@@ -1,0 +1,53 @@
+!urxvt settings
+*saveLines:        10000
+*scrollTtyKeypress:true
+*scrollTtyOutput:  false
+*scrollBar:        false
+*secondaryscroll:  true
+*internalBorder:   0
+*font:             xft:inconsolata:size=9
+*mapAlert:         true
+
+URxvt.perl-ext-common:      default,clipboard,url-select,keyboard-select
+URxvt.url-select.launcher:  dwb
+URxvt.url-select.underline: true
+URxvt.matcher.button:       1
+URxvt.urgentOnBell:         True
+URxvt.keysym.M-u:           perl:url-select:select_next
+URxvt.keysym.M-Escape:      perl:keyboard-select:activate
+URxvt.keysym.M-s:           perl:keyboard-select:search
+
+*background:    #000000
+*foreground:    #ffffff
+
+!black
+*color0:        #000000
+*color8:        #303030
+
+!red
+*color1:        #dc322f
+*color9:        #cb4b16
+
+!green
+*color2:        #82b414
+*color10:       #b6e354
+
+!yellow
+*color3:        #b58900
+*color11:       #c4ad34
+
+!blue
+*color4:        #204bd0
+*color12:       #8cadff
+
+!magenta
+*color5:        #dc348e
+*color13:       #be5f9e
+
+!cyan
+*color6:        #2aa198
+*color14:       #93a1a1
+
+!white
+*color7:        #cccccc
+*color15:       #f8f8f8

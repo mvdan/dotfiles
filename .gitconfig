@@ -1,0 +1,9 @@
+[user]
+    name = Daniel Martí
+    email = mvdan@mvdan.cc
+    editor = vim
+    signingkey = 58BF72C3
+[color]
+    ui = true
+[push]
+    default = current
