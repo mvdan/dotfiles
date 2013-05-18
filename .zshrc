@@ -167,6 +167,8 @@ alias -s png=feh
 alias -s jpg=feh
 alias -s jpeg=feh
 alias -s bmp=feh
+alias -s gif=feh
+alias -s svg=$BROWSER
 
 alias -g G="| grep"
 alias -g L="| $PAGER"
@@ -209,8 +211,7 @@ alias l="${PAGER}"
 alias c=cat
 alias v=vim
 alias s="sudo "
-alias es="sudo -E"
-alias sudo="sudo "
+alias ng="noglob"
 alias lm="mount | sed 's/ \(on\|type\) /;;/g' | column -t -s ';;'"
 alias m="mount"
 alias um="umount"
@@ -260,7 +261,8 @@ alias grs="git reset"
 alias gsa="git status -sb"
 alias gs="git status -sb -uno"
 alias gsm="git submodule"
-alias gst="git status"
+alias gss="git status"
+alias gst="git stash"
 
 alias dwbr="ip r | sed 's/default via \([^ ]*\).*/\1/' | xargs dwb &"
 wpa_sup() { wpa_passphrase $1 $2 | sudo wpa_supplicant -iwlan0 -d -c /dev/stdin }
@@ -299,6 +301,8 @@ alias devserv="ssh dev1 -t TERM=screen-256color LANG=en_US.UTF-8 tmux -u new"
     alias srm="sudo -E pacman -Rns"
     alias sim="sudo -E pacman -S --needed"
     alias syu="sudo -E pacman -Syu"
+    alias p_size="pacman -Qi | sed -n 's/^\(Name\|Installed\).*\:[ ]*\(.*\)/\2/p'\
+ | sed '/^[^ ]*$/N;s/\(.*\)\n\(.*\)/\2 \1/' | sort -h | column -t"
 }
 
 [[ -n ${commands[packer]} ]] && {
@@ -348,13 +352,14 @@ sprunge () {
     fi
 }
 
-alias chsid="sudo -E ~/.misc/debian-chroot.sh /home/debian su - mvdan"
-alias setup_enc="$HOME/.misc/setup-conceptronic.sh"
-alias enc="$HOME/.misc/encode-conceptronic.sh"
-alias p_independent="$HOME/.misc/pacman-independent.sh"
-alias p_disowned="$HOME/.misc/pacman-disowned.sh"
-alias p_size="pacman -Qi | sed -n 's/^\(Name\|Installed\).*\:[ ]*\(.*\)/\2/p' | sed '/^[^ ]*$/N;s/\(.*\)\n\(.*\)/\2 \1/' | sort -h | column -t"
-alias flacc="$HOME/.misc/flac2.sh"
+[[ -d ~/.misc ]] && {
+    alias chsid="sudo -E ~/.misc/debian-chroot.sh /home/debian su - mvdan"
+    alias setup_enc="$HOME/.misc/setup-conceptronic.sh"
+    alias enc="$HOME/.misc/encode-conceptronic.sh"
+    alias p_independent="$HOME/.misc/pacman-independent.sh"
+    alias p_disowned="$HOME/.misc/pacman-disowned.sh"
+    alias flacc="$HOME/.misc/flac2.sh"
+}
 
 [[ -n ${commands[aptitude]} ]] && {
     alias a="sudo aptitude"
@@ -365,7 +370,7 @@ alias flacc="$HOME/.misc/flac2.sh"
     alias asc="apt-get source"
 }
 
-[[ -n ${commands[lintian]} ]] && {
+[[ -n ${commands[dpkg]} ]] && {
     alias dcl="rm -fR */(N) *.{deb,changes,dsc,upload}(N)"
     dpr() { [[ ! -d *(/) ]] &&\
         tar -xf *orig* && tar -xf *debian* && mv debian/ ^debian/ && cd ^debian/ }

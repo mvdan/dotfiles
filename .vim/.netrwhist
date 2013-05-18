@@ -1,8 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =6
-let g:netrw_dirhist_1='/home/mvdan/fd/metadata/com.opendoorstudios.ds4droid'
-let g:netrw_dirhist_2='/home/mvdan/fd/metadata/org.fox.ttrss'
-let g:netrw_dirhist_3='/home/mvdan/fd/metadata/org.mariotaku.twidere'
-let g:netrw_dirhist_4='/home/mvdan/fd/build/org.mariotaku.twidere/src/org/mariotaku/twidere/fragment'
-let g:netrw_dirhist_5='/home/mvdan/fd/metadata/org.mariotaku.twidere'
-let g:netrw_dirhist_6='/home/mvdan/fd/metadata/com.opendoorstudios.ds4droid'
