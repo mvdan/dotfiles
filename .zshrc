@@ -2,6 +2,9 @@ autoload -U compinit zcalc colors zsh/terminfo vcs_info edit-command-line zmv
 compinit
 colors
 
+export M2_HOME=/opt/apache-maven
+export PATH=$PATH:/opt/apache-maven/bin
+
 bindkey -v
 bindkey '^r' history-incremental-search-backward
 bindkey "\e[A" up-line-or-history
@@ -83,12 +86,12 @@ zstyle ':completion:*:kill:*' command 'ps -au $USER -o pid,%cpu,tty,cputime,cmd'
 
 sudo-command-line() {
     [[ -z $BUFFER ]] && return
-    if [[ $BUFFER == "sudo "* ]]; then
-        CURSOR=$(( CURSOR-5 ))
-        BUFFER="${BUFFER:5}"
+    if [[ $BUFFER == "s "* ]]; then
+        CURSOR=$(( CURSOR-2 ))
+        BUFFER="${BUFFER:2}"
     else
-        BUFFER="sudo $BUFFER"
-        CURSOR=$(( CURSOR+5 ))
+        BUFFER="s $BUFFER"
+        CURSOR=$(( CURSOR+2 ))
     fi
 }
 
@@ -244,6 +247,7 @@ alias gco="git checkout"
 alias gdf="git diff"
 alias gdfc="git diff --cached"
 alias gdfs="git diff --submodule"
+alias gdfo="git diff ORIG_HEAD.."
 alias gdfu="git diff @{u}.."
 alias gfe="git fetch"
 alias glo="git log"
