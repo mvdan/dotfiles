@@ -30,7 +30,6 @@ bindkey "\e[F" end-of-line
 
 setopt auto_name_dirs
 setopt auto_pushd
-setopt auto_cd
 setopt complete_in_word
 setopt extended_glob
 setopt glob_complete
@@ -238,16 +237,16 @@ lc () { [[ $# > 1 ]] && locate -i "$(readlink -f $1)/*$2*" || locate -i "$(readl
 
 alias g="git"
 alias gad="git add"
-alias gbr="git branch"
 alias gba="git branch -a"
+alias gbr="git branch"
 alias gca="git commit -a"
 alias gcl="git clone"
 alias gcm="git commit"
 alias gco="git checkout"
 alias gdf="git diff"
 alias gdfc="git diff --cached"
-alias gdfs="git diff --submodule"
 alias gdfo="git diff ORIG_HEAD.."
+alias gdfs="git diff --submodule"
 alias gdfu="git diff @{u}.."
 alias gfe="git fetch"
 alias glo="git log"
@@ -259,11 +258,12 @@ alias gpla="git pull --all"
 alias gplr="git pull -r"
 alias gps="git push"
 alias grb="git rebase"
-alias grm="git remote"
+alias grm="git rm"
 alias grmc="git rm --cached"
 alias grs="git reset"
-alias gsa="git status -sb"
+alias grt="git remote"
 alias gs="git status -sb -uno"
+alias gsa="git status -sb"
 alias gsm="git submodule"
 alias gss="git status"
 alias gst="git stash"
@@ -297,7 +297,7 @@ alias weeserv="ssh mvdan.cc -t TERM=screen-256color LANG=en_US.UTF-8 tmux -u new
 alias devserv="ssh dev1 -t TERM=screen-256color LANG=en_US.UTF-8 tmux -u new"
 
 [[ -n ${commands[pacman]} ]] && {
-    alias p="pacman"
+    alias pc="pacman"
     alias sp="sudo -E pacman"
     alias ssm="pacman -Ss"
     ssq() { pacman -Qs "$@" | sed -n 's_local/__p' }
