@@ -4,7 +4,6 @@ alias ll="ls --color=auto -lh"
 alias la="ls --color=auto -alh"
 
 alias mkd="mkdir -p"
-mcd() { mkdir -p $1 && cd $1 }
 alias cd..="cd .."
 alias cd...="cd ../.."
 alias cd....="cd ../../.."

@@ -300,6 +300,14 @@ alias umserv="fusermount -u ~/srv"
 alias weeserv="ssh mvdan.cc -t TERM=screen-256color LANG=en_US.UTF-8 tmux -u new weechat-curses"
 alias devserv="ssh dev1 -t TERM=screen-256color LANG=en_US.UTF-8 tmux -u new"
 
+[[ -n ${commands[aptitude]} ]] && {
+    alias ap="aptitude"
+    alias ag="apt-get"
+    alias syu="sudo aptitude update && sudo aptitude upgrade"
+    alias ssm="aptitude search"
+    alias sim="sudo aptitude install"
+}
+
 [[ -n ${commands[pacman]} ]] && {
     alias pc="pacman"
     alias sp="sudo -E pacman"
@@ -344,7 +352,7 @@ alias cr="rsync -ahvP --"
 alias xp="xsel -p"
 alias xb="xsel -b"
 
-sprunge () {
+spr() {
     if [ -t 0 ]; then
         [ "$*" ] || return 1
         if [ -f "$*" ]; then
@@ -367,15 +375,6 @@ sprunge () {
     alias p_independent="$HOME/.misc/pacman-independent.sh"
     alias p_disowned="$HOME/.misc/pacman-disowned.sh"
     alias flacc="$HOME/.misc/flac2.sh"
-}
-
-[[ -n ${commands[aptitude]} ]] && {
-    alias a="sudo aptitude"
-    alias aup="sudo aptitude update && sudo aptitude upgrade"
-    alias ass="aptitude search"
-    alias abd="sudo aptitude build-dep"
-    alias ain="sudo aptitude install"
-    alias asc="apt-get source"
 }
 
 [[ -n ${commands[dpkg]} ]] && {
