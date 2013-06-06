@@ -1,12 +1,12 @@
--- awesome >= 3.5
--- vicious >= 2.1
+-- awesome >= 3.5.1
+-- vicious >= 2.1.1
 
 local awful = require("awful")
 awful.rules = require("awful.rules")
 require("awful.autofocus")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
-local naughty = require("naughty")
+naughty = require("naughty")
 local menubar = require("menubar")
 vicious = require("vicious")
 require("gears.wallpaper").set(require("gears.color")("#000000"))
@@ -37,7 +37,7 @@ exec = awful.util.spawn
 sexec = awful.util.spawn_with_shell
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
-maildirs = {
+local maildirs = {
     dan = { "/home/mvdan/Mail/linode/Creu",
     "/home/mvdan/Mail/linode/Fsfe",
     "/home/mvdan/Mail/linode/GLcat",
@@ -92,7 +92,7 @@ p_red = "#c44"
 p_blue = "#66e"
 p_yellow = "#bb4"
 
-sep = wibox.widget.textbox()
+local sep = wibox.widget.textbox()
 sep:set_text("   ")
 
 cpus_count = 0
@@ -136,22 +136,27 @@ function (widget, args)
     return used..' '..nonfree..' '..total
 end,1)
 
-function get_devices ()
-    local devices = {}
-    local dev
-    for line in io.lines("/proc/mounts") do
-        dev = line:match("^/dev/sd[a-z]") 
-        if dev ~= nil then
-            table.insert(devices,dev:sub(6,8))
+local devices = {}
+
+function add_dev(dev)
+    for i,dev_ in ipairs(devices) do
+        if dev == dev_ then
+            return
         end
     end
-    return devices
+    table.insert(devices,dev)
+end
+
+for line in io.lines("/proc/mounts") do
+    local device = line:match("^/dev/sd[a-z]")
+    if device ~= nil then
+        add_dev(device:sub(6,8))
+    end
 end
 
 iowidget = wibox.widget.textbox()
 vicious.register(iowidget, vicious.widgets.dio,
 function (widget, args)
-    local devices = get_devices()
     local iocontent = ""
     for i,dev in ipairs(devices) do
         local write = '<span color="'..p_yellow..'">'..string.format("%5s",args["{"..dev.." write_mb}"])..'</span>'
@@ -197,7 +202,7 @@ function (widget, args)
     return netcontent
     end,1)
 
-imap_enabled = true
+local imap_enabled = true
 
 mdirwidget = wibox.widget.textbox()
 function mdirwidget_update()
@@ -219,7 +224,7 @@ function mdirwidget_update()
     mdirwidget:set_markup(mdircontent)
 end
 
-imap_running = false
+local imap_running = false
 
 function offlineimap_run(force)
     if not force and (net_ifaces["wlan0"] == false and net_ifaces["eth0"] == false) then
@@ -479,6 +484,9 @@ clientbuttons = awful.util.table.join(
 
 root.keys(globalkeys)
 
+local sheight = screen[1].geometry.height
+local swidth = screen[1].geometry.width
+
 awful.rules.rules = {
     { rule = { },
       properties = { border_width = beautiful.border_width,
@@ -491,8 +499,14 @@ awful.rules.rules = {
       properties = { floating = true } },
     { rule = { class = "pinentry" },
       properties = { floating = true } },
-    { rule = { class = "gimp" },
-      properties = { floating = true } },
+    { rule = { class = "Gimp" },
+      properties = { floating = true, y = 21, height = sheight-42 } },
+    { rule = { class = "Gimp", role = "gimp-toolbox" },
+        properties = { x = 0, width = 225 }, },
+    { rule = { class = "Gimp", role = "gimp-image-window" },
+        properties = { x = 225, width = swidth-450 }, },
+    { rule = { class = "Gimp", role = "gimp-dock" },
+        properties = { x = swidth-225, width = 225 }, },
     { rule = { instance = "ssh_mvdan" },
       properties = { tag = tags[1][2] } },
     { rule = { instance = "weechat" },

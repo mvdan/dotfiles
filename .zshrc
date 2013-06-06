@@ -2,9 +2,6 @@ autoload -U compinit zcalc colors zsh/terminfo vcs_info edit-command-line zmv
 compinit
 colors
 
-export M2_HOME=/opt/apache-maven
-export PATH=$PATH:/opt/apache-maven/bin
-
 bindkey -v
 bindkey '^r' history-incremental-search-backward
 bindkey "\e[A" up-line-or-history
@@ -171,6 +168,9 @@ alias -s jpeg=feh
 alias -s bmp=feh
 alias -s gif=feh
 alias -s svg=$BROWSER
+alias -s html=$BROWSER
+alias -s xhtml=$BROWSER
+alias -s htm=$BROWSER
 
 alias -g G="| grep"
 alias -g L="| $PAGER"
@@ -184,6 +184,9 @@ alias la="ls --color=auto -alh"
 lt () { [[ $# > 0 ]] &&
     ls --color=always -Alhrt "$1" | tail -n 25 ||\
     ls --color=always -Alhrt | tail -n 25 }
+-lt () { [[ $# > 0 ]] &&
+    ls --color=always -Alhrt "$1" | head -n 25 ||\
+    ls --color=always -Alhrt | head -n 25 }
 da() { [[ $# > 0 ]] && du -hs --apparent-size "${1%/}/"*(DN) 2>/dev/null | sort -h\
     || du -hs --apparent-size ./*(DN) 2>/dev/null | sort -h
 }
