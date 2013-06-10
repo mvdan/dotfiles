@@ -405,7 +405,7 @@ globalkeys = awful.util.table.join(
         awful.prompt.run({ prompt = "dwb: " },
         promptbox[mouse.screen].widget,
         function (c)
-            sexec ("dwb '"..c.."'", false)
+            sexec("dwb "..c:gsub("\\", "\\\\"):gsub(" ", '\\ '):gsub("'", "\\'"):gsub('"', '\\"'), false)
         end)
     end),
     
@@ -413,7 +413,7 @@ globalkeys = awful.util.table.join(
         awful.prompt.run({ prompt = "pkill: " },
         promptbox[mouse.screen].widget,
         function (c)
-            sexec ("pkill --signal SIGKILL'"..c.."'", false)
+            sexec("pkill --signal SIGKILL'"..c.."'", false)
         end)
     end),
 
