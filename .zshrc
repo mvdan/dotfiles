@@ -217,21 +217,11 @@ alias l="${PAGER}"
 alias c=cat
 alias v=vim
 alias s="sudo "
+alias se="sudo -E "
 alias ng="noglob"
 alias lm="mount | sed 's/ \(on\|type\) /;;/g' | column -t -s ';;'"
 alias m="mount"
 alias um="umount"
-
-mo() {
-    [ -b /dev/sd$1 ] || return 1
-    sudo mkdir -p /media/sd$1
-    sudo mount /dev/sd$1 /media/sd$1 -o uid=mvdan,gid=users,utf8,rw,noatime 2>/dev/null ||\
-        sudo mount /dev/sd$1 /media/sd$1 -o rw,noatime
-}
-umo() {
-    [ -b /dev/sd$1 ] || return 1
-    sudo umount /media/sd$1 && sudo rmdir /media/sd$1
-}
 
 alias pk="pkill -SIGKILL"
 pgr () { ps aux | grep -v grep | grep "$@" -i --color=auto; }
@@ -278,14 +268,6 @@ alias gst="git stash"
 alias dwbr="ip r | sed 's/default via \([^ ]*\).*/\1/' | xargs dwb &"
 wpa_sup() { wpa_passphrase $1 $2 | sudo wpa_supplicant -iwlan0 -d -c /dev/stdin }
 
-alias winecfg32="WINEARCH=win32 WINEPREFIX=~/.win32 winecfg"
-alias wine32="WINEARCH=win32 WINEPREFIX=~/.win32 wine"
-p_a() {
-    sudo mkdir -p /media/cdrom
-    sudo mount -o loop ~/Torrents/a.iso /media/cdrom &&\
-        wine start D:\autorun.exe &>/dev/null
-}
-
 [[ -d ~/git/fdroidserver ]] && {
     autoload -U bashcompinit
     bashcompinit
@@ -324,10 +306,10 @@ alias devserv="ssh dev1 -t TERM=screen-256color LANG=en_US.UTF-8 tmux -u new"
  | sed '/^[^ ]*$/N;s/\(.*\)\n\(.*\)/\2 \1/' | sort -h | column -t"
 }
 
-[[ -n ${commands[packer]} ]] && {
-    alias ssk="packer -Ss"
-    alias sik="sudo -E packer -S --noedit"
-    alias syud="sudo -E packer -Syu --noedit"
+[[ -n ${commands[pacaur]} ]] && {
+    alias ssk="pacaur -Ss"
+    alias sik="sudo -E pacaur -S"
+    alias syud="sudo -E pacaur -Syu"
 }
 
 [[ -n ${commands[systemctl]} ]] && {
@@ -339,7 +321,7 @@ alias devserv="ssh dev1 -t TERM=screen-256color LANG=en_US.UTF-8 tmux -u new"
 }
 
 [[ -n ${commands[netctl]} ]] && {
-    nc() { sudo NETCTL_DEBUG=yes netctl "$@" }
+    nc() { sudo NETCTL_DEBUG="yes" netctl "$@" }
     compdef _netctl nc
     alias wm="sudo wifi-menu"
 }
@@ -372,7 +354,7 @@ spr() {
 }
 
 [[ -d ~/.misc ]] && {
-    alias chsid="sudo -E ~/.misc/debian-chroot.sh /home/debian su - mvdan"
+    alias chsid="sudo -E $HOME/.misc/debian-chroot.sh /home/debian"
     alias setup_enc="$HOME/.misc/setup-conceptronic.sh"
     alias enc="$HOME/.misc/encode-conceptronic.sh"
     alias p_independent="$HOME/.misc/pacman-independent.sh"
