@@ -197,6 +197,7 @@ alias cd..="cd .."
 alias cd...="cd ../.."
 alias cd....="cd ../../.."
 alias cd.....="cd ../../../.."
+alias cd......="cd ../../../../.."
 alias 1="cd -"
 alias 2="cd +2"
 alias 3="cd +3"
@@ -232,6 +233,7 @@ lc () { [[ $# > 1 ]] && locate -i "$(readlink -f $1)/*$2*" || locate -i "$(readl
 alias g="git"
 alias gad="git add"
 alias gap="git apply"
+alias gbs="git bisect"
 alias gba="git branch -a"
 alias gbr="git branch"
 alias gca="git commit -a"
@@ -249,6 +251,7 @@ alias glo="git log"
 alias glop="git log -p"
 alias glou="git log @{u}.."
 alias gloup="git log -p @{u}.."
+alias gls="git ls-files"
 alias gmr="git merge"
 alias gpl="git pull"
 alias gpla="git pull --all"
@@ -265,17 +268,21 @@ alias gsm="git submodule"
 alias gss="git status"
 alias gst="git stash"
 
+alias gsvn="git svn"
+
 alias dwbr="ip r | sed 's/default via \([^ ]*\).*/\1/' | xargs dwb &"
 wpa_sup() { wpa_passphrase $1 $2 | sudo wpa_supplicant -iwlan0 -d -c /dev/stdin }
 
-[[ -d ~/git/fdroidserver ]] && {
+
+[[ -x ~/server/fdroid ]] && {
     autoload -U bashcompinit
     bashcompinit
-    fdroid() { python2 ~/git/fdroidserver/fdroid "$@" }
+    fdroid() { python2 ~/server/fdroid "$@" }
     fbld() { fdroid build -p "$@" }
-    source ~mvdan/git/bash-completion/fdroid
+    source ~/server/completion/fdroid
     complete -F _fdroid_build_project fbld
-}
+    alias commitupdates=~/server/commitupdates
+} || fdroid() { HOME=${1:-/mnt}/fdroid zsh }
 
 alias mtp="sudo mtpfs -o allow_other /mnt"
 alias umtp="fusermount -u /mnt"
@@ -302,14 +309,15 @@ alias devserv="ssh dev1 -t TERM=screen-256color LANG=en_US.UTF-8 tmux -u new"
     alias srm="sudo -E pacman -Rns"
     alias sim="sudo -E pacman -S --needed"
     alias syu="sudo -E pacman -Syu"
+    alias syyu="sudo -E pacman -Syyu"
     alias p_size="pacman -Qi | sed -n 's/^\(Name\|Installed\).*\:[ ]*\(.*\)/\2/p'\
  | sed '/^[^ ]*$/N;s/\(.*\)\n\(.*\)/\2 \1/' | sort -h | column -t"
 }
 
 [[ -n ${commands[pacaur]} ]] && {
     alias ssk="pacaur -Ss"
-    alias sik="sudo -E pacaur -S"
-    alias syud="sudo -E pacaur -Syu"
+    alias sik="pacaur -S"
+    alias syud="pacaur -Syu"
 }
 
 [[ -n ${commands[systemctl]} ]] && {
