@@ -40,15 +40,14 @@ editor_cmd = terminal .. " -e " .. editor
 local maildirs = {
     dan = { "/home/mvdan/Mail/linode/Creu",
     "/home/mvdan/Mail/linode/Fsfe",
-    "/home/mvdan/Mail/linode/GLcat",
     "/home/mvdan/Mail/linode/INBOX",
     "/home/mvdan/Mail/linode/Univ" },
     mls = { "/home/mvdan/Mail/linode/Awesome",
     "/home/mvdan/Mail/linode/Arch",
     "/home/mvdan/Mail/linode/Openwrt",
+    "/home/mvdan/Mail/linode/GLcat",
     "/home/mvdan/Mail/linode/Cau",
-    "/home/mvdan/Mail/linode/Debian" },
-    gmx = {"/home/mvdan/Mail/gmx/INBOX"}
+    "/home/mvdan/Mail/linode/Debian" }
 }
 
 modkey = "Mod4"
@@ -136,7 +135,7 @@ function (widget, args)
     return used..' '..nonfree..' '..total
 end,1)
 
-local devices = {}
+local devices = { 'a' }
 
 function add_dev(dev)
     for i,dev_ in ipairs(devices) do
@@ -147,18 +146,17 @@ function add_dev(dev)
     table.insert(devices,dev)
 end
 
-for line in io.lines("/proc/mounts") do
-    local device = line:match("^/dev/sd[a-z]")
-    if device ~= nil then
-        add_dev(device:sub(6,8))
-    end
-end
-
 iowidget = wibox.widget.textbox()
 vicious.register(iowidget, vicious.widgets.dio,
 function (widget, args)
     local iocontent = ""
+    for line in io.lines("/proc/mounts") do
+        if line:sub(1,7) == "/dev/sd" then
+            add_dev(line:sub(8,8))
+        end
+    end
     for i,dev in ipairs(devices) do
+        dev = "sd"..dev
         local write = '<span color="'..p_yellow..'">'..string.format("%5s",args["{"..dev.." write_mb}"])..'</span>'
         local read = '<span color="'..p_green..'">'..string.format("%-5s",args["{"..dev.." read_mb}"])..'</span>'
         if iocontent == "" then iocontent = write..' '..dev..' '..read
@@ -374,17 +372,18 @@ globalkeys = awful.util.table.join(
     awful.key({ }, "#122", function () sexec("amixer -q set Master 4dB- -q; echo \'vicious.force({volwidget})\' | awesome-client") end),
     awful.key({ }, "#123", function () sexec("amixer -q set Master 4dB+ -q; echo \'vicious.force({volwidget})\' | awesome-client") end),
     awful.key({ }, "#150", function () sexec("xset dpms force off") end),
+
+    awful.key({ modkey, altkey}, "t", function () sexec("~/.misc/xrandr-iter") end),
     
     awful.key({ modkey, altkey}, "f", function () sexec(terminal .. " -name weechat -e weechat-curses") end),
     awful.key({ modkey, altkey}, "g", function () sexec(terminal .. " -name ssh_confine -e ssh dev1 -t TERM=screen-256color tmux -u a") end),
     awful.key({ modkey, altkey}, "h", function () sexec(terminal .. " -name ssh_mvdan -e ssh linode -t TERM=screen-256color tmux -u a") end),
-    awful.key({ modkey, altkey}, "j", function () sexec(terminal .. " -name mutt -e sh -c mutt") end),
+    awful.key({ modkey, altkey}, "j", function () sexec(terminal .. " -name mutt -e sh -c \"export TERM=screen-256color && mutt\"") end),
     awful.key({ modkey, altkey}, "b", function () sexec(terminal .. " -name newsbeuter -e sh -c newsbeuter") end),
     awful.key({ modkey, altkey}, "k", function () sexec(terminal .. " -name ranger -e ranger") end),
     awful.key({ modkey, altkey}, "m", function () sexec(terminal .. " -name rtorrent -e rtorrent") end),
     awful.key({ modkey, altkey}, "n", function () sexec(terminal .. " -name ncmpcpp -e ncmpcpp") end),
     awful.key({ modkey, altkey}, "r", function () sexec("_JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel' ho1 -m 1024m") end),
-    awful.key({ modkey, altkey}, "e", function () sexec("_JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel' JDownloader") end),
 
     awful.key({ modkey, altkey}, "i", function () sexec("iceweasel") end),
     

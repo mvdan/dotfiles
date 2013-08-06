@@ -1,0 +1,116 @@
+set nohelp
+set mbox_type = Maildir
+set folder = ~/Mail/linode
+set spoolfile = +INBOX
+set record = +Sent
+set postponed = +Drafts
+set trash = +Trash
+auto_view text/html
+alternative_order text/enriched text/plain text/html
+
+set mime_forward
+set mime_forward_rest
+set assumed_charset = 'utf-8'
+
+set abort_unmodified
+set allow_8bit
+set mail_check = 5
+set timeout = 10
+
+set realname = 'Daniel Martí'
+set sendmail = '/usr/bin/msmtp'
+set use_envelope_from
+set date_format = "!%a, %b %d, %Y at %H:%M:%S %Z"
+
+set reverse_name
+set noreverse_realname
+set reverse_alias
+folder-hook . set from = "mvdan@mvdan.cc"
+folder-hook "Fsfe" set from = "mvdan@fsfe.org"
+alternates "mvdan@mvdan.cc|mvdan@fsfe.org|danielmarti@gmx.com|dmarti@ac.upc.edu"
+
+set alias_file=~/.mutt/aliases
+source $alias_file
+set certificate_file = ~/.mutt/certificates
+set mailcap_path = ~/.mutt/mailcap
+set signature = ~/.mutt/muttsig
+set tmpdir = ~/.mutt/temp
+set header_cache = ~/.mutt/cache
+
+set auto_tag
+set fast_reply
+set noconfirmappend
+set pager_index_lines = 6
+
+set editor = vim
+set sleep_time = 0
+set narrow_tree
+folder-hook . set sort = threads
+folder-hook Sent set sort = date-sent
+folder-hook Spam set sort = date-received
+
+ignore *
+unignore from date subject to cc x-mailing-list
+
+set pager_stop
+set nomarkers
+set nomark_old
+
+set include
+set postpone = ask-no
+set abort_nosubject = no
+
+set pgp_autosign
+set pgp_auto_decode
+set pgp_sign_as = 4348041C
+set pgp_replysign
+set pgp_replyencrypt
+set pgp_timeout = 1800
+set pgp_good_sign="^gpg: Good signature from"
+set pgp_verify_sig
+set pgp_list_secring_command="gpg --no-verbose --batch --with-colons --list-secret-keys %r"
+set pgp_decode_command="gpg %?p?--passphrase-fd 0? --no-verbose --batch -o - %f"
+set pgp_verify_command="gpg --no-verbose --batch -o - --verify %s %f"
+set pgp_decrypt_command="gpg --passphrase-fd 0 --no-verbose --batch -o - %f"
+set pgp_sign_command="gpg --no-verbose --batch -o - --passphrase-fd 0 --armor --detach-sign --textmode %?a?-u %a? %f"
+set pgp_clearsign_command="gpg --no-verbose --batch -o - --passphrase-fd 0 --armor --textmode --clearsign %?a?-u %a? %f"
+set pgp_encrypt_only_command="pgpewrap gpg -v --batch -o - --encrypt --textmode --armor --always-trust %?a?-u %a? -- -r %r -- %f"
+set pgp_encrypt_sign_command="pgpewrap gpg --passphrase-fd 0 -v --batch -o - --encrypt --sign --armor --always-trust %?a?-u %a? -- -r %r -- %f"
+set pgp_import_command="gpg --no-verbose --import -v %f"
+set pgp_export_command="gpg --no-verbose --export --armor %r"
+set pgp_verify_key_command="gpg --no-verbose --batch --fingerprint --check-sigs %r"
+set pgp_list_pubring_command="gpg --no-verbose --batch --with-colons --list-keys %r"
+set pgp_list_secring_command="gpg --no-verbose --batch --with-colons --list-secret-keys %r"
+
+set sidebar_delim=" "
+set sidebar_visible
+set sidebar_width = 18
+bind index,pager H sidebar-open
+bind index,pager K sidebar-prev
+bind index,pager J sidebar-next
+color sidebar_new yellow default
+
+mailboxes "=INBOX" "=Univ" "=Fsfe" "=Cau" "=GLcat" "=Debian" "=Arch" "=Creu" "=Openwrt" "=Awesome" "=Other" "=Sent" "=Drafts" "=Trash" "=../ac/INBOX" "=../gmx/INBOX"
+macro index,pager A <change-folder>=Spam<enter>
+macro index,pager S <change-folder>=Sent<enter>
+
+color hdrdefault blue black
+color quoted blue black
+color signature blue black
+color attachment brightred black
+color message brightred black
+color error brightred black
+color indicator white color234
+color status white color237
+color tree color245 black
+color normal white black
+color markers red black
+color search white black
+color tilde brightmagenta black
+color index blue black ~F
+color index red black "~N|~O"
+folder-hook . color index color245 black "~P"
+folder-hook (Sent|Spam) color index white black "~P"
+
+color body brightwhite black '\*+[^*]+\*+'
+color body brightwhite black '_+[^_]+_+'

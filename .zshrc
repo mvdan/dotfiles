@@ -192,7 +192,7 @@ da() { [[ $# > 0 ]] && du -hs --apparent-size "${1%/}/"*(DN) 2>/dev/null | sort 
 }
 
 alias mkd="mkdir -p"
-mcd() { mkdir -p $1 && cd $1 }
+mkcd() { mkdir -p $1 && cd $1 }
 alias cd..="cd .."
 alias cd...="cd ../.."
 alias cd....="cd ../../.."
@@ -223,6 +223,7 @@ alias ng="noglob"
 alias lm="mount | sed 's/ \(on\|type\) /;;/g' | column -t -s ';;'"
 alias m="mount"
 alias um="umount"
+alias umo="umount /media/"
 
 alias pk="pkill -SIGKILL"
 pgr () { ps aux | grep -v grep | grep "$@" -i --color=auto; }
@@ -274,15 +275,15 @@ alias dwbr="ip r | sed 's/default via \([^ ]*\).*/\1/' | xargs dwb &"
 wpa_sup() { wpa_passphrase $1 $2 | sudo wpa_supplicant -iwlan0 -d -c /dev/stdin }
 
 
-[[ -x ~/server/fdroid ]] && {
+[[ -x ~/git/fdroidserver/fdroid ]] && {
     autoload -U bashcompinit
     bashcompinit
-    fdroid() { python2 ~/server/fdroid "$@" }
-    fbld() { fdroid build -p "$@" }
-    source ~/server/completion/fdroid
+    fdroid() { python2 ~/git/fdroidserver/fdroid "$@" }
+    fbld() { fdroid build -l -p "$@" }
+    source ~/git/fdroidserver/completion/bash-completion
     complete -F _fdroid_build_project fbld
-    alias commitupdates=~/server/commitupdates
-} || fdroid() { HOME=${1:-/mnt}/fdroid zsh }
+    alias commitupdates=~/git/fdroidserver/commitupdates
+}
 
 alias mtp="sudo mtpfs -o allow_other /mnt"
 alias umtp="fusermount -u /mnt"
@@ -295,7 +296,7 @@ alias devserv="ssh dev1 -t TERM=screen-256color LANG=en_US.UTF-8 tmux -u new"
 [[ -n ${commands[aptitude]} ]] && {
     alias ap="aptitude"
     alias ag="apt-get"
-    alias syu="sudo aptitude update && sudo aptitude upgrade"
+    alias syu="sudo aptitude update && sudo aptitude dist-upgrade"
     alias ssm="aptitude search"
     alias sim="sudo aptitude install"
 }
