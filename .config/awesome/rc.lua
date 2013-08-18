@@ -135,7 +135,7 @@ function (widget, args)
     return used..' '..nonfree..' '..total
 end,1)
 
-local devices = { 'a' }
+local devices
 
 function add_dev(dev)
     for i,dev_ in ipairs(devices) do
@@ -150,6 +150,7 @@ iowidget = wibox.widget.textbox()
 vicious.register(iowidget, vicious.widgets.dio,
 function (widget, args)
     local iocontent = ""
+    devices = { 'a' }
     for line in io.lines("/proc/mounts") do
         if line:sub(1,7) == "/dev/sd" then
             add_dev(line:sub(8,8))
@@ -228,6 +229,9 @@ function offlineimap_run(force)
     if not force and (net_ifaces["wlan0"] == false and net_ifaces["eth0"] == false) then
         imap_enabled = false
         return -1
+    end
+    if not imap_enabled then
+        return 0
     end
     imap_running = true
     local mdircontent = ""
@@ -405,6 +409,14 @@ globalkeys = awful.util.table.join(
         promptbox[mouse.screen].widget,
         function (c)
             sexec("dwb "..c:gsub("\\", "\\\\"):gsub(" ", '\\ '):gsub("'", "\\'"):gsub('"', '\\"'), false)
+        end)
+    end),
+
+    awful.key({ modkey }, "u", function ()
+        awful.prompt.run({ prompt = "mailman: " },
+        promptbox[mouse.screen].widget,
+        function (c)
+            sexec("/bin/zsh -c 'cd /home/mvdan/fsfe/internal/Howto && BROWSER=dwb ./ML.sh "..c.."'", false)
         end)
     end),
     

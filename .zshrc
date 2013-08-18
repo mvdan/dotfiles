@@ -142,35 +142,35 @@ setopt hist_find_no_dups
 
 [[ -n ${commands[vim]} ]] && export EDITOR=vim || export EDITOR=vi
 [[ -n ${commands[vimpager]} ]] && {
-    export PAGER=vimpager
-    alias less=vimpager
-    alias zless=vimpager
+    export PAGER="vimpager"
+    alias less="vimpager"
+    alias zless="vimpager"
 } || export PAGER="less"
 [[ -n "$DISPLAY" ]] && export BROWSER=dwb
 [[ -n "$TMUX" ]] && export TERM=screen-256color
 
-alias -s log=$PAGER
-alias -s pdf=zathura
-alias -s mp4=mplayer
-alias -s flv=mplayer
-alias -s mpg=mplayer
-alias -s mpeg=mplayer
-alias -s mkv=mplayer
-alias -s avi=mplayer
-alias -s ogv=mplayer
-alias -s flac=mplayer
-alias -s mp3=mplayer
-alias -s ogg=mplayer
-alias -s oga=mplayer
-alias -s png=feh
-alias -s jpg=feh
-alias -s jpeg=feh
-alias -s bmp=feh
-alias -s gif=feh
-alias -s svg=$BROWSER
-alias -s html=$BROWSER
-alias -s xhtml=$BROWSER
-alias -s htm=$BROWSER
+alias -s log="$PAGER"
+alias -s pdf="zathura"
+alias -s mp4="mplayer"
+alias -s flv="mplayer"
+alias -s mpg="mplayer"
+alias -s mpeg="mplayer"
+alias -s mkv="mplayer"
+alias -s avi="mplayer"
+alias -s ogv="mplayer"
+alias -s flac="mplayer"
+alias -s mp3="mplayer"
+alias -s ogg="mplayer"
+alias -s oga="mplayer"
+alias -s png="feh"
+alias -s jpg="feh"
+alias -s jpeg="feh"
+alias -s bmp="feh"
+alias -s gif="feh"
+alias -s svg="$BROWSER"
+alias -s html="$BROWSER"
+alias -s xhtml="$BROWSER"
+alias -s htm="$BROWSER"
 
 alias -g G="| grep"
 alias -g L="| $PAGER"
@@ -197,7 +197,6 @@ alias cd..="cd .."
 alias cd...="cd ../.."
 alias cd....="cd ../../.."
 alias cd.....="cd ../../../.."
-alias cd......="cd ../../../../.."
 alias 1="cd -"
 alias 2="cd +2"
 alias 3="cd +3"
@@ -215,8 +214,8 @@ alias d="dirs -v"
 
 alias p="print -l"
 alias l="${PAGER}"
-alias c=cat
-alias v=vim
+alias c="cat"
+alias v="vim"
 alias s="sudo "
 alias se="sudo -E "
 alias ng="noglob"
@@ -263,6 +262,7 @@ alias grm="git rm"
 alias grmc="git rm --cached"
 alias grs="git reset"
 alias grt="git remote"
+alias grv="git revert"
 alias gs="git status -sb -uno"
 alias gsa="git status -sb"
 alias gsm="git submodule"
@@ -278,12 +278,13 @@ wpa_sup() { wpa_passphrase $1 $2 | sudo wpa_supplicant -iwlan0 -d -c /dev/stdin 
 [[ -x ~/git/fdroidserver/fdroid ]] && {
     autoload -U bashcompinit
     bashcompinit
-    fdroid() { python2 ~/git/fdroidserver/fdroid "$@" }
+    fdroid() { python2 $HOME/git/fdroidserver/fdroid "$@" }
     fbld() { fdroid build -l -p "$@" }
-    source ~/git/fdroidserver/completion/bash-completion
+    source $HOME/git/fdroidserver/completion/bash-completion
     complete -F _fdroid_build_project fbld
-    alias commitupdates=~/git/fdroidserver/commitupdates
+    alias commitupdates="$HOME/git/fdroidserver/commitupdates"
 }
+chfdroid() { export HOME=/media/dan/fdroid zsh && cd }
 
 alias mtp="sudo mtpfs -o allow_other /mnt"
 alias umtp="fusermount -u /mnt"
@@ -303,7 +304,7 @@ alias devserv="ssh dev1 -t TERM=screen-256color LANG=en_US.UTF-8 tmux -u new"
 
 [[ -n ${commands[pacman]} ]] && {
     alias pc="pacman"
-    alias sp="sudo -E pacman"
+    alias spc="sudo -E pacman"
     alias ssm="pacman -Ss"
     ssq() { pacman -Qs "$@" | sed -n 's_local/__p' }
     ssw() { pacman -Qo $(which $1) }
@@ -330,7 +331,7 @@ alias devserv="ssh dev1 -t TERM=screen-256color LANG=en_US.UTF-8 tmux -u new"
 }
 
 [[ -n ${commands[netctl]} ]] && {
-    nc() { sudo NETCTL_DEBUG="yes" netctl "$@" }
+    nc() { sudo NETCTL_DEBUG=yes netctl "$@" }
     compdef _netctl nc
     alias wm="sudo wifi-menu"
 }
