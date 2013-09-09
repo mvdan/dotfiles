@@ -25,9 +25,10 @@ set date_format = "!%a, %b %d, %Y at %H:%M:%S %Z"
 set reverse_name
 set noreverse_realname
 set reverse_alias
+set from = "mvdan@mvdan.cc"
 folder-hook . set from = "mvdan@mvdan.cc"
 folder-hook "Fsfe" set from = "mvdan@fsfe.org"
-alternates "mvdan@mvdan.cc|mvdan@fsfe.org|danielmarti@gmx.com|dmarti@ac.upc.edu"
+alternates "mvdan@mvdan.cc|mvdan@fsfe.org|danielmarti@gmx.com|dmarti@ac.upc.edu|daniel.marti.i@est.fib.upc.edu"
 
 set alias_file=~/.mutt/aliases
 source $alias_file

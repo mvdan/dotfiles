@@ -279,9 +279,11 @@ wpa_sup() { wpa_passphrase $1 $2 | sudo wpa_supplicant -iwlan0 -d -c /dev/stdin 
     autoload -U bashcompinit
     bashcompinit
     fdroid() { python2 $HOME/git/fdroidserver/fdroid "$@" }
-    fbld() { fdroid build -l -p "$@" }
+    fbld() { fdroid build -l -v -p "$@" }
+    fcheckup() { fdroid checkupdates -v -p "$@" }
     source $HOME/git/fdroidserver/completion/bash-completion
     complete -F _fdroid_build_project fbld
+    complete -F _fdroid_checkupdates_project fcheckup
     alias commitupdates="$HOME/git/fdroidserver/commitupdates"
 }
 chfdroid() { export HOME=/media/dan/fdroid zsh && cd }
@@ -361,6 +363,11 @@ spr() {
         echo "Uploading from stdin..." >&2
         curl -F 'sprunge=<-' http://sprunge.us
     fi
+}
+
+read_dom () {
+    local IFS=\>
+    read -d \< ENTITY CONTENT
 }
 
 [[ -d ~/.misc ]] && {

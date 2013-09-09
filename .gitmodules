@@ -25,3 +25,6 @@
 [submodule ".vim/bundle/syntastic"]
 	path = .vim/bundle/syntastic
 	url = https://github.com/scrooloose/syntastic
+[submodule ".vim/bundle/unused-imports"]
+	path = .vim/bundle/unused-imports
+	url = https://github.com/akhaku/vim-java-unused-imports

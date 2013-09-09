@@ -112,9 +112,9 @@ inoremap <F10> 3<C-O><C-W>+
 inoremap <F11> 3<C-O><C-W>-
 inoremap <F12> 3<C-O><C-W>>
 
-au BufRead mutt-* set fo+=t tw=72
-au BufRead mutt-* g/^> [> ]*-- *$/,?^-- $?-2d
-au BufRead mutt-* 0
+au BufRead mutt-* silent set fo+=t tw=72
+au BufRead mutt-* silent g/^> [> ]*-- *$/,?^-- $?-2d
+au BufRead mutt-* silent 0
 au BufReadCmd *.odt,*.ott,*.ods,*.ots,*.odp,*.otp,*.odg,*.otg call zip#Browse(expand("<amatch>"))
 
 inoremap jj <esc>

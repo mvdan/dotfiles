@@ -71,7 +71,8 @@ end
 
 menubar.utils.terminal = terminal
 
-textclock = awful.widget.textclock()
+datewidget = wibox.widget.textbox()
+vicious.register(datewidget, vicious.widgets.date, " %b %d, %T ", 1)
 
 topwibox = {}
 botwibox = {}
@@ -287,7 +288,7 @@ for s = 1, screen.count() do
 
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
-    right_layout:add(textclock)
+    right_layout:add(datewidget)
     right_layout:add(layoutbox[s])
 
     local layout = wibox.layout.align.horizontal()
@@ -383,6 +384,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, altkey}, "g", function () sexec(terminal .. " -name ssh_confine -e ssh dev1 -t TERM=screen-256color tmux -u a") end),
     awful.key({ modkey, altkey}, "h", function () sexec(terminal .. " -name ssh_mvdan -e ssh linode -t TERM=screen-256color tmux -u a") end),
     awful.key({ modkey, altkey}, "j", function () sexec(terminal .. " -name mutt -e sh -c \"export TERM=screen-256color && mutt\"") end),
+    awful.key({ modkey, altkey}, "e", function () sexec(terminal .. " -name todo -e vim ~/todo") end),
     awful.key({ modkey, altkey}, "b", function () sexec(terminal .. " -name newsbeuter -e sh -c newsbeuter") end),
     awful.key({ modkey, altkey}, "k", function () sexec(terminal .. " -name ranger -e ranger") end),
     awful.key({ modkey, altkey}, "m", function () sexec(terminal .. " -name rtorrent -e rtorrent") end),
@@ -416,7 +418,7 @@ globalkeys = awful.util.table.join(
         awful.prompt.run({ prompt = "mailman: " },
         promptbox[mouse.screen].widget,
         function (c)
-            sexec("/bin/zsh -c 'cd /home/mvdan/fsfe/internal/Howto && BROWSER=dwb ./ML.sh "..c.."'", false)
+            sexec("/bin/sh -c 'cd ~/fsfe/internal/Howto && BROWSER=dwb ./ML.sh "..c.."'", false)
         end)
     end),
     
