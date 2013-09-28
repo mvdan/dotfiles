@@ -151,17 +151,17 @@ setopt hist_find_no_dups
 
 alias -s log="$PAGER"
 alias -s pdf="zathura"
-alias -s mp4="mplayer"
-alias -s flv="mplayer"
-alias -s mpg="mplayer"
-alias -s mpeg="mplayer"
-alias -s mkv="mplayer"
-alias -s avi="mplayer"
-alias -s ogv="mplayer"
-alias -s flac="mplayer"
-alias -s mp3="mplayer"
-alias -s ogg="mplayer"
-alias -s oga="mplayer"
+alias -s mp4="mpv"
+alias -s flv="mpv"
+alias -s mpg="mpv"
+alias -s mpeg="mpv"
+alias -s mkv="mpv"
+alias -s avi="mpv"
+alias -s ogv="mpv"
+alias -s flac="mpv"
+alias -s mp3="mpv"
+alias -s ogg="mpv"
+alias -s oga="mpv"
 alias -s png="feh"
 alias -s jpg="feh"
 alias -s jpeg="feh"
@@ -284,7 +284,7 @@ wpa_sup() { wpa_passphrase $1 $2 | sudo wpa_supplicant -iwlan0 -d -c /dev/stdin 
     source $HOME/git/fdroidserver/completion/bash-completion
     complete -F _fdroid_build_project fbld
     complete -F _fdroid_checkupdates_project fcheckup
-    alias commitupdates="$HOME/git/fdroidserver/commitupdates"
+    export PATH="$PATH:$HOME/git/fdroidserver/tools"
 }
 chfdroid() { export HOME=/media/dan/fdroid zsh && cd }
 

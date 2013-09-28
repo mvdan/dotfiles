@@ -167,8 +167,12 @@ function (widget, args)
     return iocontent
 end,1)
 
+function wlan0_n()
+    local name = io.popen("wpa_cli status wlan0 | sed -n 's/^id_str=//p'"):read("*line")
+    if name ~= nil then return name else return "??" end
+end
+
 function wlan0_q()
-    local w_quality = "0"
     for line in io.lines("/proc/net/wireless") do
         if line:sub(2,6) == 'wlan0' then
             return string.match(line, "([%d]+)[.]")
@@ -184,7 +188,7 @@ function (widget, args)
     net_ifaces = { eth0 = false, wlan0 = false, usb0 = false}
     for dev,enabled in pairs(net_ifaces) do
         local rx = args['{'..dev..' rx_mb}']
-        if rx ~= '0.0' and rx ~= nil then
+        if dev == 'wlan0' or (rx ~= '0.0' and rx ~= nil) then
             net_ifaces[dev] = true
             local text = ''
             local rx = rx
@@ -192,7 +196,7 @@ function (widget, args)
             local tx = args['{'..dev..' tx_mb}']
             local dn = string.format("%-6s",args['{'..dev..' down_kb}'])
             if dev == 'wlan0' then
-                text = '<span foreground="'..p_yellow..'">'..up..'</span> '..tx..' <span color="'..p_blue..'">'..wlan0_q()..'</span> '..rx..' <span foreground="'..p_green..'">'..dn..'</span>'
+                text = '<span foreground="'..p_yellow..'">'..up..'</span> '..tx..' '..wlan0_n()..' '..wlan0_q()..' '..rx..' <span foreground="'..p_green..'">'..dn..'</span>'
             else
                 text = '<span foreground="'..p_yellow..'">'..up..'</span> '..tx..' '..rx..' <span foreground="'..p_green..'">'..dn..'</span>'
             end
@@ -389,7 +393,6 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, altkey}, "k", function () sexec(terminal .. " -name ranger -e ranger") end),
     awful.key({ modkey, altkey}, "m", function () sexec(terminal .. " -name rtorrent -e rtorrent") end),
     awful.key({ modkey, altkey}, "n", function () sexec(terminal .. " -name ncmpcpp -e ncmpcpp") end),
-    awful.key({ modkey, altkey}, "r", function () sexec("_JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel' ho1 -m 1024m") end),
 
     awful.key({ modkey, altkey}, "i", function () sexec("iceweasel") end),
     

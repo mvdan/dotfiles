@@ -9,7 +9,7 @@ set number ruler
 set wrap linebreak nolist
 set nobackup noswapfile nowb
 set history=2000
-set smartindent tabstop=4 shiftwidth=4 expandtab tw=78 fo-=t
+set smartindent tabstop=4 shiftwidth=4 tw=78 fo-=t
 set laststatus=2
 set showcmd
 set hidden autoread
@@ -112,20 +112,22 @@ inoremap <F10> 3<C-O><C-W>+
 inoremap <F11> 3<C-O><C-W>-
 inoremap <F12> 3<C-O><C-W>>
 
+au BufRead *.txt silent set fo+=t tw=80
 au BufRead mutt-* silent set fo+=t tw=72
 au BufRead mutt-* silent g/^> [> ]*-- *$/,?^-- $?-2d
-au BufRead mutt-* silent 0
+au BufRead mutt-* silent /^$
 au BufReadCmd *.odt,*.ott,*.ods,*.ots,*.odp,*.otp,*.odg,*.otg call zip#Browse(expand("<amatch>"))
 
 inoremap jj <esc>
 set backspace=eol,start,indent
 
 " Copy/pasting via xsel
-noremap <leader>y :silent :w !xsel -bi<cr>
-noremap <leader>Y :silent :w !xsel -pi<cr>
-noremap <leader>p o<esc>:set paste<cr>:.!xsel -bo<cr>:set nopaste<cr>
-noremap <leader>P o<esc>:set paste<cr>:.!xsel -po<cr>:set nopaste<cr>
+noremap <leader>y :silent w !xsel -bi<cr>
+noremap <leader>Y :silent w !xsel -pi<cr>
+noremap <leader>p o<esc>:set paste<cr>:.!xsel -bo<cr>:set nopaste<cr>:silent! %s/ / /g<cr>
+noremap <leader>P o<esc>:set paste<cr>:.!xsel -po<cr>:set nopaste<cr>:silent! %s/ / /g<cr>
 
+inoremap <F8> Daniel Martí <mvdan@mvdan.cc>
 ab dm Daniel Martí
 ab mv@ mvdan@mvdan.cc
 ab rg Regards

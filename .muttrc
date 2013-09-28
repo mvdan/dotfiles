@@ -22,6 +22,7 @@ set sendmail = '/usr/bin/msmtp'
 set use_envelope_from
 set date_format = "!%a, %b %d, %Y at %H:%M:%S %Z"
 
+set edit_headers
 set reverse_name
 set noreverse_realname
 set reverse_alias
