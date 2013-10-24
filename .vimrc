@@ -18,6 +18,7 @@ set mat=2
 set background=dark
 
 set wildignore=*.swp,*.bak,*.pyc
+au BufNewFile,BufRead *.md set filetype=markdown
 
 " Search stuff
 set incsearch ignorecase smartcase showmatch hlsearch
@@ -55,12 +56,13 @@ nnoremap <leader>s :sp
 
 nnoremap <leader>t :tabn<cr>
 nnoremap <leader>e :Errors<cr>
-nnoremap <leader>n :lnext<cr>
 
 nnoremap <leader>a :wa<cr>
 nnoremap <leader>w :w<cr>
 nnoremap <leader>q :wq<cr>
 nnoremap <leader>Q :qa!<cr>
+nnoremap <leader>d :bd<cr>
+nnoremap <leader>n :bn<cr>
 
 " ex command for toggling hex mode - define mapping if desired
 command -bar Hexmode call ToggleHex()
@@ -112,7 +114,6 @@ inoremap <F10> 3<C-O><C-W>+
 inoremap <F11> 3<C-O><C-W>-
 inoremap <F12> 3<C-O><C-W>>
 
-au BufRead *.txt silent set fo+=t tw=80
 au BufRead mutt-* silent set fo+=t tw=72
 au BufRead mutt-* silent g/^> [> ]*-- *$/,?^-- $?-2d
 au BufRead mutt-* silent /^$
