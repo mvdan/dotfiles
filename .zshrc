@@ -96,7 +96,7 @@ bindkey "^s" sudo-command-line
 
 jump_after_first_word() {
 	local words=(${(z)BUFFER})
-	if (( ${#words} <= 1 )) ; then
+	if (( ${#words} <= 1 )); then
 		CURSOR=${#BUFFER}
 	else
 		CURSOR=${#${words[1]}}
@@ -146,6 +146,7 @@ setopt hist_find_no_dups
 	alias less="vimpager"
 	alias zless="vimpager"
 } || export PAGER="less"
+[[ -n ${commands[vimdiff]} ]] && export DIFF_VIEWER=vimdiff
 [[ -n "$DISPLAY" ]] && export BROWSER=dwb
 [[ -n "$TMUX" ]] && export TERM=screen-256color
 
@@ -274,15 +275,14 @@ wpa_sup() { wpa_passphrase $1 $2 | sudo wpa_supplicant -iwlan0 -d -c /dev/stdin 
 
 
 [[ -x ~/git/fdroidserver/fdroid ]] && {
+	export PATH="$PATH:$HOME/git/fdroidserver"
 	autoload -U bashcompinit
 	bashcompinit
-	fdroid() { python2 $HOME/git/fdroidserver/fdroid "$@" }
 	fbld() { fdroid build -l -v -p "$@" }
 	fcheckup() { fdroid checkupdates -v -p "$@" }
 	source $HOME/git/fdroidserver/completion/bash-completion
 	complete -F _fdroid_build_project fbld
 	complete -F _fdroid_checkupdates_project fcheckup
-	export PATH="$PATH:$HOME/git/fdroidserver/tools"
 }
 
 alias mtp="sudo mtpfs -o allow_other /mnt"
@@ -317,7 +317,7 @@ alias devserv="ssh dev1 -t TERM=screen-256color LANG=en_US.UTF-8 tmux -u new"
 
 [[ -n ${commands[pacaur]} ]] && {
 	alias pca="pacaur"
-	alias ssk="pacaur -Ss"
+	alias ssk="pacaur -Ss --votes"
 	alias sik="pacaur -S"
 	alias syud="pacaur -Syu"
 }
@@ -331,8 +331,8 @@ alias devserv="ssh dev1 -t TERM=screen-256color LANG=en_US.UTF-8 tmux -u new"
 }
 
 [[ -n ${commands[netctl]} ]] && {
-	nc() { sudo NETCTL_DEBUG=yes netctl "$@" }
-	compdef _netctl nc
+	alias nc=netctl
+	alias nca=netctl-auto
 	alias wm="sudo wifi-menu"
 }
 

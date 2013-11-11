@@ -19,6 +19,7 @@ set background=dark
 
 set wildignore=*.swp,*.bak,*.pyc
 au BufNewFile,BufRead *.md set filetype=markdown
+set diffopt+=iwhite
 
 " Search stuff
 set incsearch ignorecase smartcase showmatch hlsearch

@@ -38,16 +38,21 @@ sexec = awful.util.spawn_with_shell
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
 local maildirs = {
-	dan = { "/home/mvdan/Mail/linode/Creu",
-	"/home/mvdan/Mail/linode/Fsfe",
-	"/home/mvdan/Mail/linode/INBOX",
-	"/home/mvdan/Mail/linode/Univ" },
-	mls = { "/home/mvdan/Mail/linode/Awesome",
-	"/home/mvdan/Mail/linode/Arch",
-	"/home/mvdan/Mail/linode/Openwrt",
-	"/home/mvdan/Mail/linode/GLcat",
-	"/home/mvdan/Mail/linode/Cau",
-	"/home/mvdan/Mail/linode/Debian" }
+	dan = {
+		"/home/mvdan/Mail/linode/INBOX",
+		"/home/mvdan/Mail/linode/Univ",
+		"/home/mvdan/Mail/linode/FDroid"
+	},
+	mls = {
+		"/home/mvdan/Mail/linode/Awesome",
+		"/home/mvdan/Mail/linode/Arch",
+		"/home/mvdan/Mail/linode/Creu",
+		"/home/mvdan/Mail/linode/Fsfe",
+		"/home/mvdan/Mail/linode/Openwrt",
+		"/home/mvdan/Mail/linode/GLcat",
+		"/home/mvdan/Mail/linode/Cau",
+		"/home/mvdan/Mail/linode/Debian"
+	}
 }
 
 modkey = "Mod4"
@@ -241,7 +246,7 @@ function offlineimap_run(force)
 	imap_running = true
 	local mdircontent = ""
 	for name,path in pairs(maildirs) do
-		mdircontent = mdircontent..name.."	"
+		mdircontent = mdircontent..name.."    "
 	end
 	mdirwidget:set_text(mdircontent)
 	sexec('offlineimap &>/dev/null; echo \\"mdirwidget_update()\\" | awesome-client')
@@ -268,11 +273,7 @@ mdirtimer:start()
 mdirwidget_update()
 
 mpdwidget = wibox.widget.textbox()
-vicious.register(mpdwidget, vicious.widgets.mpd,
-function (widget, args)
-	if args["{state}"] == "Stop" then return '  - MPD -  '
-	else return args["{Title}"]..' - '..args['{Album}'] end
-end,2)
+mpdwidget:set_text("- MPD -")
 
 for s = 1, screen.count() do
 	promptbox[s] = awful.widget.prompt()

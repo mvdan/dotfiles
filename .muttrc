@@ -92,7 +92,7 @@ bind index,pager K sidebar-prev
 bind index,pager J sidebar-next
 color sidebar_new yellow default
 
-mailboxes "=INBOX" "=Univ" "=Fsfe" "=Cau" "=GLcat" "=Debian" "=Arch" "=Creu" "=Openwrt" "=Awesome" "=Other" "=Sent" "=Drafts" "=Trash" "=../ac/INBOX" "=../gmx/INBOX"
+mailboxes "=INBOX" "=Univ" "=FDroid" "=Fsfe" "=Cau" "=GLcat" "=Debian" "=Arch" "=Creu" "=Openwrt" "=Awesome" "=Other" "=Sent" "=Drafts" "=Trash" "=../ac/INBOX" "=../gmx/INBOX"
 macro index,pager A <change-folder>=Spam<enter>
 macro index,pager S <change-folder>=Sent<enter>
 
