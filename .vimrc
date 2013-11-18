@@ -9,28 +9,24 @@ set number ruler
 set wrap linebreak nolist
 set nobackup noswapfile nowb
 set history=2000
-set smartindent tabstop=4 shiftwidth=4 tw=78 fo-=t
+set smartindent
+set tabstop=4 shiftwidth=4
+set tw=78 fo-=t
 set laststatus=2
-set showcmd
-set hidden autoread
-set magic
-set mat=2
+set showcmd hidden autoread magic mat=2
 set background=dark
 
 set wildignore=*.swp,*.bak,*.pyc
 au BufNewFile,BufRead *.md set filetype=markdown
 set diffopt+=iwhite
 
-" Search stuff
 set incsearch ignorecase smartcase showmatch hlsearch
 
 " Remove all highlighting
 nnoremap <space> :noh<cr>:echo<cr><esc>
 
 " No sound on errors
-set noerrorbells
-set novisualbell
-set t_vb=
+set noerrorbells novisualbell t_vb=
 set tm=500
 
 " Save with sudo
