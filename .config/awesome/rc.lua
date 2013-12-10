@@ -395,7 +395,7 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey, altkey}, "m", function () sexec(terminal .. " -name rtorrent -e rtorrent") end),
 	awful.key({ modkey, altkey}, "n", function () sexec(terminal .. " -name ncmpcpp -e ncmpcpp") end),
 
-	awful.key({ modkey, altkey}, "i", function () sexec("iceweasel") end),
+	awful.key({ modkey, altkey}, "i", function () sexec("chromium") end),
 
 	awful.key({ }, "#171", function () sexec("ncmpcpp next; echo \'vicious.force({mpdwidget})\' | awesome-client") end),
 	awful.key({ }, "#172", function () sexec("ncmpcpp toggle; echo \'vicious.force({mpdwidget})\' | awesome-client") end),
@@ -544,7 +544,7 @@ awful.rules.rules = {
 	  properties = { tag = tags[1][5] } },
 	{ rule = { class = "Dwb" },
 	  properties = { tag = tags[1][7] } },
-	{ rule = { class = "Iceweasel" },
+	{ rule = { class = "Chromium" },
 	  properties = { tag = tags[1][8] } },
 	{ rule = { instance = "ranger" },
 	  properties = { tag = tags[1][9] } },

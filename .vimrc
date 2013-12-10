@@ -1,22 +1,21 @@
 call pathogen#infect()
+Helptags
+
 syntax on
 filetype plugin indent on
-Helptags
 
 " Various settings
 set nocompatible
-set number ruler
+set number ruler smartindent
 set wrap linebreak nolist
 set nobackup noswapfile nowb
 set history=2000
-set smartindent
 set tabstop=4 shiftwidth=4
 set tw=78 fo-=t
-set laststatus=2
-set showcmd hidden autoread magic mat=2
+set laststatus=2 showcmd hidden autoread magic mat=2
 set background=dark
 
-set wildignore=*.swp,*.bak,*.pyc
+set wildignore=*.swp,*.bak,*.pyc,*.o,*.so
 au BufNewFile,BufRead *.md set filetype=markdown
 set diffopt+=iwhite
 
@@ -115,6 +114,7 @@ au BufRead mutt-* silent set fo+=t tw=72
 au BufRead mutt-* silent g/^> [> ]*-- *$/,?^-- $?-2d
 au BufRead mutt-* silent /^$
 au BufReadCmd *.odt,*.ott,*.ods,*.ots,*.odp,*.otp,*.odg,*.otg call zip#Browse(expand("<amatch>"))
+au BufRead *.txt silent set expandtab
 
 inoremap jj <esc>
 set backspace=eol,start,indent

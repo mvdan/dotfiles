@@ -147,8 +147,8 @@ setopt hist_find_no_dups
 	alias zless="vimpager"
 } || export PAGER="less"
 [[ -n ${commands[vimdiff]} ]] && export DIFF_VIEWER=vimdiff
-[[ -n "$DISPLAY" ]] && export BROWSER=dwb
-[[ -n "$TMUX" ]] && export TERM=screen-256color
+[[ -n $DISPLAY ]] && export BROWSER=dwb
+[[ -n $TMUX ]] && export TERM=screen-256color
 
 alias -s log="$PAGER"
 alias -s pdf="zathura"
@@ -269,24 +269,25 @@ alias gsm="git submodule"
 alias gst="git stash"
 
 alias gsvn="git svn"
+gplm() { git pull origin merge-requests/$1 }
 
 alias dwbr="ip r | sed 's/default via \([^ ]*\).*/\1/' | xargs dwb &"
 wpa_sup() { wpa_passphrase $1 $2 | sudo wpa_supplicant -iwlan0 -d -c /dev/stdin }
 
+alias cppc="cppcheck --enable=all --inconclusive --std=posix"
+alias valg="valgrind --leak-check=yes --show-reachable=yes --num-callers=20"
 
 [[ -x ~/git/fdroidserver/fdroid ]] && {
 	export PATH="$PATH:$HOME/git/fdroidserver"
 	autoload -U bashcompinit
 	bashcompinit
-	fbld() { fdroid build -l -v -p "$@" }
+	alias fbld="fdroid build -l -v"
 	fcheckup() { fdroid checkupdates -v -p "$@" }
 	source $HOME/git/fdroidserver/completion/bash-completion
-	complete -F _fdroid_build_project fbld
+	complete -F _fdroid_build fbld
 	complete -F _fdroid_checkupdates_project fcheckup
 }
 
-alias mtp="sudo mtpfs -o allow_other /mnt"
-alias umtp="fusermount -u /mnt"
 alias mss="sshfs -C -o follow_symlinks"
 alias mserv="sshfs mvdan@mvdan.cc:/home/mvdan/ ~/srv -C -o follow_symlinks"
 alias umserv="fusermount -u ~/srv"
@@ -303,14 +304,15 @@ alias devserv="ssh dev1 -t TERM=screen-256color LANG=en_US.UTF-8 tmux -u new"
 
 [[ -n ${commands[pacman]} ]] && {
 	alias pc="pacman"
-	alias spc="sudo -E pacman"
+	alias spc="sudo pacman"
 	alias ssm="pacman -Ss"
+	alias ssi="pacman -Sii"
 	ssq() { pacman -Qs "$@" | sed -n 's_local/__p' }
 	ssw() { pacman -Qo $(which $1) }
-	alias srm="sudo -E pacman -Rns"
-	alias sim="sudo -E pacman -S --needed"
-	alias syu="sudo -E pacman -Syu"
-	alias syyu="sudo -E pacman -Syyu"
+	alias srm="sudo pacman -Rns"
+	alias sim="sudo pacman -S --needed"
+	alias syu="sudo pacman -Syu"
+	alias syyu="sudo pacman -Syyu"
 	alias p_size="pacman -Qi | sed -n 's/^\(Name\|Installed\).*\:[ ]*\(.*\)/\2/p'\
  | sed '/^[^ ]*$/N;s/\(.*\)\n\(.*\)/\2 \1/' | sort -h | column -t"
 }
@@ -333,6 +335,7 @@ alias devserv="ssh dev1 -t TERM=screen-256color LANG=en_US.UTF-8 tmux -u new"
 [[ -n ${commands[netctl]} ]] && {
 	alias nc=netctl
 	alias nca=netctl-auto
+	alias ncr="sudo systemctl restart netctl-auto@wlan0"
 	alias wm="sudo wifi-menu"
 }
 
@@ -405,17 +408,19 @@ zstyle ':vcs_info:git*' formats "%R\0%S\0%b %m %a"
 
 precmd() {
 	vcs_info
-	[[ -n ${vcs_info_msg_0_} ]]\
-		&& {
-			git_loc=${vcs_info_msg_0_#*\\0}
-			git_extra_info=${git_loc#*\\0}
-			git_loc=${git_loc%%\\0*}
-			PR_PWD="${PR_BLUE}${vcs_info_msg_0_%%\\0*}${PR_RED}/$git_loc" }\
-		|| PR_PWD="${PR_BLUE}%d"
+	if [[ -n ${vcs_info_msg_0_} ]]; then
+		git_loc=${vcs_info_msg_0_#*\\0}
+		git_extra_info=${git_loc#*\\0}
+		git_loc=${git_loc%%\\0*}
+		PR_PWD="${PR_BLUE}${vcs_info_msg_0_%%\\0*}${PR_RED}/$git_loc"
+	else
+		PR_PWD="${PR_BLUE}%d"
+		git_extra_info=
+	fi
 	[[ $UID -ge 1000 ]]\
 		&& { PR_USER="${PR_GREEN}%n"; PR_USER_OP="${PR_GREEN}%#"; }\
 		|| { PR_USER="${PR_RED}%n"; PR_USER_OP="${PR_RED}%#"; }
-	[[ -n "$SSH_CLIENT" || -n "$SSH2_CLIENT" ]]\
+	[[ -n $SSH_CLIENT || -n $SSH2_CLIENT ]]\
 		&& PR_HOST="${PR_YELLOW}%m${PR_CYAN}:${PR_YELLOW}%l"\
 		|| PR_HOST="${PR_GREEN}%m${PR_CYAN}:${PR_GREEN}%l"
 	case $TERM in
