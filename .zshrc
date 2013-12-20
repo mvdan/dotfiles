@@ -212,6 +212,7 @@ alias p="print -l"
 alias l="${PAGER}"
 alias c="cat"
 alias v="vim"
+alias vdif="vimdiff"
 alias s="sudo "
 alias se="sudo -E "
 alias ng="noglob"
@@ -219,6 +220,7 @@ alias lm="mount | sed 's/ \(on\|type\) /;;/g' | column -t -s ';;'"
 alias m="mount"
 alias um="umount"
 alias umo="umount /media/"
+ddd() { dd if="$1" of="$2" bs=64K }
 
 alias pk="pkill -SIGKILL"
 pgr () { ps aux | grep -v grep | grep "$@" -i --color=auto; }
@@ -278,14 +280,15 @@ alias cppc="cppcheck --enable=all --inconclusive --std=posix"
 alias valg="valgrind --leak-check=yes --show-reachable=yes --num-callers=20"
 
 [[ -x ~/git/fdroidserver/fdroid ]] && {
-	export PATH="$PATH:$HOME/git/fdroidserver"
+	alias -g fdroid=~/git/fdroidserver/fdroid
+	alias fd-commit=~/git/fdroidserver/fd-commit
 	autoload -U bashcompinit
 	bashcompinit
 	alias fbld="fdroid build -l -v"
-	fcheckup() { fdroid checkupdates -v -p "$@" }
+	alias fchk="fdroid checkupdates -v"
 	source $HOME/git/fdroidserver/completion/bash-completion
 	complete -F _fdroid_build fbld
-	complete -F _fdroid_checkupdates_project fcheckup
+	complete -F _fdroid_checkupdates fchk
 }
 
 alias mss="sshfs -C -o follow_symlinks"
