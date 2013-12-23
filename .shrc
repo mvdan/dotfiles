@@ -1,0 +1,276 @@
+#!/bin/bash
+
+command_test vim && export EDITOR=vim || export EDITOR=vi
+command_test vimpager && {
+	export PAGER="vimpager"
+	alias less="vimpager"
+	alias zless="vimpager"
+} || export PAGER="less"
+command_test vimdiff && export DIFF_VIEWER=vimdiff
+[[ -n $DISPLAY ]] && export BROWSER=dwb
+[[ -n $TMUX ]] && export TERM=screen-256color
+
+alias ls="ls --color=auto"
+alias grep="grep --color=auto"
+alias ll="ls --color=auto -lh"
+alias la="ls --color=auto -alh"
+lt () {
+	[[ $# > 0 ]] && ls --color=always -Alhrt "$1" | tail -n 25 ||\
+		ls --color=always -Alhrt | tail -n 25
+}
+-lt () {
+	[[ $# > 0 ]] && ls --color=always -Alhrt "$1" | head -n 25 ||\
+		ls --color=always -Alhrt | head -n 25
+}
+da() {
+	[[ $# > 0 ]]\
+	   	&& du -hs --apparent-size "${1%/}/"*(DN) 2>/dev/null | sort -h \
+		|| du -hs --apparent-size ./*(DN) 2>/dev/null | sort -h
+}
+
+alias mkd="mkdir -p"
+mkcd() {
+	mkdir -p $1 && cd $1
+}
+alias cd..="cd .."
+alias cd...="cd ../.."
+alias cd....="cd ../../.."
+alias cd.....="cd ../../../.."
+alias 1="cd -"
+alias 2="cd +2"
+alias 3="cd +3"
+alias 4="cd +4"
+alias 5="cd +5"
+alias 6="cd +6"
+alias 7="cd +7"
+alias 8="cd +8"
+alias 9="cd +9"
+
+alias md="mkdir -p"
+alias rd="rmdir"
+alias rr="rm -rf"
+alias d="dirs -v"
+
+alias p="print -l"
+alias l="${PAGER}"
+alias c="cat"
+alias v="vim"
+alias vdif="vimdiff"
+alias s="sudo "
+alias se="sudo -E "
+alias ng="noglob"
+alias lm="mount | sed 's/ \(on\|type\) /;;/g' | column -t -s ';;'"
+alias m="mount"
+alias um="umount"
+alias umo="umount /media/"
+ddd() {
+	dd if="$1" of="$2" bs=32K
+}
+
+alias pk="pkill -SIGKILL"
+pgr () {
+	ps aux | grep -v grep | grep "$@" -i --color=auto
+}
+fni () {
+	[[ $# > 1 ]] && find $1 "*$2*" || find . "*$1*"
+}
+fni () {
+	[[ $# > 1 ]] && find $1 -iname "*$2*" || find . -iname "*$1*"
+}
+alias udb="sudo updatedb"
+lc () {
+	[[ $# > 1 ]] && locate "$(readlink -f $1)/*$2*" ||\
+	   	locate "$(readlink -f .)/*$1*"
+}
+lci () {
+	[[ $# > 1 ]] && locate -i "$(readlink -f $1)/*$2*" ||\
+	   	locate -i "$(readlink -f .)/*$1*"
+}
+bhelp () {
+	bash -c "help $@"
+}
+
+alias g="git"
+alias gad="git add"
+alias gadp="git add -p"
+alias gap="git apply"
+alias gbs="git bisect"
+alias gba="git branch -a"
+alias gbr="git branch"
+alias gca="git commit -a -v"
+alias gcl="git clone"
+alias gcm="git commit -v"
+alias gco="git checkout"
+alias gdf="git diff"
+alias gdfc="git diff --cached"
+alias gdfo="git diff ORIG_HEAD.."
+alias gdfs="git diff --submodule"
+alias gdfu="git diff @{u}.."
+alias gfe="git fetch"
+alias ggr="git grep"
+alias glo="git log"
+alias glop="git log -p"
+alias glou="git log @{u}.."
+alias gls="git ls-files"
+alias gmr="git merge"
+alias gpl="git pull"
+alias gpla="git pull --all"
+alias gplr="git pull -r"
+alias gps="git push"
+alias grb="git rebase"
+alias grbi="git rebase -i"
+alias grm="git rm"
+alias grmc="git rm --cached"
+alias grs="git reset"
+alias grsp="git reset -p"
+alias grt="git remote"
+alias grv="git revert"
+alias gs="git status -sb -uno"
+alias gss="git status -sb"
+alias gsh="git show"
+alias gsm="git submodule"
+alias gst="git stash"
+
+alias gsvn="git svn"
+gplm() {
+	git pull origin merge-requests/$1
+}
+
+alias dwbr="ip r | sed 's/default via \([^ ]*\).*/\1/' | xargs dwb &"
+wpa_sup() {
+	wpa_passphrase $1 $2 | sudo wpa_supplicant -iwlan0 -d -c /dev/stdin
+}
+
+alias cppc="cppcheck --enable=all --inconclusive --std=posix"
+alias valg="valgrind --leak-check=yes --show-reachable=yes --num-callers=20"
+
+[[ -x ~/git/fdroidserver/fdroid ]] && {
+	alias fdroid=~/git/fdroidserver/fdroid
+	alias fd-commit=~/git/fdroidserver/fd-commit
+	alias fbld="fdroid build -l -v"
+	alias fchk="fdroid checkupdates -v"
+	setup_bashcomp
+	source $HOME/git/fdroidserver/completion/bash-completion
+	complete -F _fdroid_build fbld
+	complete -F _fdroid_checkupdates fchk
+}
+
+alias mss="sshfs -C -o follow_symlinks"
+alias mserv="sshfs mvdan@mvdan.cc:/home/mvdan/ ~/srv -C -o follow_symlinks"
+alias umserv="fusermount -u ~/srv"
+alias weeserv="ssh mvdan.cc -t TERM=screen-256color LANG=en_US.UTF-8 tmux -u new weechat"
+alias devserv="ssh dev1 -t TERM=screen-256color LANG=en_US.UTF-8 tmux -u new"
+
+command_test aptitude && {
+	alias ap="aptitude"
+	alias ag="apt-get"
+	alias syu="sudo aptitude update && sudo aptitude dist-upgrade"
+	alias ssm="aptitude search"
+	alias sim="sudo aptitude install"
+}
+
+command_test pacman && {
+	alias pc="pacman"
+	alias spc="sudo pacman"
+	alias ssm="pacman -Ss"
+	alias ssi="pacman -Sii"
+	ssq() {
+		pacman -Qs "$@" | sed -n 's_local/__p'
+	}
+	ssw() {
+		pacman -Qo $(which $1)
+	}
+	alias srm="sudo pacman -Rns"
+	alias sim="sudo pacman -S --needed"
+	alias syu="sudo pacman -Syu"
+	alias syyu="sudo pacman -Syyu"
+	alias p_size="pacman -Qi | sed -n 's/^\(Name\|Installed\).*\:[ ]*\(.*\)/\2/p'\
+ | sed '/^[^ ]*$/N;s/\(.*\)\n\(.*\)/\2 \1/' | sort -h | column -t"
+}
+
+command_test pacaur && {
+	alias pca="pacaur"
+	alias ssk="pacaur -Ss --votes"
+	alias sik="pacaur -S"
+	alias syud="pacaur -Syu"
+}
+
+command_test systemctl && {
+	alias sc="sudo systemctl"
+	alias scr="sudo systemctl reload-or-restart"
+	alias scu="systemctl --user"
+	alias scs="sudo systemctl --system"
+	alias jc="sudo journalctl --full"
+}
+
+command_test netctl && {
+	alias nc=netctl
+	alias nca=netctl-auto
+	alias ncr="sudo systemctl restart netctl-auto@wlan0"
+	alias wm="sudo wifi-menu"
+}
+
+alias tlf="sudo tailf"
+alias zs="sudo -E zsh"
+alias vis="sudo -E vim"
+alias vdifs="sudo -E vimdiff"
+
+alias zcp="zmv -C"
+alias zln="zmv -L"
+alias cr="rsync -ahvP --"
+alias xp="xsel -p"
+alias xb="xsel -b"
+
+spr() {
+	if [ -t 0 ]; then
+		[ "$*" ] || return 1
+		if [ -f "$*" ]; then
+			echo "Uploading the file "$*"..." >&2
+			cat "$*"
+		else
+			echo "Uploading the string \""$*"\"..." >&2
+			echo "$*"
+		fi | curl -F 'sprunge=<-' http://sprunge.us
+	else
+		echo "Uploading from stdin..." >&2
+		curl -F 'sprunge=<-' http://sprunge.us
+	fi
+}
+
+read_dom () {
+	local IFS=\>
+	read -d \< ENTITY CONTENT
+}
+
+[[ -d ~/.misc ]] && {
+	alias chsid="sudo -E $HOME/.misc/debian-chroot.sh /home/debian"
+	alias setup_enc="$HOME/.misc/setup-conceptronic.sh"
+	alias enc="$HOME/.misc/encode-conceptronic.sh"
+	alias p_independent="$HOME/.misc/pacman-independent.sh"
+	alias p_disowned="$HOME/.misc/pacman-disowned.sh"
+	alias flacc="$HOME/.misc/flac2.sh"
+}
+
+command_test dpkg && {
+	alias dcl="rm -fR */(N) *.{deb,changes,dsc,upload}(N)"
+	dpr() {
+		[[ ! -d *(/) ]] &&\
+			tar -xf *orig* && tar -xf *debian* &&\
+		   	mv debian/ ^debian/ && cd ^debian/
+	}
+	dpk() {
+		[[ -f debian/changelog ]] && {
+			NAME=`head -n 1 debian/changelog |\
+			   	sed -ne 's/\(.*\) (\(.*\)).*/\1_\2/p'`;
+			tar -cf ../$NAME.debian.tar.gz debian/
+		}
+	}
+	alias dbl="dpkg-buildpackage -sa && cd .."
+	alias dln="lintian -Ii --pedantic *.changes(N)"
+	alias ql="quilt"
+}
+
+export FULLNAME="Daniel Martí"
+export EMAIL="mvdan@mvdan.cc"
+export DEBFULLNAME="Daniel Martí"
+export DEBEMAIL="mvdan@mvdan.cc"
