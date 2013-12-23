@@ -88,7 +88,9 @@ alias gsm="git submodule"
 alias gst="git stash"
 
 alias gsvn="git svn"
-gplm() { git pull origin merge-requests/$1 }
+gplm() {
+	git pull origin merge-requests/$1
+}
 
 alias tlf="sudo tailf"
 alias vis="sudo -E vim"
