@@ -273,7 +273,11 @@ mdirtimer:start()
 mdirwidget_update()
 
 mpdwidget = wibox.widget.textbox()
-mpdwidget:set_text("- MPD -")
+vicious.register(mpdwidget, vicious.widgets.mpd,
+function (widget, args)
+   if args["{state}"] == "Stop" then return '  - MPD -  '
+   else return args["{Title}"]..' - '..args['{Album}'] end
+end,2)
 
 for s = 1, screen.count() do
 	promptbox[s] = awful.widget.prompt()

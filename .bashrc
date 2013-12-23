@@ -23,6 +23,20 @@ alias rd="rmdir"
 alias rr="rm -rf"
 alias d="dirs -v"
 
+commands() {
+	command -v $1 >/dev/null 2>&1
+}
+
+commands vim && export EDITOR=vim || export EDITOR=vi
+commands vimpager && {
+	export PAGER="vimpager"
+	alias less="vimpager"
+	alias zless="vimpager"
+} || export PAGER="less"
+commands vimdiff && export DIFF_VIEWER=vimdiff
+[[ -n $DISPLAY ]] && export BROWSER=dwb
+[[ -n $TMUX ]] && export TERM=screen-256color
+
 alias p="print -l"
 alias l="${PAGER}"
 alias c=cat

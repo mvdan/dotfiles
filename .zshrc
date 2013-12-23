@@ -294,7 +294,7 @@ alias valg="valgrind --leak-check=yes --show-reachable=yes --num-callers=20"
 alias mss="sshfs -C -o follow_symlinks"
 alias mserv="sshfs mvdan@mvdan.cc:/home/mvdan/ ~/srv -C -o follow_symlinks"
 alias umserv="fusermount -u ~/srv"
-alias weeserv="ssh mvdan.cc -t TERM=screen-256color LANG=en_US.UTF-8 tmux -u new weechat-curses"
+alias weeserv="ssh mvdan.cc -t TERM=screen-256color LANG=en_US.UTF-8 tmux -u new weechat"
 alias devserv="ssh dev1 -t TERM=screen-256color LANG=en_US.UTF-8 tmux -u new"
 
 [[ -n ${commands[aptitude]} ]] && {
