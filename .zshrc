@@ -152,6 +152,10 @@ setup_bashcomp() {
 }
 source ~/.shrc
 
+bhelp () {
+	bash -c "help $@"
+}
+
 alias -s log="$PAGER"
 alias -s pdf="zathura"
 alias -s mp4="mpv"
@@ -195,12 +199,21 @@ precmd() {
 		PR_PWD="${PR_BLUE}%d"
 		git_extra_info=
 	fi
-	[[ $UID -ge 1000 ]]\
-		&& { PR_USER="${PR_GREEN}%n"; PR_USER_OP="${PR_GREEN}%#"; }\
-		|| { PR_USER="${PR_RED}%n"; PR_USER_OP="${PR_RED}%#"; }
-	[[ -n $SSH_CLIENT || -n $SSH2_CLIENT ]]\
-		&& PR_HOST="${PR_YELLOW}%m${PR_CYAN}:${PR_YELLOW}%l"\
-		|| PR_HOST="${PR_GREEN}%m${PR_CYAN}:${PR_GREEN}%l"
+
+	if [[ $UID -ge 1000 ]]; then
+		PR_USER="${PR_GREEN}%n"
+		PR_USER_OP="${PR_GREEN}%#"
+	else
+		PR_USER="${PR_RED}%n"
+		PR_USER_OP="${PR_RED}%#"
+	fi
+
+	if [[ -n $SSH_CLIENT || -n $SSH2_CLIENT ]]; then
+		PR_HOST="${PR_YELLOW}%m${PR_CYAN}:${PR_YELLOW}%l"
+	else
+		PR_HOST="${PR_GREEN}%m${PR_CYAN}:${PR_GREEN}%l"
+	fi
+
 	case $TERM in
 		linux*|cons*)
 			PR_TITLEBAR="";;

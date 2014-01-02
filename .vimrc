@@ -17,6 +17,7 @@ set background=dark
 
 set wildignore=*.swp,*.bak,*.pyc,*.o,*.so
 au BufNewFile,BufRead *.md set filetype=markdown
+au BufNewFile,BufRead ~/sites/* set filetype=nginx
 set diffopt+=iwhite
 
 set incsearch ignorecase smartcase showmatch hlsearch

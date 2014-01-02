@@ -12,16 +12,19 @@ command_test vimdiff && export DIFF_VIEWER=vimdiff
 
 alias ls="ls --color=auto"
 alias grep="grep --color=auto"
-alias ll="ls --color=auto -lh"
-alias la="ls --color=auto -alh"
+alias ll="ls --color=auto -lhi"
+alias la="ls --color=auto -alhi"
+
 lt () {
 	[[ $# > 0 ]] && ls --color=always -Alhrt "$1" | tail -n 25 ||\
 		ls --color=always -Alhrt | tail -n 25
 }
--lt () {
+
+lt- () {
 	[[ $# > 0 ]] && ls --color=always -Alhrt "$1" | head -n 25 ||\
 		ls --color=always -Alhrt | head -n 25
 }
+
 da() {
 	[[ $# > 0 ]]\
 	   	&& du -hs --apparent-size "${1%/}/"*(DN) 2>/dev/null | sort -h \
@@ -71,23 +74,24 @@ alias pk="pkill -SIGKILL"
 pgr () {
 	ps aux | grep -v grep | grep "$@" -i --color=auto
 }
+
 fni () {
 	[[ $# > 1 ]] && find $1 "*$2*" || find . "*$1*"
 }
+
 fni () {
 	[[ $# > 1 ]] && find $1 -iname "*$2*" || find . -iname "*$1*"
 }
+
 alias udb="sudo updatedb"
 lc () {
 	[[ $# > 1 ]] && locate "$(readlink -f $1)/*$2*" ||\
 	   	locate "$(readlink -f .)/*$1*"
 }
+
 lci () {
 	[[ $# > 1 ]] && locate -i "$(readlink -f $1)/*$2*" ||\
 	   	locate -i "$(readlink -f .)/*$1*"
-}
-bhelp () {
-	bash -c "help $@"
 }
 
 alias g="git"
@@ -136,7 +140,6 @@ gplm() {
 	git pull origin merge-requests/$1
 }
 
-alias dwbr="ip r | sed 's/default via \([^ ]*\).*/\1/' | xargs dwb &"
 wpa_sup() {
 	wpa_passphrase $1 $2 | sudo wpa_supplicant -iwlan0 -d -c /dev/stdin
 }
@@ -153,6 +156,7 @@ alias valg="valgrind --leak-check=yes --show-reachable=yes --num-callers=20"
 	source $HOME/git/fdroidserver/completion/bash-completion
 	complete -F _fdroid_build fbld
 	complete -F _fdroid_checkupdates fchk
+	export VAGRANT_HOME=/mnt/dan/fdroid/vagrant
 }
 
 alias mss="sshfs -C -o follow_symlinks"
@@ -272,5 +276,5 @@ command_test dpkg && {
 
 export FULLNAME="Daniel Martí"
 export EMAIL="mvdan@mvdan.cc"
-export DEBFULLNAME="Daniel Martí"
-export DEBEMAIL="mvdan@mvdan.cc"
+export DEBFULLNAME=$FULLNAME
+export DEBEMAIL=$EMAIL
