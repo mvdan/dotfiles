@@ -143,17 +143,24 @@ setopt hist_find_no_dups
 command_test() {
 	test -n ${commands[$1]}
 }
+
 bashcomp_done=false
-setup_bashcomp() {
+bashcomp() {
+
 	$bashcomp_done && return
 	autoload -U bashcompinit
 	bashcompinit
 	bashcomp_done=true
+
+	for f in "$@"; do
+		source "$f"
+	done
 }
+
 source ~/.shrc
 
 bhelp () {
-	bash -c "help $@"
+	bash -c "help \"$@\""
 }
 
 alias -s log="$PAGER"
