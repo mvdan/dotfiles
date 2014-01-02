@@ -37,10 +37,10 @@ else
 	PR_HOST="${PR_GREEN}\h${PR_CYAN}:${PR_GREEN}pts/\l"
 fi
 
-PR_PWD="${PR_BLUE}${PWD}"
+PR_PWD="${PR_BLUE}\${PWD}"
 
 PS1="${PR_CYAN}[${PR_USER}${PR_CYAN}@${PR_HOST}${PR_CYAN}] \
-[${PR_YELLOW}\A${PR_CYAN}] [${PR_PWD}${PR_CYAN}] [${PR_YELLOW}${?}${PR_CYAN}]
+[${PR_YELLOW}\A${PR_CYAN}] [${PR_PWD}${PR_CYAN}] [${PR_YELLOW}\${?}${PR_CYAN}]
  ${PR_USER_OP}${PR_NONE} "
 PS2='> '
 PS3='> '
