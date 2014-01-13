@@ -152,9 +152,11 @@ alias valg="valgrind --leak-check=yes --show-reachable=yes --num-callers=20"
 	alias fd-commit=~/git/fdroidserver/fd-commit
 	alias fbld="fdroid build -l -v"
 	alias fchk="fdroid checkupdates -v"
+	alias flnt="fdroid lint -v"
 	bashcomp $HOME/git/fdroidserver/completion/bash-completion
 	complete -F _fdroid_build fbld
 	complete -F _fdroid_checkupdates fchk
+	complete -F _fdroid_lint flnt
 	export VAGRANT_HOME=/mnt/dan/fdroid/vagrant
 }
 
@@ -277,3 +279,5 @@ export FULLNAME="Daniel Martí"
 export EMAIL="mvdan@mvdan.cc"
 export DEBFULLNAME=$FULLNAME
 export DEBEMAIL=$EMAIL
+
+export PATH="$PATH:/opt/gradle/bin"

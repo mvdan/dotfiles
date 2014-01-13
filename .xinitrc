@@ -1,6 +1,7 @@
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
-amixer set Master 60% unmute -q
+amixer -M set Master 50% unmute -q
 init --user &
+xbacklight -set 50%
 redshift -l 41:2 &
 syndaemon -t -k -i 1 -d &
 eval $(gpg-agent --daemon) &

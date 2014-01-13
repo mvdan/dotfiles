@@ -382,9 +382,9 @@ globalkeys = awful.util.table.join(
 
 	awful.key({ modkey, "Control" }, "n", awful.client.restore),
 
-	awful.key({ }, "#121", function () sexec("amixer -q set Master toggle -q; echo \'vicious.force({volwidget})\' | awesome-client") end),
-	awful.key({ }, "#122", function () sexec("amixer -q set Master 4dB- -q; echo \'vicious.force({volwidget})\' | awesome-client") end),
-	awful.key({ }, "#123", function () sexec("amixer -q set Master 4dB+ -q; echo \'vicious.force({volwidget})\' | awesome-client") end),
+	awful.key({ }, "#121", function () sexec("amixer -q set Master toggle ; echo \'vicious.force({volwidget})\' | awesome-client") end),
+	awful.key({ }, "#122", function () sexec("amixer -M -q set Master 5%- ; echo \'vicious.force({volwidget})\' | awesome-client") end),
+	awful.key({ }, "#123", function () sexec("amixer -M -q set Master 5%+ ; echo \'vicious.force({volwidget})\' | awesome-client") end),
 	awful.key({ }, "#150", function () sexec("xset dpms force off") end),
 
 	awful.key({ modkey, altkey}, "t", function () sexec("~/.misc/xrandr-iter") end),

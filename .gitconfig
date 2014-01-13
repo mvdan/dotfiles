@@ -2,7 +2,7 @@
     name = Daniel Martí
     email = mvdan@mvdan.cc
     editor = vim
-    signingkey = 58BF72C3
+    signingkey = 4348041C
 [color]
     ui = true
 [push]
