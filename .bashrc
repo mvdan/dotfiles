@@ -14,6 +14,15 @@ bhelp () {
 	help "$@"
 }
 
+da() {
+	if [[ $# > 0 ]]; then
+	   	du -hs --apparent-size "$1"/{.[!.]*,*} 2>/dev/null | sort -h
+
+	else
+		du -hs --apparent-size ./{.[!.]*,*} 2>/dev/null | sort -h
+	fi
+}
+
 set -o vi
 
 PR_RED="\e[31m"

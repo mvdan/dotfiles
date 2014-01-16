@@ -44,11 +44,8 @@ local maildirs = {
 		"/home/mvdan/Mail/linode/FDroid"
 	},
 	mls = {
-		"/home/mvdan/Mail/linode/Awesome",
-		"/home/mvdan/Mail/linode/Arch",
 		"/home/mvdan/Mail/linode/Creu",
 		"/home/mvdan/Mail/linode/Fsfe",
-		"/home/mvdan/Mail/linode/Openwrt",
 		"/home/mvdan/Mail/linode/GLcat",
 		"/home/mvdan/Mail/linode/Cau",
 		"/home/mvdan/Mail/linode/Debian"
@@ -173,7 +170,7 @@ function (widget, args)
 end,1)
 
 function wlan0_n()
-	local name = io.popen("wpa_cli status wlan0 | sed -n 's/^id_str=//p'"):read("*line")
+	local name = io.popen("wpa_cli status wlan0 | sed -n 's/^id_str=//p'"):read("*l")
 	if name ~= nil then return name else return "??" end
 end
 
@@ -219,9 +216,7 @@ function mdirwidget_update()
 	for name,paths in pairs(maildirs) do
 		local count = 0
 		for n,path in ipairs(paths) do
-			local f = io.popen("find '"..path.."' -type f -wholename '*/new/*'")
-			for line in f:lines() do count = count + 1 end
-			f:close()
+			count = count + io.popen("find '"..path.."/new' -type f | wc -l"):read("*n")
 		end
 		if not imap_enabled then name = "<span foreground='"..p_grey.."'>"..name.."</span>" end
 		if count > 0 then
@@ -236,31 +231,27 @@ end
 local imap_running = false
 
 function offlineimap_run(force)
+	if not imap_enabled then
+		return 0
+	end
 	if not force and (net_ifaces["wlan0"] == false and net_ifaces["eth0"] == false) then
 		imap_enabled = false
 		return -1
 	end
-	if not imap_enabled then
-		return 0
-	end
 	imap_running = true
-	local mdircontent = ""
-	for name,path in pairs(maildirs) do
-		mdircontent = mdircontent..name.."    "
-	end
-	mdirwidget:set_text(mdircontent)
-	sexec('offlineimap &>/dev/null; echo \\"mdirwidget_update()\\" | awesome-client')
+	sexec('offlineimap &>/dev/null; notmuch new &>/dev/null; echo \\"mdirwidget_update()\\" | awesome-client')
 	imap_running = false
 end
 
 function offlineimap_toggle()
 	imap_enabled = not imap_enabled
+	mdirwidget_update()
 	if imap_enabled then
 		offlineimap_run()
 	end
 end
 
-imap = timer({ timeout = 160 })
+imap = timer({ timeout = 120 })
 imap:connect_signal("timeout", offlineimap_run)
 imap:start()
 
@@ -409,7 +400,7 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey }, "i", function ()
 		naughty.notify({
 			title = " % ip route",
-			text = io.popen("ip route"):read("*all"):sub(0,-2),
+			text = io.popen("ip route"):read("*a"):sub(0,-2),
 			position = "bottom_right"
 		})
 	end),

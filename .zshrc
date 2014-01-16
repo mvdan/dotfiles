@@ -163,6 +163,14 @@ bhelp () {
 	bash -c "help \"$@\""
 }
 
+da() {
+	if [[ $# > 0 ]]; then
+	   	du -hs --apparent-size "$1"/*(DN) 2>/dev/null | sort -h
+	else
+		du -hs --apparent-size ./*(DN) 2>/dev/null | sort -h
+	fi
+}
+
 alias -s log="$PAGER"
 alias -s pdf="zathura"
 alias -s mp4="mpv"

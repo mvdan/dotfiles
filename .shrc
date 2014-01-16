@@ -16,19 +16,19 @@ alias ll="ls --color=auto -lhi"
 alias la="ls --color=auto -alhi"
 
 lt () {
-	[[ $# > 0 ]] && ls --color=always -Alhrt "$1" | tail -n 25 ||\
+	if [[ $# > 0 ]]; then
+		ls --color=always -Alhrt "$1" | tail -n 25
+	else
 		ls --color=always -Alhrt | tail -n 25
+	fi
 }
 
 lt- () {
-	[[ $# > 0 ]] && ls --color=always -Alhrt "$1" | head -n 25 ||\
+	if [[ $# > 0 ]]; then
+		ls --color=always -Alhrt "$1" | head -n 25
+	else
 		ls --color=always -Alhrt | head -n 25
-}
-
-da() {
-	[[ $# > 0 ]]\
-	   	&& du -hs --apparent-size "${1%/}/"*(DN) 2>/dev/null | sort -h \
-		|| du -hs --apparent-size ./*(DN) 2>/dev/null | sort -h
+	fi
 }
 
 alias mkd="mkdir -p"
