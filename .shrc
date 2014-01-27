@@ -14,6 +14,7 @@ alias ls="ls --color=auto"
 alias grep="grep --color=auto"
 alias ll="ls --color=auto -lhi"
 alias la="ls --color=auto -alhi"
+alias cal="cal -m"
 
 lt () {
 	if [[ $# > 0 ]]; then
@@ -66,9 +67,6 @@ alias lm="mount | sed 's/ \(on\|type\) /;;/g' | column -t -s ';;'"
 alias m="mount"
 alias um="umount"
 alias umo="umount /media/"
-ddd() {
-	dd if="$1" of="$2" bs=32K
-}
 
 alias pk="pkill -SIGKILL"
 pgr () {
@@ -102,7 +100,8 @@ alias gbs="git bisect"
 alias gba="git branch -a"
 alias gbr="git branch"
 alias gca="git commit -a -v"
-alias gcl="git clone"
+alias gcle="git clean -dffx"
+alias gclo="git clone"
 alias gcm="git commit -v"
 alias gco="git checkout"
 alias gdf="git diff"
@@ -209,13 +208,12 @@ command_test systemctl && {
 }
 
 command_test netctl && {
-	alias nc=netctl
-	alias nca=netctl-auto
-	alias ncr="sudo systemctl restart netctl-auto@wlan0"
-	alias wm="sudo wifi-menu"
+	alias nc="sudo -E netctl"
+	alias nca="sudo -E netctl-auto"
+	alias wm="sudo -E wifi-menu"
 }
 
-alias tlf="sudo tailf"
+alias tlf="sudo -E tailf"
 alias zs="sudo -E zsh"
 alias vis="sudo -E vim"
 alias vdifs="sudo -E vimdiff"

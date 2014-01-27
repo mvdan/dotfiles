@@ -114,12 +114,10 @@ end,1)
 
 batwidget = wibox.widget.textbox()
 vicious.register(batwidget, vicious.widgets.bat, function(widget, args)
-	if args[1] == "-" then
-		return string.format("%3s",args[2])..string.format("%6s",args[3])
-	elseif args[1] == '+' then
+	if args[1] == '+' then
 		return "<span color='"..p_green.."'>"..string.format("%3s",args[2]).."</span>"..string.format("%6s",args[3])
 	else
-		return "<span color='"..p_green.."'>"..string.format("%3s",args[2]).."</span> 00:00"
+		return string.format("%3s",args[2])..string.format("%6s",args[3])
 	end
 end, 2, "BAT1")
 
@@ -142,9 +140,7 @@ local devices
 
 function add_dev(dev)
 	for i,dev_ in ipairs(devices) do
-		if dev == dev_ then
-			return
-		end
+		if dev == dev_ then return end
 	end
 	table.insert(devices,dev)
 end
@@ -404,6 +400,8 @@ globalkeys = awful.util.table.join(
 			position = "bottom_right"
 		})
 	end),
+
+	awful.key({ modkey, "Shift"}, "i", function () sexec("sudo systemctl restart netctl-auto@wlan0") end),
 	
 	awful.key({ modkey, altkey}, "o", function () offlineimap_run(true) end),
 	awful.key({ modkey, altkey, "Shift" }, "o", function () offlineimap_toggle() end),
