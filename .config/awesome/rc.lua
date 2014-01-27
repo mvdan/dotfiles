@@ -114,10 +114,14 @@ end,1)
 
 batwidget = wibox.widget.textbox()
 vicious.register(batwidget, vicious.widgets.bat, function(widget, args)
-	if args[1] == '+' then
-		return "<span color='"..p_green.."'>"..string.format("%3s",args[2]).."</span>"..string.format("%6s",args[3])
-	else
+	if args[1] == "−" then
 		return string.format("%3s",args[2])..string.format("%6s",args[3])
+	elseif args[1] == '+' then
+		return "<span color='"..p_green.."'>"..string.format("%3s",args[2]).."</span>"..string.format("%6s",args[3])
+	elseif args[1] == '↯' then
+		return "<span color='"..p_green.."'>"..string.format("%3s",args[2]).."</span> 00:00"
+	else
+		return "<span color='"..p_green.."'>"..string.format("%3s",args[2]).."</span> ??:??"
 	end
 end, 2, "BAT1")
 
