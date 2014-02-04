@@ -119,11 +119,11 @@ bindkey -M vicmd '??' history-beginning-search-forward
 bindkey -M vicmd 'q' push-line
 
 if [[ $HOST == royal ]]; then
-	HISTSIZE=3000
-	SAVEHIST=3000
+	HISTSIZE=8000
+	SAVEHIST=8000
 else
-	SAVEHIST=1000
-	HISTSIZE=1000
+	SAVEHIST=4000
+	HISTSIZE=4000
 fi
 
 HISTFILE=~/.history

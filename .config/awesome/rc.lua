@@ -1,5 +1,5 @@
--- awesome >= 3.5.1
--- vicious >= 2.1.1
+-- awesome >= 3.5.2
+-- vicious >= 2.1.3
 
 local awful = require("awful")
 awful.rules = require("awful.rules")
@@ -39,16 +39,13 @@ editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
 local maildirs = {
 	dan = {
-		"/home/mvdan/Mail/linode/INBOX",
-		"/home/mvdan/Mail/linode/Univ",
-		"/home/mvdan/Mail/linode/FDroid"
+		"/home/mvdan/Mail/linode/INBOX/new"
 	},
 	mls = {
-		"/home/mvdan/Mail/linode/Creu",
-		"/home/mvdan/Mail/linode/Fsfe",
-		"/home/mvdan/Mail/linode/GLcat",
-		"/home/mvdan/Mail/linode/Cau",
-		"/home/mvdan/Mail/linode/Debian"
+		"/home/mvdan/Mail/linode/Fsfe/new",
+		"/home/mvdan/Mail/linode/Cau/new",
+		"/home/mvdan/Mail/linode/Univ/new",
+		"/home/mvdan/Mail/linode/FDroid/new"
 	}
 }
 
@@ -106,7 +103,7 @@ cpuwidget = wibox.widget.textbox()
 vicious.register(cpuwidget, vicious.widgets.cpu,
 function (widget, args)
 	local cpucontent=""
-	for cn=1,cpus_count,1 do
+	for cn=1,cpus_count do
 		cpucontent = cpucontent..string.format("%4s", args[cn])
 	end
 	return cpucontent
@@ -171,7 +168,8 @@ end,1)
 
 function wlan0_n()
 	local name = io.popen("wpa_cli status wlan0 | sed -n 's/^id_str=//p'"):read("*l")
-	if name ~= nil then return name else return "??" end
+	if name ~= nil then return name end
+	return "??"
 end
 
 function wlan0_q()
@@ -214,15 +212,12 @@ mdirwidget = wibox.widget.textbox()
 function mdirwidget_update()
 	local mdircontent = ""
 	for name,paths in pairs(maildirs) do
-		local count = 0
-		for n,path in ipairs(paths) do
-			count = count + io.popen("find '"..path.."/new' -type f | wc -l"):read("*n")
-		end
+		local count = io.popen("find "..table.concat(paths, " ").." -type f | wc -l"):read("*n")
 		if not imap_enabled then name = "<span foreground='"..p_grey.."'>"..name.."</span>" end
 		if count > 0 then
-			mdircontent = mdircontent..name.." <span foreground='"..p_green.."'>"..string.format("%-3d",count).."</span>"
+			mdircontent = mdircontent..name.." <span foreground='"..p_green.."'>"..string.format("%-3d", count).."</span>"
 		else
-			mdircontent = mdircontent..name.." "..string.format("%-3d",count)
+			mdircontent = mdircontent..name.." "..string.format("%-3d", count)
 		end
 	end
 	mdirwidget:set_markup(mdircontent)
@@ -255,7 +250,7 @@ imap = timer({ timeout = 120 })
 imap:connect_signal("timeout", offlineimap_run)
 imap:start()
 
-mdirtimer = timer({ timeout = 10 })
+mdirtimer = timer({ timeout = 5 })
 mdirtimer:connect_signal("timeout", function() 
 	if not imap_running then mdirwidget_update() end
 end)
@@ -266,8 +261,8 @@ mdirwidget_update()
 mpdwidget = wibox.widget.textbox()
 vicious.register(mpdwidget, vicious.widgets.mpd,
 function (widget, args)
-   if args["{state}"] == "Stop" then return '  - MPD -  '
-   else return args["{Title}"]..' - '..args['{Album}'] end
+	if args["{state}"] == "Stop" then return '  - MPD -  '
+	else return args["{Title}"]..' - '..args['{Album}'] end
 end,2)
 
 for s = 1, screen.count() do
@@ -329,28 +324,157 @@ for s = 1, screen.count() do
 
 end
 
-globalkeys = awful.util.table.join(
-	awful.key({ modkey,		   }, "Left",   awful.tag.viewprev	   ),
-	awful.key({ modkey,		   }, "Right",  awful.tag.viewnext	   ),
-	awful.key({ modkey,		   }, "Escape", awful.tag.history.restore),
+-- Get active outputs
+local function outputs()
+	local outputs = {}
+	local xrandr = io.popen("xrandr -q")
+	if xrandr then
+		for line in xrandr:lines() do
+			output = line:match("^([%w-]+) connected ")
+			if output then
+				outputs[#outputs + 1] = output
+			end
+		end
+		xrandr:close()
+	end
 
-	awful.key({ modkey,		   }, "j",
+	return outputs
+end
+
+local function arrange(out)
+	-- We need to enumerate all the way to combinate output. We assume
+	-- we want only an horizontal layout.
+	local choices  = {}
+	local previous = { {} }
+	for i = 1, #out do
+		-- Find all permutation of length `i`: we take the permutation
+		-- of length `i-1` and for each of them, we create new
+		-- permutations by adding each output at the end of it if it is
+		-- not already present.
+		local new = {}
+		for _, p in pairs(previous) do
+			for _, o in pairs(out) do
+				if not awful.util.table.hasitem(p, o) then
+					new[#new + 1] = awful.util.table.join(p, {o})
+				end
+			end
+		end
+		choices = awful.util.table.join(choices, new)
+		previous = new
+	end
+
+	return choices
+end
+
+-- Build available choices
+local function menu()
+	local menu = {}
+	local out = outputs()
+	local choices = arrange(out)
+
+	for _, choice in pairs(choices) do
+		local cmd = "xrandr"
+		-- Enabled outputs
+		for i, o in pairs(choice) do
+			cmd = cmd .. " --output " .. o .. " --auto"
+			if i > 1 then
+				cmd = cmd .. " --right-of " .. choice[i-1]
+			end
+		end
+		-- Disabled outputs
+		for _, o in pairs(out) do
+			if not awful.util.table.hasitem(choice, o) then
+				cmd = cmd .. " --output " .. o .. " --off"
+			end
+		end
+
+		local label = ""
+		if #choice == 1 then
+			label = 'Only <span weight="bold">' .. choice[1] .. '</span>'
+		else
+			for i, o in pairs(choice) do
+				if i > 1 then label = label .. " + " end
+				label = label .. '<span weight="bold">' .. o .. '</span>'
+			end
+		end
+
+		menu[#menu + 1] = { label,
+		cmd,
+		"/usr/share/icons/Tango/32x32/devices/display.png"}
+	end
+
+	return menu
+end
+
+-- Display xrandr notifications from choices
+local state = { iterator = nil,
+timer = nil,
+cid = nil }
+local function xrandr()
+	-- Stop any previous timer
+	if state.timer then
+		state.timer:stop()
+		state.timer = nil
+	end
+
+	-- Build the list of choices
+	if not state.iterator then
+		state.iterator = awful.util.table.iterate(menu(),
+		function() return true end)
+	end
+
+	-- Select one and display the appropriate notification
+	local next  = state.iterator()
+	local label, action, icon
+	if not next then
+		label, icon = "Keep the current configuration", "/usr/share/icons/Tango/32x32/devices/display.png"
+		state.iterator = nil
+	else
+		label, action, icon = unpack(next)
+	end
+	state.cid = naughty.notify({ text = label,
+	icon = icon,
+	timeout = 2,
+	screen = mouse.screen, -- Important, not all screens may be visible
+	font = "Free Sans 16",
+	replaces_id = state.cid }).id
+
+	-- Setup the timer
+	state.timer = timer { timeout = 2 }
+	state.timer:connect_signal("timeout",
+	function()
+		state.timer:stop()
+		state.timer = nil
+		state.iterator = nil
+		if action then
+			awful.util.spawn(action, false)
+		end
+	end)
+	state.timer:start()
+end
+
+globalkeys = awful.util.table.join(
+	awful.key({ modkey,		}, "Left", awful.tag.viewprev),
+	awful.key({ modkey,		}, "Right", awful.tag.viewnext),
+	awful.key({ modkey,		}, "Escape", awful.tag.history.restore),
+
+	awful.key({ modkey,		}, "j",
 		function ()
 			awful.client.focus.byidx( 1)
 			if client.focus then client.focus:raise() end
 		end),
-	awful.key({ modkey,		   }, "k",
+	awful.key({ modkey,		}, "k",
 		function ()
 			awful.client.focus.byidx(-1)
 			if client.focus then client.focus:raise() end
 		end),
 
-	awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)	end),
-	awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)	end),
+	awful.key({ modkey, "Shift" }, "j", function () awful.client.swap.byidx( 1) end),
+	awful.key({ modkey, "Shift" }, "k", function () awful.client.swap.byidx( -1) end),
 	awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end),
 	awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative(-1) end),
-	awful.key({ modkey,		   }, "u", awful.client.urgent.jumpto),
-	awful.key({ modkey,		   }, "Tab",
+	awful.key({ modkey,		}, "u", awful.client.urgent.jumpto),
+	awful.key({ modkey,		}, "Tab",
 		function ()
 			awful.client.focus.history.previous()
 			if client.focus then
@@ -358,18 +482,18 @@ globalkeys = awful.util.table.join(
 			end
 		end),
 
-	awful.key({ modkey,		   }, "Return", function () awful.util.spawn(terminal) end),
+	awful.key({ modkey,		}, "Return", function () awful.util.spawn(terminal) end),
 	awful.key({ modkey, "Control" }, "r", awesome.restart),
-	awful.key({ modkey, "Shift"   }, "q", awesome.quit),
+	awful.key({ modkey, "Shift" }, "q", awesome.quit),
 
-	awful.key({ modkey,		   }, "l",	 function () awful.tag.incmwfact( 0.05)	end),
-	awful.key({ modkey,		   }, "h",	 function () awful.tag.incmwfact(-0.05)	end),
-	awful.key({ modkey, "Shift"   }, "h",	 function () awful.tag.incnmaster( 1)	  end),
-	awful.key({ modkey, "Shift"   }, "l",	 function () awful.tag.incnmaster(-1)	  end),
-	awful.key({ modkey, "Control" }, "h",	 function () awful.tag.incncol( 1)		 end),
-	awful.key({ modkey, "Control" }, "l",	 function () awful.tag.incncol(-1)		 end),
-	awful.key({ modkey,		   }, "space", function () awful.layout.inc(layouts,  1) end),
-	awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
+	awful.key({ modkey,		}, "l", function () awful.tag.incmwfact( 0.05) end),
+	awful.key({ modkey,		}, "h", function () awful.tag.incmwfact(-0.05) end),
+	awful.key({ modkey, "Shift"}, "h", function () awful.tag.incnmaster( 1) end),
+	awful.key({ modkey, "Shift"}, "l", function () awful.tag.incnmaster(-1) end),
+	awful.key({ modkey, "Control"}, "h", function () awful.tag.incncol( 1) end),
+	awful.key({ modkey, "Control"}, "l", function () awful.tag.incncol(-1) end),
+	awful.key({ modkey,		}, "space", function () awful.layout.inc(layouts, 1) end),
+	awful.key({ modkey, "Shift"}, "space", function () awful.layout.inc(layouts, -1) end),
 
 	awful.key({ modkey, "Control" }, "n", awful.client.restore),
 
@@ -378,7 +502,7 @@ globalkeys = awful.util.table.join(
 	awful.key({ }, "#123", function () sexec("amixer -M -q set Master 5%+ ; echo \'vicious.force({volwidget})\' | awesome-client") end),
 	awful.key({ }, "#150", function () sexec("xset dpms force off") end),
 
-	awful.key({ modkey, altkey}, "t", function () sexec("~/.misc/xrandr-iter") end),
+	awful.key({ modkey, altkey}, "t", xrandr),
 	
 	awful.key({ modkey, altkey}, "f", function () sexec(terminal .. " -name weechat -e weechat-curses") end),
 	awful.key({ modkey, altkey}, "g", function () sexec(terminal .. " -name ssh_confine -e ssh dev1 -t TERM=screen-256color tmux -u a") end),
@@ -414,8 +538,8 @@ globalkeys = awful.util.table.join(
 
 	awful.key({ modkey }, "r", function () promptbox[mouse.screen]:run() end),
 
-	awful.key({ modkey, "Shift" }, "o", function () sexec("dwb") end),
-	awful.key({ modkey }, "o", function ()
+	awful.key({ modkey, "Shift" }, "y", function () sexec("dwb") end),
+	awful.key({ modkey }, "y", function ()
 		awful.prompt.run({ prompt = "dwb: " },
 		promptbox[mouse.screen].widget,
 		function (c)
@@ -423,13 +547,13 @@ globalkeys = awful.util.table.join(
 		end)
 	end),
 
-	awful.key({ modkey }, "u", function ()
-		awful.prompt.run({ prompt = "mailman: " },
-		promptbox[mouse.screen].widget,
-		function (c)
-			sexec("/bin/sh -c 'cd ~/fsfe/internal/Howto && BROWSER=dwb ./ML.sh "..c.."'", false)
-		end)
-	end),
+	--awful.key({ modkey }, "u", function ()
+		--awful.prompt.run({ prompt = "mailman: " },
+		--promptbox[mouse.screen].widget,
+		--function (c)
+			--sexec("/bin/sh -c 'cd ~/fsfe/internal/Howto && BROWSER=dwb ./ML.sh "..c.."'", false)
+		--end)
+	--end),
 	
 	awful.key({ modkey, "Shift" }, "p", function ()
 		awful.prompt.run({ prompt = "pkill: " },
@@ -450,13 +574,13 @@ globalkeys = awful.util.table.join(
 )
 
 clientkeys = awful.util.table.join(
-	awful.key({ modkey,		   }, "f",	  function (c) c.fullscreen = not c.fullscreen  end),
-	awful.key({ modkey, "Shift"   }, "c",	  function (c) c:kill()						 end),
-	awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle					 ),
+	awful.key({ modkey,		}, "f", function (c) c.fullscreen = not c.fullscreen end),
+	awful.key({ modkey, "Shift" }, "c", function (c) c:kill() end),
+	awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle ),
 	awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end),
-	awful.key({ modkey,		   }, "o",	  awful.client.movetoscreen						),
-	awful.key({ modkey,		   }, "t",	  function (c) c.ontop = not c.ontop			end),
-	awful.key({ modkey,		   }, "n",
+	awful.key({ modkey,		}, "o", awful.client.movetoscreen),
+	awful.key({ modkey,		}, "t", function (c) c.ontop = not c.ontop end),
+	awful.key({ modkey,		}, "n",
 		function (c)
 			c.minimized = true
 		end),
@@ -470,33 +594,33 @@ clientkeys = awful.util.table.join(
 for i = 1, 10 do
 	globalkeys = awful.util.table.join(globalkeys,
 		awful.key({ modkey }, "#" .. i + 9,
-				  function ()
+				function ()
 						local tag = awful.tag.gettags(mouse.screen)[i]
 						if tag then
-						   awful.tag.viewonly(tag)
+							awful.tag.viewonly(tag)
 						end
-				  end),
+				end),
 		awful.key({ modkey, "Control" }, "#" .. i + 9,
-				  function ()
-					  local tag = awful.tag.gettags(mouse.screen)[i]
-					  if tag then
-						 awful.tag.viewtoggle(tag)
-					  end
-				  end),
+				function ()
+					local tag = awful.tag.gettags(mouse.screen)[i]
+					if tag then
+						awful.tag.viewtoggle(tag)
+					end
+				end),
 		awful.key({ modkey, "Shift" }, "#" .. i + 9,
-				  function ()
-					  local tag = awful.tag.gettags(client.focus.screen)[i]
-					  if client.focus and tag then
-						  awful.client.movetotag(tag)
-					 end
-				  end),
+				function ()
+					local tag = awful.tag.gettags(client.focus.screen)[i]
+					if client.focus and tag then
+						awful.client.movetotag(tag)
+					end
+				end),
 		awful.key({ modkey, "Control", "Shift" }, "#" .. i + 9,
-				  function ()
-					  local tag = awful.tag.gettags(client.focus.screen)[i]
-					  if client.focus and tag then
-						  awful.client.toggletag(tag)
-					  end
-				  end))
+				function ()
+					local tag = awful.tag.gettags(client.focus.screen)[i]
+					if client.focus and tag then
+						awful.client.toggletag(tag)
+					end
+				end))
 end
 
 clientbuttons = awful.util.table.join(
@@ -511,18 +635,18 @@ local swidth = screen[1].geometry.width
 
 awful.rules.rules = {
 	{ rule = { },
-	  properties = { border_width = beautiful.border_width,
-		  border_color = beautiful.border_normal,
-		  focus = awful.client.focus.filter,
-		  size_hints_honor = false,
-		  keys = clientkeys,
-		  buttons = clientbuttons } },
+	properties = { border_width = beautiful.border_width,
+		border_color = beautiful.border_normal,
+		focus = awful.client.focus.filter,
+		size_hints_honor = false,
+		keys = clientkeys,
+		buttons = clientbuttons } },
 	{ rule = { class = "MPlayer" },
-	  properties = { floating = true } },
+	properties = { floating = true } },
 	{ rule = { class = "pinentry" },
-	  properties = { floating = true } },
+	properties = { floating = true } },
 	{ rule = { class = "Gimp" },
-	  properties = { floating = true, y = 21, height = sheight-42 } },
+	properties = { floating = true, y = 21, height = sheight-42 } },
 	{ rule = { class = "Gimp", role = "gimp-toolbox" },
 		properties = { x = 0, width = 225 }, },
 	{ rule = { class = "Gimp", role = "gimp-image-window" },
@@ -530,25 +654,25 @@ awful.rules.rules = {
 	{ rule = { class = "Gimp", role = "gimp-dock" },
 		properties = { x = swidth-225, width = 225 }, },
 	{ rule = { instance = "ssh_mvdan" },
-	  properties = { tag = tags[1][2] } },
+	properties = { tag = tags[1][2] } },
 	{ rule = { instance = "weechat" },
-	  properties = { tag = tags[1][3] } },
+	properties = { tag = tags[1][3] } },
 	{ rule = { instance = "ssh_confine" },
-	  properties = { tag = tags[1][4] } },
+	properties = { tag = tags[1][4] } },
 	{ rule = { instance = "mutt" },
-	  properties = { tag = tags[1][3] } },
+	properties = { tag = tags[1][3] } },
 	{ rule = { instance = "newsbeuter" },
-	  properties = { tag = tags[1][5] } },
+	properties = { tag = tags[1][5] } },
 	{ rule = { class = "Dwb" },
-	  properties = { tag = tags[1][7] } },
+	properties = { tag = tags[1][7] } },
 	{ rule = { class = "Chromium" },
-	  properties = { tag = tags[1][8] } },
+	properties = { tag = tags[1][8] } },
 	{ rule = { instance = "ranger" },
-	  properties = { tag = tags[1][9] } },
+	properties = { tag = tags[1][9] } },
 	{ rule = { instance = "rtorrent" },
-	  properties = { tag = tags[1][10] } },
+	properties = { tag = tags[1][10] } },
 	{ rule = { instance = "ncmpcpp" },
-	  properties = { tag = tags[1][10] } }
+	properties = { tag = tags[1][10] } }
 }
 
 client.connect_signal("manage", function (c, startup)

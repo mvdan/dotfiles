@@ -149,7 +149,7 @@ alias valg="valgrind --leak-check=yes --show-reachable=yes --num-callers=20"
 [[ -x ~/git/fdroidserver/fdroid ]] && {
 	alias fdroid=~/git/fdroidserver/fdroid
 	alias fd-commit=~/git/fdroidserver/fd-commit
-	alias fbld="fdroid build -l -v"
+	alias fbld="fdroid build -l -v --no-tarball"
 	alias fchk="fdroid checkupdates -v"
 	alias flnt="fdroid lint -v"
 	bashcomp $HOME/git/fdroidserver/completion/bash-completion
