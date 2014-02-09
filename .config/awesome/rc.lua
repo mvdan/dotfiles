@@ -213,7 +213,9 @@ function mdirwidget_update()
 	local mdircontent = ""
 	for name,paths in pairs(maildirs) do
 		local count = io.popen("find "..table.concat(paths, " ").." -type f | wc -l"):read("*n")
-		if not imap_enabled then name = "<span foreground='"..p_grey.."'>"..name.."</span>" end
+		if not imap_enabled then
+			name = "<span foreground='"..p_grey.."'>"..name.."</span>"
+		end
 		if count > 0 then
 			mdircontent = mdircontent..name.." <span foreground='"..p_green.."'>"..string.format("%-3d", count).."</span>"
 		else
@@ -223,24 +225,20 @@ function mdirwidget_update()
 	mdirwidget:set_markup(mdircontent)
 end
 
-local imap_running = false
 
 function offlineimap_run(force)
-	if not imap_enabled then
-		return 0
+	if not force and not imap_enabled then
+		return
 	end
 	if not force and (net_ifaces["wlan0"] == false and net_ifaces["eth0"] == false) then
 		imap_enabled = false
-		return -1
+		return
 	end
-	imap_running = true
-	sexec('offlineimap &>/dev/null; notmuch new &>/dev/null; echo \\"mdirwidget_update()\\" | awesome-client')
-	imap_running = false
+	sexec('offlineimap &>/dev/null && notmuch new &>/dev/null; echo \\"mdirwidget_update()\\" | awesome-client')
 end
 
 function offlineimap_toggle()
 	imap_enabled = not imap_enabled
-	mdirwidget_update()
 	if imap_enabled then
 		offlineimap_run()
 	end
@@ -251,9 +249,7 @@ imap:connect_signal("timeout", offlineimap_run)
 imap:start()
 
 mdirtimer = timer({ timeout = 5 })
-mdirtimer:connect_signal("timeout", function() 
-	if not imap_running then mdirwidget_update() end
-end)
+mdirtimer:connect_signal("timeout", function() mdirwidget_update() end)
 mdirtimer:start()
 
 mdirwidget_update()

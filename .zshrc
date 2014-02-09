@@ -171,6 +171,25 @@ da() {
 	fi
 }
 
+command_test dpkg && {
+	alias dcl="rm -fR */(N) *.{deb,changes,dsc,upload}(N)"
+	dpr() {
+		[[ ! -d *(/) ]] &&\
+			tar -xf *orig* && tar -xf *debian* &&\
+		   	mv debian/ ^debian/ && cd ^debian/
+	}
+	dpk() {
+		[[ -f debian/changelog ]] && {
+			NAME=`head -n 1 debian/changelog |\
+			   	sed -ne 's/\(.*\) (\(.*\)).*/\1_\2/p'`;
+			tar -cf ../$NAME.debian.tar.gz debian/
+		}
+	}
+	alias dbl="dpkg-buildpackage -sa && cd .."
+	alias dln="lintian -Ii --pedantic *.changes(N)"
+	alias ql="quilt"
+}
+
 alias -s log="$PAGER"
 alias -s pdf="zathura"
 alias -s mp4="mpv"

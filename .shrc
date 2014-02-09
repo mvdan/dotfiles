@@ -66,7 +66,7 @@ alias ng="noglob"
 alias lm="mount | sed 's/ \(on\|type\) /;;/g' | column -t -s ';;'"
 alias m="mount"
 alias um="umount"
-alias umo="umount /media/"
+alias mb="mount --bind"
 
 alias pk="pkill -SIGKILL"
 pgr () {
@@ -168,9 +168,6 @@ alias devserv="ssh dev1 -t TERM=screen-256color LANG=en_US.UTF-8 tmux -u new"
 command_test aptitude && {
 	alias ap="aptitude"
 	alias ag="apt-get"
-	alias syu="sudo aptitude update && sudo aptitude dist-upgrade"
-	alias ssm="aptitude search"
-	alias sim="sudo aptitude install"
 }
 
 command_test pacman && {
@@ -254,28 +251,12 @@ read_dom () {
 	alias flacc="$HOME/.misc/flac2.sh"
 }
 
-command_test dpkg && {
-	alias dcl="rm -fR */(N) *.{deb,changes,dsc,upload}(N)"
-	dpr() {
-		[[ ! -d *(/) ]] &&\
-			tar -xf *orig* && tar -xf *debian* &&\
-		   	mv debian/ ^debian/ && cd ^debian/
-	}
-	dpk() {
-		[[ -f debian/changelog ]] && {
-			NAME=`head -n 1 debian/changelog |\
-			   	sed -ne 's/\(.*\) (\(.*\)).*/\1_\2/p'`;
-			tar -cf ../$NAME.debian.tar.gz debian/
-		}
-	}
-	alias dbl="dpkg-buildpackage -sa && cd .."
-	alias dln="lintian -Ii --pedantic *.changes(N)"
-	alias ql="quilt"
-}
-
 export FULLNAME="Daniel Martí"
 export EMAIL="mvdan@mvdan.cc"
 export DEBFULLNAME=$FULLNAME
 export DEBEMAIL=$EMAIL
 
 export PATH="$PATH:/opt/gradle/bin"
+
+export WINEARCH=win32
+export WINEPREFIX=/mnt/dan/wine
