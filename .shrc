@@ -125,6 +125,7 @@ alias grbi="git rebase -i"
 alias grm="git rm"
 alias grmc="git rm --cached"
 alias grs="git reset"
+alias grsh="git reset --hard"
 alias grsp="git reset -p"
 alias grt="git remote"
 alias grv="git revert"
@@ -132,11 +133,13 @@ alias gs="git status -sb -uno"
 alias gss="git status -sb"
 alias gsh="git show"
 alias gsm="git submodule"
+alias gsmu="git submodule update --init --recursive"
+alias gsmf="git submodule foreach --recursive"
 alias gst="git stash"
 
 alias gsvn="git svn"
 gplm() {
-	git pull origin merge-requests/$1
+	git pull origin merge-requests/$1 --no-ff
 }
 
 wpa_sup() {

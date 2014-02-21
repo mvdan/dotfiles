@@ -248,7 +248,7 @@ imap = timer({ timeout = 120 })
 imap:connect_signal("timeout", offlineimap_run)
 imap:start()
 
-mdirtimer = timer({ timeout = 5 })
+mdirtimer = timer({ timeout = 3 })
 mdirtimer:connect_signal("timeout", function() mdirwidget_update() end)
 mdirtimer:start()
 
