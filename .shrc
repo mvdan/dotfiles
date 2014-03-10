@@ -139,7 +139,7 @@ alias gst="git stash"
 
 alias gsvn="git svn"
 gplm() {
-	git pull origin merge-requests/$1 --no-ff
+	git pull --no-ff origin merge-requests/$1
 }
 
 wpa_sup() {

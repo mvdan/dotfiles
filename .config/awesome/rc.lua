@@ -32,7 +32,7 @@ end
 
 beautiful.init(os.getenv("HOME").."/.config/awesome/theme.lua")
 
-terminal = "urxvtc"
+terminal = "urxvt"
 exec = awful.util.spawn
 sexec = awful.util.spawn_with_shell
 editor = os.getenv("EDITOR") or "vim"
