@@ -7,7 +7,7 @@ command_test vimpager && {
 	alias zless="vimpager"
 } || export PAGER="less"
 command_test vimdiff && export DIFF_VIEWER=vimdiff
-[[ -n $DISPLAY ]] && export BROWSER=dwb
+[[ -n $DISPLAY ]] && export BROWSER=chromium
 [[ -n $TMUX ]] && export TERM=screen-256color
 
 alias ls="ls --color=auto"
@@ -118,7 +118,7 @@ alias gls="git ls-files"
 alias gmr="git merge"
 alias gpl="git pull"
 alias gpla="git pull --all"
-alias gplr="git pull -r"
+alias gplr="git pull --rebase=preserve"
 alias gps="git push"
 alias grb="git rebase"
 alias grbi="git rebase -i"
@@ -139,7 +139,17 @@ alias gst="git stash"
 
 alias gsvn="git svn"
 gplm() {
-	git pull --no-ff origin merge-requests/$1
+	if [[ $1 != */* ]]; then
+		case $PWD in
+			*/fd|*/fd/*)
+				1=$1/fdroiddata;;
+			*/fsr|*/fsr/*)
+				1=$1/fdroidserver;;
+			*/fcl|*/fcl/*)
+				1=$1/fdroidclient;;
+		esac
+	fi
+	git pull --no-ff https://gitlab.com/${1}.git ${2:-master}
 }
 
 wpa_sup() {
@@ -149,13 +159,13 @@ wpa_sup() {
 alias cppc="cppcheck --enable=all --inconclusive --std=posix"
 alias valg="valgrind --leak-check=yes --show-reachable=yes --num-callers=20"
 
-[[ -x ~/git/fdroidserver/fdroid ]] && {
-	alias fdroid=~/git/fdroidserver/fdroid
-	alias fd-commit=~/git/fdroidserver/fd-commit
+[[ -x ~/git/fsr/fdroid ]] && {
+	alias fdroid=~/git/fsr/fdroid
+	alias fd-commit=~/git/fsr/fd-commit
 	alias fbld="fdroid build -l -v --no-tarball"
 	alias fchk="fdroid checkupdates -v"
 	alias flnt="fdroid lint -v"
-	bashcomp $HOME/git/fdroidserver/completion/bash-completion
+	bashcomp $HOME/git/fsr/completion/bash-completion
 	complete -F _fdroid_build fbld
 	complete -F _fdroid_checkupdates fchk
 	complete -F _fdroid_lint flnt
@@ -208,7 +218,7 @@ command_test systemctl && {
 }
 
 command_test netctl && {
-	alias nc="sudo -E netctl"
+	alias ncl="sudo -E netctl"
 	alias nca="sudo -E netctl-auto"
 	alias wm="sudo -E wifi-menu"
 }
@@ -260,6 +270,13 @@ export DEBFULLNAME=$FULLNAME
 export DEBEMAIL=$EMAIL
 
 export PATH="$PATH:/opt/gradle/bin"
+alias gradle="gradle --daemon"
 
 export WINEARCH=win32
 export WINEPREFIX=/mnt/dan/wine
+#export PATH=~/git/arm-eabi-4.6/bin:$PATH
+#export ARCH=arm SUBARCH=arm  CROSS_COMPILE=arm-eabi-
+
+export CCACHE_PATH="/usr/bin"
+export CCACHE_COMPRESS
+export GOPATH=$HOME/.go

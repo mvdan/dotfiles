@@ -18,6 +18,7 @@ set background=dark
 set wildignore=*.swp,*.bak,*.pyc,*.o,*.so
 au BufNewFile,BufRead *.md set filetype=markdown
 au BufNewFile,BufRead ~/sites/* set filetype=nginx
+au BufReadPost fugitive://* set bufhidden=delete
 set diffopt+=iwhite
 
 set incsearch ignorecase smartcase showmatch hlsearch
@@ -115,7 +116,11 @@ au BufRead mutt-* silent set fo+=t tw=72
 au BufRead mutt-* silent g/^> [> ]*-- *$/,?^-- $?-2d
 au BufRead mutt-* silent /^$
 au BufReadCmd *.odt,*.ott,*.ods,*.ots,*.odp,*.otp,*.odg,*.otg call zip#Browse(expand("<amatch>"))
-au BufRead *.txt silent set expandtab
+au BufRead *.txt silent set et
+au BufRead ~/git/tor/*.[ch] silent set et sw=2
+au BufRead ~/git/tor_sample/*.[ch] silent set et sw=2
+au BufRead ~/git/prop/* silent set et sw=4
+au BufRead ~/git/fcl/* silent set et sw=4
 
 inoremap jj <esc>
 set backspace=eol,start,indent

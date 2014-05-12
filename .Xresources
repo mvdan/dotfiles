@@ -5,11 +5,11 @@
 *scrollBar:        false
 *secondaryscroll:  true
 *internalBorder:   0
-*font:             xft:inconsolata:size=9
+*font:             xft:inconsolata:size=10
 *mapAlert:         true
 
 URxvt.perl-ext-common:      default,clipboard,url-select,keyboard-select
-URxvt.url-select.launcher:  dwb
+URxvt.url-select.launcher:  chromium
 URxvt.url-select.underline: true
 URxvt.matcher.button:       1
 URxvt.urgentOnBell:         True

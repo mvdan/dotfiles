@@ -31,8 +31,12 @@ folder-hook . set from = "mvdan@mvdan.cc"
 folder-hook "Fsfe" set from = "mvdan@fsfe.org"
 alternates "mvdan@mvdan.cc|mvdan@fsfe.org|danielmarti@gmx.com|dmarti@ac.upc.edu|daniel.marti.i@est.fib.upc.edu"
 
-set alias_file=~/.mutt/aliases
-source $alias_file
+set query_command= "abook --mutt-query '%s'"
+macro index,pager  a "<pipe-message>abook --add-email-quiet<return>" "Add this sender to Abook"
+bind editor        <Tab> complete-query
+
+set rfc2047_parameters = yes
+
 set certificate_file = ~/.mutt/certificates
 set mailcap_path = ~/.mutt/mailcap
 set signature = ~/.mutt/muttsig
@@ -92,7 +96,7 @@ bind index,pager K sidebar-prev
 bind index,pager J sidebar-next
 color sidebar_new yellow default
 
-mailboxes "=INBOX" "=Univ" "=FDroid" "=Fsfe" "=Cau" "=GLcat" "=Debian" "=Creu" "=Other" "=Sent" "=Drafts" "=Trash" "=../ac/INBOX" "=../gmx/INBOX"
+mailboxes "=INBOX" "=Univ" "=FDroid" "=Tor" "=Fsfe" "=Cau" "=Debian" "=Creu" "=Other" "=Sent" "=Drafts" "=Trash" "=../ac/INBOX" "=../gmx/INBOX"
 macro index,pager A <change-folder>=Spam<enter>
 macro index,pager S <change-folder>=Sent<enter>
 

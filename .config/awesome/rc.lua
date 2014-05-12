@@ -1,4 +1,4 @@
--- awesome >= 3.5.2
+-- awesome >= 3.5.5
 -- vicious >= 2.1.3
 
 local awful = require("awful")
@@ -43,6 +43,7 @@ local maildirs = {
 	},
 	mls = {
 		"/home/mvdan/Mail/linode/Fsfe/new",
+		"/home/mvdan/Mail/linode/Tor/new",
 		"/home/mvdan/Mail/linode/Cau/new",
 		"/home/mvdan/Mail/linode/Univ/new",
 		"/home/mvdan/Mail/linode/FDroid/new"
@@ -120,13 +121,13 @@ vicious.register(batwidget, vicious.widgets.bat, function(widget, args)
 	else
 		return "<span color='"..p_green.."'>"..string.format("%3s",args[2]).."</span> ??:??"
 	end
-end, 2, "BAT1")
+end, 4, "BAT1")
 
 volwidget = wibox.widget.textbox()
 vicious.register(volwidget, vicious.widgets.volume, function(widget, args)
 	if args[2] == "♫" then return string.format("%3s",args[1])
 	else return '<span color="'..p_blue..'">'..string.format("%3s",args[1])..'</span>' end
-end, 2, "Master")
+end, 4, "Master")
 
 memwidget = wibox.widget.textbox()
 vicious.register(memwidget, vicious.widgets.mem,
@@ -204,7 +205,7 @@ function (widget, args)
 		end
 	end
 	return netcontent
-	end,1)
+end,1)
 
 local imap_enabled = true
 
@@ -212,7 +213,7 @@ mdirwidget = wibox.widget.textbox()
 function mdirwidget_update()
 	local mdircontent = ""
 	for name,paths in pairs(maildirs) do
-		local count = io.popen("find "..table.concat(paths, " ").." -type f | wc -l"):read("*n")
+		local count = io.popen("find "..table.concat(paths, " ").." -type f 2>/dev/null | wc -l"):read("*n")
 		if not imap_enabled then
 			name = "<span foreground='"..p_grey.."'>"..name.."</span>"
 		end
@@ -259,7 +260,7 @@ vicious.register(mpdwidget, vicious.widgets.mpd,
 function (widget, args)
 	if args["{state}"] == "Stop" then return '  - MPD -  '
 	else return args["{Title}"]..' - '..args['{Album}'] end
-end,2)
+end, 2)
 
 for s = 1, screen.count() do
 	promptbox[s] = awful.widget.prompt()
@@ -534,12 +535,11 @@ globalkeys = awful.util.table.join(
 
 	awful.key({ modkey }, "r", function () promptbox[mouse.screen]:run() end),
 
-	awful.key({ modkey, "Shift" }, "y", function () sexec("dwb") end),
-	awful.key({ modkey }, "y", function ()
-		awful.prompt.run({ prompt = "dwb: " },
+	awful.key({ modkey }, "u", function ()
+		awful.prompt.run({ prompt = "chromium: " },
 		promptbox[mouse.screen].widget,
 		function (c)
-			sexec("dwb "..c:gsub("\\", "\\\\"):gsub(" ", '\\ '):gsub("'", "\\'"):gsub('"', '\\"'), false)
+			sexec("chromium "..c:gsub("\\", "\\\\"):gsub(" ", '\\ '):gsub("'", "\\'"):gsub('"', '\\"'), false)
 		end)
 	end),
 

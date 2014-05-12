@@ -1,15 +1,18 @@
 [user]
-    name = Daniel Martí
-    email = mvdan@mvdan.cc
-    editor = vim
-    signingkey = 4348041C
+	name = Daniel Martí
+	email = mvdan@mvdan.cc
+	editor = vim
+	signingkey = 4348041C
 [color]
-    ui = true
+	ui = true
 [push]
-    default = current
+	default = current
 [filter "tabspace"]
 	smudge = unexpand --tabs=4 --first-only
 	clean = expand --tabs=4 --initial
+[format]
+	signoff = true
+	signature =
 [alias]
 	ad = add
 	adp = add -p

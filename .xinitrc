@@ -1,8 +1,8 @@
-[[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
+[ -f ~/.Xresources ] && xrdb -merge ~/.Xresources &
 amixer -M set Master 50% unmute -q
+xbacklight -set 30% &
+unclutter -idle 3 &
 init --user &
-xbacklight -set 30%
 redshift -l 41:2 &
 syndaemon -t -k -i 1 -d &
-eval $(gpg-agent --daemon) &
 exec awesome --no-argb
