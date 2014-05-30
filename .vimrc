@@ -14,6 +14,7 @@ set tabstop=4 shiftwidth=4
 set tw=78 fo-=t
 set laststatus=2 showcmd hidden autoread magic mat=2
 set background=dark
+set nojoinspaces
 
 set wildignore=*.swp,*.bak,*.pyc,*.o,*.so
 au BufNewFile,BufRead *.md set filetype=markdown

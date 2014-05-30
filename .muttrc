@@ -8,7 +8,7 @@ set trash = +Trash
 auto_view text/html
 alternative_order text/enriched text/plain text/html
 
-set mime_forward
+set mime_forward = 'ask-yes'
 set mime_forward_rest
 set assumed_charset = 'utf-8'
 
@@ -96,7 +96,7 @@ bind index,pager K sidebar-prev
 bind index,pager J sidebar-next
 color sidebar_new yellow default
 
-mailboxes "=INBOX" "=Univ" "=FDroid" "=Tor" "=Fsfe" "=Cau" "=Debian" "=Creu" "=Other" "=Sent" "=Drafts" "=Trash" "=../ac/INBOX" "=../gmx/INBOX"
+mailboxes "=INBOX" "=Univ" "=FDroid" "=Tor" "=Fsfe" "=Cau" "=Debian" "=Creu" "=Announ" "=Other" "=Sent" "=Drafts" "=Trash" "=../ac/INBOX" "=../gmx/INBOX"
 macro index,pager A <change-folder>=Spam<enter>
 macro index,pager S <change-folder>=Sent<enter>
 

@@ -43,6 +43,7 @@ local maildirs = {
 	},
 	mls = {
 		"/home/mvdan/Mail/linode/Fsfe/new",
+		"/home/mvdan/Mail/linode/Announ/new",
 		"/home/mvdan/Mail/linode/Tor/new",
 		"/home/mvdan/Mail/linode/Cau/new",
 		"/home/mvdan/Mail/linode/Univ/new",

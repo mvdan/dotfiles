@@ -160,8 +160,6 @@ alias cppc="cppcheck --enable=all --inconclusive --std=posix"
 alias valg="valgrind --leak-check=yes --show-reachable=yes --num-callers=20"
 
 [[ -x ~/git/fsr/fdroid ]] && {
-	alias fdroid=~/git/fsr/fdroid
-	alias fd-commit=~/git/fsr/fd-commit
 	alias fbld="fdroid build -l -v --no-tarball"
 	alias fchk="fdroid checkupdates -v"
 	alias flnt="fdroid lint -v"
@@ -169,7 +167,6 @@ alias valg="valgrind --leak-check=yes --show-reachable=yes --num-callers=20"
 	complete -F _fdroid_build fbld
 	complete -F _fdroid_checkupdates fchk
 	complete -F _fdroid_lint flnt
-	export VAGRANT_HOME=/mnt/dan/fdroid/vagrant
 }
 
 alias mss="sshfs -C -o follow_symlinks"
@@ -269,7 +266,7 @@ export EMAIL="mvdan@mvdan.cc"
 export DEBFULLNAME=$FULLNAME
 export DEBEMAIL=$EMAIL
 
-export PATH="$PATH:/opt/gradle/bin"
+export PATH="$HOME/bin:$PATH:/opt/gradle/bin"
 alias gradle="gradle --daemon"
 
 export WINEARCH=win32
