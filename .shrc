@@ -267,7 +267,7 @@ export EMAIL="mvdan@mvdan.cc"
 export DEBFULLNAME=$FULLNAME
 export DEBEMAIL=$EMAIL
 
-export PATH="$HOME/bin:$PATH:/opt/gradle/bin"
+export PATH="$HOME/.bin:$PATH:/opt/gradle/bin"
 alias gradle="gradle --daemon"
 
 export WINEARCH=win32

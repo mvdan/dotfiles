@@ -229,6 +229,7 @@ end
 
 
 function offlineimap_run(force)
+	force = force or false
 	if not force and not imap_enabled then
 		return
 	end
