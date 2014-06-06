@@ -190,6 +190,10 @@ command_test dpkg && {
 	alias ql="quilt"
 }
 
+alias zcp="noglob zmv -C"
+alias zln="noglob zmv -L"
+alias mmv='noglob zmv -W'
+
 alias -s log="$PAGER"
 alias -s pdf="zathura"
 alias -s mp4="mpv"

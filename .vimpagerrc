@@ -1,0 +1,9 @@
+set nocompatible
+set number ruler smartindent
+set wrap linebreak nolist
+set nobackup noswapfile nowb
+set laststatus=2 showcmd hidden autoread magic mat=2
+set background=dark
+
+set noerrorbells novisualbell t_vb=
+set tm=500

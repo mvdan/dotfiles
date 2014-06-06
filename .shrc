@@ -12,6 +12,7 @@ command_test vimdiff && export DIFF_VIEWER=vimdiff
 
 alias ls="ls --color=auto"
 alias grep="grep --color=auto"
+alias egrep="grep -E --color=auto"
 alias ll="ls --color=auto -lhi"
 alias la="ls --color=auto -alhi"
 alias cal="cal -m"
