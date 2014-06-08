@@ -1,0 +1,26 @@
+terminal=urxvt
+
+interm=vim
+
+# 1. File extension
+# .pdf:zathura
+
+# 2. Mime type
+application/pdf:zathura
+
+# 3. Mime category
+image:feh
+video:mpv
+audio:mpv->interm # you can also specify the interm rule explictly after '->'
+text:vim
+
+# 4. Regexp
+?'^http:\/\/':$BROWSER
+?'^https:\/\/':$BROWSER
+?'^www.':$BROWSER
+
+# Directory rule for directories
+directory:echo
+
+# Default rule just echoes back whatever
+default:echo
