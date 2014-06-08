@@ -122,7 +122,7 @@ vicious.register(batwidget, vicious.widgets.bat, function(widget, args)
 	else
 		return "<span color='"..p_green.."'>"..string.format("%3s",args[2]).."</span> ??:??"
 	end
-end, 4, "BAT1")
+end, 4, "BAT0")
 
 volwidget = wibox.widget.textbox()
 vicious.register(volwidget, vicious.widgets.volume, function(widget, args)
@@ -168,15 +168,15 @@ function (widget, args)
 	return iocontent
 end,1)
 
-function wlan0_n()
-	local name = io.popen("wpa_cli status wlan0 | sed -n 's/^id_str=//p'"):read("*l")
+function wifi_n()
+	local name = io.popen("wpa_cli status wlp3s0 | sed -n 's/^id_str=//p'"):read("*l")
 	if name ~= nil then return name end
 	return "??"
 end
 
-function wlan0_q()
+function wifi_q()
 	for line in io.lines("/proc/net/wireless") do
-		if line:sub(2,6) == 'wlan0' then
+		if line:sub(1,6) == 'wlp3s0' then
 			return string.match(line, "([%d]+)[.]")
 		end
 	end
@@ -187,18 +187,18 @@ netwidget = wibox.widget.textbox()
 vicious.register(netwidget, vicious.widgets.net,
 function (widget, args)
 	local netcontent = ""
-	net_ifaces = { eth0 = false, wlan0 = false, usb0 = false}
+	net_ifaces = { enp0s25 = false, wlp3s0 = false, enp0s20u2 = false}
 	for dev,enabled in pairs(net_ifaces) do
 		local rx = args['{'..dev..' rx_mb}']
-		if dev == 'wlan0' or (rx ~= '0.0' and rx ~= nil) then
+		if dev == 'wlp3s0' or (rx ~= '0.0' and rx ~= nil) then
 			net_ifaces[dev] = true
 			local text = ''
 			local rx = rx
 			local up = string.format("%5s",args['{'..dev..' up_kb}'])
 			local tx = args['{'..dev..' tx_mb}']
 			local dn = string.format("%-6s",args['{'..dev..' down_kb}'])
-			if dev == 'wlan0' then
-				text = '<span foreground="'..p_yellow..'">'..up..'</span> '..tx..' '..wlan0_n()..' '..wlan0_q()..' '..rx..' <span foreground="'..p_green..'">'..dn..'</span>'
+			if dev == 'wlp3s0' then
+				text = '<span foreground="'..p_yellow..'">'..up..'</span> '..tx..' '..wifi_n()..' '..wifi_q()..' '..rx..' <span foreground="'..p_green..'">'..dn..'</span>'
 			else
 				text = '<span foreground="'..p_yellow..'">'..up..'</span> '..tx..' '..rx..' <span foreground="'..p_green..'">'..dn..'</span>'
 			end
@@ -233,7 +233,7 @@ function offlineimap_run(force)
 	if not force and not imap_enabled then
 		return
 	end
-	if not force and (net_ifaces["wlan0"] == false and net_ifaces["eth0"] == false) then
+	if not force and (net_ifaces["wlp3s0"] == false and net_ifaces["eth0"] == false) then
 		imap_enabled = false
 		return
 	end
@@ -496,10 +496,12 @@ globalkeys = awful.util.table.join(
 
 	awful.key({ modkey, "Control" }, "n", awful.client.restore),
 
-	awful.key({ }, "#121", function () sexec("amixer -q set Master toggle ; echo \'vicious.force({volwidget})\' | awesome-client") end),
-	awful.key({ }, "#122", function () sexec("amixer -M -q set Master 5%- ; echo \'vicious.force({volwidget})\' | awesome-client") end),
-	awful.key({ }, "#123", function () sexec("amixer -M -q set Master 5%+ ; echo \'vicious.force({volwidget})\' | awesome-client") end),
-	awful.key({ }, "#150", function () sexec("xset dpms force off") end),
+	awful.key({ modkey, altkey }, "Down", function () sexec("amixer -q set Master toggle ; echo \'vicious.force({volwidget})\' | awesome-client") end),
+	awful.key({ modkey, altkey }, "Left", function () sexec("amixer -M -q set Master 5%- ; echo \'vicious.force({volwidget})\' | awesome-client") end),
+	awful.key({ modkey, altkey }, "Right", function () sexec("amixer -M -q set Master 5%+ ; echo \'vicious.force({volwidget})\' | awesome-client") end),
+	awful.key({ modkey, altkey }, "Up", function () sexec("xset dpms force off") end),
+	awful.key({ modkey, altkey }, "Prior", function () sexec("cur=$(xbacklight -get); [ ${cur%%.*} -gt 10 ] && xbacklight -dec 3 || xbacklight -dec 1") end),
+	awful.key({ modkey, altkey }, "Next",  function () sexec("cur=$(xbacklight -get); [ ${cur%%.*} -gt 10 ] && xbacklight -inc 3 || xbacklight -inc 1") end),
 
 	awful.key({ modkey, altkey}, "t", xrandr),
 	
@@ -528,12 +530,12 @@ globalkeys = awful.util.table.join(
 		})
 	end),
 
-	awful.key({ modkey, "Shift"}, "i", function () sexec("sudo systemctl restart netctl-auto@wlan0") end),
+	awful.key({ modkey, "Shift"}, "i", function () sexec("sudo systemctl restart netctl-auto@wlp3s0") end),
 	
 	awful.key({ modkey, altkey}, "o", function () offlineimap_run(true) end),
 	awful.key({ modkey, altkey, "Shift" }, "o", function () offlineimap_toggle() end),
 	
-	awful.key({ modkey, altkey}, "y", function () sexec("eject -T") end),
+	--awful.key({ modkey, altkey}, "y", function () sexec("eject -T") end),
 
 	awful.key({ modkey }, "r", function () promptbox[mouse.screen]:run() end),
 
