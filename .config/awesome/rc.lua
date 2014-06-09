@@ -500,8 +500,8 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey, altkey }, "Left", function () sexec("amixer -M -q set Master 5%- ; echo \'vicious.force({volwidget})\' | awesome-client") end),
 	awful.key({ modkey, altkey }, "Right", function () sexec("amixer -M -q set Master 5%+ ; echo \'vicious.force({volwidget})\' | awesome-client") end),
 	awful.key({ modkey, altkey }, "Up", function () sexec("xset dpms force off") end),
-	awful.key({ modkey, altkey }, "Prior", function () sexec("cur=$(xbacklight -get); [ ${cur%%.*} -gt 10 ] && xbacklight -dec 3 || xbacklight -dec 1") end),
-	awful.key({ modkey, altkey }, "Next",  function () sexec("cur=$(xbacklight -get); [ ${cur%%.*} -gt 10 ] && xbacklight -inc 3 || xbacklight -inc 1") end),
+	awful.key({ modkey, altkey }, "Prior", function () sexec("cur=$(xbacklight -get); cur=${cur%%.*}; if [ $cur -gt 40 ]; then xbacklight -dec 8; elif [ $cur -gt 10 ]; then xbacklight -dec 3; else xbacklight -dec 1; fi") end),
+	awful.key({ modkey, altkey }, "Next",  function () sexec("cur=$(xbacklight -get); cur=${cur%%.*}; if [ $cur -gt 40 ]; then xbacklight -inc 8; elif [ $cur -gt 10 ]; then xbacklight -inc 3; else xbacklight -inc 1; fi") end),
 
 	awful.key({ modkey, altkey}, "t", xrandr),
 	
