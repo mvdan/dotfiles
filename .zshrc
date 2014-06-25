@@ -94,6 +94,20 @@ sudo-command-line() {
 zle -N sudo-command-line
 bindkey "^s" sudo-command-line
 
+noglob-command-line() {
+	[[ -z $BUFFER ]] && return
+	if [[ $BUFFER == "ng "* ]]; then
+		CURSOR=$(( CURSOR-3 ))
+		BUFFER="${BUFFER:2}"
+	else
+		BUFFER="ng $BUFFER"
+		CURSOR=$(( CURSOR+3 ))
+	fi
+}
+
+zle -N noglob-command-line
+bindkey "^n" noglob-command-line
+
 jump_after_first_word() {
 	local words=(${(z)BUFFER})
 	if (( ${#words} <= 1 )); then

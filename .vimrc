@@ -133,8 +133,4 @@ noremap <leader>p o<esc>:set paste<cr>:.!xsel -bo<cr>:set nopaste<cr>:silent! %s
 noremap <leader>P o<esc>:set paste<cr>:.!xsel -po<cr>:set nopaste<cr>:silent! %s/ / /g<cr>
 
 inoremap <F8> Daniel Martí <mvdan@mvdan.cc>
-ab dm Daniel Martí
 ab mv@ mvdan@mvdan.cc
-ab rg Regards
-ab ch Cheers
-ab tht Thank you for your time

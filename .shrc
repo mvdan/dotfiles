@@ -202,7 +202,7 @@ command_test pacman && {
 
 command_test pacaur && {
 	alias pca="pacaur"
-	alias ssk="pacaur -Ss --votes"
+	alias ssk="pacaur -Ss"
 	alias sik="pacaur -S"
 	alias syud="pacaur -Syu"
 }

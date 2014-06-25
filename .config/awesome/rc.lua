@@ -499,28 +499,29 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey, altkey }, "Down", function () sexec("amixer -q set Master toggle ; echo \'vicious.force({volwidget})\' | awesome-client") end),
 	awful.key({ modkey, altkey }, "Left", function () sexec("amixer -M -q set Master 5%- ; echo \'vicious.force({volwidget})\' | awesome-client") end),
 	awful.key({ modkey, altkey }, "Right", function () sexec("amixer -M -q set Master 5%+ ; echo \'vicious.force({volwidget})\' | awesome-client") end),
+
+	awful.key({ modkey, altkey }, ".", function () sexec("ncmpcpp next; echo \'vicious.force({mpdwidget})\' | awesome-client") end),
+	awful.key({ modkey, altkey }, ",", function () sexec("ncmpcpp prev; echo \'vicious.force({mpdwidget})\' | awesome-client") end),
+	awful.key({ modkey, altkey }, "-", function () sexec("ncmpcpp toggle") end),
+	--awful.key({ }, "#174", function () sexec("ncmpcpp stop; echo \'vicious.force({mpdwidget})\' | awesome-client") end),
+
 	awful.key({ modkey, altkey }, "Up", function () sexec("xset dpms force off") end),
 	awful.key({ modkey, altkey }, "Prior", function () sexec("cur=$(xbacklight -get); cur=${cur%%.*}; if [ $cur -gt 40 ]; then xbacklight -dec 8; elif [ $cur -gt 10 ]; then xbacklight -dec 3; else xbacklight -dec 1; fi") end),
 	awful.key({ modkey, altkey }, "Next",  function () sexec("cur=$(xbacklight -get); cur=${cur%%.*}; if [ $cur -gt 40 ]; then xbacklight -inc 8; elif [ $cur -gt 10 ]; then xbacklight -inc 3; else xbacklight -inc 1; fi") end),
 
-	awful.key({ modkey, altkey}, "t", xrandr),
-	
-	awful.key({ modkey, altkey}, "f", function () sexec(terminal .. " -name weechat -e weechat-curses") end),
-	awful.key({ modkey, altkey}, "g", function () sexec(terminal .. " -name ssh_confine -e ssh dev1 -t TERM=screen-256color tmux -u a") end),
-	awful.key({ modkey, altkey}, "h", function () sexec(terminal .. " -name ssh_mvdan -e ssh linode -t TERM=screen-256color tmux -u a") end),
-	awful.key({ modkey, altkey}, "j", function () sexec(terminal .. " -name mutt -e sh -c \"export TERM=screen-256color && mutt\"") end),
-	awful.key({ modkey, altkey}, "e", function () sexec(terminal .. " -name todo -e vim ~/todo") end),
-	awful.key({ modkey, altkey}, "b", function () sexec(terminal .. " -name newsbeuter -e sh -c newsbeuter") end),
-	awful.key({ modkey, altkey}, "k", function () sexec(terminal .. " -name ranger -e ranger") end),
-	awful.key({ modkey, altkey}, "m", function () sexec(terminal .. " -name rtorrent -e rtorrent") end),
-	awful.key({ modkey, altkey}, "n", function () sexec(terminal .. " -name ncmpcpp -e ncmpcpp") end),
+	awful.key({ modkey, altkey }, "t", xrandr),
 
-	awful.key({ modkey, altkey}, "i", function () sexec("chromium") end),
+	awful.key({ modkey, altkey }, "g", function () sexec(terminal .. " -name ssh_confine -e ssh dev1 -t TERM=screen-256color tmux -u a") end),
+	awful.key({ modkey, altkey }, "h", function () sexec(terminal .. " -name ssh_mvdan -e ssh linode -t TERM=screen-256color tmux -u a") end),
+	awful.key({ modkey, altkey }, "j", function () sexec(terminal .. " -name mutt -e sh -c \"export TERM=screen-256color && mutt\"") end),
+	awful.key({ modkey, altkey }, "e", function () sexec(terminal .. " -name todo -e vim ~/todo") end),
+	awful.key({ modkey, altkey }, "b", function () sexec(terminal .. " -name newsbeuter -e sh -c newsbeuter") end),
+	awful.key({ modkey, altkey }, "k", function () sexec(terminal .. " -name ranger -e ranger") end),
+	awful.key({ modkey, altkey }, "m", function () sexec(terminal .. " -name rtorrent -e rtorrent -d /tmp -s /tmp") end),
+	awful.key({ modkey, altkey, "Shift" }, "m", function () sexec(terminal .. " -name rtorrent -e rtorrent -d /mnt/dan/Torrents -s /mnt/dan/Torrents") end),
+	awful.key({ modkey, altkey }, "n", function () sexec(terminal .. " -name ncmpcpp -e ncmpcpp") end),
 
-	awful.key({ }, "#171", function () sexec("ncmpcpp next; echo \'vicious.force({mpdwidget})\' | awesome-client") end),
-	awful.key({ }, "#172", function () sexec("ncmpcpp toggle; echo \'vicious.force({mpdwidget})\' | awesome-client") end),
-	awful.key({ }, "#173", function () sexec("ncmpcpp prev; echo \'vicious.force({mpdwidget})\' | awesome-client") end),
-	awful.key({ }, "#174", function () sexec("ncmpcpp stop; echo \'vicious.force({mpdwidget})\' | awesome-client") end),
+	awful.key({ modkey, altkey }, "i", function () sexec("chromium") end),
 
 	awful.key({ modkey }, "i", function ()
 		naughty.notify({
@@ -532,7 +533,7 @@ globalkeys = awful.util.table.join(
 
 	awful.key({ modkey, "Shift"}, "i", function () sexec("sudo systemctl restart netctl-auto@wlp3s0") end),
 	
-	awful.key({ modkey, altkey}, "o", function () offlineimap_run(true) end),
+	awful.key({ modkey, altkey }, "o", function () offlineimap_run(true) end),
 	awful.key({ modkey, altkey, "Shift" }, "o", function () offlineimap_toggle() end),
 	
 	--awful.key({ modkey, altkey}, "y", function () sexec("eject -T") end),
