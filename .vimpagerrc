@@ -5,5 +5,10 @@ set nobackup noswapfile nowb
 set laststatus=2 showcmd hidden autoread magic mat=2
 set background=dark
 
+" Remove all highlighting
+nnoremap <space> :noh<cr>:echo<cr><esc>
+
+set incsearch ignorecase smartcase showmatch hlsearch
+
 set noerrorbells novisualbell t_vb=
 set tm=500

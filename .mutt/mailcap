@@ -1,0 +1,19 @@
+text/html;       chromium %s; nametemplate=%s.html
+text/html;       elinks -dump %s; nametemplate=%s.html; copiousoutput
+text/xhtml;      chromium %s; nametemplate=%s.html
+text/xhtml;      elinks -dump %s; nametemplate=%s.html; copiousoutput
+text/*;          vim %s
+application/pdf; zathura %s; nametemplate=%s.pdf
+application/ps;  zathura %s; nametemplate=%s.ps
+image/png;       feh %s; nametemplate=%s.png &
+image/png;       img2txt -W 100 %s; nametemplate=%s.png; copiousoutput
+image/pneg;      feh %s; nametemplate=%s.pneg &
+image/pneg;      img2txt -W 100 %s; nametemplate=%s.pneg; copiousoutput
+image/jpg;       feh %s; nametemplate=%s.jpg &
+image/jpg;       img2txt -W 100 %s; nametemplate=%s.jpg; copiousoutput
+image/jpeg;      feh %s; nametemplate=%s.jpeg &
+image/jpeg;      img2txt -W 100 %s; nametemplate=%s.jpeg; copiousoutput
+image/bmp;       feh %s; nametemplate=%s.bmp &
+image/bmp;       img2txt -W 100 %s; nametemplate=%s.bmp; copiousoutput
+image/gif;       feh %s; nametemplate=%s.gif &
+image/gif;       img2txt -W 100 %s; nametemplate=%s.gif; copiousoutput

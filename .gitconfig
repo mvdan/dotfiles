@@ -5,6 +5,8 @@
 	signingkey = 4348041C
 [color]
 	ui = true
+[core]
+	askpass = /bin/true
 [push]
 	default = current
 [filter "tabspace"]

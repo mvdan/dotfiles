@@ -24,6 +24,8 @@ bindkey "\eOH" beginning-of-line
 bindkey "\eOF" end-of-line
 bindkey "\e[H" beginning-of-line
 bindkey "\e[F" end-of-line
+bindkey '^Y' up-line-or-history
+bindkey '^E' down-line-or-history
 
 setopt auto_name_dirs
 setopt auto_pushd
@@ -33,7 +35,6 @@ setopt glob_complete
 setopt ignore_eof
 setopt multios
 setopt no_case_glob
-setopt no_clobber
 setopt no_flow_control
 setopt no_hup
 setopt no_beep
@@ -53,6 +54,12 @@ _force_rehash() {
 
 setopt zle
 zle -N edit-command-line
+
+function zle-line-init () { echoti smkx }
+function zle-line-finish () { echoti rmkx }
+zle -N zle-line-init
+zle -N zle-line-finish
+
 
 zstyle ':completion::complete:*' use-cache 1
 zstyle ':completion:*' verbose yes

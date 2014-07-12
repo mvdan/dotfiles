@@ -164,7 +164,7 @@ alias valg="valgrind --leak-check=yes --show-reachable=yes --num-callers=20"
 	alias fbld="fdroid build -l -v --no-tarball"
 	alias fchk="fdroid checkupdates -v"
 	alias flnt="fdroid lint -v"
-	bashcomp $HOME/git/fsr/completion/bash-completion
+	bashcomp ~/git/fsr/completion/bash-completion
 	complete -F _fdroid_build fbld
 	complete -F _fdroid_checkupdates fchk
 	complete -F _fdroid_lint flnt
@@ -248,7 +248,7 @@ spr() {
 	fi
 }
 
-read_dom () {
+read_dom() {
 	local IFS=\>
 	read -d \< ENTITY CONTENT
 }
@@ -268,10 +268,9 @@ export DEBFULLNAME=$FULLNAME
 export DEBEMAIL=$EMAIL
 
 export PATH="$HOME/.bin:$PATH:/opt/gradle/bin"
-alias gradle="gradle --daemon"
 
-export WINEARCH=win32
-export WINEPREFIX=/mnt/dan/wine
+#export WINEARCH=win32
+#export WINEPREFIX=/mnt/dan/wine
 #export PATH=~/git/arm-eabi-4.6/bin:$PATH
 #export ARCH=arm SUBARCH=arm  CROSS_COMPILE=arm-eabi-
 

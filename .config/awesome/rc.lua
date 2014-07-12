@@ -32,7 +32,7 @@ end
 
 beautiful.init(os.getenv("HOME").."/.config/awesome/theme.lua")
 
-terminal = "urxvt"
+terminal = "st"
 exec = awful.util.spawn
 sexec = awful.util.spawn_with_shell
 editor = os.getenv("EDITOR") or "vim"
@@ -505,21 +505,21 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey, altkey }, "-", function () sexec("ncmpcpp toggle") end),
 	--awful.key({ }, "#174", function () sexec("ncmpcpp stop; echo \'vicious.force({mpdwidget})\' | awesome-client") end),
 
-	awful.key({ modkey, altkey }, "Up", function () sexec("xset dpms force off") end),
+	awful.key({ modkey, altkey }, "Up", function () sexec("slock") end),
 	awful.key({ modkey, altkey }, "Prior", function () sexec("cur=$(xbacklight -get); cur=${cur%%.*}; if [ $cur -gt 40 ]; then xbacklight -dec 8; elif [ $cur -gt 10 ]; then xbacklight -dec 3; else xbacklight -dec 1; fi") end),
 	awful.key({ modkey, altkey }, "Next",  function () sexec("cur=$(xbacklight -get); cur=${cur%%.*}; if [ $cur -gt 40 ]; then xbacklight -inc 8; elif [ $cur -gt 10 ]; then xbacklight -inc 3; else xbacklight -inc 1; fi") end),
 
 	awful.key({ modkey, altkey }, "t", xrandr),
 
-	awful.key({ modkey, altkey }, "g", function () sexec(terminal .. " -name ssh_confine -e ssh dev1 -t TERM=screen-256color tmux -u a") end),
-	awful.key({ modkey, altkey }, "h", function () sexec(terminal .. " -name ssh_mvdan -e ssh linode -t TERM=screen-256color tmux -u a") end),
-	awful.key({ modkey, altkey }, "j", function () sexec(terminal .. " -name mutt -e sh -c \"export TERM=screen-256color && mutt\"") end),
-	awful.key({ modkey, altkey }, "e", function () sexec(terminal .. " -name todo -e vim ~/todo") end),
-	awful.key({ modkey, altkey }, "b", function () sexec(terminal .. " -name newsbeuter -e sh -c newsbeuter") end),
-	awful.key({ modkey, altkey }, "k", function () sexec(terminal .. " -name ranger -e ranger") end),
-	awful.key({ modkey, altkey }, "m", function () sexec(terminal .. " -name rtorrent -e rtorrent -d /tmp -s /tmp") end),
-	awful.key({ modkey, altkey, "Shift" }, "m", function () sexec(terminal .. " -name rtorrent -e rtorrent -d /mnt/dan/Torrents -s /mnt/dan/Torrents") end),
-	awful.key({ modkey, altkey }, "n", function () sexec(terminal .. " -name ncmpcpp -e ncmpcpp") end),
+	awful.key({ modkey, altkey }, "g", function () sexec(terminal .. " -c ssh_confine -e ssh dev1 -t TERM=screen-256color tmux -u a") end),
+	awful.key({ modkey, altkey }, "h", function () sexec(terminal .. " -c ssh_mvdan -e ssh linode -t TERM=screen-256color tmux -u a") end),
+	awful.key({ modkey, altkey }, "j", function () sexec(terminal .. " -c mutt -e mutt") end),
+	awful.key({ modkey, altkey }, "e", function () sexec(terminal .. " -c todo -e vim ~/TODO.md") end),
+	awful.key({ modkey, altkey }, "b", function () sexec(terminal .. " -c newsbeuter -e sh -c newsbeuter") end),
+	awful.key({ modkey, altkey }, "k", function () sexec(terminal .. " -c ranger -e ranger") end),
+	awful.key({ modkey, altkey }, "m", function () sexec(terminal .. " -c rtorrent -e rtorrent -d /tmp -s /tmp") end),
+	awful.key({ modkey, altkey, "Shift" }, "m", function () sexec(terminal .. " -c rtorrent -e rtorrent -d /mnt/dan/Torrents -s /mnt/dan/Torrents") end),
+	awful.key({ modkey, altkey }, "n", function () sexec(terminal .. " -c ncmpcpp -e ncmpcpp") end),
 
 	awful.key({ modkey, altkey }, "i", function () sexec("chromium") end),
 
