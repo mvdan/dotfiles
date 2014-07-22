@@ -96,18 +96,18 @@ endfunction
 nnoremap <leader>H :Hexmode<CR>
 
 " Split window shortcuts
-nnoremap <C-j> <C-W>j
-nnoremap <C-k> <C-W>k
-nnoremap <C-l> <C-W>l
-nnoremap <C-h> <C-W>h
+"nnoremap <C-j> <C-W>j
+"nnoremap <C-k> <C-W>k
+"nnoremap <C-l> <C-W>l
+"nnoremap <C-h> <C-W>h
 nnoremap <F9> 3<C-W><
 nnoremap <F10> 3<C-W>+
 nnoremap <F11> 3<C-W>-
 nnoremap <F12> 3<C-W>>
-inoremap <C-j> <C-O><C-W>j
-inoremap <C-k> <C-O><C-W>k
-inoremap <C-l> <C-O><C-W>l
-inoremap <C-h> <C-O><C-W>h
+"inoremap <C-j> <C-O><C-W>j
+"inoremap <C-k> <C-O><C-W>k
+"inoremap <C-l> <C-O><C-W>l
+"inoremap <C-h> <C-O><C-W>h
 inoremap <F9> 3<C-O><C-W><
 inoremap <F10> 3<C-O><C-W>+
 inoremap <F11> 3<C-O><C-W>-
