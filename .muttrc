@@ -92,11 +92,18 @@ set pgp_list_secring_command="gpg --no-verbose --batch --with-colons --list-secr
 
 set sidebar_delim=" "
 set sidebar_visible
-set sidebar_width = 18
+set sidebar_width = 20
 bind index,pager H sidebar-open
 bind index,pager K sidebar-prev
 bind index,pager J sidebar-next
 color sidebar_new yellow default
+
+bind index gg first-entry
+bind index G last-entry
+bind pager gg top
+bind pager G bottom
+bind index,pager \cu half-up
+bind index,pager \cd half-down
 
 mailboxes "=INBOX" "=Univ" "=FDroid" "=Tor" "=Fsfe" "=Cau" "=Debian" "=Creu" "=Announ" "=Other" "=Sent" "=Drafts" "=Trash" "=../ac/INBOX" "=../gmx/INBOX"
 macro index,pager A <change-folder>=Spam<enter>
@@ -108,8 +115,8 @@ color signature blue black
 color attachment brightred black
 color message brightred black
 color error brightred black
-color indicator white color234
-color status white color237
+color indicator white color237
+color status white color235
 color tree color245 black
 color normal white black
 color markers red black

@@ -45,7 +45,6 @@
 	ps = push
 	rb = rebase
 	rbi = rebase -i
-	rm = rm
 	rmc = rm --cached
 	rs = reset
 	rsh = reset --hard
@@ -59,4 +58,3 @@
 	smu = submodule update --init --recursive
 	smf = submodule foreach --recursive
 	st = stash
-	svn = svn

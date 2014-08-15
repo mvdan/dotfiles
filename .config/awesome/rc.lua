@@ -168,13 +168,13 @@ function (widget, args)
 	return iocontent
 end,1)
 
-function wifi_n()
+local function wifi_n()
 	local name = io.popen("wpa_cli status wlp3s0 | sed -n 's/^id_str=//p'"):read("*l")
 	if name ~= nil then return name end
 	return "??"
 end
 
-function wifi_q()
+local function wifi_q()
 	for line in io.lines("/proc/net/wireless") do
 		if line:sub(1,6) == 'wlp3s0' then
 			return string.match(line, "([%d]+)[.]")
@@ -187,7 +187,7 @@ netwidget = wibox.widget.textbox()
 vicious.register(netwidget, vicious.widgets.net,
 function (widget, args)
 	local netcontent = ""
-	net_ifaces = { enp0s25 = false, wlp3s0 = false, enp0s20u2 = false}
+	net_ifaces = { lo = false, enp0s25 = false, wlp3s0 = false, enp0s20u1 = false, enp0s20u2 = false }
 	for dev,enabled in pairs(net_ifaces) do
 		local rx = args['{'..dev..' rx_mb}']
 		if dev == 'wlp3s0' or (rx ~= '0.0' and rx ~= nil) then
@@ -200,7 +200,7 @@ function (widget, args)
 			if dev == 'wlp3s0' then
 				text = '<span foreground="'..p_yellow..'">'..up..'</span> '..tx..' '..wifi_n()..' '..wifi_q()..' '..rx..' <span foreground="'..p_green..'">'..dn..'</span>'
 			else
-				text = '<span foreground="'..p_yellow..'">'..up..'</span> '..tx..' '..rx..' <span foreground="'..p_green..'">'..dn..'</span>'
+				text = '<span foreground="'..p_yellow..'">'..up..'</span> '..tx..' '..dev..' '..rx..' <span foreground="'..p_green..'">'..dn..'</span>'
 			end
 			netcontent = netcontent..text
 		end
@@ -505,9 +505,9 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey, altkey }, "-", function () sexec("ncmpcpp toggle") end),
 	--awful.key({ }, "#174", function () sexec("ncmpcpp stop; echo \'vicious.force({mpdwidget})\' | awesome-client") end),
 
-	awful.key({ modkey, altkey }, "Up", function () sexec("slock") end),
-	awful.key({ modkey, altkey }, "Prior", function () sexec("cur=$(xbacklight -get); cur=${cur%%.*}; if [ $cur -gt 40 ]; then xbacklight -dec 8; elif [ $cur -gt 10 ]; then xbacklight -dec 3; else xbacklight -dec 1; fi") end),
-	awful.key({ modkey, altkey }, "Next",  function () sexec("cur=$(xbacklight -get); cur=${cur%%.*}; if [ $cur -gt 40 ]; then xbacklight -inc 8; elif [ $cur -gt 10 ]; then xbacklight -inc 3; else xbacklight -inc 1; fi") end),
+	awful.key({ modkey, altkey }, "Up", function () sexec("xset dpms force off && slock") end),
+	awful.key({ modkey, altkey }, "Prior", function () sexec("cur=$(xbacklight -get); cur=${cur%%.*}; if [ $cur -gt 40 ]; then xbacklight -dec 10; elif [ $cur -gt 10 ]; then xbacklight -dec 3; else xbacklight -dec 1; fi") end),
+	awful.key({ modkey, altkey }, "Next",  function () sexec("cur=$(xbacklight -get); cur=${cur%%.*}; if [ $cur -gt 40 ]; then xbacklight -inc 10; elif [ $cur -gt 10 ]; then xbacklight -inc 3; else xbacklight -inc 1; fi") end),
 
 	awful.key({ modkey, altkey }, "t", xrandr),
 

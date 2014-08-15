@@ -16,6 +16,8 @@ set laststatus=2 showcmd hidden autoread magic mat=2
 set background=dark
 set nojoinspaces
 
+set shell=/bin/bash\ -i
+
 set wildignore=*.swp,*.bak,*.pyc,*.o,*.so
 au BufNewFile,BufRead *.md set filetype=markdown
 au BufNewFile,BufRead ~/sites/* set filetype=nginx

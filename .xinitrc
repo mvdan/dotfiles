@@ -3,4 +3,4 @@
 unclutter -idle 3 &
 redshift -l 41:2 &
 syndaemon -t -k -i 1 &
-exec awesome --no-argb
+exec awesome

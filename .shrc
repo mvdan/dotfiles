@@ -234,17 +234,19 @@ alias xb="xsel -b"
 
 spr() {
 	if [ -t 0 ]; then
-		[ "$*" ] || return 1
-		if [ -f "$*" ]; then
-			echo "Uploading the file "$*"..." >&2
-			cat "$*"
-		else
-			echo "Uploading the string \""$*"\"..." >&2
-			echo "$*"
-		fi | curl -F 'sprunge=<-' http://sprunge.us
+		[ $# -gt 0 ] || return 1
+		cat "$@" | curl -F 'sprunge=<-' http://sprunge.us
 	else
-		echo "Uploading from stdin..." >&2
 		curl -F 'sprunge=<-' http://sprunge.us
+	fi
+}
+
+pcat() {
+	if [ -t 0 ]; then
+		[ $# -gt 0 ] || return 1
+		cat "$@" | curl -F 'paste=<-' http://paste.cat
+	else
+		curl -F 'paste=<-' http://paste.cat
 	fi
 }
 
