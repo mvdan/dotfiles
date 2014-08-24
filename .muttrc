@@ -98,9 +98,7 @@ bind index,pager K sidebar-prev
 bind index,pager J sidebar-next
 color sidebar_new yellow default
 
-bind index gg first-entry
 bind index G last-entry
-bind pager gg top
 bind pager G bottom
 bind index,pager \cu half-up
 bind index,pager \cd half-down

@@ -41,22 +41,14 @@ command Wq :execute ':silent w !sudo tee % > /dev/null' | :quit!
 let mapleader = ","
 let g:mapleader = ","
 
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_working_path_mode = 'rc'
-let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
-let g:ctrlp_user_command = 'find %s -type f'
 let g:tagbar_autoclose = 1
 let g:tagbar_compact = 1
-
-let g:syntastic_mode_map = { 'mode': 'passive' }
 
 nnoremap <leader>N :NERDTree<cr>
 nnoremap <leader>v :vsp 
 nnoremap <leader>s :sp 
 
 nnoremap <leader>t :tabn<cr>
-nnoremap <leader>e :Errors<cr>
 
 nnoremap <leader>a :wa<cr>
 nnoremap <leader>w :w<cr>

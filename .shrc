@@ -1,11 +1,7 @@
 #!/bin/bash
 
 command_test vim && export EDITOR=vim || export EDITOR=vi
-command_test vimpager && {
-	export PAGER="vimpager"
-	alias less="vimpager"
-	alias zless="vimpager"
-} || export PAGER="less"
+export PAGER="less"
 command_test vimdiff && export DIFF_VIEWER=vimdiff
 [[ -n $DISPLAY ]] && export BROWSER=chromium
 [[ -n $TMUX ]] && export TERM=screen-256color
@@ -269,13 +265,11 @@ export EMAIL="mvdan@mvdan.cc"
 export DEBFULLNAME=$FULLNAME
 export DEBEMAIL=$EMAIL
 
-export PATH="$HOME/.bin:$PATH:/opt/gradle/bin"
 
 #export WINEARCH=win32
 #export WINEPREFIX=/mnt/dan/wine
 #export PATH=~/git/arm-eabi-4.6/bin:$PATH
 #export ARCH=arm SUBARCH=arm  CROSS_COMPILE=arm-eabi-
 
-export CCACHE_PATH="/usr/bin"
-export CCACHE_COMPRESS
 export GOPATH=$HOME/.go
+export PATH="$HOME/.bin:$GOPATH/bin:$PATH:/opt/gradle/bin"
