@@ -134,6 +134,8 @@ alias gsmu="git submodule update --init --recursive"
 alias gsmf="git submodule foreach --recursive"
 alias gst="git stash"
 
+alias gsmfc="git smf 'git cle && git rsh' && git cle && git rsh"
+
 alias gsvn="git svn"
 gplm() {
 	if [[ $1 != */* ]]; then
@@ -239,10 +241,10 @@ spr() {
 
 pcat() {
 	if [ -t 0 ]; then
-		[ $# -gt 0 ] || return 1
-		cat "$@" | curl -F 'paste=<-' http://paste.cat
+		[ $# -eq 1 ] || return 1
+		curl -F "paste=@$1" http://localhost:8080
 	else
-		curl -F 'paste=<-' http://paste.cat
+		curl -F "paste=<-" http://localhost:8080
 	fi
 }
 
