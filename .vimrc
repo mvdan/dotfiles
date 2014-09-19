@@ -16,6 +16,9 @@ set laststatus=2 showcmd hidden autoread magic mat=2
 set background=dark
 set nojoinspaces
 
+set foldmethod=syntax foldnestmax=1
+hi Folded ctermbg=black
+
 set shell=/bin/bash\ -i
 
 set wildignore=*.swp,*.bak,*.pyc,*.o,*.so
@@ -50,13 +53,6 @@ nnoremap <leader>s :sp
 
 nnoremap <leader>t :tabn<cr>
 
-nnoremap <leader>a :wa<cr>
-nnoremap <leader>w :w<cr>
-nnoremap <leader>q :wq<cr>
-nnoremap <leader>Q :qa!<cr>
-nnoremap <leader>d :bd<cr>
-nnoremap <leader>n :bn<cr>
-
 " ex command for toggling hex mode - define mapping if desired
 command -bar Hexmode call ToggleHex()
 
@@ -87,30 +83,23 @@ function ToggleHex()
   let &modifiable=l:oldmodifiable
 endfunction
 
-nnoremap <leader>H :Hexmode<CR>
-
 " Split window shortcuts
-"nnoremap <C-j> <C-W>j
-"nnoremap <C-k> <C-W>k
-"nnoremap <C-l> <C-W>l
-"nnoremap <C-h> <C-W>h
 nnoremap <F9> 3<C-W><
 nnoremap <F10> 3<C-W>+
 nnoremap <F11> 3<C-W>-
 nnoremap <F12> 3<C-W>>
-"inoremap <C-j> <C-O><C-W>j
-"inoremap <C-k> <C-O><C-W>k
-"inoremap <C-l> <C-O><C-W>l
-"inoremap <C-h> <C-O><C-W>h
 inoremap <F9> 3<C-O><C-W><
 inoremap <F10> 3<C-O><C-W>+
 inoremap <F11> 3<C-O><C-W>-
 inoremap <F12> 3<C-O><C-W>>
 
+" E-mail text wrapping
 au BufRead mutt-* silent set fo+=t tw=72
+" Remove the last signature
 au BufRead mutt-* silent g/^> [> ]*-- *$/,?^-- $?-2d
+" Start at the first empty line where we'll write
 au BufRead mutt-* silent /^$
-au BufReadCmd *.odt,*.ott,*.ods,*.ots,*.odp,*.otp,*.odg,*.otg call zip#Browse(expand("<amatch>"))
+
 au BufRead *.txt silent set et
 au BufRead ~/git/tor/*.[ch] silent set et sw=2
 au BufRead ~/git/tor_sample/*.[ch] silent set et sw=2

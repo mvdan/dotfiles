@@ -3,7 +3,6 @@
 #password = "secret"
 #timeout = 5
 enable-mouse = no
-
 #screen-list = playlist browse
 
 #search-mode = 0
@@ -15,16 +14,16 @@ bell-on-wrap = no
 audible-bell = no
 #visible-bell = no
 #crossfade-time = 10
-#seek-time = 1
+seek-time = 3
 #welcome-screen-list = yes
 #wide-cursor = yes
 #hardware-cursor = yes
 #hide-cursor = 5
 #scroll = yes
 #scroll-sep = " *** "
-#list-format = "%name%|[%artist% - ]%title%|%file%"
-#search-format = "%name%|[%artist% - ]%title%|%file%"
-#status-format = "[%artist% - ]%title%|%shortfile%"
+list-format = "%name%|[%artist% - ][%album% - ]%title%|%file%"
+search-format = "%name%|[%artist% - ][%album% - ]%title%|%file%"
+status-format = "[%artist% - ][%album% - ]%title%|%shortfile%"
 #status-message-time = 3
 #display-time = yes
 #timedisplay-type = elapsed

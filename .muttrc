@@ -42,8 +42,8 @@ set rfc2047_parameters = yes
 set certificate_file = ~/.mutt/certificates
 set mailcap_path = ~/.mutt/mailcap
 set signature = ~/.mutt/muttsig
-set tmpdir = ~/.mutt/temp
-set header_cache = ~/.mutt/cache
+set header_cache = ~/.mutt/headercache
+set tmpdir = ~/.cache
 
 set auto_tag
 set fast_reply
@@ -103,7 +103,7 @@ bind pager G bottom
 bind index,pager \cu half-up
 bind index,pager \cd half-down
 
-mailboxes "=INBOX" "=Univ" "=FDroid" "=Tor" "=Fsfe" "=Cau" "=Debian" "=Creu" "=Announ" "=Other" "=Sent" "=Drafts" "=Trash" "=../ac/INBOX" "=../gmx/INBOX"
+mailboxes "=INBOX" "=Univ" "=FDroid" "=Tor" "=Suckless" "=Cau" "=Fsfe" "=Debian" "=Creu" "=Announ" "=Other" "=Sent" "=GLcat" "=Drafts" "=Trash" "=../ac/INBOX" "=../gmx/INBOX"
 macro index,pager A <change-folder>=Spam<enter>
 macro index,pager S <change-folder>=Sent<enter>
 

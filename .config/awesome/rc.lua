@@ -43,7 +43,6 @@ local maildirs = {
 	},
 	mls = {
 		"/home/mvdan/Mail/linode/Fsfe/new",
-		"/home/mvdan/Mail/linode/Announ/new",
 		"/home/mvdan/Mail/linode/Tor/new",
 		"/home/mvdan/Mail/linode/Cau/new",
 		"/home/mvdan/Mail/linode/Univ/new",
@@ -183,26 +182,23 @@ local function wifi_q()
 	return "??"
 end
 
+net_ifaces = { wlp3s0 = false, enp0s20u1 = false, enp0s20u2 = false }
 netwidget = wibox.widget.textbox()
 vicious.register(netwidget, vicious.widgets.net,
 function (widget, args)
 	local netcontent = ""
-	net_ifaces = { lo = false, enp0s25 = false, wlp3s0 = false, enp0s20u1 = false, enp0s20u2 = false }
 	for dev,enabled in pairs(net_ifaces) do
 		local rx = args['{'..dev..' rx_mb}']
 		if dev == 'wlp3s0' or (rx ~= '0.0' and rx ~= nil) then
 			net_ifaces[dev] = true
-			local text = ''
-			local rx = rx
 			local up = string.format("%5s",args['{'..dev..' up_kb}'])
 			local tx = args['{'..dev..' tx_mb}']
 			local dn = string.format("%-6s",args['{'..dev..' down_kb}'])
 			if dev == 'wlp3s0' then
-				text = '<span foreground="'..p_yellow..'">'..up..'</span> '..tx..' '..wifi_n()..' '..wifi_q()..' '..rx..' <span foreground="'..p_green..'">'..dn..'</span>'
+				netcontent = netcontent..'<span foreground="'..p_yellow..'">'..up..'</span> '..tx..' '..wifi_n()..' '..wifi_q()..' '..rx..' <span foreground="'..p_green..'">'..dn..'</span>'
 			else
-				text = '<span foreground="'..p_yellow..'">'..up..'</span> '..tx..' '..dev..' '..rx..' <span foreground="'..p_green..'">'..dn..'</span>'
+				netcontent = netcontent..'<span foreground="'..p_yellow..'">'..up..'</span> '..tx..' '..dev..' '..rx..' <span foreground="'..p_green..'">'..dn..'</span>'
 			end
-			netcontent = netcontent..text
 		end
 	end
 	return netcontent
