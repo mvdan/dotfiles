@@ -13,9 +13,3 @@
 [submodule ".vim/bundle/surround"]
 	path = .vim/bundle/surround
 	url = https://github.com/tpope/vim-surround
-[submodule ".vim/bundle/tagbar"]
-	path = .vim/bundle/tagbar
-	url = https://github.com/majutsushi/tagbar
-[submodule ".vim/bundle/unused-imports"]
-	path = .vim/bundle/unused-imports
-	url = https://github.com/akhaku/vim-java-unused-imports

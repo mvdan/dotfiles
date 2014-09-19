@@ -4,7 +4,6 @@ Helptags
 syntax on
 filetype plugin indent on
 
-" Various settings
 set nocompatible
 set number ruler smartindent
 set wrap linebreak nolist
@@ -46,10 +45,6 @@ let g:mapleader = ","
 
 let g:tagbar_autoclose = 1
 let g:tagbar_compact = 1
-
-nnoremap <leader>N :NERDTree<cr>
-nnoremap <leader>v :vsp 
-nnoremap <leader>s :sp 
 
 nnoremap <leader>t :tabn<cr>
 
@@ -94,7 +89,7 @@ inoremap <F11> 3<C-O><C-W>-
 inoremap <F12> 3<C-O><C-W>>
 
 " E-mail text wrapping
-au BufRead mutt-* silent set fo+=t tw=72
+au BufRead mutt-* silent set formatoptions+=t textwidth=72 foldmethod=manual
 " Remove the last signature
 au BufRead mutt-* silent g/^> [> ]*-- *$/,?^-- $?-2d
 " Start at the first empty line where we'll write
@@ -102,8 +97,6 @@ au BufRead mutt-* silent /^$
 
 au BufRead *.txt silent set et
 au BufRead ~/git/tor/*.[ch] silent set et sw=2
-au BufRead ~/git/tor_sample/*.[ch] silent set et sw=2
-au BufRead ~/git/prop/* silent set et sw=4
 au BufRead ~/git/fcl/* silent set et sw=4
 
 inoremap jj <esc>
