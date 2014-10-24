@@ -55,6 +55,8 @@ _force_rehash() {
 setopt zle
 zle -N edit-command-line
 
+bindkey "^H" vi-backward-delete-char
+bindkey "^?" vi-delete-char
 function zle-line-init () { echoti smkx }
 function zle-line-finish () { echoti rmkx }
 zle -N zle-line-init

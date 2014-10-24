@@ -2,7 +2,6 @@ set nohelp
 set mbox_type = Maildir
 set folder = ~/Mail/linode
 set spoolfile = +INBOX
-set record = +Sent
 set postponed = +Drafts
 set trash = +Trash
 auto_view text/html
@@ -17,21 +16,25 @@ set allow_8bit
 set mail_check = 5
 set timeout = 10
 
-set realname = 'Daniel Martí'
 set sendmail = '/usr/bin/msmtp'
-set use_envelope_from
 set date_format = "!%a, %b %d, %Y at %H:%M:%S %Z"
 
 set edit_headers
 set reverse_name
 set noreverse_realname
 set reverse_alias
+set realname = 'Daniel Martí'
 set from = "mvdan@mvdan.cc"
-folder-hook . set from = "mvdan@mvdan.cc"
-folder-hook "Fsfe" set from = "mvdan@fsfe.org"
-alternates "mvdan@mvdan.cc|mvdan@fsfe.org|danielmarti@gmx.com|dmarti@ac.upc.edu|daniel.marti.i@est.fib.upc.edu"
-folder-hook "." unmy_hdr Reply-To:
-folder-hook "FDroid" my_hdr Reply-To: team@f-droid.org
+set use_envelope_from
+alternates "mvdan@mvdan.cc|mvdan@fsfe.org|danielmarti@gmx.com|dmarti@ac.upc.edu|daniel.marti.i@est.fib.upc.edu|aeigantonvila@gmail.com"
+set record = +Sent
+
+folder-hook . "set realname = 'Daniel Martí' from = 'mvdan@mvdan.cc' record = +Sent"
+folder-hook "Fsfe" "set from = 'mvdan@fsfe.org'"
+folder-hook /cau/ "set realname = 'AEiG Anton Vilà' from = 'aeigantonvila@gmail.com' record = ''"
+
+folder-hook "." "unmy_hdr Reply-To:"
+folder-hook "FDroid" "my_hdr Reply-To: team@f-droid.org"
 
 set query_command= "abook --mutt-query '%s'"
 macro index,pager  B "<pipe-message>abook --add-email-quiet<return>" "Add this sender to Abook"
@@ -68,7 +71,7 @@ set include
 set postpone = ask-no
 set abort_nosubject = no
 
-set pgp_autosign
+#set pgp_autosign
 set pgp_auto_decode
 set pgp_sign_as = 4348041C
 set pgp_replysign
@@ -92,7 +95,7 @@ set pgp_list_secring_command="gpg --no-verbose --batch --with-colons --list-secr
 
 set sidebar_delim=" "
 set sidebar_visible
-set sidebar_width = 20
+set sidebar_width = 32
 bind index,pager H sidebar-open
 bind index,pager K sidebar-prev
 bind index,pager J sidebar-next
@@ -103,7 +106,9 @@ bind pager G bottom
 bind index,pager \cu half-up
 bind index,pager \cd half-down
 
-mailboxes "=INBOX" "=Univ" "=FDroid" "=Tor" "=Suckless" "=Cau" "=Fsfe" "=Debian" "=Creu" "=Announ" "=Other" "=Sent" "=GLcat" "=Drafts" "=Trash" "=../ac/INBOX" "=../gmx/INBOX"
+mailboxes "=INBOX" "=Univ" "=FDroid" "=Tor" "=Suckless" "=Cau" "=Fsfe" "=Announ" "=Other" "=Sent" "=GLcat" "=Drafts" "=Trash"
+mailboxes "=../ac/INBOX" "=../gmx/INBOX"
+mailboxes "=../cau/INBOX" "=../cau/Sent" "=../cau/Administració interna" "=../cau/Ajuntament"
 macro index,pager A <change-folder>=Spam<enter>
 macro index,pager S <change-folder>=Sent<enter>
 

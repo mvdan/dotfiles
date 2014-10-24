@@ -98,6 +98,8 @@ au BufRead mutt-* silent /^$
 au BufRead *.txt silent set et
 au BufRead ~/git/tor/*.[ch] silent set et sw=2
 au BufRead ~/git/fcl/* silent set et sw=4
+au BufRead ~/git/ia/* silent set et sw=4
+au BufRead ~/git/whatthedish-android/* silent set et sw=4
 
 inoremap jj <esc>
 set backspace=eol,start,indent

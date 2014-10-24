@@ -239,14 +239,8 @@ spr() {
 	fi
 }
 
-pcat() {
-	if [ -t 0 ]; then
-		[ $# -eq 1 ] || return 1
-		curl -F "paste=@$1" http://localhost:8080
-	else
-		curl -F "paste=<-" http://localhost:8080
-	fi
-}
+alias pcat='curl -F "paste=<-" http://paste.cat'
+alias lpcat='curl -F "paste=<-" http://localhost:8080'
 
 read_dom() {
 	local IFS=\>
@@ -267,11 +261,11 @@ export EMAIL="mvdan@mvdan.cc"
 export DEBFULLNAME=$FULLNAME
 export DEBEMAIL=$EMAIL
 
-
 #export WINEARCH=win32
 #export WINEPREFIX=/mnt/dan/wine
 #export PATH=~/git/arm-eabi-4.6/bin:$PATH
 #export ARCH=arm SUBARCH=arm  CROSS_COMPILE=arm-eabi-
 
-export GOPATH=$HOME/.go
+export GOPATH=$HOME/go
 export PATH="$HOME/.bin:$GOPATH/bin:$PATH:/opt/gradle/bin"
+alias grd="gradle --daemon"
