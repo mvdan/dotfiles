@@ -6,14 +6,14 @@ filetype plugin indent on
 
 set nocompatible
 set number ruler smartindent
-set wrap linebreak nolist
-set nobackup noswapfile nowb
+set wrap linebreak nolist nojoinspaces
+set nobackup noswapfile nowritebackup
 set history=2000
 set tabstop=4 shiftwidth=4
-set tw=78 fo-=t
-set laststatus=2 showcmd hidden autoread magic mat=2
+set textwidth=78 formatoptions-=t
+set laststatus=2 showcmd hidden
+set autoread magic matchtime=2
 set background=dark
-set nojoinspaces
 
 set foldmethod=syntax foldnestmax=1
 hi Folded ctermbg=black
@@ -33,7 +33,7 @@ nnoremap <space> :noh<cr>:echo<cr><esc>
 
 " No sound on errors
 set noerrorbells novisualbell t_vb=
-set tm=500
+set timeoutlen=500
 
 " Save with sudo
 command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
