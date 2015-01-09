@@ -208,17 +208,12 @@ function (widget, args)
 	return netcontent
 end,1)
 
-local imap_enabled = true
-
 mdirwidget = wibox.widget.textbox()
 function mdirwidget_update()
 	local mdircontent = ""
 	for name,paths in pairs(maildirs) do
 		local count = io.popen("find "..table.concat(paths, " ").." -type f 2>/dev/null | wc -l"):read("*n")
-		if not imap_enabled then
-			name = "<span foreground='"..p_grey.."'>"..name.."</span>"
-		end
-		if count > 0 then
+		if count ~= nil and count > 0 then
 			mdircontent = mdircontent..name.." <span foreground='"..p_green.."'>"..string.format("%-3d", count).."</span>"
 		else
 			mdircontent = mdircontent..name.." "..string.format("%-3d", count)
@@ -229,26 +224,14 @@ end
 
 
 function offlineimap_run(force)
-	force = force or false
-	if not force and not imap_enabled then
-		return
-	end
-	if not force and (net_ifaces["wlp3s0"] == false and net_ifaces["eth0"] == false) then
-		imap_enabled = false
+	if net_ifaces["wlp3s0"] == false and net_ifaces["eth0"] == false then
 		return
 	end
 	sexec('offlineimap &>/dev/null && notmuch new &>/dev/null; echo \\"mdirwidget_update()\\" | awesome-client')
 end
 
-function offlineimap_toggle()
-	imap_enabled = not imap_enabled
-	if imap_enabled then
-		offlineimap_run()
-	end
-end
-
-imap = timer({ timeout = 120 })
-imap:connect_signal("timeout", offlineimap_run)
+imap = timer({ timeout = 60 })
+imap:connect_signal("timeout", function() offlineimap_run(false) end)
 imap:start()
 
 mdirtimer = timer({ timeout = 3 })
@@ -513,6 +496,7 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey, altkey }, "1", function () sexec("setxkbmap us altgr-intl -option caps:none") end),
 	awful.key({ modkey, altkey }, "2", function () sexec("setxkbmap es cat -option caps:none") end),
 
+	awful.key({ modkey, altkey }, "s", function () sexec("cd /tmp; scrot -s &>/tmp/out") end),
 	awful.key({ modkey, altkey }, "t", xrandr),
 
 	awful.key({ modkey, altkey }, "g", function () sexec(terminal .. " -c ssh_confine -e ssh dev1 -t TERM=screen-256color tmux -u a") end),
@@ -538,7 +522,6 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey, "Shift"}, "i", function () sexec("sudo systemctl restart netctl-auto@wlp3s0") end),
 	
 	awful.key({ modkey, altkey }, "o", function () offlineimap_run(true) end),
-	awful.key({ modkey, altkey, "Shift" }, "o", function () offlineimap_toggle() end),
 	
 	--awful.key({ modkey, altkey}, "y", function () sexec("eject -T") end),
 

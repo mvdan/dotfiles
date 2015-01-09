@@ -1,11 +1,5 @@
 #!/bin/bash
 
-command_test vim && export EDITOR=vim || export EDITOR=vi
-export PAGER="less"
-command_test vimdiff && export DIFF_VIEWER=vimdiff
-[[ -n $DISPLAY ]] && export BROWSER=chromium
-[[ -n $TMUX ]] && export TERM=screen-256color
-
 alias ls="ls --color=auto"
 alias grep="grep --color=auto"
 alias egrep="grep -E --color=auto"
@@ -70,7 +64,7 @@ pgr () {
 	ps aux | grep -v grep | grep "$@" -i --color=auto
 }
 
-fni () {
+fn () {
 	[[ $# > 1 ]] && find $1 "*$2*" || find . "*$1*"
 }
 
@@ -151,13 +145,6 @@ gplm() {
 	git pull --no-ff https://gitlab.com/${1}.git ${2:-master}
 }
 
-wpa_sup() {
-	wpa_passphrase $1 $2 | sudo wpa_supplicant -iwlan0 -d -c /dev/stdin
-}
-
-alias cppc="cppcheck --enable=all --inconclusive --std=posix"
-alias valg="valgrind --leak-check=yes --show-reachable=yes --num-callers=20"
-
 [[ -x ~/git/fsr/fdroid ]] && {
 	alias fbld="fdroid build -l -v --no-tarball"
 	alias fchk="fdroid checkupdates -v"
@@ -172,7 +159,17 @@ alias mss="sshfs -C -o follow_symlinks"
 alias mserv="sshfs mvdan@mvdan.cc:/home/mvdan/ ~/srv -C -o follow_symlinks"
 alias umserv="fusermount -u ~/srv"
 alias weeserv="ssh mvdan.cc -t TERM=screen-256color LANG=en_US.UTF-8 tmux -u new weechat"
-alias devserv="ssh dev1 -t TERM=screen-256color LANG=en_US.UTF-8 tmux -u new"
+
+[ -n "$DISPLAY" ] && export BROWSER=chromium
+[ -n "$TMUX" ] && export TERM=screen-256color
+
+command_test() {
+	command -v $1 >/dev/null 2>&1
+	return $?
+}
+
+command_test vim && export EDITOR=vim || export EDITOR=vi
+command_test vimdiff && export DIFF_VIEWER=vimdiff
 
 command_test aptitude && {
 	alias ap="aptitude"
@@ -242,30 +239,4 @@ spr() {
 alias pcat='curl -F "paste=<-" http://paste.cat'
 alias lpcat='curl -F "paste=<-" http://localhost:8080'
 
-read_dom() {
-	local IFS=\>
-	read -d \< ENTITY CONTENT
-}
-
-[[ -d ~/.misc ]] && {
-	alias chsid="sudo -E $HOME/.misc/debian-chroot.sh /home/debian"
-	alias setup_enc="$HOME/.misc/setup-conceptronic.sh"
-	alias enc="$HOME/.misc/encode-conceptronic.sh"
-	alias p_independent="$HOME/.misc/pacman-independent.sh"
-	alias p_disowned="$HOME/.misc/pacman-disowned.sh"
-	alias flacc="$HOME/.misc/flac2.sh"
-}
-
-export FULLNAME="Daniel Martí"
-export EMAIL="mvdan@mvdan.cc"
-export DEBFULLNAME=$FULLNAME
-export DEBEMAIL=$EMAIL
-
-#export WINEARCH=win32
-#export WINEPREFIX=/mnt/dan/wine
-#export PATH=~/git/arm-eabi-4.6/bin:$PATH
-#export ARCH=arm SUBARCH=arm  CROSS_COMPILE=arm-eabi-
-
-export GOPATH=$HOME/go
-export PATH="$HOME/.bin:$GOPATH/bin:$PATH:/opt/gradle/bin"
 alias grd="gradle --daemon"

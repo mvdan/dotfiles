@@ -9,14 +9,11 @@ set number ruler smartindent
 set wrap linebreak nolist nojoinspaces
 set nobackup noswapfile nowritebackup
 set history=2000
-set tabstop=4 shiftwidth=4
+set tabstop=8 shiftwidth=8
 set textwidth=78 formatoptions-=t
 set laststatus=2 showcmd hidden
 set autoread magic matchtime=2
 set background=dark
-
-set foldmethod=syntax foldnestmax=1
-hi Folded ctermbg=black
 
 set shell=/bin/bash\ -i
 
@@ -89,7 +86,7 @@ inoremap <F11> 3<C-O><C-W>-
 inoremap <F12> 3<C-O><C-W>>
 
 " E-mail text wrapping
-au BufRead mutt-* silent set formatoptions+=t textwidth=72 foldmethod=manual
+au BufRead mutt-* silent set formatoptions+=t textwidth=72
 " Remove the last signature
 au BufRead mutt-* silent g/^> [> ]*-- *$/,?^-- $?-2d
 " Start at the first empty line where we'll write
@@ -98,8 +95,6 @@ au BufRead mutt-* silent /^$
 au BufRead *.txt silent set et
 au BufRead ~/git/tor/*.[ch] silent set et sw=2
 au BufRead ~/git/fcl/* silent set et sw=4
-au BufRead ~/git/ia/* silent set et sw=4
-au BufRead ~/git/whatthedish-android/* silent set et sw=4
 
 inoremap jj <esc>
 set backspace=eol,start,indent
@@ -112,3 +107,4 @@ noremap <leader>P o<esc>:set paste<cr>:.!xsel -po<cr>:set nopaste<cr>:silent! %s
 
 inoremap <F8> Daniel Martí <mvdan@mvdan.cc>
 ab mv@ mvdan@mvdan.cc
+au BufRead,BufNewFile *.pddl setf lisp

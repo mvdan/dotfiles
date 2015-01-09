@@ -162,24 +162,19 @@ setopt hist_save_no_dups
 setopt hist_expire_dups_first
 setopt hist_find_no_dups
 
-command_test() {
-	test -n ${commands[$1]}
-}
-
 bashcomp_done=false
 bashcomp() {
-
 	$bashcomp_done && return
 	autoload -U bashcompinit
 	bashcompinit
 	bashcomp_done=true
 
 	for f in "$@"; do
-		source "$f"
+		. "$f"
 	done
 }
 
-source ~/.shrc
+. ~/.shrc
 
 bhelp () {
 	bash -c "help \"$@\""
@@ -191,25 +186,6 @@ da() {
 	else
 		du -hs --apparent-size ./*(DN) 2>/dev/null | sort -h
 	fi
-}
-
-command_test dpkg && {
-	alias dcl="rm -fR */(N) *.{deb,changes,dsc,upload}(N)"
-	dpr() {
-		[[ ! -d *(/) ]] &&\
-			tar -xf *orig* && tar -xf *debian* &&\
-		   	mv debian/ ^debian/ && cd ^debian/
-	}
-	dpk() {
-		[[ -f debian/changelog ]] && {
-			NAME=`head -n 1 debian/changelog |\
-			   	sed -ne 's/\(.*\) (\(.*\)).*/\1_\2/p'`;
-			tar -cf ../$NAME.debian.tar.gz debian/
-		}
-	}
-	alias dbl="dpkg-buildpackage -sa && cd .."
-	alias dln="lintian -Ii --pedantic *.changes(N)"
-	alias ql="quilt"
 }
 
 alias zcp="noglob zmv -C"

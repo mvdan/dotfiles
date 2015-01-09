@@ -72,6 +72,7 @@ set postpone = ask-no
 set abort_nosubject = no
 
 #set pgp_autosign
+set pgp_use_gpg_agent = yes
 set pgp_auto_decode
 set pgp_sign_as = 4348041C
 set pgp_replysign
