@@ -94,6 +94,10 @@ function yellow(str)
 	return string.format('<span color="#bb4">%s</span>', str)
 end
 
+function space(n, str)
+	return string.format('%'..n..'s', str)
+end
+
 local sep = wibox.widget.textbox()
 sep:set_text("   ")
 
@@ -107,7 +111,7 @@ vicious.register(cpuwidget, vicious.widgets.cpu,
 function (widget, args)
 	local txt=""
 	for cn=1, cpus_count do
-		txt = txt..string.format("%4s", args[cn])
+		txt = txt..space(4, args[cn])
 	end
 	return txt
 end, 1)
@@ -115,31 +119,31 @@ end, 1)
 batwidget = wibox.widget.textbox()
 vicious.register(batwidget, vicious.widgets.bat, function(widget, args)
 	if args[1] == "−" then
-		return string.format("%3s", args[2])..string.format("%6s", args[3])
+		return space(3, args[2])..space(6, args[3])
 	elseif args[1] == '+' then
-		return green(string.format("%3s", args[2]))..string.format("%6s", args[3])
+		return green(space(3, args[2]))..space(6, args[3])
 	elseif args[1] == '↯' then
-		return green(string.format("%3s", args[2])).." 00:00"
+		return green(space(3, args[2])).." 00:00"
 	else
-		return green(string.format("%3s", args[2])).." ??:??"
+		return green(space(3, args[2])).." ??:??"
 	end
 end, 4, "BAT0")
 
 volwidget = wibox.widget.textbox()
 vicious.register(volwidget, vicious.widgets.volume, function(widget, args)
 	if args[2] == "♫" then
-		return string.format("%3s", args[1])
+		return space(3, args[1])
 	else
-		return blue(string.format("%3s", args[1]))
+		return blue(space(3, args[1]))
 	end
 end, 4, "Master")
 
 memwidget = wibox.widget.textbox()
 vicious.register(memwidget, vicious.widgets.mem,
 function (widget, args)
-	local used = yellow(string.format("%5s", args[2]))
-	local nonfree = blue(string.format("%4s", args[9]))
-	local total = green(string.format("%-5s", args[3]))
+	local used = yellow(space(5, args[2]))
+	local nonfree = blue(space(4, args[9]))
+	local total = green(space(-5, args[3]))
 	return used..' '..nonfree..' '..total
 end, 1)
 
@@ -164,8 +168,8 @@ function (widget, args)
 	end
 	for i, dev in ipairs(devices) do
 		dev = "sd"..dev
-		local write = yellow(string.format("%5s", args["{"..dev.." write_mb}"]))
-		local read = green(string.format("%-5s", args["{"..dev.." read_mb}"]))
+		local write = yellow(space(5, args["{"..dev.." write_mb}"]))
+		local read = green(space(-5, args["{"..dev.." read_mb}"]))
 		if txt ~= "" then txt = txt..'  ' end
 		txt = txt..write..' '..dev..' '..read
 	end
@@ -196,9 +200,9 @@ function (widget, args)
 		local rx = args['{'..dev..' rx_mb}']
 		if dev == 'wlp3s0' or (rx ~= '0.0' and rx ~= nil) then
 			net_ifaces[dev] = true
-			local up = string.format("%5s", args['{'..dev..' up_kb}'])
+			local up = space(5, args['{'..dev..' up_kb}'])
 			local tx = args['{'..dev..' tx_mb}']
-			local dn = string.format("%-6s", args['{'..dev..' down_kb}'])
+			local dn = space(-6, args['{'..dev..' down_kb}'])
 			if dev == 'wlp3s0' then
 				txt = txt..yellow(up)..' '..tx..' '..wifi_n()..' '..wifi_q()..' '..rx..' '..green(dn)
 			else
@@ -212,10 +216,13 @@ end, 1)
 function mdir_str(name)
 	local paths = maildirs[name]
 	local count = io.popen("find "..table.concat(paths, " ").." -type f 2>/dev/null | wc -l"):read("*n")
-	if count ~= nil and count > 0 then
-		return name..' '..green(string.format("%-3d", count))
+	if count == nil then
+		return name.." ?"
 	end
-	return name.." "..string.format("%-3d", count)
+	if count > 0 then
+		return name..' '..green(space(-3, count))
+	end
+	return name.." "..space(-3, count)
 end
 
 mdirwidget = wibox.widget.textbox()
@@ -243,8 +250,11 @@ mdirwidget_update()
 mpdwidget = wibox.widget.textbox()
 vicious.register(mpdwidget, vicious.widgets.mpd,
 function (widget, args)
-	if args["{state}"] == "Stop" then return '  - MPD -  '
-	else return args["{Title}"]..' - '..args['{Album}'] end
+	if args["{state}"] == "Stop" then
+		return '  - MPD -  '
+	else
+		return args["{Title}"]..' - '..args['{Album}']
+	end
 end, 5)
 
 for s = 1, screen.count() do
