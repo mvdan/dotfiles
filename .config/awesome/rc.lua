@@ -1,4 +1,4 @@
--- awesome >= 3.5.5
+-- awesome >= 3.5.6
 -- vicious >= 2.1.3
 
 local awful = require("awful")
@@ -41,16 +41,8 @@ local maildirs = {
 	dan = {
 		"/home/mvdan/Mail/linode/INBOX/new",
 	},
-	mls = {
-		"/home/mvdan/Mail/linode/Fsfe/new",
-		"/home/mvdan/Mail/linode/Tor/new",
-		"/home/mvdan/Mail/linode/Univ/new",
-	},
 	cau = {
 		"/home/mvdan/Mail/linode/Cau/new",
-		--"/home/mvdan/Mail/cau/INBOX/new",
-		--"/home/mvdan/Mail/cau/Administració interna/new",
-		--"/home/mvdan/Mail/cau/Ajuntament/new",
 	}
 }
 
@@ -101,54 +93,54 @@ sep:set_text("   ")
 
 cpus_count = 0
 for line in io.lines("/proc/stat") do
-	if string.match(line,"^cpu[%d]+") then cpus_count = cpus_count + 1 end
+	if string.match(line, "^cpu[%d]+") then cpus_count = cpus_count + 1 end
 end
 
 cpuwidget = wibox.widget.textbox()
 vicious.register(cpuwidget, vicious.widgets.cpu,
 function (widget, args)
 	local cpucontent=""
-	for cn=1,cpus_count do
+	for cn=1, cpus_count do
 		cpucontent = cpucontent..string.format("%4s", args[cn])
 	end
 	return cpucontent
-end,1)
+end, 1)
 
 batwidget = wibox.widget.textbox()
 vicious.register(batwidget, vicious.widgets.bat, function(widget, args)
 	if args[1] == "−" then
-		return string.format("%3s",args[2])..string.format("%6s",args[3])
+		return string.format("%3s", args[2])..string.format("%6s", args[3])
 	elseif args[1] == '+' then
-		return "<span color='"..p_green.."'>"..string.format("%3s",args[2]).."</span>"..string.format("%6s",args[3])
+		return "<span color='"..p_green.."'>"..string.format("%3s", args[2]).."</span>"..string.format("%6s", args[3])
 	elseif args[1] == '↯' then
-		return "<span color='"..p_green.."'>"..string.format("%3s",args[2]).."</span> 00:00"
+		return "<span color='"..p_green.."'>"..string.format("%3s", args[2]).."</span> 00:00"
 	else
-		return "<span color='"..p_green.."'>"..string.format("%3s",args[2]).."</span> ??:??"
+		return "<span color='"..p_green.."'>"..string.format("%3s", args[2]).."</span> ??:??"
 	end
 end, 4, "BAT0")
 
 volwidget = wibox.widget.textbox()
 vicious.register(volwidget, vicious.widgets.volume, function(widget, args)
-	if args[2] == "♫" then return string.format("%3s",args[1])
-	else return '<span color="'..p_blue..'">'..string.format("%3s",args[1])..'</span>' end
+	if args[2] == "♫" then return string.format("%3s", args[1])
+	else return '<span color="'..p_blue..'">'..string.format("%3s", args[1])..'</span>' end
 end, 4, "Master")
 
 memwidget = wibox.widget.textbox()
 vicious.register(memwidget, vicious.widgets.mem,
 function (widget, args)
-	local used = "<span color='"..p_yellow.."'>"..string.format("%5s",args[2]).."</span>"
-	local nonfree = "<span color='"..p_blue.."'>"..string.format("%4s",args[9]).."</span>"
-	local total = "<span color='"..p_green.."'>"..string.format("%-5s",args[3]).."</span>"
+	local used = "<span color='"..p_yellow.."'>"..string.format("%5s", args[2]).."</span>"
+	local nonfree = "<span color='"..p_blue.."'>"..string.format("%4s", args[9]).."</span>"
+	local total = "<span color='"..p_green.."'>"..string.format("%-5s", args[3]).."</span>"
 	return used..' '..nonfree..' '..total
-end,1)
+end, 1)
 
 local devices
 
 function add_dev(dev)
-	for i,dev_ in ipairs(devices) do
+	for i, dev_ in ipairs(devices) do
 		if dev == dev_ then return end
 	end
-	table.insert(devices,dev)
+	table.insert(devices, dev)
 end
 
 iowidget = wibox.widget.textbox()
@@ -157,19 +149,19 @@ function (widget, args)
 	local iocontent = ""
 	devices = { 'a' }
 	for line in io.lines("/proc/mounts") do
-		if line:sub(1,7) == "/dev/sd" then
-			add_dev(line:sub(8,8))
+		if line:sub(1, 7) == "/dev/sd" then
+			add_dev(line:sub(8, 8))
 		end
 	end
-	for i,dev in ipairs(devices) do
+	for i, dev in ipairs(devices) do
 		dev = "sd"..dev
-		local write = '<span color="'..p_yellow..'">'..string.format("%5s",args["{"..dev.." write_mb}"])..'</span>'
-		local read = '<span color="'..p_green..'">'..string.format("%-5s",args["{"..dev.." read_mb}"])..'</span>'
+		local write = '<span color="'..p_yellow..'">'..string.format("%5s", args["{"..dev.." write_mb}"])..'</span>'
+		local read = '<span color="'..p_green..'">'..string.format("%-5s", args["{"..dev.." read_mb}"])..'</span>'
 		if iocontent == "" then iocontent = write..' '..dev..' '..read
 		else iocontent = iocontent..'  '..write..' '..dev..' '..read end
 	end
 	return iocontent
-end,1)
+end, 1)
 
 local function wifi_n()
 	local name = io.popen("wpa_cli status wlp3s0 | sed -n 's/^id_str=//p'"):read("*l")
@@ -179,7 +171,7 @@ end
 
 local function wifi_q()
 	for line in io.lines("/proc/net/wireless") do
-		if line:sub(1,6) == 'wlp3s0' then
+		if line:sub(1, 6) == 'wlp3s0' then
 			return string.match(line, "([%d]+)[.]")
 		end
 	end
@@ -191,13 +183,13 @@ netwidget = wibox.widget.textbox()
 vicious.register(netwidget, vicious.widgets.net,
 function (widget, args)
 	local netcontent = ""
-	for dev,enabled in pairs(net_ifaces) do
+	for dev, enabled in pairs(net_ifaces) do
 		local rx = args['{'..dev..' rx_mb}']
 		if dev == 'wlp3s0' or (rx ~= '0.0' and rx ~= nil) then
 			net_ifaces[dev] = true
-			local up = string.format("%5s",args['{'..dev..' up_kb}'])
+			local up = string.format("%5s", args['{'..dev..' up_kb}'])
 			local tx = args['{'..dev..' tx_mb}']
-			local dn = string.format("%-6s",args['{'..dev..' down_kb}'])
+			local dn = string.format("%-6s", args['{'..dev..' down_kb}'])
 			if dev == 'wlp3s0' then
 				netcontent = netcontent..'<span foreground="'..p_yellow..'">'..up..'</span> '..tx..' '..wifi_n()..' '..wifi_q()..' '..rx..' <span foreground="'..p_green..'">'..dn..'</span>'
 			else
@@ -206,22 +198,21 @@ function (widget, args)
 		end
 	end
 	return netcontent
-end,1)
+end, 1)
+
+function mdir_str(name)
+	local paths = maildirs[name]
+	local count = io.popen("find "..table.concat(paths, " ").." -type f 2>/dev/null | wc -l"):read("*n")
+	if count ~= nil and count > 0 then
+		return name.." <span foreground='"..p_green.."'>"..string.format("%-3d", count).."</span>"
+	end
+	return name.." "..string.format("%-3d", count)
+end
 
 mdirwidget = wibox.widget.textbox()
 function mdirwidget_update()
-	local mdircontent = ""
-	for name,paths in pairs(maildirs) do
-		local count = io.popen("find "..table.concat(paths, " ").." -type f 2>/dev/null | wc -l"):read("*n")
-		if count ~= nil and count > 0 then
-			mdircontent = mdircontent..name.." <span foreground='"..p_green.."'>"..string.format("%-3d", count).."</span>"
-		else
-			mdircontent = mdircontent..name.." "..string.format("%-3d", count)
-		end
-	end
-	mdirwidget:set_markup(mdircontent)
+	mdirwidget:set_markup(mdir_str("dan")..mdir_str("cau"))
 end
-
 
 function offlineimap_run(force)
 	if net_ifaces["wlp3s0"] == false and net_ifaces["eth0"] == false then
@@ -514,7 +505,7 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey }, "i", function ()
 		naughty.notify({
 			title = " % ip route",
-			text = io.popen("ip route"):read("*a"):sub(0,-2),
+			text = io.popen("ip route"):read("*a"):sub(0, -2),
 			position = "bottom_right"
 		})
 	end),
