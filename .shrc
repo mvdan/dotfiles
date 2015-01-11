@@ -160,7 +160,6 @@ alias mserv="sshfs mvdan@mvdan.cc:/home/mvdan/ ~/srv -C -o follow_symlinks"
 alias umserv="fusermount -u ~/srv"
 alias weeserv="ssh mvdan.cc -t TERM=screen-256color LANG=en_US.UTF-8 tmux -u new weechat"
 
-[ -n "$DISPLAY" ] && export BROWSER=chromium
 [ -n "$TMUX" ] && export TERM=screen-256color
 
 command_test() {
