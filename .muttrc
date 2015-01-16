@@ -51,7 +51,7 @@ set tmpdir = ~/.cache
 set auto_tag
 set fast_reply
 set noconfirmappend
-set pager_index_lines = 6
+set pager_index_lines = 8
 
 set editor = vim
 set sleep_time = 0

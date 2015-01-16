@@ -1,4 +1,3 @@
-([ -f ~/.Xresources ] && xrdb -merge ~/.Xresources) &
 (
 	xrandr --dpi 150;
 	xbacklight -set 30%;
