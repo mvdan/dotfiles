@@ -191,8 +191,6 @@ command_test pacman && {
 	alias sim="sudo pacman -S --needed"
 	alias syu="sudo pacman -Syu"
 	alias syyu="sudo pacman -Syyu"
-	alias p_size="pacman -Qi | sed -n 's/^\(Name\|Installed\).*\:[ ]*\(.*\)/\2/p'\
- | sed '/^[^ ]*$/N;s/\(.*\)\n\(.*\)/\2 \1/' | sort -h | column -t"
 }
 
 command_test pacaur && {
