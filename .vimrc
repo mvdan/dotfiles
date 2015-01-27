@@ -108,3 +108,4 @@ noremap <leader>P o<esc>:set paste<cr>:.!xsel -po<cr>:set nopaste<cr>:silent! %s
 inoremap <F8> Daniel Martí <mvdan@mvdan.cc>
 ab mv@ mvdan@mvdan.cc
 au BufRead,BufNewFile *.pddl setf lisp
+au BufNewFile,BufRead *.gradle set filetype=groovy

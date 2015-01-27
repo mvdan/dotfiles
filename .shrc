@@ -65,11 +65,19 @@ pgr () {
 }
 
 fn () {
-	[[ $# > 1 ]] && find $1 "*$2*" || find . "*$1*"
+	if [[ $# > 1 ]]; then
+		find $1 -name "*$2*"
+	else
+		find . -name "*$1*"
+	fi
 }
 
-fni () {
-	[[ $# > 1 ]] && find $1 -iname "*$2*" || find . -iname "*$1*"
+fn () {
+	if [[ $# > 1 ]]; then
+		find $1 -iname "*$2*"
+	else
+		find . -iname "*$1*"
+	fi
 }
 
 alias udb="sudo updatedb"
