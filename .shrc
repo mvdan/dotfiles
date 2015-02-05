@@ -72,7 +72,7 @@ fn () {
 	fi
 }
 
-fn () {
+fni () {
 	if [[ $# > 1 ]]; then
 		find $1 -iname "*$2*"
 	else
@@ -244,5 +244,6 @@ spr() {
 
 alias pcat='curl -F "paste=<-" http://paste.cat'
 alias lpcat='curl -F "paste=<-" http://localhost:8080'
+alias cdg="cd ${GOPATH}/src/github.com/mvdan"
 
 alias grd="gradle --daemon"

@@ -499,7 +499,7 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey, altkey }, "/", function () sexec("mpc toggle") end),
 	--awful.key({ }, "#174", function () sexec("mpc stop; echo \'vicious.force({mpdwidget})\' | awesome-client") end),
 
-	awful.key({ modkey, altkey }, "Up", function () sexec("xset dpms force off && slock") end),
+	awful.key({ modkey, altkey }, "Up", function () sexec("slock") end),
 	awful.key({ modkey, altkey }, "Prior", function () sexec("cur=$(xbacklight -get); cur=${cur%%.*}; if [ $cur -gt 40 ]; then xbacklight -dec 10; elif [ $cur -gt 10 ]; then xbacklight -dec 3; else xbacklight -dec 1; fi") end),
 	awful.key({ modkey, altkey }, "Next", function () sexec("cur=$(xbacklight -get); cur=${cur%%.*}; if [ $cur -gt 40 ]; then xbacklight -inc 10; elif [ $cur -gt 10 ]; then xbacklight -inc 3; else xbacklight -inc 1; fi") end),
 
