@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# In the default configuration, the checks E123, E133, E226, E241 and E242 are
+# ignored because they are not rules unanimously accepted
+# On top of those, we ignore:
+# * E501: line too long (82 > 79 characters)
+#   - Recommended for readability but not enforced
+#   - Some lines are awkward to wrap around a char limit
+# * E302: expected 2 blank lines, found 0
+#   - One blank line is enough
+
+PEP8_IGNORE="E123,E133,E226,E241,E242,E501,E302"
+
+find . -type f -name '*.py' -print0 | xargs -0 autopep8 --ignore=$PEP8_IGNORE --in-place 
