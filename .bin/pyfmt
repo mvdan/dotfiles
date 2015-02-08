@@ -8,7 +8,17 @@
 #   - Some lines are awkward to wrap around a char limit
 # * E302: expected 2 blank lines, found 0
 #   - One blank line is enough
+# * E127: continuation line over-indented for visual indent
+# * E128: continuation line under-indented for visual indent
+#   - Visual indents are often unnecessary
 
-PEP8_IGNORE="E123,E133,E226,E241,E242,E501,E302"
+PEP8_IGNORE="E123,E133,E226,E241,E242,E501,E302,E127,E128"
 
-find . -type f -name '*.py' -print0 | xargs -0 autopep8 --ignore=$PEP8_IGNORE --in-place 
+FILES=$(find . -type f -name '*.py')
+
+autopep8 --ignore=$PEP8_IGNORE --in-place $FILES
+
+for f in $FILES; do
+	unexpand -t 4 $f > ${f}_
+	mv ${f}_ $f
+done
