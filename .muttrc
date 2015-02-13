@@ -108,6 +108,7 @@ bind index,pager \cu half-up
 bind index,pager \cd half-down
 
 mailboxes "=INBOX" "=Univ" "=FDroid" "=Tor" "=Suckless" "=Cau" "=Fsfe" "=Announ" "=Other" "=Sent" "=GLcat" "=Drafts" "=Trash"
+mailboxes "=../khacks/INBOX"
 mailboxes "=../ac/INBOX" "=../gmx/INBOX"
 mailboxes "=../cau/INBOX" "=../cau/Sent" "=../cau/Administració interna" "=../cau/Ajuntament"
 macro index,pager A <change-folder>=Spam<enter>

@@ -86,15 +86,16 @@ inoremap <F11> 3<C-O><C-W>-
 inoremap <F12> 3<C-O><C-W>>
 
 " E-mail text wrapping
-au BufRead mutt-* silent set formatoptions+=t textwidth=72
+au BufRead mutt-* silent setl formatoptions+=t textwidth=72
 " Remove the last signature
 au BufRead mutt-* silent g/^> [> ]*-- *$/,?^-- $?-2d
 " Start at the first empty line where we'll write
 au BufRead mutt-* silent /^$
 
-au BufRead *.txt silent set et
-au BufRead ~/git/tor/*.[ch] silent set et sw=2
-au BufRead ~/git/fcl/* silent set et sw=4
+au BufRead *.txt silent setl et
+au BufRead ~/git/tor/*.[ch] silent setl et sw=2
+au BufRead ~/git/fcl/* silent setl et sw=4
+au BufRead ~/git/bunked-web/*.py silent setl noet sw=4 ts=4
 
 inoremap jj <esc>
 set backspace=eol,start,indent

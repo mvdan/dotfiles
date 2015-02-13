@@ -35,16 +35,19 @@
 	fe = fetch
 	gr = grep
 	lo = log
+	loo = log ORIG_HEAD..
 	lop = log -p
+	lopo = log -p ORIG_HEAD..
 	lou = log @{u}..
 	ls = ls-files
 	mr = merge
 	pl = pull
 	pla = pull --all
-	plr = pull -r
+	plr = pull --rebase=preserve
 	ps = push
 	rb = rebase
 	rbi = rebase -i
+	rm = rm
 	rmc = rm --cached
 	rs = reset
 	rsh = reset --hard
