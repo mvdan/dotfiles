@@ -235,7 +235,7 @@ function offlineimap_run(force)
 	if net_ifaces["wlp3s0"] == false and net_ifaces["eth0"] == false then
 		return
 	end
-	sexec('offlineimap &>/dev/null && notmuch new &>/dev/null; echo \\"mdirwidget_update()\\" | awesome-client')
+	sexec('offlineimap &>/dev/null; notmuch new &>/dev/null; echo \\"mdirwidget_update()\\" | awesome-client')
 end
 
 imap = timer({ timeout = 60 })
