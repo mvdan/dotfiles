@@ -18,6 +18,7 @@ set timeout = 10
 
 set sendmail = '/usr/bin/msmtp'
 set date_format = "!%a, %b %d, %Y at %H:%M:%S %Z"
+set index_format = "%4C %Z %{%b %d} %-20.20L (%?l?%4l&%4c?) %s"
 
 set edit_headers
 set reverse_name
@@ -26,7 +27,7 @@ set reverse_alias
 set realname = 'Daniel Martí'
 set from = "mvdan@mvdan.cc"
 set use_envelope_from
-alternates "mvdan@mvdan.cc|mvdan@fsfe.org|danielmarti@gmx.com|dmarti@ac.upc.edu|daniel.marti.i@est.fib.upc.edu|aeigantonvila@gmail.com"
+alternates "mvdan@mvdan.cc|mvdan@fsfe.org|danielmarti@gmx.com|dmarti@ac.upc.edu|daniel.marti.i@est.fib.upc.edu|aeigantonvila@gmail.com|khacks@kairossociety.org"
 set record = +Sent
 
 folder-hook . "set realname = 'Daniel Martí' from = 'mvdan@mvdan.cc' record = +Sent"
@@ -51,7 +52,7 @@ set tmpdir = ~/.cache
 set auto_tag
 set fast_reply
 set noconfirmappend
-set pager_index_lines = 8
+set pager_index_lines = 9
 
 set editor = vim
 set sleep_time = 0

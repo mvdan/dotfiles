@@ -40,6 +40,7 @@ editor_cmd = terminal .. " -e " .. editor
 local maildirs = {
 	dan = {
 		"/home/mvdan/Mail/linode/INBOX/new",
+		"/home/mvdan/Mail/linode/Univ/new",
 	},
 	cau = {
 		"/home/mvdan/Mail/linode/Cau/new",
@@ -191,7 +192,7 @@ local function wifi_q()
 	return "??"
 end
 
-net_ifaces = { wlp3s0 = false, enp0s20u1 = false, enp0s20u2 = false }
+net_ifaces = { enp0s25 = false, wlp3s0 = false, enp0s20u1 = false, enp0s20u2 = false }
 netwidget = wibox.widget.textbox()
 vicious.register(netwidget, vicious.widgets.net,
 function (widget, args)
@@ -515,8 +516,6 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey, altkey }, "e", function () sexec(terminal .. " -c todo -e vim ~/TODO.md") end),
 	awful.key({ modkey, altkey }, "b", function () sexec(terminal .. " -c newsbeuter -e sh -c newsbeuter") end),
 	awful.key({ modkey, altkey }, "k", function () sexec(terminal .. " -c ranger -e zsh -c ranger") end),
-	awful.key({ modkey, altkey }, "m", function () sexec(terminal .. " -c rtorrent -e rtorrent -d /tmp -s /tmp") end),
-	awful.key({ modkey, altkey, "Shift" }, "m", function () sexec(terminal .. " -c rtorrent -e rtorrent -d /mnt/dan/Torrents -s /mnt/dan/Torrents") end),
 	awful.key({ modkey, altkey }, "n", function () sexec(terminal .. " -c ncmpc -e ncmpc") end),
 
 	awful.key({ modkey, altkey }, "i", function () sexec("chromium") end),

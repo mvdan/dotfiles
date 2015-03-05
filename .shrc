@@ -1,10 +1,10 @@
 #!/bin/bash
 
-alias ls="ls --color=auto"
+alias ls="ls --color=auto -F"
 alias grep="grep --color=auto"
 alias egrep="grep -E --color=auto"
-alias ll="ls --color=auto -lhi"
-alias la="ls --color=auto -alhi"
+alias ll="ls --color=auto -lhiF"
+alias la="ls --color=auto -alhiF"
 alias cal="cal -m"
 
 lt () {
