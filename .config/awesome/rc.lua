@@ -498,7 +498,6 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey, altkey }, ",", function () sexec("mpc prev; echo \'vicious.force({mpdwidget})\' | awesome-client") end),
 	awful.key({ modkey, altkey }, "-", function () sexec("mpc toggle") end),
 	awful.key({ modkey, altkey }, "/", function () sexec("mpc toggle") end),
-	--awful.key({ }, "#174", function () sexec("mpc stop; echo \'vicious.force({mpdwidget})\' | awesome-client") end),
 
 	awful.key({ modkey, altkey }, "Up", function () sexec("slock") end),
 	awful.key({ modkey, altkey }, "Prior", function () sexec("cur=$(xbacklight -get); cur=${cur%%.*}; if [ $cur -gt 40 ]; then xbacklight -dec 10; elif [ $cur -gt 10 ]; then xbacklight -dec 3; else xbacklight -dec 1; fi") end),
@@ -507,14 +506,11 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey, altkey }, "1", function () sexec("setxkbmap us altgr-intl -option caps:none") end),
 	awful.key({ modkey, altkey }, "2", function () sexec("setxkbmap es cat -option caps:none") end),
 
-	awful.key({ modkey, altkey }, "s", function () sexec("cd /tmp; scrot -s &>/tmp/out") end),
 	awful.key({ modkey, altkey }, "t", xrandr),
 
-	awful.key({ modkey, altkey }, "g", function () sexec(terminal .. " -c ssh_confine -e ssh dev1 -t TERM=screen-256color tmux -u a") end),
 	awful.key({ modkey, altkey }, "h", function () sexec(terminal .. " -c ssh_mvdan -e ssh linode -t TERM=screen-256color tmux -u a") end),
 	awful.key({ modkey, altkey }, "j", function () sexec(terminal .. " -c mutt -e mutt") end),
 	awful.key({ modkey, altkey }, "e", function () sexec(terminal .. " -c todo -e vim ~/TODO.md") end),
-	awful.key({ modkey, altkey }, "b", function () sexec(terminal .. " -c newsbeuter -e sh -c newsbeuter") end),
 	awful.key({ modkey, altkey }, "k", function () sexec(terminal .. " -c ranger -e zsh -c ranger") end),
 	awful.key({ modkey, altkey }, "n", function () sexec(terminal .. " -c ncmpc -e ncmpc") end),
 
@@ -532,33 +528,7 @@ globalkeys = awful.util.table.join(
 	
 	awful.key({ modkey, altkey }, "o", function () offlineimap_run(true) end),
 	
-	--awful.key({ modkey, altkey}, "y", function () sexec("eject -T") end),
-
 	awful.key({ modkey }, "r", function () promptbox[mouse.screen]:run() end),
-
-	awful.key({ modkey }, "u", function ()
-		awful.prompt.run({ prompt = "chromium: " },
-		promptbox[mouse.screen].widget,
-		function (c)
-			sexec("chromium "..c:gsub("\\", "\\\\"):gsub(" ", '\\ '):gsub("'", "\\'"):gsub('"', '\\"'), false)
-		end)
-	end),
-
-	--awful.key({ modkey }, "u", function ()
-		--awful.prompt.run({ prompt = "mailman: " },
-		--promptbox[mouse.screen].widget,
-		--function (c)
-			--sexec("/bin/sh -c 'cd ~/fsfe/internal/Howto && BROWSER=dwb ./ML.sh "..c.."'", false)
-		--end)
-	--end),
-	
-	awful.key({ modkey, "Shift" }, "p", function ()
-		awful.prompt.run({ prompt = "pkill: " },
-		promptbox[mouse.screen].widget,
-		function (c)
-			sexec("pkill --signal SIGKILL'"..c.."'", false)
-		end)
-	end),
 
 	awful.key({ modkey }, "x",
 		function ()
@@ -654,20 +624,12 @@ awful.rules.rules = {
 	properties = { tag = tags[1][2] } },
 	{ rule = { instance = "weechat" },
 	properties = { tag = tags[1][3] } },
-	{ rule = { instance = "ssh_confine" },
-	properties = { tag = tags[1][4] } },
 	{ rule = { instance = "mutt" },
 	properties = { tag = tags[1][3] } },
-	{ rule = { instance = "newsbeuter" },
-	properties = { tag = tags[1][5] } },
-	{ rule = { class = "Dwb" },
-	properties = { tag = tags[1][7] } },
 	{ rule = { class = "Chromium" },
 	properties = { tag = tags[1][8] } },
 	{ rule = { instance = "ranger" },
 	properties = { tag = tags[1][9] } },
-	{ rule = { instance = "rtorrent" },
-	properties = { tag = tags[1][10] } },
 	{ rule = { instance = "ncmpc" },
 	properties = { tag = tags[1][10] } }
 }
