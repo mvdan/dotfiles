@@ -51,7 +51,7 @@ function yellow(str) return string.format('<span color="#bb4">%s</span>', str) e
 function space(n, str) return string.format('%'..n..'s', str) end
 
 local sep = wibox.widget.textbox()
-sep:set_text("   ")
+sep:set_text("    ")
 
 local cpu_count = 0
 for line in io.lines("/proc/stat") do
@@ -253,11 +253,11 @@ for s = 1, screen.count() do
     bot_left_layout:add(sep)
     bot_left_layout:add(cpuwidget)
     bot_left_layout:add(sep)
+    bot_left_layout:add(blwidget)
+    bot_left_layout:add(sep)
     bot_left_layout:add(batwidget)
     bot_left_layout:add(sep)
     bot_left_layout:add(volwidget)
-    bot_left_layout:add(sep)
-    bot_left_layout:add(blwidget)
     bot_left_layout:add(sep)
     bot_left_layout:add(memwidget)
     bot_left_layout:add(sep)
@@ -450,9 +450,6 @@ clientbuttons = awful.util.table.join(
     awful.button({ modkey }, 3, awful.mouse.client.resize))
 
 root.keys(globalkeys)
-
-local sheight = screen[1].geometry.height
-local swidth = screen[1].geometry.width
 
 awful.rules.rules = {
     { rule = { },
