@@ -13,8 +13,6 @@ beautiful.init(os.getenv("HOME").."/.config/awesome/theme.lua")
 terminal = "st"
 exec = awful.util.spawn
 sexec = awful.util.spawn_with_shell
-editor = os.getenv("EDITOR") or "vim"
-editor_cmd = terminal .. " -e " .. editor
 
 modkey = "Mod4"
 altkey = "Mod1"
@@ -55,16 +53,16 @@ function space(n, str) return string.format('%'..n..'s', str) end
 local sep = wibox.widget.textbox()
 sep:set_text("   ")
 
-local cpus_count = 0
+local cpu_count = 0
 for line in io.lines("/proc/stat") do
-    if string.match(line, "^cpu[%d]+") then cpus_count = cpus_count + 1 end
+    if string.match(line, "^cpu[%d]+") then cpu_count = cpu_count + 1 end
 end
 
 local cpuwidget = wibox.widget.textbox()
 vicious.register(cpuwidget, vicious.widgets.cpu,
 function (widget, args)
     local txt=""
-    for cn=1, cpus_count do
+    for cn=1, cpu_count do
         txt = txt..space(4, args[cn])
     end
     return txt
@@ -82,6 +80,8 @@ vicious.register(batwidget, vicious.widgets.bat, function(widget, args)
         return green(space(3, args[2])).." ??:??"
     end
 end, 4, "BAT0")
+
+local blwidget = wibox.widget.textbox()
 
 local volwidget = wibox.widget.textbox()
 vicious.register(volwidget, vicious.widgets.volume, function(widget, args)
@@ -215,9 +215,8 @@ vicious.register(mpdwidget, vicious.widgets.mpd,
 function (widget, args)
     if args["{state}"] == "Stop" then
         return '  - MPD -  '
-    else
-        return args["{Title}"]..' - '..args['{Album}']
     end
+    return args["{Title}"]..' - '..args['{Album}']
 end, 5)
 
 for s = 1, screen.count() do
@@ -258,6 +257,8 @@ for s = 1, screen.count() do
     bot_left_layout:add(sep)
     bot_left_layout:add(volwidget)
     bot_left_layout:add(sep)
+    bot_left_layout:add(blwidget)
+    bot_left_layout:add(sep)
     bot_left_layout:add(memwidget)
     bot_left_layout:add(sep)
     bot_left_layout:add(iowidget)
@@ -276,6 +277,33 @@ for s = 1, screen.count() do
     bot_layout:set_middle()
     bot_layout:set_right(bot_right_layout)
     botwibox[s]:set_widget(bot_layout)
+end
+
+function round(number)
+    local floor = math.floor(number)
+    if number - floor >= 0.5 then
+        return floor + 1
+    end
+    return floor
+end
+
+local backlight = round(io.popen("xbacklight -get"):read("*n"))
+blwidget:set_text(tostring(backlight))
+
+function backlight_inc(increasing)
+    if increasing and backlight >= 100 then
+        return
+    end
+    if not increasing and backlight <= 0 then
+        return
+    end
+    local num = 1 + math.floor(backlight / 20.0)
+    if not increasing then
+        num = -num
+    end
+    backlight = backlight + num
+    exec(string.format("xbacklight -set %d", backlight))
+    blwidget:set_text(tostring(backlight))
 end
 
 globalkeys = awful.util.table.join(
@@ -327,20 +355,20 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, altkey    }, "Right",    function () sexec("amixer -M -q set Master 5%+ ; echo \'vicious.force({volwidget})\' | awesome-client") end),
     awful.key({ modkey, altkey    }, ".",        function () sexec("mpc next; echo \'vicious.force({mpdwidget})\' | awesome-client") end),
     awful.key({ modkey, altkey    }, ",",        function () sexec("mpc prev; echo \'vicious.force({mpdwidget})\' | awesome-client") end),
-    awful.key({ modkey, altkey    }, "-",        function () sexec("mpc toggle") end),
-    awful.key({ modkey, altkey    }, "/",        function () sexec("mpc toggle") end),
-    awful.key({ modkey, altkey    }, "Up",       function () sexec("slock") end),
-    awful.key({ modkey, altkey    }, "Prior",    function () sexec("cur=$(xbacklight -get); cur=${cur%%.*}; if [ $cur -gt 40 ]; then xbacklight -dec 10; elif [ $cur -gt 10 ]; then xbacklight -dec 3; else xbacklight -dec 1; fi") end),
-    awful.key({ modkey, altkey    }, "Next",     function () sexec("cur=$(xbacklight -get); cur=${cur%%.*}; if [ $cur -gt 40 ]; then xbacklight -inc 10; elif [ $cur -gt 10 ]; then xbacklight -inc 3; else xbacklight -inc 1; fi") end),
-    awful.key({ modkey, altkey    }, "1",        function () sexec("setxkbmap us altgr-intl -option caps:none") end),
-    awful.key({ modkey, altkey    }, "2",        function () sexec("setxkbmap es cat -option caps:none") end),
-    awful.key({ modkey, altkey    }, "h",        function () sexec(terminal .. " -c ssh_mvdan -e ssh linode -t TERM=screen-256color tmux -u a") end),
-    awful.key({ modkey, altkey    }, "j",        function () sexec(terminal .. " -c mutt -e mutt") end),
-    awful.key({ modkey, altkey    }, "k",        function () sexec(terminal .. " -c ranger -e zsh -c ranger") end),
-    awful.key({ modkey, altkey    }, "n",        function () sexec(terminal .. " -c ncmpc -e ncmpc") end),
-    awful.key({ modkey, altkey    }, "i",        function () sexec("chromium") end),
+    awful.key({ modkey, altkey    }, "-",        function () exec("mpc toggle") end),
+    awful.key({ modkey, altkey    }, "/",        function () exec("mpc toggle") end),
+    awful.key({ modkey, altkey    }, "Up",       function () exec("slock") end),
+    awful.key({ modkey, altkey    }, "Prior",    function () backlight_inc(false) end),
+    awful.key({ modkey, altkey    }, "Next",     function () backlight_inc(true) end),
+    awful.key({ modkey, altkey    }, "1",        function () exec("setxkbmap us altgr-intl -option caps:none") end),
+    awful.key({ modkey, altkey    }, "2",        function () exec("setxkbmap es cat -option caps:none") end),
+    awful.key({ modkey, altkey    }, "h",        function () exec(terminal .. " -c ssh_mvdan -e ssh linode -t TERM=screen-256color tmux -u a") end),
+    awful.key({ modkey, altkey    }, "j",        function () exec(terminal .. " -c mutt -e mutt") end),
+    awful.key({ modkey, altkey    }, "k",        function () exec(terminal .. " -c ranger -e zsh -c ranger") end),
+    awful.key({ modkey, altkey    }, "n",        function () exec(terminal .. " -c ncmpc -e ncmpc") end),
+    awful.key({ modkey, altkey    }, "i",        function () exec("chromium") end),
 
-    awful.key({ modkey }, "i", function ()
+    awful.key({ modkey            }, "i", function ()
         naughty.notify({
             title = " % ip route",
             text = io.popen("ip route"):read("*a"):sub(0, -2),
@@ -348,9 +376,9 @@ globalkeys = awful.util.table.join(
         })
     end),
 
-    awful.key({ modkey, "Shift"}, "i", function () sexec("sudo systemctl restart netctl-auto@wlp3s0") end),
+    awful.key({ modkey, "Shift"   }, "i", function () exec("sudo systemctl restart netctl-auto@wlp3s0") end),
     
-    awful.key({ modkey, altkey }, "o", function () offlineimap_run(true) end),
+    awful.key({ modkey, altkey    }, "o", function () offlineimap_run(true) end),
 
     awful.key({ modkey },            "r",     function () promptbox[mouse.screen]:run() end),
 
@@ -434,14 +462,6 @@ awful.rules.rules = {
         size_hints_honor = false,
         keys = clientkeys,
         buttons = clientbuttons } },
-    { rule = { class = "Gimp" },
-    properties = { floating = true, y = 21, height = sheight-42 } },
-    { rule = { class = "Gimp", role = "gimp-toolbox" },
-        properties = { x = 0, width = 225 }, },
-    { rule = { class = "Gimp", role = "gimp-image-window" },
-        properties = { x = 225, width = swidth-450 }, },
-    { rule = { class = "Gimp", role = "gimp-dock" },
-        properties = { x = swidth-225, width = 225 }, },
     { rule = { instance = "ssh_mvdan" },
     properties = { tag = tags[1][2] } },
     { rule = { instance = "mutt" },
@@ -474,4 +494,4 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 
--- vi:
+-- vim: et ts=4 sw=4
