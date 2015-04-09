@@ -97,7 +97,7 @@ set pgp_list_secring_command="gpg --no-verbose --batch --with-colons --list-secr
 
 set sidebar_delim=" "
 set sidebar_visible
-set sidebar_width = 32
+set sidebar_width = 28
 bind index,pager H sidebar-open
 bind index,pager K sidebar-prev
 bind index,pager J sidebar-next
@@ -111,7 +111,7 @@ bind index,pager \cd half-down
 mailboxes "=INBOX" "=Univ" "=FDroid" "=Tor" "=Suckless" "=Cau" "=Fsfe" "=Announ" "=Other" "=Sent" "=GLcat" "=Drafts" "=Trash"
 mailboxes "=../khacks/INBOX"
 mailboxes "=../ac/INBOX" "=../gmx/INBOX"
-mailboxes "=../cau/INBOX" "=../cau/Sent" "=../cau/Administració interna" "=../cau/Ajuntament"
+mailboxes "=../cau/INBOX" "=../cau/Sent"
 macro index,pager A <change-folder>=Spam<enter>
 macro index,pager S <change-folder>=Sent<enter>
 

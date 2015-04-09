@@ -8,25 +8,6 @@ local menubar = require("menubar")
 local vicious = require("vicious")
 require("gears.wallpaper").set(require("gears.color")("#000000"))
 
-if awesome.startup_errors then
-    naughty.notify({ preset = naughty.config.presets.critical,
-                     title = "Oops, there were errors during startup!",
-                     text = awesome.startup_errors })
-end
-
-do
-    local in_error = false
-    awesome.connect_signal("debug::error", function (err)
-        if in_error then return end
-        in_error = true
-
-        naughty.notify({ preset = naughty.config.presets.critical,
-                         title = "Oops, an error happened!",
-                         text = err })
-        in_error = false
-    end)
-end
-
 beautiful.init(os.getenv("HOME").."/.config/awesome/theme.lua")
 
 terminal = "st"
@@ -34,15 +15,6 @@ exec = awful.util.spawn
 sexec = awful.util.spawn_with_shell
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
-local maildirs = {
-    dan = {
-        "/home/mvdan/Mail/linode/INBOX/new",
-        "/home/mvdan/Mail/linode/Univ/new",
-    },
-    cau = {
-        "/home/mvdan/Mail/linode/Cau/new",
-    }
-}
 
 modkey = "Mod4"
 altkey = "Mod1"
@@ -83,12 +55,12 @@ function space(n, str) return string.format('%'..n..'s', str) end
 local sep = wibox.widget.textbox()
 sep:set_text("   ")
 
-cpus_count = 0
+local cpus_count = 0
 for line in io.lines("/proc/stat") do
     if string.match(line, "^cpu[%d]+") then cpus_count = cpus_count + 1 end
 end
 
-cpuwidget = wibox.widget.textbox()
+local cpuwidget = wibox.widget.textbox()
 vicious.register(cpuwidget, vicious.widgets.cpu,
 function (widget, args)
     local txt=""
@@ -98,7 +70,7 @@ function (widget, args)
     return txt
 end, 1)
 
-batwidget = wibox.widget.textbox()
+local batwidget = wibox.widget.textbox()
 vicious.register(batwidget, vicious.widgets.bat, function(widget, args)
     if args[1] == "−" then
         return space(3, args[2])..space(6, args[3])
@@ -111,7 +83,7 @@ vicious.register(batwidget, vicious.widgets.bat, function(widget, args)
     end
 end, 4, "BAT0")
 
-volwidget = wibox.widget.textbox()
+local volwidget = wibox.widget.textbox()
 vicious.register(volwidget, vicious.widgets.volume, function(widget, args)
     if args[2] == "♫" then
         return space(3, args[1])
@@ -120,7 +92,7 @@ vicious.register(volwidget, vicious.widgets.volume, function(widget, args)
     end
 end, 4, "Master")
 
-memwidget = wibox.widget.textbox()
+local memwidget = wibox.widget.textbox()
 vicious.register(memwidget, vicious.widgets.mem,
 function (widget, args)
     local used = yellow(space(5, args[2]))
@@ -138,7 +110,7 @@ function add_dev(dev)
     table.insert(devices, dev)
 end
 
-iowidget = wibox.widget.textbox()
+local iowidget = wibox.widget.textbox()
 vicious.register(iowidget, vicious.widgets.dio,
 function (widget, args)
     local txt = ""
@@ -173,8 +145,8 @@ local function wifi_q()
     return "??"
 end
 
-net_ifaces = { enp0s25 = false, wlp3s0 = false, enp0s20u1 = false, enp0s20u2 = false }
-netwidget = wibox.widget.textbox()
+local net_ifaces = { enp0s25 = false, wlp3s0 = false, enp0s20u1 = false, enp0s20u2 = false }
+local netwidget = wibox.widget.textbox()
 vicious.register(netwidget, vicious.widgets.net,
 function (widget, args)
     local txt = ""
@@ -195,6 +167,15 @@ function (widget, args)
     return txt
 end, 1)
 
+local maildirs = {
+    dan = {
+        "/home/mvdan/Mail/linode/INBOX/new",
+        "/home/mvdan/Mail/linode/Univ/new",
+    },
+    cau = {
+        "/home/mvdan/Mail/linode/Cau/new",
+    }
+}
 function mdir_str(name)
     local paths = maildirs[name]
     local count = io.popen("find "..table.concat(paths, " ").." -type f 2>/dev/null | wc -l"):read("*n")
@@ -207,7 +188,7 @@ function mdir_str(name)
     return name.." "..space(-3, count)
 end
 
-mdirwidget = wibox.widget.textbox()
+local mdirwidget = wibox.widget.textbox()
 function mdirwidget_update()
     mdirwidget:set_markup(mdir_str("dan")..mdir_str("cau"))
 end
@@ -219,17 +200,17 @@ function offlineimap_run(force)
     sexec('offlineimap &>/dev/null; notmuch new &>/dev/null; echo \\"mdirwidget_update()\\" | awesome-client')
 end
 
-imap = timer({ timeout = 60 })
+local imap = timer({ timeout = 60 })
 imap:connect_signal("timeout", function() offlineimap_run(false) end)
 imap:start()
 
-mdirtimer = timer({ timeout = 3 })
+local mdirtimer = timer({ timeout = 3 })
 mdirtimer:connect_signal("timeout", function() mdirwidget_update() end)
 mdirtimer:start()
 
 mdirwidget_update()
 
-mpdwidget = wibox.widget.textbox()
+local mpdwidget = wibox.widget.textbox()
 vicious.register(mpdwidget, vicious.widgets.mpd,
 function (widget, args)
     if args["{state}"] == "Stop" then
