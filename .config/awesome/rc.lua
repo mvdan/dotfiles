@@ -5,7 +5,7 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
-local vicious = require("vicious")
+vicious = require("vicious")
 require("gears.wallpaper").set(require("gears.color")("#000000"))
 
 beautiful.init(os.getenv("HOME").."/.config/awesome/theme.lua")
@@ -50,7 +50,7 @@ function blue(str) return string.format('<span color="#77f">%s</span>', str) end
 function yellow(str) return string.format('<span color="#bb4">%s</span>', str) end
 function space(n, str) return string.format('%'..n..'s', str) end
 
-local sep = wibox.widget.textbox()
+sep = wibox.widget.textbox()
 sep:set_text("    ")
 
 local cpu_count = 0
@@ -58,7 +58,7 @@ for line in io.lines("/proc/stat") do
     if string.match(line, "^cpu[%d]+") then cpu_count = cpu_count + 1 end
 end
 
-local cpuwidget = wibox.widget.textbox()
+cpuwidget = wibox.widget.textbox()
 vicious.register(cpuwidget, vicious.widgets.cpu,
 function (widget, args)
     local txt=""
@@ -68,31 +68,97 @@ function (widget, args)
     return txt
 end, 1)
 
-local batwidget = wibox.widget.textbox()
+batwidget = wibox.widget.textbox()
 vicious.register(batwidget, vicious.widgets.bat, function(widget, args)
     if args[1] == "−" then
         return space(3, args[2])..space(6, args[3])
-    elseif args[1] == '+' then
-        return green(space(3, args[2]))..space(6, args[3])
-    elseif args[1] == '↯' then
-        return green(space(3, args[2])).." 00:00"
-    else
-        return green(space(3, args[2])).." ??:??"
     end
+    if args[1] == '+' then
+        return green(space(3, args[2]))..space(6, args[3])
+    end
+    if args[1] == '↯' then
+        return green(space(3, args[2])).." 00:00"
+    end
+    return green(space(3, args[2])).." ??:??"
 end, 4, "BAT0")
 
-local blwidget = wibox.widget.textbox()
+blwidget = wibox.widget.textbox()
+local backlight = 0
 
-local volwidget = wibox.widget.textbox()
-vicious.register(volwidget, vicious.widgets.volume, function(widget, args)
-    if args[2] == "♫" then
-        return space(3, args[1])
-    else
-        return blue(space(3, args[1]))
+function round(number)
+    local floor = math.floor(number)
+    if number - floor >= 0.5 then
+        return floor + 1
     end
-end, 4, "Master")
+    return floor
+end
 
-local memwidget = wibox.widget.textbox()
+function backlight_get()
+    local f = io.popen("xbacklight -get")
+    backlight = round(f:read("*n"))
+    f:close()
+    blwidget:set_text(space(3, tostring(backlight)))
+end
+backlight_get()
+
+function backlight_inc(increasing)
+    if increasing and backlight >= 100 then
+        return
+    end
+    if not increasing and backlight <= 0 then
+        return
+    end
+    local num = 1 + math.floor(backlight / 20.0)
+    if not increasing then
+        num = -num
+    end
+    backlight = backlight + num
+    exec(string.format("xbacklight -set %d", backlight))
+    blwidget:set_text(space(3, tostring(backlight)))
+end
+
+volwidget = wibox.widget.textbox()
+local volume = 0
+local volume_muted = false
+function volume_get()
+    local f = io.popen("amixer -M get Master")
+    local mixer = f:read("*all")
+    f:close()
+    local volu, mute = string.match(mixer, "([%d]+)%%.*%[([%l]*)")
+    if volu == nil then
+        return
+    end
+    volume = tonumber(volu)
+    volume_muted = (mute == "off" or (mute == "" and volume == 0))
+    if volume_muted then
+        volwidget:set_text(blue(space(3, tostring(volume))))
+    else
+        volwidget:set_text(space(3, tostring(volume)))
+    end
+end
+volume_get()
+
+function volume_inc(increasing)
+    if increasing and volume >= 100 then
+        return
+    end
+    if not increasing and volume <= 0 then
+        return
+    end
+    local num = 5
+    if not increasing then
+        num = -num
+    end
+    volume = volume + num
+    exec(string.format("amixer -M -q set Master %d%%", volume))
+    if volume_muted then
+        volwidget:set_text(blue(space(3, tostring(volume))))
+    else
+        volwidget:set_text(space(3, tostring(volume)))
+    end
+end
+
+memwidget = wibox.widget.textbox()
 vicious.register(memwidget, vicious.widgets.mem,
 function (widget, args)
     local used = yellow(space(5, args[2]))
@@ -110,7 +176,7 @@ function add_dev(dev)
     table.insert(devices, dev)
 end
 
-local iowidget = wibox.widget.textbox()
+iowidget = wibox.widget.textbox()
 vicious.register(iowidget, vicious.widgets.dio,
 function (widget, args)
     local txt = ""
@@ -131,7 +197,9 @@ function (widget, args)
 end, 1)
 
 local function wifi_n()
-    local name = io.popen("wpa_cli status wlp3s0 | sed -n 's/^id_str=//p'"):read("*l")
+    local f = io.popen("wpa_cli status wlp3s0 | sed -n 's/^id_str=//p'")
+    local name = f:read("*l")
+    f:close()
     if name ~= nil then return name end
     return "??"
 end
@@ -146,7 +214,7 @@ local function wifi_q()
 end
 
 local net_ifaces = { enp0s25 = false, wlp3s0 = false, enp0s20u1 = false, enp0s20u2 = false }
-local netwidget = wibox.widget.textbox()
+netwidget = wibox.widget.textbox()
 vicious.register(netwidget, vicious.widgets.net,
 function (widget, args)
     local txt = ""
@@ -178,7 +246,9 @@ local maildirs = {
 }
 function mdir_str(name)
     local paths = maildirs[name]
-    local count = io.popen("find "..table.concat(paths, " ").." -type f 2>/dev/null | wc -l"):read("*n")
+    local f = io.popen("find "..table.concat(paths, " ").." -type f 2>/dev/null | wc -l")
+    local count = f:read("*n")
+    f:close()
     if count == nil then
         return name.." ?"
     end
@@ -188,7 +258,7 @@ function mdir_str(name)
     return name.." "..space(-3, count)
 end
 
-local mdirwidget = wibox.widget.textbox()
+mdirwidget = wibox.widget.textbox()
 function mdirwidget_update()
     mdirwidget:set_markup(mdir_str("dan")..mdir_str("cau"))
 end
@@ -210,7 +280,7 @@ mdirtimer:start()
 
 mdirwidget_update()
 
-local mpdwidget = wibox.widget.textbox()
+mpdwidget = wibox.widget.textbox()
 vicious.register(mpdwidget, vicious.widgets.mpd,
 function (widget, args)
     if args["{state}"] == "Stop" then
@@ -279,33 +349,6 @@ for s = 1, screen.count() do
     botwibox[s]:set_widget(bot_layout)
 end
 
-function round(number)
-    local floor = math.floor(number)
-    if number - floor >= 0.5 then
-        return floor + 1
-    end
-    return floor
-end
-
-local backlight = round(io.popen("xbacklight -get"):read("*n"))
-blwidget:set_text(tostring(backlight))
-
-function backlight_inc(increasing)
-    if increasing and backlight >= 100 then
-        return
-    end
-    if not increasing and backlight <= 0 then
-        return
-    end
-    local num = 1 + math.floor(backlight / 20.0)
-    if not increasing then
-        num = -num
-    end
-    backlight = backlight + num
-    exec(string.format("xbacklight -set %d", backlight))
-    blwidget:set_text(tostring(backlight))
-end
-
 globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ),
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
@@ -322,11 +365,11 @@ globalkeys = awful.util.table.join(
             if client.focus then client.focus:raise() end
         end),
 
-    awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end),
-    awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end),
-    awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end),
-    awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative(-1) end),
-    awful.key({ modkey,           }, "u", awful.client.urgent.jumpto),
+    awful.key({ modkey, "Shift"   }, "j",     function () awful.client.swap.byidx(  1)    end),
+    awful.key({ modkey, "Shift"   }, "k",     function () awful.client.swap.byidx( -1)    end),
+    awful.key({ modkey, "Control" }, "j",     function () awful.screen.focus_relative( 1) end),
+    awful.key({ modkey, "Control" }, "k",     function () awful.screen.focus_relative(-1) end),
+    awful.key({ modkey,           }, "u",     awful.client.urgent.jumpto),
     awful.key({ modkey,           }, "Tab",
         function ()
             awful.client.focus.history.previous()
@@ -336,8 +379,8 @@ globalkeys = awful.util.table.join(
         end),
 
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
-    awful.key({ modkey, "Control" }, "r", awesome.restart),
-    awful.key({ modkey, "Shift"   }, "q", awesome.quit),
+    awful.key({ modkey, "Control" }, "r",     awesome.restart),
+    awful.key({ modkey, "Shift"   }, "q",     awesome.quit),
 
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)    end),
     awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)    end),
@@ -348,27 +391,27 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
 
-    awful.key({ modkey, "Control" }, "n", awful.client.restore),
+    awful.key({ modkey, "Control" }, "n",     awful.client.restore),
 
-    awful.key({ modkey, altkey    }, "Down",     function () sexec("amixer -q set Master toggle ; echo \'vicious.force({volwidget})\' | awesome-client") end),
-    awful.key({ modkey, altkey    }, "Left",     function () sexec("amixer -M -q set Master 5%- ; echo \'vicious.force({volwidget})\' | awesome-client") end),
-    awful.key({ modkey, altkey    }, "Right",    function () sexec("amixer -M -q set Master 5%+ ; echo \'vicious.force({volwidget})\' | awesome-client") end),
-    awful.key({ modkey, altkey    }, ".",        function () sexec("mpc next; echo \'vicious.force({mpdwidget})\' | awesome-client") end),
-    awful.key({ modkey, altkey    }, ",",        function () sexec("mpc prev; echo \'vicious.force({mpdwidget})\' | awesome-client") end),
-    awful.key({ modkey, altkey    }, "-",        function () exec("mpc toggle") end),
-    awful.key({ modkey, altkey    }, "/",        function () exec("mpc toggle") end),
-    awful.key({ modkey, altkey    }, "Up",       function () exec("slock") end),
-    awful.key({ modkey, altkey    }, "Prior",    function () backlight_inc(false) end),
-    awful.key({ modkey, altkey    }, "Next",     function () backlight_inc(true) end),
-    awful.key({ modkey, altkey    }, "1",        function () exec("setxkbmap us altgr-intl -option caps:none") end),
-    awful.key({ modkey, altkey    }, "2",        function () exec("setxkbmap es cat -option caps:none") end),
-    awful.key({ modkey, altkey    }, "h",        function () exec(terminal .. " -c ssh_mvdan -e ssh linode -t TERM=screen-256color tmux -u a") end),
-    awful.key({ modkey, altkey    }, "j",        function () exec(terminal .. " -c mutt -e mutt") end),
-    awful.key({ modkey, altkey    }, "k",        function () exec(terminal .. " -c ranger -e zsh -c ranger") end),
-    awful.key({ modkey, altkey    }, "n",        function () exec(terminal .. " -c ncmpc -e ncmpc") end),
-    awful.key({ modkey, altkey    }, "i",        function () exec("chromium") end),
+    awful.key({ modkey, altkey    }, "Down",  function () volume_mute() end),
+    awful.key({ modkey, altkey    }, "Left",  function () volume_inc(false) end),
+    awful.key({ modkey, altkey    }, "Right", function () volume_inc(true) end),
+    awful.key({ modkey, altkey    }, ".",     function () sexec("mpc next; echo \'vicious.force({mpdwidget})\' | awesome-client") end),
+    awful.key({ modkey, altkey    }, ",",     function () sexec("mpc prev; echo \'vicious.force({mpdwidget})\' | awesome-client") end),
+    awful.key({ modkey, altkey    }, "-",     function () exec("mpc toggle") end),
+    awful.key({ modkey, altkey    }, "/",     function () exec("mpc toggle") end),
+    awful.key({ modkey, altkey    }, "Up",    function () exec("slock") end),
+    awful.key({ modkey, altkey    }, "Prior", function () backlight_inc(false) end),
+    awful.key({ modkey, altkey    }, "Next",  function () backlight_inc(true) end),
+    awful.key({ modkey, altkey    }, "1",     function () exec("setxkbmap us altgr-intl -option caps:none") end),
+    awful.key({ modkey, altkey    }, "2",     function () exec("setxkbmap es cat -option caps:none") end),
+    awful.key({ modkey, altkey    }, "h",     function () exec(terminal .. " -c ssh_mvdan -e ssh linode -t TERM=screen-256color tmux -u a") end),
+    awful.key({ modkey, altkey    }, "j",     function () exec(terminal .. " -c mutt -e mutt") end),
+    awful.key({ modkey, altkey    }, "k",     function () exec(terminal .. " -c ranger -e zsh -c ranger") end),
+    awful.key({ modkey, altkey    }, "n",     function () exec(terminal .. " -c ncmpc -e ncmpc") end),
+    awful.key({ modkey, altkey    }, "i",     function () exec("chromium") end),
 
-    awful.key({ modkey            }, "i", function ()
+    awful.key({ modkey            }, "i",     function ()
         naughty.notify({
             title = " % ip route",
             text = io.popen("ip route"):read("*a"):sub(0, -2),
@@ -376,11 +419,9 @@ globalkeys = awful.util.table.join(
         })
     end),
 
-    awful.key({ modkey, "Shift"   }, "i", function () exec("sudo systemctl restart netctl-auto@wlp3s0") end),
-    
-    awful.key({ modkey, altkey    }, "o", function () offlineimap_run(true) end),
-
-    awful.key({ modkey },            "r",     function () promptbox[mouse.screen]:run() end),
+    awful.key({ modkey, "Shift"   }, "i",     function () exec("sudo systemctl restart netctl-auto@wlp3s0") end),
+    awful.key({ modkey, altkey    }, "o",     function () offlineimap_run(true) end),
+    awful.key({ modkey            }, "r",     function () promptbox[mouse.screen]:run() end),
 
     awful.key({ modkey }, "x",
               function ()
@@ -406,7 +447,7 @@ clientkeys = awful.util.table.join(
         end)
 )
 
-for i = 1, 9 do
+for i = 1, 10 do
     globalkeys = awful.util.table.join(globalkeys,
         awful.key({ modkey }, "#" .. i + 9,
                   function ()
