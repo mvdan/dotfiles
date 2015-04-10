@@ -70,15 +70,9 @@ end, 1)
 
 batwidget = wibox.widget.textbox()
 vicious.register(batwidget, vicious.widgets.bat, function(widget, args)
-    if args[1] == "−" then
-        return space(3, args[2])..space(6, args[3])
-    end
-    if args[1] == '+' then
-        return green(space(3, args[2]))..space(6, args[3])
-    end
-    if args[1] == '↯' then
-        return green(space(3, args[2])).." 00:00"
-    end
+    if args[1] == "−" then return space(3, args[2])..space(6, args[3]) end
+    if args[1] == '+' then return green(space(3, args[2]))..space(6, args[3]) end
+    if args[1] == '↯' then return green(space(3, args[2])).." 00:00" end
     return green(space(3, args[2])).." ??:??"
 end, 4, "BAT0")
 
@@ -169,25 +163,16 @@ end, 1)
 
 local devices
 
-function add_dev(dev)
-    for i, dev_ in ipairs(devices) do
-        if dev == dev_ then return end
-    end
-    table.insert(devices, dev)
-end
-
 iowidget = wibox.widget.textbox()
 vicious.register(iowidget, vicious.widgets.dio,
 function (widget, args)
     local txt = ""
-    devices = { 'a' }
-    for line in io.lines("/proc/mounts") do
-        if line:sub(1, 7) == "/dev/sd" then
-            add_dev(line:sub(8, 8))
-        end
+    devices = { }
+    for line in io.lines("/proc/diskstats") do
+        local dev = string.match(line, " (sd[a-z]) ")
+        if dev ~= nil then table.insert(devices, dev) end
     end
     for i, dev in ipairs(devices) do
-        dev = "sd"..dev
         local write = yellow(space(5, args["{"..dev.." write_mb}"]))
         local read = green(space(-5, args["{"..dev.." read_mb}"]))
         if txt ~= "" then txt = txt..'  ' end
@@ -197,9 +182,10 @@ function (widget, args)
 end, 1)
 
 local function wifi_n()
-    local f = io.popen("wpa_cli status wlp3s0 | sed -n 's/^id_str=//p'")
-    local name = f:read("*l")
+    local f = io.popen("wpa_cli status wlp3s0")
+    local o = f:read("*a")
     f:close()
+    local name = string.match(o, "id_str=([a-zA-Z0-9_\\-.,]+)")
     if name ~= nil then return name end
     return "??"
 end
@@ -249,9 +235,7 @@ function mdir_str(name)
     local f = io.popen("find "..table.concat(paths, " ").." -type f 2>/dev/null | wc -l")
     local count = f:read("*n")
     f:close()
-    if count == nil then
-        return name.." ?"
-    end
+    if count == nil then return name.." ?" end
     if count > 0 then
         return name..' '..green(space(-3, count))
     end
@@ -267,7 +251,7 @@ function offlineimap_run(force)
     if net_ifaces["wlp3s0"] == false and net_ifaces["eth0"] == false then
         return
     end
-    sexec('offlineimap &>/dev/null; notmuch new &>/dev/null; echo \\"mdirwidget_update()\\" | awesome-client')
+    sexec('offlineimap -u Quiet; notmuch new --quiet')
 end
 
 local imap = timer({ timeout = 60 })
@@ -283,9 +267,7 @@ mdirwidget_update()
 mpdwidget = wibox.widget.textbox()
 vicious.register(mpdwidget, vicious.widgets.mpd,
 function (widget, args)
-    if args["{state}"] == "Stop" then
-        return '  - MPD -  '
-    end
+    if args["{state}"] == "Stop" then return '  - MPD -  ' end
     return args["{Title}"]..' - '..args['{Album}']
 end, 5)
 
@@ -373,9 +355,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Tab",
         function ()
             awful.client.focus.history.previous()
-            if client.focus then
-                client.focus:raise()
-            end
+            if client.focus then client.focus:raise() end
         end),
 
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
@@ -453,34 +433,26 @@ for i = 1, 10 do
                   function ()
                         local screen = mouse.screen
                         local tag = awful.tag.gettags(screen)[i]
-                        if tag then
-                           awful.tag.viewonly(tag)
-                        end
+                        if tag then awful.tag.viewonly(tag) end
                   end),
         awful.key({ modkey, "Control" }, "#" .. i + 9,
                   function ()
                       local screen = mouse.screen
                       local tag = awful.tag.gettags(screen)[i]
-                      if tag then
-                         awful.tag.viewtoggle(tag)
-                      end
+                      if tag then awful.tag.viewtoggle(tag) end
                   end),
         awful.key({ modkey, "Shift" }, "#" .. i + 9,
                   function ()
                       if client.focus then
                           local tag = awful.tag.gettags(client.focus.screen)[i]
-                          if tag then
-                              awful.client.movetotag(tag)
-                          end
+                          if tag then awful.client.movetotag(tag) end
                      end
                   end),
         awful.key({ modkey, "Control", "Shift" }, "#" .. i + 9,
                   function ()
                       if client.focus then
                           local tag = awful.tag.gettags(client.focus.screen)[i]
-                          if tag then
-                              awful.client.toggletag(tag)
-                          end
+                          if tag then awful.client.toggletag(tag) end
                       end
                   end))
 end
