@@ -107,6 +107,7 @@ function backlight_inc(increasing)
         num = -num
     end
     backlight = backlight + num
+    if backlight > 100 then backlight = 100 end
     exec(string.format("xbacklight -set %d", backlight))
     blwidget:set_text(space(3, tostring(backlight)))
 end
@@ -114,6 +115,15 @@ end
 volwidget = wibox.widget.textbox()
 local volume = 0
 local volume_muted = false
+
+function volume_upd()
+    if volume_muted then
+        volwidget:set_markup(blue(space(3, tostring(volume))))
+    else
+        volwidget:set_text(space(3, tostring(volume)))
+    end
+end
+
 function volume_get()
     local f = io.popen("amixer -M get Master")
     local mixer = f:read("*all")
@@ -123,12 +133,8 @@ function volume_get()
         return
     end
     volume = tonumber(volu)
-    volume_muted = (mute == "off" or (mute == "" and volume == 0))
-    if volume_muted then
-        volwidget:set_text(blue(space(3, tostring(volume))))
-    else
-        volwidget:set_text(space(3, tostring(volume)))
-    end
+    volume_muted = mute == "off" or (mute == "" and volume == 0)
+    volume_upd()
 end
 volume_get()
 
@@ -144,12 +150,15 @@ function volume_inc(increasing)
         num = -num
     end
     volume = volume + num
+    if volume > 100 then volume = 100 end
     exec(string.format("amixer -M -q set Master %d%%", volume))
-    if volume_muted then
-        volwidget:set_text(blue(space(3, tostring(volume))))
-    else
-        volwidget:set_text(space(3, tostring(volume)))
-    end
+    volume_upd()
+end
+
+function volume_mute(increasing)
+    volume_muted = not volume_muted
+    exec("amixer -q set Master toggle")
+    volume_upd()
 end
 
 memwidget = wibox.widget.textbox()
@@ -314,12 +323,13 @@ for s = 1, screen.count() do
     bot_left_layout:add(memwidget)
     bot_left_layout:add(sep)
     bot_left_layout:add(iowidget)
+    bot_left_layout:add(sep)
+    bot_left_layout:add(netwidget)
+    bot_left_layout:add(sep)
+    bot_left_layout:add(mdirwidget)
+    bot_left_layout:add(sep)
 
     local bot_right_layout = wibox.layout.fixed.horizontal()
-    bot_right_layout:add(netwidget)
-    bot_right_layout:add(sep)
-    bot_right_layout:add(mdirwidget)
-    bot_right_layout:add(sep)
     bot_right_layout:add(mpdwidget)
     bot_right_layout:add(sep)
     bot_right_layout:add(sep)
@@ -392,9 +402,11 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, altkey    }, "i",     function () exec("chromium") end),
 
     awful.key({ modkey            }, "i",     function ()
+        local f = io.popen("ip route")
+        local t = f:read("*a"):sub(0, -2)
         naughty.notify({
             title = " % ip route",
-            text = io.popen("ip route"):read("*a"):sub(0, -2),
+            text = t,
             position = "bottom_right"
         })
     end),
