@@ -11,7 +11,7 @@ require("gears.wallpaper").set(require("gears.color")("#000000"))
 beautiful.init(os.getenv("HOME").."/.config/awesome/theme.lua")
 
 terminal = "st"
-exec = awful.util.spawn
+--exec = awful.util.spawn
 sexec = awful.util.spawn_with_shell
 
 modkey = "Mod4"
@@ -96,25 +96,19 @@ end
 backlight_get()
 
 function backlight_inc(increasing)
-    if increasing and backlight >= 100 then
-        return
-    end
-    if not increasing and backlight <= 0 then
-        return
-    end
+    if increasing and backlight >= 100 then return end
+    if not increasing and backlight <= 0 then return end
     local num = 1 + math.floor(backlight / 20.0)
-    if not increasing then
-        num = -num
-    end
+    if not increasing then num = -num end
     backlight = backlight + num
     if backlight > 100 then backlight = 100 end
-    exec(string.format("xbacklight -set %d", backlight))
+    sexec(string.format("xbacklight -set %d", backlight))
     blwidget:set_text(space(3, tostring(backlight)))
 end
 
 volwidget = wibox.widget.textbox()
 local volume = 0
-local volume_muted = false
+local volume_muted = true
 
 function volume_upd()
     if volume_muted then
@@ -129,9 +123,7 @@ function volume_get()
     local mixer = f:read("*all")
     f:close()
     local volu, mute = string.match(mixer, "([%d]+)%%.*%[([%l]*)")
-    if volu == nil then
-        return
-    end
+    if volu == nil then return end
     volume = tonumber(volu)
     volume_muted = mute == "off" or (mute == "" and volume == 0)
     volume_upd()
@@ -139,25 +131,19 @@ end
 volume_get()
 
 function volume_inc(increasing)
-    if increasing and volume >= 100 then
-        return
-    end
-    if not increasing and volume <= 0 then
-        return
-    end
+    if increasing and volume >= 100 then return end
+    if not increasing and volume <= 0 then return end
     local num = 5
-    if not increasing then
-        num = -num
-    end
+    if not increasing then num = -num end
     volume = volume + num
     if volume > 100 then volume = 100 end
-    exec(string.format("amixer -M -q set Master %d%%", volume))
+    sexec(string.format("amixer -M -q set Master %d%%", volume))
     volume_upd()
 end
 
 function volume_mute(increasing)
     volume_muted = not volume_muted
-    exec("amixer -q set Master toggle")
+    sexec("amixer -q set Master toggle")
     volume_upd()
 end
 
@@ -388,22 +374,23 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, altkey    }, "Right", function () volume_inc(true) end),
     awful.key({ modkey, altkey    }, ".",     function () sexec("mpc next; echo \'vicious.force({mpdwidget})\' | awesome-client") end),
     awful.key({ modkey, altkey    }, ",",     function () sexec("mpc prev; echo \'vicious.force({mpdwidget})\' | awesome-client") end),
-    awful.key({ modkey, altkey    }, "-",     function () exec("mpc toggle") end),
-    awful.key({ modkey, altkey    }, "/",     function () exec("mpc toggle") end),
-    awful.key({ modkey, altkey    }, "Up",    function () exec("slock") end),
+    awful.key({ modkey, altkey    }, "-",     function () sexec("mpc toggle") end),
+    awful.key({ modkey, altkey    }, "/",     function () sexec("mpc toggle") end),
+    awful.key({ modkey, altkey    }, "Up",    function () sexec("slock") end),
     awful.key({ modkey, altkey    }, "Prior", function () backlight_inc(false) end),
     awful.key({ modkey, altkey    }, "Next",  function () backlight_inc(true) end),
-    awful.key({ modkey, altkey    }, "1",     function () exec("setxkbmap us altgr-intl -option caps:none") end),
-    awful.key({ modkey, altkey    }, "2",     function () exec("setxkbmap es cat -option caps:none") end),
-    awful.key({ modkey, altkey    }, "h",     function () exec(terminal .. " -c ssh_mvdan -e ssh linode -t TERM=screen-256color tmux -u a") end),
-    awful.key({ modkey, altkey    }, "j",     function () exec(terminal .. " -c mutt -e mutt") end),
-    awful.key({ modkey, altkey    }, "k",     function () exec(terminal .. " -c ranger -e zsh -c ranger") end),
-    awful.key({ modkey, altkey    }, "n",     function () exec(terminal .. " -c ncmpc -e ncmpc") end),
-    awful.key({ modkey, altkey    }, "i",     function () exec("chromium") end),
+    awful.key({ modkey, altkey    }, "1",     function () sexec("setxkbmap us altgr-intl -option caps:none") end),
+    awful.key({ modkey, altkey    }, "2",     function () sexec("setxkbmap es cat -option caps:none") end),
+    awful.key({ modkey, altkey    }, "h",     function () sexec(terminal .. " -c ssh_mvdan -e ssh linode -t TERM=screen-256color tmux -u a") end),
+    awful.key({ modkey, altkey    }, "j",     function () sexec(terminal .. " -c mutt -e mutt") end),
+    awful.key({ modkey, altkey    }, "k",     function () sexec(terminal .. " -c ranger -e zsh -c ranger") end),
+    awful.key({ modkey, altkey    }, "n",     function () sexec(terminal .. " -c ncmpc -e ncmpc") end),
+    awful.key({ modkey, altkey    }, "i",     function () sexec("chromium") end),
 
     awful.key({ modkey            }, "i",     function ()
         local f = io.popen("ip route")
         local t = f:read("*a"):sub(0, -2)
+        f:close()
         naughty.notify({
             title = " % ip route",
             text = t,
@@ -411,7 +398,7 @@ globalkeys = awful.util.table.join(
         })
     end),
 
-    awful.key({ modkey, "Shift"   }, "i",     function () exec("sudo systemctl restart netctl-auto@wlp3s0") end),
+    awful.key({ modkey, "Shift"   }, "i",     function () sexec("sudo systemctl restart netctl-auto@wlp3s0") end),
     awful.key({ modkey, altkey    }, "o",     function () offlineimap_run(true) end),
     awful.key({ modkey            }, "r",     function () promptbox[mouse.screen]:run() end),
 
