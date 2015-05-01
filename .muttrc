@@ -27,7 +27,7 @@ set reverse_alias
 set realname = 'Daniel Martí'
 set from = "mvdan@mvdan.cc"
 set use_envelope_from
-alternates "mvdan@mvdan.cc|mvdan@fsfe.org|danielmarti@gmx.com|dmarti@ac.upc.edu|daniel.marti.i@est.fib.upc.edu|aeigantonvila@gmail.com|khacks@kairossociety.org"
+alternates "mvdan@mvdan.cc|mvdan@fsfe.org|danielmarti@gmx.com|dmarti@ac.upc.edu|daniel.marti.i@est.fib.upc.edu|aeigantonvila@gmail.com|khacks@kairossociety.org|daniel.marti@kairossociety.org"
 set record = +Sent
 
 folder-hook . "set realname = 'Daniel Martí' from = 'mvdan@mvdan.cc' record = +Sent"

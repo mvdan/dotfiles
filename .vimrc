@@ -19,6 +19,8 @@ set shell=/bin/bash\ -i
 
 set wildignore=*.swp,*.bak,*.pyc,*.o,*.so
 au BufNewFile,BufRead *.md set filetype=markdown
+au BufNewFile,BufRead *.pl set filetype=prolog
+au BufNewFile,BufRead *.PKGBUILD set filetype=sh
 au BufNewFile,BufRead ~/sites/* set filetype=nginx
 au BufReadPost fugitive://* set bufhidden=delete
 set diffopt+=iwhite
