@@ -250,3 +250,6 @@ alias lpcat='curl -F "paste=<-" http://localhost:8080'
 alias cdg="cd ${GOPATH}/src/github.com/mvdan"
 
 alias grd="gradle --daemon"
+logcat() {
+	adb logcat | grep `adb shell ps | grep $1 | cut -c10-15`
+}
