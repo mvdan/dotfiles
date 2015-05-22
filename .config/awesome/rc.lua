@@ -221,9 +221,6 @@ local maildirs = {
         "/home/mvdan/Mail/linode/INBOX/new",
         "/home/mvdan/Mail/linode/Univ/new",
     },
-    cau = {
-        "/home/mvdan/Mail/linode/Cau/new",
-    }
 }
 function mdir_str(name)
     local paths = maildirs[name]
@@ -239,7 +236,7 @@ end
 
 mdirwidget = wibox.widget.textbox()
 function mdirwidget_update()
-    mdirwidget:set_markup(mdir_str("dan")..mdir_str("cau"))
+    mdirwidget:set_markup(mdir_str("dan"))
 end
 
 function offlineimap_run(force)
@@ -317,7 +314,6 @@ for s = 1, screen.count() do
 
     local bot_right_layout = wibox.layout.fixed.horizontal()
     bot_right_layout:add(mpdwidget)
-    bot_right_layout:add(sep)
     bot_right_layout:add(sep)
 
     local bot_layout = wibox.layout.align.horizontal()
