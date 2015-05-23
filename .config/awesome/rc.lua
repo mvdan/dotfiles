@@ -201,7 +201,7 @@ function (widget, args)
     local txt = ""
     for dev, enabled in pairs(net_ifaces) do
         local rx = args['{'..dev..' rx_mb}']
-        if dev == 'wlp3s0' or (rx ~= '0.0' and rx ~= nil) then
+        if rx ~= '0.0' and rx ~= nil then
             net_ifaces[dev] = true
             local up = space(5, args['{'..dev..' up_kb}'])
             local tx = args['{'..dev..' tx_mb}']
@@ -222,6 +222,7 @@ local maildirs = {
         "/home/mvdan/Mail/linode/Univ/new",
     },
 }
+
 function mdir_str(name)
     local paths = maildirs[name]
     local f = io.popen("find "..table.concat(paths, " ").." -type f 2>/dev/null | wc -l")
@@ -239,15 +240,16 @@ function mdirwidget_update()
     mdirwidget:set_markup(mdir_str("dan"))
 end
 
-function offlineimap_run(force)
-    if net_ifaces["wlp3s0"] == false and net_ifaces["eth0"] == false then
+function offlineimap_run()
+    if net_ifaces["wlp3s0"] == false and net_ifaces["enp0s25"] == false then
         return
     end
+    naughty.notify({ title = " % offlineimap", position = "bottom_right" })
     sexec('offlineimap -u Quiet; notmuch new --quiet')
 end
 
 local imap = timer({ timeout = 60 })
-imap:connect_signal("timeout", function() offlineimap_run(false) end)
+imap:connect_signal("timeout", function() offlineimap_run() end)
 imap:start()
 
 local mdirtimer = timer({ timeout = 3 })
@@ -259,7 +261,7 @@ mdirwidget_update()
 mpdwidget = wibox.widget.textbox()
 vicious.register(mpdwidget, vicious.widgets.mpd,
 function (widget, args)
-    if args["{state}"] == "Stop" then return '  - MPD -  ' end
+    if args["{state}"] == "Stop" then return ' - MPD - ' end
     return args["{Title}"]..' - '..args['{Album}']
 end, 5)
 
@@ -394,8 +396,6 @@ globalkeys = awful.util.table.join(
         })
     end),
 
-    awful.key({ modkey, "Shift"   }, "i",     function () sexec("sudo systemctl restart netctl-auto@wlp3s0") end),
-    awful.key({ modkey, altkey    }, "o",     function () offlineimap_run(true) end),
     awful.key({ modkey            }, "r",     function () promptbox[mouse.screen]:run() end),
 
     awful.key({ modkey }, "x",
