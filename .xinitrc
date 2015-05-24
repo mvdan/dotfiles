@@ -1,4 +1,4 @@
-xrandr --dpi 150
+xrandr --dpi 144
 xbacklight -set 30%
 setxkbmap us altgr-intl -option caps:none
 amixer -q -M set Master 100% mute
