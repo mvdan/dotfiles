@@ -70,9 +70,15 @@ end, 1)
 
 batwidget = wibox.widget.textbox()
 vicious.register(batwidget, vicious.widgets.bat, function(widget, args)
-    if args[1] == "−" then return space(3, args[2])..space(6, args[3]) end
-    if args[1] == '+' then return green(space(3, args[2]))..space(6, args[3]) end
-    if args[1] == '↯' then return green(space(3, args[2])).." 00:00" end
+    if args[1] == "−" then
+        return space(3, args[2])..space(6, args[3])
+    end
+    if args[1] == '+' then
+        return green(space(3, args[2]))..space(6, args[3])
+    end
+    if args[1] == '↯' then
+        return green(space(3, args[2])).." 00:00"
+    end
     return green(space(3, args[2])).." ??:??"
 end, 4, "BAT0")
 
@@ -217,34 +223,33 @@ function (widget, args)
 end, 1)
 
 local maildirs = {
-    dan = {
-        "/home/mvdan/Mail/linode/INBOX/new",
-        "/home/mvdan/Mail/linode/Univ/new",
-    },
+    "/home/mvdan/Mail/linode/INBOX/new",
+    "/home/mvdan/Mail/linode/Univ/new",
 }
 
-function mdir_str(name)
-    local paths = maildirs[name]
-    local f = io.popen("find "..table.concat(paths, " ").." -type f 2>/dev/null | wc -l")
+function mdir_str()
+    local label = "mail"
+    local f = io.popen("find "..table.concat(maildirs, " ").." -type f 2>/dev/null | wc -l")
     local count = f:read("*n")
     f:close()
-    if count == nil then return name.." ?" end
-    if count > 0 then
-        return name..' '..green(space(-3, count))
+    if count == nil then
+        return label.." ?"
     end
-    return name.." "..space(-3, count)
+    if count > 0 then
+        return label..' '..green(space(-3, count))
+    end
+    return label.." "..space(-3, count)
 end
 
 mdirwidget = wibox.widget.textbox()
 function mdirwidget_update()
-    mdirwidget:set_markup(mdir_str("dan"))
+    mdirwidget:set_markup(mdir_str())
 end
 
 function offlineimap_run()
     if net_ifaces["wlp3s0"] == false and net_ifaces["enp0s25"] == false then
         return
     end
-    naughty.notify({ title = " % offlineimap", position = "bottom_right" })
     sexec('offlineimap -u Quiet; notmuch new --quiet')
 end
 
