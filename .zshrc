@@ -27,12 +27,8 @@ bindkey "\e[F" end-of-line
 bindkey '^Y' up-line-or-history
 bindkey '^E' down-line-or-history
 
-setopt auto_name_dirs
-setopt auto_pushd
-setopt complete_in_word
 setopt extended_glob
 setopt glob_complete
-setopt ignore_eof
 setopt multios
 setopt no_case_glob
 setopt no_flow_control
@@ -40,14 +36,7 @@ setopt no_hup
 setopt no_beep
 setopt numeric_glob_sort
 setopt prompt_subst
-setopt pushd_ignore_dups
-setopt pushd_minus
-setopt pushd_silent
-setopt pushd_to_home
-setopt rc_expand_param
-setopt list_ambiguous
 
-zstyle ':completion::complete:*' use-cache 1
 zstyle ':completion:*' verbose yes
 zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
 zstyle ':completion:*:descriptions' format '%B%d%b'
@@ -88,17 +77,7 @@ SAVEHIST=4000
 HISTSIZE=4000
 
 HISTFILE=~/.history
-setopt append_history
 setopt hist_ignore_dups
-setopt hist_ignore_all_dups
-setopt hist_reduce_blanks
-setopt hist_ignore_space
-setopt hist_no_store
-setopt hist_verify
-setopt extended_history
-setopt hist_save_no_dups
-setopt hist_expire_dups_first
-setopt hist_find_no_dups
 
 bashcomp_done=false
 bashcomp() {
