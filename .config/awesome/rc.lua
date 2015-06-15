@@ -47,6 +47,7 @@ tasklist = {}
 
 function green(str) return string.format('<span color="#4c4">%s</span>', str) end
 function blue(str) return string.format('<span color="#77f">%s</span>', str) end
+function red(str) return string.format('<span color="#f77">%s</span>', str) end
 function yellow(str) return string.format('<span color="#bb4">%s</span>', str) end
 function space(n, str) return string.format('%'..n..'s', str) end
 
@@ -71,6 +72,9 @@ end, 1)
 batwidget = wibox.widget.textbox()
 vicious.register(batwidget, vicious.widgets.bat, function(widget, args)
     if args[1] == "−" then
+        if args[2] < 10 then
+            return red(space(3, args[2]))..space(6, args[3])
+        end
         return space(3, args[2])..space(6, args[3])
     end
     if args[1] == '+' then

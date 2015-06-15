@@ -95,10 +95,9 @@ au BufRead mutt-* silent g/^> [> ]*-- *$/,?^-- $?-2d
 " Start at the first empty line where we'll write
 au BufRead mutt-* silent /^$
 
-au BufRead *.txt silent setl et
+au BufRead *.txt silent setl et sw=4
 au BufRead ~/git/tor/*.[ch] silent setl et sw=2
 au BufRead ~/git/fcl/* silent setl et sw=4
-au BufRead ~/git/bunked-web/*.py silent setl noet sw=4 ts=4
 
 inoremap jj <esc>
 set backspace=eol,start,indent
@@ -111,5 +110,4 @@ noremap <leader>P o<esc>:set paste<cr>:.!xsel -po<cr>:set nopaste<cr>:silent! %s
 
 inoremap <F8> Daniel Martí <mvdan@mvdan.cc>
 ab mv@ mvdan@mvdan.cc
-au BufRead,BufNewFile *.pddl setf lisp
 au BufNewFile,BufRead *.gradle set filetype=groovy

@@ -10,3 +10,6 @@
 [submodule ".vim/bundle/surround"]
 	path = .vim/bundle/surround
 	url = https://github.com/tpope/vim-surround
+[submodule ".vim/bundle/fileline"]
+	path = .vim/bundle/fileline
+	url = https://github.com/bogado/file-line

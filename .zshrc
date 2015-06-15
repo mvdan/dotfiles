@@ -78,6 +78,7 @@ HISTSIZE=4000
 
 HISTFILE=~/.history
 setopt hist_ignore_dups
+setopt share_history
 
 bashcomp_done=false
 bashcomp() {
