@@ -227,22 +227,31 @@ function (widget, args)
 end, 1)
 
 local maildirs = {
-    "/home/mvdan/Mail/linode/INBOX/new",
-    "/home/mvdan/Mail/linode/Univ/new",
+    mail = {
+        "/home/mvdan/Mail/linode/INBOX/new",
+        "/home/mvdan/Mail/linode/Univ/new",
+    },
+    goog = {
+        "/home/mvdan/Mail/google/INBOX/new",
+    }
 }
 
 function mdir_str()
-    local label = "mail"
-    local f = io.popen("find "..table.concat(maildirs, " ").." -type f 2>/dev/null | wc -l")
-    local count = f:read("*n")
-    f:close()
-    if count == nil then
-        return label.." ?"
+    local txt = ""
+    for _, label in pairs({"mail", "goog"}) do
+        local paths = maildirs[label]
+        local f = io.popen("find "..table.concat(paths, " ").." -type f 2>/dev/null | wc -l")
+        local count = f:read("*n")
+        f:close()
+        if count == nil then
+            txt = txt..label.." ?"
+        elseif count > 0 then
+            txt = txt..label..' '..green(space(-3, count))
+        else
+            txt = txt..label.." "..space(-3, count)
+        end
     end
-    if count > 0 then
-        return label..' '..green(space(-3, count))
-    end
-    return label.." "..space(-3, count)
+    return txt
 end
 
 mdirwidget = wibox.widget.textbox()
@@ -392,7 +401,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, altkey    }, "j",     function () sexec(terminal .. " -c mutt -e mutt") end),
     awful.key({ modkey, altkey    }, "k",     function () sexec(terminal .. " -c ranger -e zsh -c ranger") end),
     awful.key({ modkey, altkey    }, "n",     function () sexec(terminal .. " -c ncmpc -e ncmpc") end),
-    awful.key({ modkey, altkey    }, "i",     function () sexec("chromium") end),
+    awful.key({ modkey, altkey    }, "i",     function () sexec("chromium --force-device-scale-factor=1.5") end),
 
     awful.key({ modkey            }, "i",     function ()
         local f = io.popen("ip route")

@@ -105,7 +105,7 @@ set backspace=eol,start,indent
 " Copy/pasting via xsel
 noremap <leader>y :silent w !xsel -bi<cr>
 noremap <leader>Y :silent w !xsel -pi<cr>
-noremap <leader>p o<esc>:set paste<cr>:.!xsel -bo<cr>:set nopaste<cr>:silent! %s/ / /g<cr>
+noremap <leader>p o<esc>:set paste<cr>:.!xsel -bo<cr>:set nopaste<cr>
 noremap <leader>P o<esc>:set paste<cr>:.!xsel -po<cr>:set nopaste<cr>:silent! %s/ / /g<cr>
 
 inoremap <F8> Daniel Martí <mvdan@mvdan.cc>

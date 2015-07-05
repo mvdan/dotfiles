@@ -27,11 +27,12 @@ set reverse_alias
 set realname = 'Daniel Martí'
 set from = "mvdan@mvdan.cc"
 set use_envelope_from
-alternates "mvdan@mvdan.cc|mvdan@fsfe.org|danielmarti@gmx.com|daniel.marti.i@est.fib.upc.edu|aeigantonvila@gmail.com|khacks@kairossociety.org|daniel.marti@kairossociety.org"
+alternates "mvdan@mvdan.cc|mvdan@fsfe.org|mvdan@google.com|danielmarti@gmx.com|daniel.marti.i@est.fib.upc.edu|aeigantonvila@gmail.com|khacks@kairossociety.org|daniel.marti@kairossociety.org"
 set record = +Sent
 
 folder-hook . "set realname = 'Daniel Martí' from = 'mvdan@mvdan.cc' record = +Sent"
 folder-hook "Fsfe" "set from = 'mvdan@fsfe.org'"
+folder-hook /google/ "set from = 'mvdan@google.com' record = ''"
 folder-hook /cau/ "set realname = 'AEiG Anton Vilà' from = 'aeigantonvila@gmail.com' record = ''"
 
 folder-hook "." "unmy_hdr Reply-To:"
@@ -108,7 +109,9 @@ bind pager G bottom
 bind index,pager \cu half-up
 bind index,pager \cd half-down
 
-mailboxes "=INBOX" "=Univ" "=FDroid" "=Tor" "=Suckless" "=Cau" "=Fsfe" "=Announ" "=Other" "=Sent" "=GLcat" "=Drafts" "=Trash"
+mailboxes "=INBOX"
+mailboxes "=../google/INBOX"
+mailboxes "=Univ" "=FDroid" "=Tor" "=Suckless" "=Cau" "=Fsfe" "=Announ" "=Other" "=Sent" "=GLcat" "=Drafts" "=Trash"
 mailboxes "=../khacks/INBOX"
 mailboxes "=../ac/INBOX" "=../gmx/INBOX"
 mailboxes "=../cau/INBOX" "=../cau/Sent"
