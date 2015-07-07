@@ -247,7 +247,7 @@ spr() {
 
 alias pcat='curl -F "paste=<-" http://paste.cat'
 alias lpcat='curl -F "paste=<-" http://localhost:8080'
-alias cdg="cd ${GOPATH}/src/github.com/mvdan"
+alias cdg="cd ${GOPATH}/src/github.com"
 
 alias grd="gradle --daemon"
 logcat() {
