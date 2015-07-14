@@ -227,18 +227,23 @@ function (widget, args)
 end, 1)
 
 local maildirs = {
-    mail = {
+    inb = {
         "/home/mvdan/Mail/linode/INBOX/new",
+    },
+    unv = {
         "/home/mvdan/Mail/linode/Univ/new",
     },
-    goog = {
+    oth = {
+        "/home/mvdan/Mail/linode/Other/new",
+    },
+    gog = {
         "/home/mvdan/Mail/google/INBOX/new",
-    }
+    },
 }
 
 function mdir_str()
     local txt = ""
-    for _, label in pairs({"mail", "goog"}) do
+    for _, label in pairs({"inb", "unv", "oth", "gog"}) do
         local paths = maildirs[label]
         local f = io.popen("find "..table.concat(paths, " ").." -type f 2>/dev/null | wc -l")
         local count = f:read("*n")

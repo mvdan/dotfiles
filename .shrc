@@ -5,7 +5,6 @@ alias grep="grep --color=auto"
 alias egrep="grep -E --color=auto"
 alias ll="ls --color=auto -lhiF"
 alias la="ls --color=auto -alhiF"
-alias cal="cal -m"
 
 lt () {
 	if [[ $# > 0 ]]; then
@@ -23,7 +22,6 @@ lt- () {
 	fi
 }
 
-alias mkd="mkdir -p"
 mkcd() {
 	mkdir -p $1 && cd $1
 }
@@ -50,7 +48,6 @@ alias p="print -l"
 alias l="${PAGER}"
 alias c="cat"
 alias v="vim"
-alias vdif="vimdiff"
 alias s="sudo "
 alias se="sudo -E "
 alias ng="noglob"
@@ -168,8 +165,6 @@ gplm() {
 	complete -F _fdroid_lint flnt
 }
 
-alias mss="sshfs -C -o follow_symlinks"
-alias mserv="sshfs mvdan@mvdan.cc:/home/mvdan/ ~/srv -C -o follow_symlinks"
 alias weeserv="ssh mvdan.cc -t TERM=screen-256color LANG=en_US.UTF-8 tmux -u new weechat"
 
 [ -n "$TMUX" ] && export TERM=screen-256color
@@ -181,11 +176,6 @@ command_test() {
 
 command_test vim && export EDITOR=vim || export EDITOR=vi
 command_test vimdiff && export DIFF_VIEWER=vimdiff
-
-command_test aptitude && {
-	alias ap="aptitude"
-	alias ag="apt-get"
-}
 
 command_test pacman && {
 	alias pc="pacman"
@@ -213,9 +203,7 @@ command_test pacaur && {
 
 command_test systemctl && {
 	alias sc="sudo systemctl"
-	alias scr="sudo systemctl reload-or-restart"
 	alias scu="systemctl --user"
-	alias scs="sudo systemctl --system"
 	alias jc="sudo journalctl --full"
 }
 
@@ -233,8 +221,6 @@ alias vdifs="sudo -E vimdiff"
 alias zcp="zmv -C"
 alias zln="zmv -L"
 alias cr="rsync -ahvP --"
-alias xp="xsel -p"
-alias xb="xsel -b"
 
 spr() {
 	if [ -t 0 ]; then
