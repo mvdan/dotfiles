@@ -9,6 +9,8 @@ alternative_order text/enriched text/plain text/html
 
 set mime_forward = 'ask-yes'
 set mime_forward_rest
+set charset = 'utf-8'
+set send_charset = 'utf-8'
 set assumed_charset = 'utf-8'
 
 set abort_unmodified

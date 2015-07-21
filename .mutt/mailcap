@@ -1,6 +1,6 @@
-text/html;       chromium %s; nametemplate=%s.html
+text/html;       chromium %s && sleep 2; nametemplate=%s.html
 text/html;       elinks -dump %s; nametemplate=%s.html; copiousoutput
-text/xhtml;      chromium %s; nametemplate=%s.html
+text/xhtml;      chromium %s && sleep 2; nametemplate=%s.html
 text/xhtml;      elinks -dump %s; nametemplate=%s.html; copiousoutput
 text/*;          vim %s
 application/pdf; zathura %s; nametemplate=%s.pdf

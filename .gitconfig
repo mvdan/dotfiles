@@ -29,6 +29,7 @@
 	co = checkout
 	df = diff
 	dfc = diff --cached
+	dfm = diff master..
 	dfo = diff ORIG_HEAD..
 	dfs = diff --submodule
 	dfu = diff @{u}..

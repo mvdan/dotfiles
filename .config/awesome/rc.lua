@@ -52,7 +52,7 @@ function yellow(str) return string.format('<span color="#bb4">%s</span>', str) e
 function space(n, str) return string.format('%'..n..'s', str) end
 
 sep = wibox.widget.textbox()
-sep:set_text("    ")
+sep:set_text("   ")
 
 local cpu_count = 0
 for line in io.lines("/proc/stat") do
@@ -105,13 +105,22 @@ function backlight_get()
 end
 backlight_get()
 
+function betw(val, min, max)
+    if val < min then
+        return min
+    end
+    if val > max then
+        return max
+    end
+    return val
+end
+
 function backlight_inc(increasing)
-    if increasing and backlight >= 100 then return end
-    if not increasing and backlight <= 0 then return end
     local num = 1 + math.floor(backlight / 20.0)
-    if not increasing then num = -num end
-    backlight = backlight + num
-    if backlight > 100 then backlight = 100 end
+    if not increasing then
+        num = -num
+    end
+    backlight = betw(backlight + num, 0, 100)
     sexec(string.format("xbacklight -set %d", backlight))
     blwidget:set_text(space(3, tostring(backlight)))
 end
@@ -141,12 +150,11 @@ end
 volume_get()
 
 function volume_inc(increasing)
-    if increasing and volume >= 100 then return end
-    if not increasing and volume <= 0 then return end
     local num = 5
-    if not increasing then num = -num end
-    volume = volume + num
-    if volume > 100 then volume = 100 end
+    if not increasing then
+        num = -num
+    end
+    volume = betw(volume + num, 0, 100)
     sexec(string.format("amixer -M -q set Master %d%%", volume))
     volume_upd()
 end
@@ -339,7 +347,6 @@ for s = 1, screen.count() do
 
     local bot_right_layout = wibox.layout.fixed.horizontal()
     bot_right_layout:add(mpdwidget)
-    bot_right_layout:add(sep)
 
     local bot_layout = wibox.layout.align.horizontal()
     bot_layout:set_left(bot_left_layout)
@@ -408,6 +415,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, altkey    }, "n",     function () sexec(terminal .. " -c ncmpc -e ncmpc") end),
     awful.key({ modkey, altkey    }, "i",     function () sexec("chromium --force-device-scale-factor=1.5") end),
 
+    awful.key({ modkey            }, "s",     function () sexec("maim -s ~/$(date +%F-%T).png") end),
     awful.key({ modkey            }, "i",     function ()
         local f = io.popen("ip route")
         local t = f:read("*a"):sub(0, -2)

@@ -103,6 +103,7 @@ alias gcm="git commit -v"
 alias gco="git checkout"
 alias gdf="git diff"
 alias gdfc="git diff --cached"
+alias gdfm="git diff master.."
 alias gdfo="git diff ORIG_HEAD.."
 alias gdfs="git diff --submodule"
 alias gdfu="git diff @{u}.."
@@ -231,7 +232,7 @@ spr() {
 	fi
 }
 
-alias pcat='curl -F "paste=<-" http://paste.cat'
+alias pcat='curl -F "paste=<-" http://p.mvdan.cc'
 alias lpcat='curl -F "paste=<-" http://localhost:8080'
 alias cdg="cd ${GOPATH}/src/github.com"
 
