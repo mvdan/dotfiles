@@ -1,0 +1,3 @@
+#!/bin/sh
+
+chromium "$@" && sleep 3

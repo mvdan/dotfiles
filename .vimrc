@@ -11,21 +11,32 @@ set wrap linebreak nolist nojoinspaces
 set nobackup noswapfile nowritebackup
 set history=2000
 set tabstop=8 shiftwidth=8
-set textwidth=78 formatoptions-=t
-set laststatus=2 showcmd hidden
+set textwidth=78 formatoptions-=t formatoptions+=j
+set laststatus=2 showcmd hidden wildmenu
 set autoread magic matchtime=2
+set fileformats+=mac
 set background=dark
 
 " Annoying stuff
 nnoremap <F1> <nop>
 nnoremap Q <nop>
 nnoremap K <nop>
+vnoremap Q <nop>
+vnoremap K <nop>
 set shortmess+=I
 set backspace=eol,start,indent
+set complete-=i
 set noerrorbells novisualbell t_vb=
-set timeoutlen=500
 
-set shell=/bin/bash\ -i
+set nrformats-=octal
+set ttimeout
+set timeoutlen=300
+
+set display+=lastline
+
+set shell=/bin/bash
+
+set encoding=utf-8
 
 set wildignore=*.swp,*.bak,*.pyc,*.o,*.so
 au BufNewFile,BufRead *.md set filetype=markdown
@@ -51,29 +62,29 @@ command -bar Hexmode call ToggleHex()
 
 " helper function to toggle hex mode
 function ToggleHex()
-  let l:modified=&mod
-  let l:oldreadonly=&readonly
-  let &readonly=0
-  let l:oldmodifiable=&modifiable
-  let &modifiable=1
-  if !exists("b:editHex") || !b:editHex
-    let b:oldft=&ft
-    let b:oldbin=&bin
-    setlocal binary
-    let &ft="xxd"
-    let b:editHex=1
-    %!xxd
-  else
-    let &ft=b:oldft
-    if !b:oldbin
-      setlocal nobinary
-    endif
-    let b:editHex=0
-    %!xxd -r
-  endif
-  let &mod=l:modified
-  let &readonly=l:oldreadonly
-  let &modifiable=l:oldmodifiable
+	let l:modified=&mod
+	let l:oldreadonly=&readonly
+	let &readonly=0
+	let l:oldmodifiable=&modifiable
+	let &modifiable=1
+	if !exists("b:editHex") || !b:editHex
+		let b:oldft=&ft
+		let b:oldbin=&bin
+		setlocal binary
+		let &ft="xxd"
+		let b:editHex=1
+		%!xxd
+	else
+		let &ft=b:oldft
+		if !b:oldbin
+			setlocal nobinary
+		endif
+		let b:editHex=0
+		%!xxd -r
+	endif
+	let &mod=l:modified
+	let &readonly=l:oldreadonly
+	let &modifiable=l:oldmodifiable
 endfunction
 
 " Split window shortcuts
@@ -103,7 +114,7 @@ inoremap jj <esc>
 noremap <leader>y :silent w !xsel -bi<cr>
 noremap <leader>Y :silent w !xsel -pi<cr>
 noremap <leader>p o<esc>:set paste<cr>:.!xsel -bo<cr>:set nopaste<cr>
-noremap <leader>P o<esc>:set paste<cr>:.!xsel -po<cr>:set nopaste<cr>:silent! %s/ / /g<cr>
+noremap <leader>P o<esc>:set paste<cr>:.!xsel -po<cr>:set nopaste<cr>
 
 inoremap <F8> Daniel Martí <mvdan@mvdan.cc>
 ab mv@ mvdan@mvdan.cc

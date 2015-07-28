@@ -73,8 +73,8 @@ bindkey -M vicmd '//' history-beginning-search-backward
 bindkey -M vicmd '??' history-beginning-search-forward
 bindkey -M vicmd 'q' push-line
 
-SAVEHIST=8000
-HISTSIZE=8000
+SAVEHIST=50000
+HISTSIZE=50000
 
 HISTFILE=~/.history
 setopt hist_ignore_dups

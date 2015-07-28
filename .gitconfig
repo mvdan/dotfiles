@@ -29,11 +29,12 @@
 	co = checkout
 	df = diff
 	dfc = diff --cached
-	dfm = diff master..
+	dfm = diff master
 	dfo = diff ORIG_HEAD..
 	dfs = diff --submodule
 	dfu = diff @{u}..
 	fe = fetch
+	fea = fetch --all -v -p
 	gr = grep
 	lo = log
 	loo = log ORIG_HEAD..
