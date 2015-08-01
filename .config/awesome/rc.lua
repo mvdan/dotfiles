@@ -347,6 +347,7 @@ for s = 1, screen.count() do
 
     local bot_right_layout = wibox.layout.fixed.horizontal()
     bot_right_layout:add(mpdwidget)
+    bot_right_layout:add(sep)
 
     local bot_layout = wibox.layout.align.horizontal()
     bot_layout:set_left(bot_left_layout)
