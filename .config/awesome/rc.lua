@@ -72,7 +72,7 @@ end, 1)
 batwidget = wibox.widget.textbox()
 vicious.register(batwidget, vicious.widgets.bat, function(widget, args)
     if args[1] == "−" then
-        if args[2] < 10 then
+        if args[2] < 15 then
             return red(space(3, args[2]))..space(6, args[3])
         end
         return space(3, args[2])..space(6, args[3])
