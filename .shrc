@@ -143,6 +143,11 @@ alias gst="git stash"
 alias gsmfc="git smf 'git cle && git rsh' && git cle && git rsh"
 
 alias gsvn="git svn"
+gbrd() {
+	for b in $@; do
+		gbr -d $b && gps origin :$b
+	done
+}
 gplm() {
 	if [[ $1 != */* ]]; then
 		case $PWD in
@@ -167,6 +172,7 @@ gplm() {
 	complete -F _fdroid_lint flnt
 }
 
+alias ssh="TERM=xterm ssh"
 alias weeserv="ssh mvdan.cc -t TERM=screen-256color LANG=en_US.UTF-8 tmux -u new weechat"
 
 [ -n "$TMUX" ] && export TERM=screen-256color
