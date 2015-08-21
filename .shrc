@@ -93,20 +93,19 @@ alias g="git"
 alias gad="git add"
 alias gadp="git add -p"
 alias gap="git apply"
-alias gbs="git bisect"
 alias gba="git branch -a"
 alias gbr="git branch"
+alias gbs="git bisect"
 alias gca="git commit -a -v"
+alias gcm="git commit -v"
 alias gcle="git clean -dffx"
 alias gclo="git clone"
-alias gcm="git commit -v"
 alias gco="git checkout"
 alias gdf="git diff"
 alias gdfc="git diff --cached"
-alias gdfm="git diff master"
-alias gdfo="git diff ORIG_HEAD.."
-alias gdfs="git diff --submodule"
-alias gdfu="git diff @{u}.."
+alias gdfm="git diff master..."
+alias gdfo="git diff ORIG_HEAD..."
+alias gdfu="git diff @{u}..."
 alias gfe="git fetch"
 alias gfea="git fetch --all -v -p"
 alias ggr="git grep"
@@ -117,10 +116,9 @@ alias glopo="git log --decorate -p ORIG_HEAD.."
 alias glou="git log --decorate @{u}.."
 alias gls="git ls-files"
 alias gmr="git merge"
-alias gmrf="git merge --ff-only"
 alias gpl="git pull"
-alias gpla="git pull --all"
 alias gplf="git pull --ff-only"
+alias gplm="git pull --no-ff"
 alias gplr="git pull --rebase=preserve"
 alias gps="git push"
 alias grb="git rebase"
@@ -136,40 +134,17 @@ alias gs="git status -sb -uno"
 alias gss="git status -sb"
 alias gsh="git show"
 alias gsm="git submodule"
-alias gsmu="git submodule update --init --recursive"
 alias gsmf="git submodule foreach --recursive"
+alias gsmu="git submodule update --init --recursive"
 alias gst="git stash"
 
-alias gsmfc="git smf 'git cle && git rsh' && git cle && git rsh"
+alias gsmfc="gsmf 'gcle && grsh' && gcle && grsh"
 
 alias gsvn="git svn"
 gbrd() {
 	for b in $@; do
 		gbr -d $b && gps origin :$b
 	done
-}
-gplm() {
-	if [[ $1 != */* ]]; then
-		case $PWD in
-			*/fd|*/fd/*)
-				1=$1/fdroiddata;;
-			*/fsr|*/fsr/*)
-				1=$1/fdroidserver;;
-			*/fcl|*/fcl/*)
-				1=$1/fdroidclient;;
-		esac
-	fi
-	git pull --no-ff https://gitlab.com/${1}.git ${2:-master}
-}
-
-[[ -x ~/git/fsr/fdroid ]] && {
-	alias fbld="fdroid build -l -v --no-tarball"
-	alias fchk="fdroid checkupdates -v"
-	alias flnt="fdroid lint -v"
-	bashcomp ~/git/fsr/completion/bash-completion
-	complete -F _fdroid_build fbld
-	complete -F _fdroid_checkupdates fchk
-	complete -F _fdroid_lint flnt
 }
 
 alias ssh="TERM=xterm ssh"
@@ -213,12 +188,23 @@ command_test systemctl && {
 	alias sc="sudo systemctl"
 	alias scu="systemctl --user"
 	alias jc="sudo journalctl --full"
+	alias scn="sudo systemctl restart netctl-auto@wlp3s0"
 }
 
 command_test netctl && {
 	alias ncl="sudo -E netctl"
 	alias nca="sudo -E netctl-auto"
 	alias wm="sudo -E wifi-menu"
+}
+
+command_test fdroid && {
+	alias fbld="fdroid build -l -v --no-tarball"
+	alias fchk="fdroid checkupdates -v"
+	alias flnt="fdroid lint -v"
+	bashcomp ~/git/fsr/completion/bash-completion
+	complete -F _fdroid_build fbld
+	complete -F _fdroid_checkupdates fchk
+	complete -F _fdroid_lint flnt
 }
 
 alias tlf="sudo -E tailf"
