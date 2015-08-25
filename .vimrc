@@ -104,9 +104,11 @@ au BufRead mutt-* silent g/^> [> ]*-- *$/,?^-- $?-2d
 " Start at the first empty line where we'll write
 au BufRead mutt-* silent /^$
 
-au BufRead *.txt silent setl et sw=4
-au BufRead ~/git/tor/*.[ch] silent setl et sw=2
-au BufRead ~/git/fcl/* silent setl et sw=4
+au BufNewFile,BufRead *.txt silent setl et sw=4
+au BufNewFile,BufRead ~/git/tor/*.[ch] silent setl et sw=2
+au BufNewFile,BufRead ~/git/fcl/* silent setl et sw=4
+au BufNewFile,BufRead ~/git/macfuzzer/* silent setl et sw=4
+au BufNewFile,BufRead ~/git/qksms/* silent setl et sw=4
 
 inoremap jj <esc>
 
