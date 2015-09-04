@@ -414,7 +414,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, altkey    }, "j",     function () sexec(terminal .. " -c mutt -e mutt") end),
     awful.key({ modkey, altkey    }, "k",     function () sexec(terminal .. " -c ranger -e zsh -c ranger") end),
     awful.key({ modkey, altkey    }, "n",     function () sexec(terminal .. " -c ncmpc -e ncmpc") end),
-    awful.key({ modkey, altkey    }, "i",     function () sexec("chromium --force-device-scale-factor=1.5") end),
+    awful.key({ modkey, altkey    }, "i",     function () sexec("chromium") end),
 
     awful.key({ modkey            }, "s",     function () sexec("maim -s ~/$(date +%F-%T).png") end),
     awful.key({ modkey            }, "i",     function ()

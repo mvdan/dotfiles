@@ -79,17 +79,11 @@ HISTSIZE=50000
 HISTFILE=~/.history
 setopt hist_ignore_dups
 setopt share_history
+setopt shwordsplit
 
-bashcomp_done=false
-bashcomp() {
-	$bashcomp_done && return
+bash_compat_init() {
 	autoload -U bashcompinit
 	bashcompinit
-	bashcomp_done=true
-
-	for f in "$@"; do
-		. "$f"
-	done
 }
 
 . ~/.shrc
@@ -100,9 +94,9 @@ bhelp () {
 
 da() {
 	if [[ $# > 0 ]]; then
-	   	du -hs --apparent-size "$1"/*(DN) 2>/dev/null | sort -h
+		du -hs "$1"/*(DN) 2>/dev/null | sort -h
 	else
-		du -hs --apparent-size ./*(DN) 2>/dev/null | sort -h
+		du -hs ./*(DN) 2>/dev/null | sort -h
 	fi
 }
 

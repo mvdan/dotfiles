@@ -1,5 +1,7 @@
 #!/bin/bash
 
+bash_compat_init
+
 alias ls="ls --color=auto -F"
 alias grep="grep --color=auto"
 alias egrep="grep -E --color=auto"
@@ -123,6 +125,7 @@ alias gplr="git pull --rebase=preserve"
 alias gps="git push"
 alias grb="git rebase"
 alias grbi="git rebase -i"
+alias grbia="git rebase -i --autosquash"
 alias grm="git rm"
 alias grmc="git rm --cached"
 alias grs="git reset"
@@ -141,11 +144,19 @@ alias gst="git stash"
 alias gsmfc="gsmf 'gcle && grsh' && gcle && grsh"
 
 alias gsvn="git svn"
+
 gbrd() {
 	for b in $@; do
 		gbr -d $b && gps origin :$b
 	done
 }
+
+__git_local_head() {
+    local cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "$(ls .git/refs/heads)" -- $cur) )
+}
+
+complete -F __git_local_head gbrd
 
 alias ssh="TERM=xterm ssh"
 alias weeserv="ssh mvdan.cc -t TERM=screen-256color LANG=en_US.UTF-8 tmux -u new weechat"
@@ -201,7 +212,7 @@ command_test fdroid && {
 	alias fbld="fdroid build -l -v --no-tarball"
 	alias fchk="fdroid checkupdates -v"
 	alias flnt="fdroid lint -v"
-	bashcomp ~/git/fsr/completion/bash-completion
+	. ~/git/fsr/completion/bash-completion
 	complete -F _fdroid_build fbld
 	complete -F _fdroid_checkupdates fchk
 	complete -F _fdroid_lint flnt

@@ -2,10 +2,8 @@ command_test() {
 	command -v $1 >/dev/null 2>&1
 }
 
-bashcomp() {
-	for f in "$@"; do
-		source "$f"
-	done
+bash_compat_init() {
+	return
 }
 
 source ~/.shrc
