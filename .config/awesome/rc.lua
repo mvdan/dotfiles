@@ -212,7 +212,7 @@ local function wifi_q()
     return "??"
 end
 
-local net_ifaces = { enp0s25 = false, wlp3s0 = false, enp0s20u1 = false, enp0s20u2 = false }
+local net_ifaces = { lo = false, enp0s25 = false, wlp3s0 = false, enp0s20u1 = false, enp0s20u2 = false }
 netwidget = wibox.widget.textbox()
 vicious.register(netwidget, vicious.widgets.net,
 function (widget, args)

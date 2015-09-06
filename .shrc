@@ -4,11 +4,10 @@ bash_compat_init
 
 alias ls="ls --color=auto -F"
 alias grep="grep --color=auto"
-alias egrep="grep -E --color=auto"
 alias ll="ls --color=auto -lhiF"
 alias la="ls --color=auto -alhiF"
 
-lt () {
+lt() {
 	if [[ $# > 0 ]]; then
 		ls --color=always -Alhrt "$1" | tail -n 25
 	else
@@ -16,55 +15,15 @@ lt () {
 	fi
 }
 
-lt- () {
-	if [[ $# > 0 ]]; then
-		ls --color=always -Alhrt "$1" | head -n 25
-	else
-		ls --color=always -Alhrt | head -n 25
-	fi
-}
+mkcd() { mkdir -p $1 && cd $1 }
+alias cd.="cd .."
+alias cd..="cd ../.."
+alias cd...="cd ../../.."
+alias cd....="cd ../../../.."
 
-mkcd() {
-	mkdir -p $1 && cd $1
-}
-alias cd..="cd .."
-alias cd...="cd ../.."
-alias cd....="cd ../../.."
-alias cd.....="cd ../../../.."
-alias 1="cd -"
-alias 2="cd +2"
-alias 3="cd +3"
-alias 4="cd +4"
-alias 5="cd +5"
-alias 6="cd +6"
-alias 7="cd +7"
-alias 8="cd +8"
-alias 9="cd +9"
+pgr() { ps aux | grep -v grep | grep "$@" -i --color=auto }
 
-alias md="mkdir -p"
-alias rd="rmdir"
-alias rr="rm -rf"
-alias d="dirs -v"
-
-alias p="print -l"
-alias l="${PAGER}"
-alias c="cat"
-alias v="vim"
-alias s="sudo "
-alias se="sudo -E "
-alias ng="noglob"
-alias lm="mount | sed 's/ \(on\|type\) /;;/g' | column -t -s ';;'"
-alias m="mount"
-alias um="umount"
-alias mb="mount --bind"
-alias fm="fusermount"
-
-alias pk="pkill -SIGKILL"
-pgr () {
-	ps aux | grep -v grep | grep "$@" -i --color=auto
-}
-
-fn () {
+fn() {
 	if [[ $# > 1 ]]; then
 		find $1 -name "*$2*"
 	else
@@ -72,23 +31,12 @@ fn () {
 	fi
 }
 
-fni () {
+fni() {
 	if [[ $# > 1 ]]; then
 		find $1 -iname "*$2*"
 	else
 		find . -iname "*$1*"
 	fi
-}
-
-alias udb="sudo updatedb"
-lc () {
-	[[ $# > 1 ]] && locate "$(readlink -f $1)/*$2*" ||\
-	   	locate "$(readlink -f .)/*$1*"
-}
-
-lci () {
-	[[ $# > 1 ]] && locate -i "$(readlink -f $1)/*$2*" ||\
-	   	locate -i "$(readlink -f .)/*$1*"
 }
 
 alias g="git"
@@ -100,6 +48,7 @@ alias gbr="git branch"
 alias gbs="git bisect"
 alias gca="git commit -a -v"
 alias gcm="git commit -v"
+alias gcp="git cherry-pick"
 alias gcle="git clean -dffx"
 alias gclo="git clone"
 alias gco="git checkout"
@@ -168,28 +117,18 @@ command_test() {
 	return $?
 }
 
-command_test vim && export EDITOR=vim || export EDITOR=vi
-command_test vimdiff && export DIFF_VIEWER=vimdiff
-
 command_test pacman && {
-	alias pc="pacman"
-	alias spc="sudo pacman"
 	alias ssm="pacman -Ss"
 	alias ssi="pacman -Sii"
 	ssq() {
 		pacman -Qs "$@" | sed -n 's_local/__p'
 	}
 	ssw() {
-		pacman -Qo $(which $1)
+		pacman -Qo "$(which $1)"
 	}
 	alias srm="sudo pacman -Rns"
 	alias sim="sudo pacman -S --needed"
 	alias syu="sudo pacman -Syu"
-	alias syyu="sudo pacman -Syyu"
-}
-
-command_test pacaur && {
-	alias pca="pacaur"
 	alias ssk="pacaur -Ss"
 	alias sik="pacaur -S"
 	alias syud="pacaur -Syu"
@@ -218,11 +157,6 @@ command_test fdroid && {
 	complete -F _fdroid_lint flnt
 }
 
-alias tlf="sudo -E tailf"
-alias zs="sudo -E zsh"
-alias vis="sudo -E vim"
-alias vdifs="sudo -E vimdiff"
-
 alias zcp="zmv -C"
 alias zln="zmv -L"
 alias cr="rsync -ahvP --"
@@ -241,6 +175,4 @@ alias lpcat='curl -F "paste=<-" http://localhost:8080'
 alias cdg="cd ${GOPATH}/src/github.com"
 
 alias grd="gradle --daemon"
-logcat() {
-	adb logcat | grep `adb shell ps | grep $1 | cut -c10-15`
-}
+logcat() { adb logcat | grep `adb shell ps | grep $1 | cut -c10-15` }
