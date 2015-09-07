@@ -1,0 +1,16 @@
+[database]
+path=/home/mvdan/Mail
+
+[user]
+name=Daniel Martí
+primary_email=mvdan@mvdan.cc
+
+[new]
+tags=unread;inbox;
+ignore=
+
+[search]
+exclude_tags=deleted;spam;
+
+[maildir]
+synchronize_flags=true
