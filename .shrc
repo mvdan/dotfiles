@@ -17,6 +17,7 @@ lt() {
 
 alias l="less"
 alias s="sudo"
+alias rr="rm -rf"
 
 mkcd() { mkdir -p $1 && cd $1 }
 alias cd.="cd .."

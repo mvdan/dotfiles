@@ -1,0 +1,23 @@
+user "mvdan"
+pid_file "/home/mvdan/.mpd/mpd.pid"
+db_file "/home/mvdan/.mpd/mpd.db"
+state_file "/home/mvdan/.mpd/mpdstate"
+
+music_directory "/home/mvdan/Music"
+
+bind_to_address "any"
+port "6600"
+metadata_to_use "artist,album,title,track,name,genre,date,composer,performer,disc"
+auto_update "yes"
+auto_update_depth "4"
+follow_outside_symlinks "yes"
+follow_inside_symlinks "yes"
+audio_output {
+    type "alsa"
+    name "My ALSA Device"
+    mixer_device "Master"
+}
+replaygain "track"
+replaygain_preamp "0"
+audio_buffer_size "4096"
+buffer_before_play "10%"
