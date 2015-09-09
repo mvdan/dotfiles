@@ -17,6 +17,8 @@ lt() {
 
 alias l="less"
 alias s="sudo"
+alias se="s -E"
+alias zs="se $SHELL"
 alias rr="rm -rf"
 
 mkcd() { mkdir -p $1 && cd $1 }
@@ -24,6 +26,7 @@ alias cd.="cd .."
 alias cd..="cd ../.."
 alias cd...="cd ../../.."
 alias cd....="cd ../../../.."
+alias cdr="cd $(git rev-parse --show-toplevel)"
 
 pgr() { ps aux | grep -v grep | grep "$@" -i --color=auto }
 
@@ -105,11 +108,21 @@ gbrd() {
 }
 
 __git_local_head() {
-    local cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "$(ls .git/refs/heads)" -- $cur) )
+	local cur="${COMP_WORDS[COMP_CWORD]}"
+	COMPREPLY=( $(compgen -W "$(ls .git/refs/heads)" -- $cur) )
 }
 
 complete -F __git_local_head gbrd
+
+git-prepare-patches() {
+	sed -i 's/^From:.*/From: Daniel Martí <mvdan@mvdan.cc>/' *.patch
+}
+
+git-send-patches() {
+	for f in *.patch; do
+		mutt -H $f || break
+	done
+}
 
 alias ssh="TERM=xterm ssh"
 alias weeserv="ssh mvdan.cc -t TERM=screen-256color LANG=en_US.UTF-8 tmux -u new weechat"

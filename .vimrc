@@ -2,7 +2,7 @@ call pathogen#infect()
 Helptags
 
 syntax on
-set synmaxcol=150
+set synmaxcol=500
 filetype plugin indent on
 
 set encoding=utf-8
