@@ -26,13 +26,13 @@ alias cd.="cd .."
 alias cd..="cd ../.."
 alias cd...="cd ../../.."
 alias cd....="cd ../../../.."
-alias cdr="cd $(git rev-parse --show-toplevel)"
+cdr() { cd $(git rev-parse --show-toplevel) }
 
 pgr() { ps aux | grep -v grep | grep "$@" -i --color=auto }
 
 fn() {
 	if [[ $# > 1 ]]; then
-		find $1 -name "*$2*"
+		find "$1" -name "*$2*"
 	else
 		find . -name "*$1*"
 	fi
@@ -40,7 +40,7 @@ fn() {
 
 fni() {
 	if [[ $# > 1 ]]; then
-		find $1 -iname "*$2*"
+		find "$1" -iname "*$2*"
 	else
 		find . -iname "*$1*"
 	fi
@@ -105,6 +105,32 @@ gbrd() {
 	for b in $@; do
 		gbr -d $b && gps origin :$b
 	done
+}
+
+gplmr() {
+	local owner=${1}
+	local branch=${2:-master}
+	site=""
+	repo=""
+	case "$PWD/" in
+		*/fcl/*)
+			site="gitlab.com"
+			repo="fdroidclient"
+			;;
+		*/fsr/*)
+			site="gitlab.com"
+			repo="fdroidserver"
+			;;
+		*/fd/*)
+			site="gitlab.com"
+			repo="fdroiddata"
+			;;
+		*)
+			echo "repo unknown"
+			return
+			;;
+	esac
+	git pull https://${site}/${owner}/${repo}.git ${branch}
 }
 
 __git_local_head() {
@@ -189,7 +215,6 @@ spr() {
 
 alias pcat='curl -F "paste=<-" http://p.mvdan.cc'
 alias lpcat='curl -F "paste=<-" http://localhost:8080'
-alias cdg="cd ${GOPATH}/src/github.com"
 
 alias grd="gradle --daemon"
 logcat() { adb logcat | grep `adb shell ps | grep $1 | cut -c10-15` }

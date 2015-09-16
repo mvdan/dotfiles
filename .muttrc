@@ -115,10 +115,22 @@ bind index,pager \cd half-down
 
 mailboxes "=INBOX"
 mailboxes "=../google/INBOX"
-mailboxes "=Univ" "=FDroid" "=Tor" "=Suckless" "=Cau" "=Fsfe" "=Announ" "=Other" "=Sent" "=GLcat" "=Drafts" "=Trash"
+mailboxes "=Univ"
+mailboxes "=FDroid"
+mailboxes "=Tor"
+mailboxes "=Suckless"
+mailboxes "=Cau"
+mailboxes "=Fsfe"
+mailboxes "=Announ"
+mailboxes "=Other"
+mailboxes "=Sent"
+mailboxes "=GLcat"
+mailboxes "=Drafts"
+mailboxes "=Trash"
 mailboxes "=../khacks/INBOX"
-mailboxes "=../ac/INBOX" "=../gmx/INBOX"
-mailboxes "=../cau/INBOX" "=../cau/Sent"
+mailboxes "=../ac/INBOX"
+mailboxes "=../gmx/INBOX"
+mailboxes "=../cau/INBOX"
 macro index,pager A <change-folder>=Spam<enter>
 macro index,pager S <change-folder>=Sent<enter>
 
