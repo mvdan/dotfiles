@@ -20,6 +20,7 @@ alias s="sudo"
 alias se="s -E"
 alias zs="se $SHELL"
 alias rr="rm -rf"
+alias vs="se vim"
 
 mkcd() { mkdir -p $1 && cd $1 }
 alias cd.="cd .."
@@ -161,6 +162,7 @@ command_test() {
 }
 
 command_test pacman && {
+	alias spc="sudo pacman"
 	alias ssm="pacman -Ss"
 	alias ssi="pacman -Sii"
 	ssq() {

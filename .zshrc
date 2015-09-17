@@ -2,6 +2,11 @@ autoload -U compinit colors zsh/terminfo zmv
 compinit
 colors
 
+function zle-line-init () { echoti smkx }
+function zle-line-finish () { echoti rmkx }
+zle -N zle-line-init
+zle -N zle-line-finish
+
 bindkey -v
 bindkey '^r' history-incremental-search-backward
 bindkey "\e[A" up-line-or-history

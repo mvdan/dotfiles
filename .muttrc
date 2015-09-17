@@ -35,6 +35,7 @@ folder-hook . "set trash = +Trash"
 folder-hook "Spam" "unset trash"
 
 folder-hook . "set realname = 'Daniel Martí' from = 'mvdan@mvdan.cc' record = +Sent"
+folder-hook "Univ" "set from = 'daniel.marti.i@est.fib.upc.edu'"
 folder-hook "Fsfe" "set from = 'mvdan@fsfe.org'"
 folder-hook /google/ "set from = 'mvdan@google.com' record = ''"
 folder-hook /cau/ "set realname = 'AEiG Anton Vilà' from = 'aeigantonvila@gmail.com' record = ''"
