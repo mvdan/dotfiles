@@ -7,8 +7,11 @@ function zle-line-finish () { echoti rmkx }
 zle -N zle-line-init
 zle -N zle-line-finish
 
+noop() {}
+zle -N noop
+
 bindkey -v
-bindkey '^r' history-incremental-search-backward
+bindkey '^r' history-incremental-pattern-search-backward
 bindkey "\e[A" up-line-or-history
 bindkey "\e[B" down-line-or-history
 bindkey "\e[C" forward-char
@@ -19,18 +22,14 @@ bindkey "\e[5~" beginning-of-history
 bindkey "\e[6~" end-of-history
 bindkey "\e[3~" delete-char
 bindkey "\e[2~" overwrite-mode
-bindkey "\e[5C" forward-word
-bindkey "\e[5D" backward-word
-bindkey "\e\e[C" forward-word
-bindkey "\e\e[D" backward-word
 bindkey "\e[7~" beginning-of-line
 bindkey "\e[8~" end-of-line
 bindkey "\eOH" beginning-of-line
 bindkey "\eOF" end-of-line
 bindkey "\e[H" beginning-of-line
 bindkey "\e[F" end-of-line
-bindkey '^Y' up-line-or-history
-bindkey '^E' down-line-or-history
+bindkey '^Y' noop
+bindkey '^E' noop
 
 setopt extended_glob
 setopt glob_complete
@@ -42,29 +41,9 @@ setopt no_beep
 setopt numeric_glob_sort
 setopt prompt_subst
 
-zstyle ':completion:*' verbose yes
-zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
-zstyle ':completion:*:descriptions' format '%B%d%b'
-zstyle ':completion:*:messages' format '%d'
-zstyle ':completion:*:warnings' format 'No matches for: %d'
-zstyle ':completion:*' group-name ''
-zstyle ':completion:*' completer _expand _complete _approximate _files _ignored
-zstyle ':completion:*' auto-description 'specify: %d'
-zstyle ':completion:*:default' list-prompt '%S%M matches%s'
-zstyle ':completion:*:default' menu 'select=0'
+zstyle ':completion:*' completer _complete
+zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' '+l:|=* r:|=*'
 zstyle ':completion:*' file-sort modification reverse
-zstyle ':completion:*' list-colors "=(#b) #([0-9]#)*=36=31"
-zstyle ':completion:*:manuals' separate-sections true
-zstyle ':completion:*:man:*' menu yes select
-zstyle ':completion:*' list-separator 'fREW'
-zstyle ':completion:*:windows' menu on=0
-zstyle ':completion:*:expand:*' tag-order all-expansions
-zstyle ':completion:*:approximate:*' max-errors 'reply=(  $((  ($#PREFIX+$#SUFFIX)/3  ))  )'
-zstyle ':completion:*:corrections' format '%B%d (errors %e)%b'
-zstyle ':completion::*:(rm|vi):*' ignore-line true
-zstyle ':completion:*' ignore-parents parent pwd
-zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
-zstyle ':completion:*:kill:*' command 'ps -au $USER -o pid,%cpu,tty,cputime,cmd'
 
 setopt vi
 bindkey -M viins 'jj' vi-cmd-mode

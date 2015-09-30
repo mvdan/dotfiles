@@ -27,6 +27,7 @@ alias cd.="cd .."
 alias cd..="cd ../.."
 alias cd...="cd ../../.."
 alias cd....="cd ../../../.."
+alias cdg="cd $GOPATH/src/github.com/mvdan"
 cdr() { cd $(git rev-parse --show-toplevel) }
 
 pgr() { ps aux | grep -v grep | grep "$@" -i --color=auto }
@@ -98,7 +99,7 @@ alias gsmf="git submodule foreach --recursive"
 alias gsmu="git submodule update --init --recursive"
 alias gst="git stash"
 
-alias gsmfc="gsmf 'gcle && grsh' && gcle && grsh"
+alias gsmfc="gsmf 'git clean -dffx && git reset --hard' && gcle && grsh"
 
 alias gsvn="git svn"
 
@@ -136,7 +137,8 @@ gplmr() {
 
 __git_local_head() {
 	local cur="${COMP_WORDS[COMP_CWORD]}"
-	COMPREPLY=( $(compgen -W "$(ls .git/refs/heads)" -- $cur) )
+	local gr="$(git rev-parse --show-toplevel)"
+	COMPREPLY=( $(compgen -W "$(ls ${gr}/.git/refs/heads)" -- $cur) )
 }
 
 complete -F __git_local_head gbrd
@@ -220,3 +222,4 @@ alias lpcat='curl -F "paste=<-" http://localhost:8080'
 
 alias grd="gradle --daemon"
 logcat() { adb logcat | grep `adb shell ps | grep $1 | cut -c10-15` }
+alias kctl="kubectl --namespace=kube-system"

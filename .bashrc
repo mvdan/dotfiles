@@ -14,10 +14,10 @@ bhelp () {
 
 da() {
 	if [[ $# > 0 ]]; then
-	   	du -hs --apparent-size "$1"/{.[!.]*,*} 2>/dev/null | sort -h
+		du -hs "$1"/{.[!.]*,*} 2>/dev/null | sort -h
 
 	else
-		du -hs --apparent-size ./{.[!.]*,*} 2>/dev/null | sort -h
+		du -hs ./{.[!.]*,*} 2>/dev/null | sort -h
 	fi
 }
 
