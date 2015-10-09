@@ -11,7 +11,8 @@ set number ruler smartindent
 set wrap linebreak nolist nojoinspaces
 set nobackup noswapfile nowritebackup
 set history=2000
-set noexpandtab tabstop=8 shiftwidth=8
+"set noexpandtab tabstop=8 shiftwidth=8
+set expandtab tabstop=4 shiftwidth=4
 set textwidth=78 formatoptions-=t formatoptions+=j
 set laststatus=2 showcmd hidden wildmenu
 set autoread magic matchtime=2
