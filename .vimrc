@@ -12,7 +12,7 @@ set wrap linebreak nolist nojoinspaces
 set nobackup noswapfile nowritebackup
 set history=2000
 set noexpandtab tabstop=8 shiftwidth=8
-set textwidth=78 formatoptions-=t formatoptions+=j
+set textwidth=72 formatoptions-=t formatoptions+=j
 set laststatus=2 showcmd hidden wildmenu
 set autoread magic matchtime=2
 set fileformats+=mac
@@ -80,7 +80,7 @@ nnoremap <F10> 3<C-W>+
 nnoremap <F11> 3<C-W>-
 nnoremap <F12> 3<C-W>>
 
-au BufRead mutt-* silent setl formatoptions+=t textwidth=72
+au BufRead mutt-* silent setl formatoptions+=t
 au BufRead mutt-* silent g/^> [> ]*-- *$/,?^-- $?-2d
 au BufRead mutt-* silent /^$
 
