@@ -16,18 +16,22 @@ lt() {
 }
 
 alias l="less"
+alias sudo='sudo ' # for alias to work with sudo
 alias s="sudo"
 alias se="s -E"
 alias zs="se $SHELL"
 alias rr="rm -rf"
 alias vs="se vim"
 
-mkcd() { mkdir -p $1 && cd $1 }
+alias m="mount"
+alias um="umount"
+
+mkcd() { mkdir -p "$1" && cd "$1" }
 alias cd.="cd .."
 alias cd..="cd ../.."
 alias cd...="cd ../../.."
 alias cd....="cd ../../../.."
-alias cdg="cd $GOPATH/src/github.com/mvdan"
+cdg() { cd $GOPATH/src/github.com/mvdan }
 cdr() { cd $(git rev-parse --show-toplevel) }
 
 pgr() { ps aux | grep -v grep | grep "$@" -i --color=auto }
@@ -66,7 +70,7 @@ alias gdfc="git diff --cached"
 alias gdfm="git diff master..."
 alias gdfo="git diff ORIG_HEAD..."
 alias gdfu="git diff @{u}..."
-alias gfe="git fetch"
+alias gfe="git fetch -v -p"
 alias gfea="git fetch --all -v -p"
 alias ggr="git grep"
 alias glo="git log --decorate"
