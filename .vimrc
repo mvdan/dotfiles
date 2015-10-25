@@ -35,7 +35,7 @@ set nrformats-=octal
 set ttimeout
 set timeoutlen=300
 
-set wildignore=*.swp,*.bak,*.pyc,*.o,*.so
+set wildignore=*.swp,*.bak,*.pyc,*.o,*.so,*.a
 au BufNewFile,BufRead *.md set filetype=markdown
 au BufNewFile,BufRead *.gradle set filetype=groovy
 au BufNewFile,BufRead *.pl set filetype=prolog
