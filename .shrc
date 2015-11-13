@@ -26,15 +26,23 @@ alias vs="se vim"
 alias m="mount"
 alias um="umount"
 
-mkcd() { mkdir -p "$1" && cd "$1" }
+mkcd() {
+	mkdir -p "$1" && cd "$1"
+}
 alias cd.="cd .."
 alias cd..="cd ../.."
 alias cd...="cd ../../.."
 alias cd....="cd ../../../.."
-cdg() { cd $GOPATH/src/github.com/mvdan }
-cdr() { cd $(git rev-parse --show-toplevel) }
+cdg() {
+	cd $GOPATH/src/github.com/mvdan
+}
+cdr() {
+	cd $(git rev-parse --show-toplevel)
+}
 
-pgr() { ps aux | grep -v grep | grep "$@" -i --color=auto }
+pgr() {
+	ps aux | grep -v grep | grep "$@" -i --color=auto
+}
 
 fn() {
 	if [[ $# > 1 ]]; then
@@ -225,5 +233,7 @@ alias pcat='curl -F "paste=<-" http://p.mvdan.cc'
 alias lpcat='curl -F "paste=<-" http://localhost:8080'
 
 alias grd="gradle --daemon"
-logcat() { adb logcat | grep `adb shell ps | grep $1 | cut -c10-15` }
+logcat() {
+	adb logcat | grep `adb shell ps | grep $1 | cut -c10-15`
+}
 alias kctl="kubectl --namespace=kube-system"
