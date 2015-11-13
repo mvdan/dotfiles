@@ -503,6 +503,8 @@ awful.rules.rules = {
     properties = { tag = tags[1][2] } },
     { rule = { instance = "mutt" },
     properties = { tag = tags[1][3] } },
+    { rule = { class = "Slack" },
+    properties = { tag = tags[1][6] } },
     { rule = { class = "Telegram" },
     properties = { tag = tags[1][7] } },
     { rule = { class = "chromium" },

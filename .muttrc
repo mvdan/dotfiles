@@ -103,10 +103,13 @@ set pgp_list_secring_command="gpg --no-verbose --batch --with-colons --list-secr
 set sidebar_delim=" "
 set sidebar_visible
 set sidebar_width = 28
-bind index,pager H sidebar-open
-bind index,pager K sidebar-prev
-bind index,pager J sidebar-next
+bind index,pager <esc>h sidebar-open
+bind index,pager <esc>k sidebar-prev
+bind index,pager <esc>j sidebar-next
+bind index,pager <esc>i sidebar-new
 color sidebar_new yellow default
+macro index,pager <esc>a <change-folder>=Spam<enter>
+macro index,pager <esc>s <change-folder>=Sent<enter>
 
 bind index G last-entry
 bind pager G bottom
@@ -130,8 +133,6 @@ mailboxes "=../khacks/INBOX"
 mailboxes "=../ac/INBOX"
 mailboxes "=../gmx/INBOX"
 mailboxes "=../cau/INBOX"
-macro index,pager A <change-folder>=Spam<enter>
-macro index,pager S <change-folder>=Sent<enter>
 
 color hdrdefault blue black
 color quoted blue black
