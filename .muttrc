@@ -28,7 +28,7 @@ set reverse_alias
 set realname = 'Daniel Martí'
 set from = "mvdan@mvdan.cc"
 set use_envelope_from
-alternates "mvdan@mvdan.cc|mvdan@fsfe.org|danielmarti@gmx.com|daniel.marti.i@est.fib.upc.edu|aeigantonvila@gmail.com|khacks@kairossociety.org|daniel.marti@kairossociety.org"
+alternates "mvdan@mvdan.cc|mvdan@fsfe.org|danielmarti@gmx.com|daniel.marti.i@est.fib.upc.edu"
 set record = +Sent
 
 folder-hook . "set trash = +Trash"
@@ -37,7 +37,6 @@ folder-hook "Spam" "unset trash"
 folder-hook . "set realname = 'Daniel Martí' from = 'mvdan@mvdan.cc' record = +Sent"
 folder-hook "Univ" "set from = 'daniel.marti.i@est.fib.upc.edu'"
 folder-hook "Fsfe" "set from = 'mvdan@fsfe.org'"
-folder-hook /cau/ "set realname = 'AEiG Anton Vilà' from = 'aeigantonvila@gmail.com' record = ''"
 
 folder-hook "." "unmy_hdr Reply-To:"
 folder-hook "FDroid" "my_hdr Reply-To: team@f-droid.org"
@@ -129,10 +128,7 @@ mailboxes "=Sent"
 mailboxes "=GLcat"
 mailboxes "=Drafts"
 mailboxes "=Trash"
-mailboxes "=../khacks/INBOX"
-mailboxes "=../ac/INBOX"
 mailboxes "=../gmx/INBOX"
-mailboxes "=../cau/INBOX"
 
 color hdrdefault blue black
 color quoted blue black
