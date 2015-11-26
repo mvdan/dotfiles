@@ -34,16 +34,12 @@ set record = +Sent
 folder-hook . "set trash = +Trash"
 folder-hook "Spam" "unset trash"
 
-folder-hook . "set realname = 'Daniel Martí' from = 'mvdan@mvdan.cc' record = +Sent"
-folder-hook "Univ" "set from = 'daniel.marti.i@est.fib.upc.edu'"
-folder-hook "Fsfe" "set from = 'mvdan@fsfe.org'"
-
 folder-hook "." "unmy_hdr Reply-To:"
 folder-hook "FDroid" "my_hdr Reply-To: team@f-droid.org"
 
-set query_command= "abook --mutt-query '%s'"
-macro index,pager  B "<pipe-message>abook --add-email-quiet<return>" "Add this sender to Abook"
-bind editor        <Tab> complete-query
+set query_command = "abook --mutt-query '%s'"
+macro index,pager B "<pipe-message>abook --add-email-quiet<return>" "Add this sender to Abook"
+bind editor <Tab> complete-query
 
 set rfc2047_parameters = yes
 
@@ -83,23 +79,23 @@ set pgp_sign_as = 4348041C
 set pgp_replysign
 set pgp_replyencrypt
 set pgp_timeout = 1800
-set pgp_good_sign="^gpg: Good signature from"
+set pgp_good_sign = "^gpg: Good signature from"
 set pgp_verify_sig
-set pgp_list_secring_command="gpg --no-verbose --batch --with-colons --list-secret-keys %r"
-set pgp_decode_command="gpg %?p?--passphrase-fd 0? --no-verbose --batch -o - %f"
-set pgp_verify_command="gpg --no-verbose --batch -o - --verify %s %f"
-set pgp_decrypt_command="gpg --passphrase-fd 0 --no-verbose --batch -o - %f"
-set pgp_sign_command="gpg --no-verbose --batch -o - --passphrase-fd 0 --armor --detach-sign --textmode %?a?-u %a? %f"
-set pgp_clearsign_command="gpg --no-verbose --batch -o - --passphrase-fd 0 --armor --textmode --clearsign %?a?-u %a? %f"
-set pgp_encrypt_only_command="pgpewrap gpg -v --batch -o - --encrypt --textmode --armor --always-trust %?a?-u %a? -- -r %r -- %f"
-set pgp_encrypt_sign_command="pgpewrap gpg --passphrase-fd 0 -v --batch -o - --encrypt --sign --armor --always-trust %?a?-u %a? -- -r %r -- %f"
-set pgp_import_command="gpg --no-verbose --import -v %f"
-set pgp_export_command="gpg --no-verbose --export --armor %r"
-set pgp_verify_key_command="gpg --no-verbose --batch --fingerprint --check-sigs %r"
-set pgp_list_pubring_command="gpg --no-verbose --batch --with-colons --list-keys %r"
-set pgp_list_secring_command="gpg --no-verbose --batch --with-colons --list-secret-keys %r"
+set pgp_list_secring_command = "gpg --no-verbose --batch --with-colons --list-secret-keys %r"
+set pgp_decode_command = "gpg %?p?--passphrase-fd 0? --no-verbose --batch -o - %f"
+set pgp_verify_command = "gpg --no-verbose --batch -o - --verify %s %f"
+set pgp_decrypt_command = "gpg --passphrase-fd 0 --no-verbose --batch -o - %f"
+set pgp_sign_command = "gpg --no-verbose --batch -o - --passphrase-fd 0 --armor --detach-sign --textmode %?a?-u %a? %f"
+set pgp_clearsign_command = "gpg --no-verbose --batch -o - --passphrase-fd 0 --armor --textmode --clearsign %?a?-u %a? %f"
+set pgp_encrypt_only_command = "pgpewrap gpg -v --batch -o - --encrypt --textmode --armor --always-trust %?a?-u %a? -- -r %r -- %f"
+set pgp_encrypt_sign_command = "pgpewrap gpg --passphrase-fd 0 -v --batch -o - --encrypt --sign --armor --always-trust %?a?-u %a? -- -r %r -- %f"
+set pgp_import_command = "gpg --no-verbose --import -v %f"
+set pgp_export_command = "gpg --no-verbose --export --armor %r"
+set pgp_verify_key_command = "gpg --no-verbose --batch --fingerprint --check-sigs %r"
+set pgp_list_pubring_command = "gpg --no-verbose --batch --with-colons --list-keys %r"
+set pgp_list_secring_command = "gpg --no-verbose --batch --with-colons --list-secret-keys %r"
 
-set sidebar_delim=" "
+set sidebar_delim = " "
 set sidebar_visible
 set sidebar_width = 28
 bind index,pager <esc>h sidebar-open
@@ -119,7 +115,6 @@ mailboxes "=INBOX"
 mailboxes "=Univ"
 mailboxes "=FDroid"
 mailboxes "=Tor"
-mailboxes "=Suckless"
 mailboxes "=Cau"
 mailboxes "=Fsfe"
 mailboxes "=Announ"
