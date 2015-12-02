@@ -82,6 +82,7 @@ alias gfe="git fetch -v -p"
 alias gfea="git fetch --all -v -p"
 alias ggr="git grep"
 alias glo="git log --decorate"
+alias glos="git log --decorate --stat"
 alias gloo="git log --decorate ORIG_HEAD.."
 alias glop="git log --decorate -p"
 alias glopo="git log --decorate -p ORIG_HEAD.."
@@ -218,7 +219,7 @@ command_test fdroid && {
 
 alias zcp="zmv -C"
 alias zln="zmv -L"
-alias cr="rsync -ahvP --"
+alias rsv="rsync -ah --info=progress2"
 
 spr() {
 	if [ -t 0 ]; then

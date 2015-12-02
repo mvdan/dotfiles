@@ -81,8 +81,6 @@ nnoremap <F11> 3<C-W>-
 nnoremap <F12> 3<C-W>>
 
 au BufRead mutt-* silent setl formatoptions+=t
-au BufRead mutt-* silent g/^[> ]\+-- *$/,?^-- $?-2d
-au BufRead mutt-* silent setl mod
 au BufRead mutt-* silent /^$
 
 au BufNewFile,BufRead *.txt silent setl et sw=4
