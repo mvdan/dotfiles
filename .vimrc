@@ -34,6 +34,7 @@ set display+=lastline
 set nrformats-=octal
 set ttimeout
 set timeoutlen=300
+set scrolloff=4
 
 set wildignore=*.swp,*.bak,*.pyc,*.o,*.so,*.a
 au BufNewFile,BufRead *.md set filetype=markdown
