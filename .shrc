@@ -60,6 +60,9 @@ fni() {
 	fi
 }
 
+alias gg="go get -u -v"
+alias gd="go get -u -v -d"
+
 alias g="git"
 alias gad="git add"
 alias gadp="git add -p"
