@@ -236,22 +236,19 @@ end, 1)
 
 local maildirs = {
     inb = {
-        "/home/mvdan/Mail/linode/INBOX/new",
+        "/home/mvdan/mail/mvdan/INBOX/new",
     },
     unv = {
-        "/home/mvdan/Mail/linode/Univ/new",
+        "/home/mvdan/mail/mvdan/Univ/new",
     },
     oth = {
-        "/home/mvdan/Mail/linode/Other/new",
-    },
-    gog = {
-        "/home/mvdan/Mail/google/INBOX/new",
+        "/home/mvdan/mail/mvdan/Other/new",
     },
 }
 
 function mdir_str()
     local txt = ""
-    for _, label in pairs({"inb", "unv", "oth", "gog"}) do
+    for _, label in pairs({"inb", "unv", "oth"}) do
         local paths = maildirs[label]
         local f = io.popen("find "..table.concat(paths, " ").." -type f 2>/dev/null | wc -l")
         local count = f:read("*n")
@@ -272,15 +269,15 @@ function mdirwidget_update()
     mdirwidget:set_markup(mdir_str())
 end
 
-function offlineimap_run()
+function imap_sync()
     if net_ifaces["wlp3s0"] == false and net_ifaces["enp0s25"] == false then
         return
     end
-    sexec('offlineimap -u Quiet; notmuch new --quiet')
+    sexec('mbsync -a -q; notmuch new --quiet')
 end
 
 local imap = timer({ timeout = 60 })
-imap:connect_signal("timeout", function() offlineimap_run() end)
+imap:connect_signal("timeout", function() imap_sync() end)
 imap:start()
 
 local mdirtimer = timer({ timeout = 3 })

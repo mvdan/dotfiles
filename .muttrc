@@ -1,7 +1,7 @@
 set nohelp
 set mbox_type = Maildir
-set folder = ~/Mail/linode
-set spoolfile = +INBOX
+set folder = ~/mail/mvdan
+set spoolfile = +Inbox
 set postponed = +Drafts
 auto_view text/html
 alternative_order text/enriched text/plain text/html
@@ -111,7 +111,7 @@ bind pager G bottom
 bind index,pager \cu half-up
 bind index,pager \cd half-down
 
-mailboxes "=INBOX"
+mailboxes "=Inbox"
 mailboxes "=Univ"
 mailboxes "=FDroid"
 mailboxes "=Tor"
@@ -123,7 +123,7 @@ mailboxes "=Sent"
 mailboxes "=GLcat"
 mailboxes "=Drafts"
 mailboxes "=Trash"
-mailboxes "=../gmx/INBOX"
+mailboxes "=../gmx/Inbox"
 
 color hdrdefault blue black
 color quoted blue black
