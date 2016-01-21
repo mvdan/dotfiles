@@ -236,7 +236,7 @@ end, 1)
 
 local maildirs = {
     inb = {
-        "/home/mvdan/mail/mvdan/INBOX/new",
+        "/home/mvdan/mail/mvdan/Inbox/new",
     },
     unv = {
         "/home/mvdan/mail/mvdan/Univ/new",
@@ -407,7 +407,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, altkey    }, "Next",  function () backlight_inc(true) end),
     awful.key({ modkey, altkey    }, "1",     function () sexec("setxkbmap us altgr-intl -option caps:none") end),
     awful.key({ modkey, altkey    }, "2",     function () sexec("setxkbmap es cat -option caps:none") end),
-    awful.key({ modkey, altkey    }, "h",     function () sexec(terminal .. " -c ssh_mvdan -e ssh linode -t TERM=screen-256color tmux -u a") end),
+    awful.key({ modkey, altkey    }, "h",     function () sexec(terminal .. " -c ssh -e ssh linode -t TERM=screen-256color tmux -u a") end),
     awful.key({ modkey, altkey    }, "j",     function () sexec(terminal .. " -c mutt -e mutt") end),
     awful.key({ modkey, altkey    }, "k",     function () sexec(terminal .. " -c ranger -e zsh -c ranger") end),
     awful.key({ modkey, altkey    }, "n",     function () sexec(terminal .. " -c ncmpc -e ncmpc") end),
@@ -496,17 +496,17 @@ awful.rules.rules = {
         size_hints_honor = false,
         keys = clientkeys,
         buttons = clientbuttons } },
-    { rule = { instance = "ssh_mvdan" },
+    { rule = { class = "ssh" },
     properties = { tag = tags[1][2] } },
-    { rule = { instance = "mutt" },
+    { rule = { class = "mutt" },
     properties = { tag = tags[1][3] } },
     { rule = { class = "Telegram" },
     properties = { tag = tags[1][7] } },
     { rule = { class = "chromium" },
     properties = { tag = tags[1][8] } },
-    { rule = { instance = "ranger" },
+    { rule = { class = "ranger" },
     properties = { tag = tags[1][9] } },
-    { rule = { instance = "ncmpc" },
+    { rule = { class = "ncmpc" },
     properties = { tag = tags[1][10] } }
 }
 
