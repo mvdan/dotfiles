@@ -34,9 +34,6 @@ set record = +Sent
 folder-hook . "set trash = +Trash"
 folder-hook "Spam" "unset trash"
 
-folder-hook "." "unmy_hdr Reply-To:"
-folder-hook "FDroid" "my_hdr Reply-To: team@f-droid.org"
-
 set query_command = "abook --mutt-query '%s'"
 macro index,pager B "<pipe-message>abook --add-email-quiet<return>" "Add this sender to Abook"
 bind editor <Tab> complete-query
