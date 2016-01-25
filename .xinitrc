@@ -1,8 +1,8 @@
 xrandr --dpi 144
 xbacklight -set 30%
 setxkbmap us altgr-intl -option caps:none
-amixer -q -M set Master 100% mute
+amixer -q -M set Master 50% mute
 unclutter -idle 3 &
-redshift -l 41:2 &
+redshift -l 55:1.6 &
 syndaemon -t -k -i 0.5 &
 exec awesome
