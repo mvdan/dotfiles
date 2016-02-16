@@ -110,6 +110,7 @@ bind index,pager \cd half-down
 mailboxes "=Inbox"
 mailboxes "=Univ"
 mailboxes "=FDroid"
+mailboxes "=FD-reps"
 mailboxes "=Tor"
 mailboxes "=Cau"
 mailboxes "=Fsfe"
