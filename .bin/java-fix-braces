@@ -1,0 +1,51 @@
+#!/usr/bin/python3
+
+import sys
+import glob
+import re
+
+singleRe = re.compile(r'^ *((((} )?else )?if|for|while) \(.*\)|(} )?else)$')
+elseRe = re.compile(r'^ *else')
+
+def even(line):
+    inc = 0
+    for c in line:
+        if c == '(':
+            inc += 1
+        elif c == ')':
+            inc -= 1
+    return inc == 0
+
+for path in glob.iglob('**/src/**/*.java', recursive=True):
+    lines = []
+
+    with open(path, 'r') as f:
+        cur = []
+        just = False
+        for line in f:
+            spaces = 0
+            for c in line:
+                if c != ' ':
+                    break
+                spaces += 1
+            for c in list(cur):
+                if spaces <= c:
+                    if just:
+                        line = '    ' + line
+                        break
+                    if elseRe.match(line):
+                        line = str(spaces * ' ') + '} ' + line.lstrip()
+                    else:
+                        lines.append(str(c * ' ') + '}\n')
+                    cur.remove(c)
+            if singleRe.match(line) and even(line):
+                lines.append(line[:-1] + ' {\n')
+                cur.insert(0, spaces)
+                just = True
+            else:
+                lines.append(line)
+                just = False
+
+    with open(path, 'w') as f:
+        for line in lines:
+            f.write(line)
