@@ -98,7 +98,6 @@ set sidebar_width = 28
 bind index,pager <esc>h sidebar-open
 bind index,pager <esc>k sidebar-prev
 bind index,pager <esc>j sidebar-next
-bind index,pager <esc>i sidebar-new
 color sidebar_new yellow default
 macro index,pager <esc>a <change-folder>=Spam<enter>
 macro index,pager <esc>s <change-folder>=Sent<enter>

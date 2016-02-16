@@ -16,7 +16,7 @@ lt() {
 }
 
 alias l="less"
-alias sudo='sudo ' # for alias to work with sudo
+alias sudo='sudo ' # for aliases to work with sudo
 alias s="sudo"
 alias se="s -E"
 alias zs="se $SHELL"
@@ -116,8 +116,6 @@ alias gsmu="git submodule update --init --recursive"
 alias gst="git stash"
 
 alias gsmfc="gsmf 'git clean -dffx && git reset --hard' && gcle && grsh"
-
-alias gsvn="git svn"
 
 gbrd() {
 	for b in $@; do
@@ -224,15 +222,6 @@ alias zcp="zmv -C"
 alias zln="zmv -L"
 alias rsv="rsync -ah --info=progress2"
 
-spr() {
-	if [ -t 0 ]; then
-		[ $# -gt 0 ] || return 1
-		cat "$@" | curl -F 'sprunge=<-' http://sprunge.us
-	else
-		curl -F 'sprunge=<-' http://sprunge.us
-	fi
-}
-
 alias pcat='curl -F "paste=<-" http://p.mvdan.cc'
 alias lpcat='curl -F "paste=<-" http://localhost:8080'
 
@@ -240,4 +229,3 @@ alias grd="gradle --daemon"
 logcat() {
 	adb logcat | grep `adb shell ps | grep $1 | cut -c10-15`
 }
-alias kctl="kubectl --namespace=kube-system"
