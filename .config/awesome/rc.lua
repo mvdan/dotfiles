@@ -72,8 +72,11 @@ end, 1)
 batwidget = wibox.widget.textbox()
 vicious.register(batwidget, vicious.widgets.bat, function(widget, args)
     if args[1] == "−" then
-        if args[2] < 15 then
-            return red(space(3, args[2]))..space(6, args[3])
+        if args[2] < 10 then
+            return red(space(3, args[2].."!!"))..space(6, args[3])
+        end
+        if args[2] < 20 then
+            return red(space(3, args[2].."!"))..space(6, args[3])
         end
         return space(3, args[2])..space(6, args[3])
     end
@@ -117,6 +120,7 @@ end
 
 function backlight_inc(increasing)
     local num = 1 + math.floor(backlight / 20.0)
+    if num % 2 == 1 then num = num + 1 end
     if not increasing then
         num = -num
     end
@@ -144,6 +148,7 @@ function volume_get()
     local volu, mute = string.match(mixer, "([%d]+)%%.*%[([%l]*)")
     if volu == nil then return end
     volume = tonumber(volu)
+    volume = volume + (5 - (volume % 5))
     volume_muted = mute == "off" or (mute == "" and volume == 0)
     volume_upd()
 end
@@ -186,10 +191,10 @@ function (widget, args)
         if dev ~= nil then table.insert(devices, dev) end
     end
     for i, dev in ipairs(devices) do
-        local write = yellow(space(5, args["{"..dev.." write_mb}"]))
-        local read = green(space(-5, args["{"..dev.." read_mb}"]))
+        local write = yellow(space(4, args["{"..dev.." write_mb}"]))
+        local read = green(space(-4, args["{"..dev.." read_mb}"]))
         if txt ~= "" then txt = txt..'  ' end
-        txt = txt..write..' '..dev..' '..read
+        txt = txt..write..' '..dev:sub(3)..' '..read
     end
     return txt
 end, 1)
@@ -223,7 +228,7 @@ function (widget, args)
             net_ifaces[dev] = true
             local up = space(5, args['{'..dev..' up_kb}'])
             local tx = args['{'..dev..' tx_mb}']
-            local dn = space(-6, args['{'..dev..' down_kb}'])
+            local dn = space(-5, args['{'..dev..' down_kb}'])
             if dev == 'wlp3s0' then
                 txt = txt..yellow(up)..' '..tx..' '..wifi_n()..' '..wifi_q()..' '..rx..' '..green(dn)
             else
@@ -235,30 +240,24 @@ function (widget, args)
 end, 1)
 
 local maildirs = {
-    inb = {
-        "/home/mvdan/mail/mvdan/Inbox/new",
-    },
-    unv = {
-        "/home/mvdan/mail/mvdan/Univ/new",
-    },
-    oth = {
-        "/home/mvdan/mail/mvdan/Other/new",
-    },
+    "/home/mvdan/mail/mvdan/Inbox/new",
+    "/home/mvdan/mail/mvdan/Other/new",
 }
 
 function mdir_str()
     local txt = ""
-    for _, label in pairs({"inb", "unv", "oth"}) do
-        local paths = maildirs[label]
-        local f = io.popen("find "..table.concat(paths, " ").." -type f 2>/dev/null | wc -l")
+    for i, path in ipairs(maildirs) do
+        local f = io.popen("find "..path.." -type f 2>/dev/null | wc -l")
         local count = f:read("*n")
         f:close()
+        local sp = 2
+        if i > 1 then sp = 3 end
         if count == nil then
-            txt = txt..label.." ?"
+            txt = txt.." ?"
         elseif count > 0 then
-            txt = txt..label..' '..green(space(-3, count))
+            txt = txt..green(space(sp, count))
         else
-            txt = txt..label.." "..space(-3, count)
+            txt = txt..space(sp, count)
         end
     end
     return txt
@@ -286,11 +285,18 @@ mdirtimer:start()
 
 mdirwidget_update()
 
+function ellipsize(str, l)
+    if string.len(str) <= l + 1 then
+        return str
+    end
+    return string.format("%s…", str:sub(1, l))
+end
+
 mpdwidget = wibox.widget.textbox()
 vicious.register(mpdwidget, vicious.widgets.mpd,
 function (widget, args)
     if args["{state}"] == "Stop" then return ' - MPD - ' end
-    return args["{Title}"]..' - '..args['{Album}']
+    return ellipsize(args["{Title}"], 24)..' - '..ellipsize(args['{Album}'], 20)
 end, 5)
 
 for s = 1, screen.count() do
