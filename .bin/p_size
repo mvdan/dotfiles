@@ -1,2 +1,2 @@
 #!/bin/sh
-expac -s "%-30n %m" | sort -rhk 2
+expac -s "%-30n %m" | sort -hk 2
