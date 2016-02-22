@@ -418,6 +418,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, altkey    }, "k",     function () sexec(terminal .. " -c ranger -e zsh -c ranger") end),
     awful.key({ modkey, altkey    }, "n",     function () sexec(terminal .. " -c ncmpc -e ncmpc") end),
     awful.key({ modkey, altkey    }, "i",     function () sexec("chromium") end),
+    awful.key({ modkey, altkey    }, "o",     function () sexec(terminal .. " -c todo -e vim ~/TODO.txt") end),
 
     awful.key({ modkey            }, "s",     function () sexec("maim -s ~/$(date +%F-%T).png") end),
     awful.key({ modkey            }, "i",     function ()
@@ -502,6 +503,8 @@ awful.rules.rules = {
         size_hints_honor = false,
         keys = clientkeys,
         buttons = clientbuttons } },
+    { rule = { class = "todo" },
+    properties = { tag = tags[1][1] } },
     { rule = { class = "ssh" },
     properties = { tag = tags[1][2] } },
     { rule = { class = "mutt" },
