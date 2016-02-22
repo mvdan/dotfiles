@@ -1,7 +1,0 @@
-datetime-format "%D %R"
-
-bind-key j next
-bind-key k prev
-
-bind-key J next-feed
-bind-key K prev-feed
