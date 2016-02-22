@@ -62,6 +62,8 @@ fni() {
 
 alias gg="go get -u -v"
 alias gd="go get -u -v -d"
+alias gb="go build -v"
+alias gi="go install -v"
 
 alias g="git"
 alias gad="git add"
