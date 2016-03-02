@@ -22,6 +22,7 @@ alias se="s -E"
 alias zs="se $SHELL"
 alias rr="rm -rf"
 alias vs="se vim"
+alias gh="grep <~/.history"
 
 alias m="mount"
 alias um="umount"
