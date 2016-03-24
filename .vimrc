@@ -37,6 +37,8 @@ set timeoutlen=300
 set scrolloff=4
 
 set wildignore=*.swp,*.bak,*.pyc,*.o,*.so,*.a
+au BufNewFile,BufRead *.cabal set et
+au BufNewFile,BufRead *.hs set et
 au BufNewFile,BufRead *.md set filetype=markdown
 au BufNewFile,BufRead *.gradle set filetype=groovy
 au BufNewFile,BufRead *.pl set filetype=prolog
@@ -84,6 +86,7 @@ nnoremap <F12> 3<C-W>>
 au BufRead mutt-* silent setl formatoptions+=t
 au BufRead mutt-* silent /^$
 
+au BufNewFile,BufRead *.tex silent setl formatoptions+=t
 au BufNewFile,BufRead *.txt silent setl et sw=4
 au BufNewFile,BufRead ~/git/tor/*.[ch] silent setl et sw=2
 au BufNewFile,BufRead ~/git/fcl/* silent setl et sw=4

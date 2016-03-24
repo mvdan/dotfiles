@@ -1,11 +1,11 @@
 [user]
 	name = Daniel Martí
 	email = mvdan@mvdan.cc
-	editor = vim
 	signingkey = 4348041C
 [color]
 	ui = true
 [core]
+	editor = vim
 	askpass = /bin/true
 [push]
 	default = current

@@ -73,8 +73,8 @@ set abort_nosubject = no
 set pgp_use_gpg_agent = yes
 set pgp_auto_decode
 set pgp_sign_as = 4348041C
-set pgp_replysign
-set pgp_replyencrypt
+#set pgp_replysign
+#set pgp_replyencrypt
 set pgp_timeout = 1800
 set pgp_good_sign = "^gpg: Good signature from"
 set pgp_verify_sig
