@@ -126,36 +126,10 @@ gbrd() {
 	done
 }
 
-gplmr() {
-	local owner=${1}
-	local branch=${2:-master}
-	site=""
-	repo=""
-	case "$PWD/" in
-		*/fcl/*)
-			site="gitlab.com"
-			repo="fdroidclient"
-			;;
-		*/fsr/*)
-			site="gitlab.com"
-			repo="fdroidserver"
-			;;
-		*/fd/*)
-			site="gitlab.com"
-			repo="fdroiddata"
-			;;
-		*)
-			echo "repo unknown"
-			return
-			;;
-	esac
-	git pull https://${site}/${owner}/${repo}.git ${branch}
-}
-
 __git_local_head() {
 	local cur="${COMP_WORDS[COMP_CWORD]}"
 	local gr="$(git rev-parse --show-toplevel)"
-	COMPREPLY=( $(compgen -W "$(ls ${gr}/.git/refs/heads)" -- $cur) )
+	COMPREPLY=( $(compgen -W "$(ls ${gr}/.git/refs/remotes/origin)" -- $cur) )
 }
 
 complete -F __git_local_head gbrd
@@ -186,9 +160,6 @@ command_test pacman && {
 	alias ssi="pacman -Sii"
 	ssq() {
 		pacman -Qs "$@" | sed -n 's_local/__p'
-	}
-	ssw() {
-		pacman -Qo "$(which $1)"
 	}
 	alias srm="sudo pacman -Rns"
 	alias sim="sudo pacman -S --needed"
@@ -226,9 +197,8 @@ alias zln="zmv -L"
 alias rsv="rsync -ah --info=progress2"
 
 alias pcat='curl -F "paste=<-" http://p.mvdan.cc'
-alias lpcat='curl -F "paste=<-" http://localhost:8080'
 
 alias grd="gradle --daemon"
 logcat() {
-	adb logcat | grep `adb shell ps | grep $1 | cut -c10-15`
+	adb logcat | grep `adb shell ps | grep $1 | sed 1q | cut -c10-15`
 }
