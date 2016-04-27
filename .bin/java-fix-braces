@@ -16,7 +16,7 @@ def even(line):
             inc -= 1
     return inc == 0
 
-for path in glob.iglob('**/src/**/*.java', recursive=True):
+for path in glob.iglob('**/*.java', recursive=True):
     lines = []
 
     with open(path, 'r') as f:
