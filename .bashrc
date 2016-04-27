@@ -138,10 +138,8 @@ PR_NONE="\e[39m"
 
 if [[ $UID -ge 1000 ]]; then
 	PR_USER="${PR_GREEN}\u"
-	PR_USER_OP="${PR_GREEN}\$"
 else
 	PR_USER="${PR_RED}\u"
-	PR_USER_OP="${PR_RED}\$"
 fi
 
 if [[ -n $SSH_CLIENT || -n $SSH2_CLIENT ]]; then
@@ -157,8 +155,5 @@ case $TERM in
         ;;
 esac
 
-PS1="${PR_TITLE}${PR_CYAN}[${PR_USER}${PR_CYAN}@${PR_HOST}${PR_CYAN}] [${PR_YELLOW}\${?}${PR_CYAN}] [${PR_BLUE}\${PWD}${PR_CYAN}] 
- ${PR_USER_OP}${PR_NONE} "
-PS2='> '
-PS3='> '
-PS4='+ '
+PS1="${PR_TITLE}${PR_CYAN}[${PR_USER}${PR_CYAN}@${PR_HOST}${PR_CYAN}] [${PR_YELLOW}\${?}${PR_CYAN}] [${PR_BLUE}\${PWD}${PR_CYAN}]
+ \[${PR_GREEN}\]\$\[${PR_NONE}\] "
