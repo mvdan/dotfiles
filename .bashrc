@@ -12,7 +12,7 @@ alias se="s -E"
 alias zs="se $SHELL"
 alias rr="rm -rf"
 alias vs="se vim"
-alias gh="grep <~/.history"
+alias gh="grep <~/.bash_history"
 
 alias m="mount"
 alias um="umount"
@@ -34,7 +34,6 @@ alias gd="go get -u -v -d"
 alias gb="go build -v"
 alias gi="go install -v"
 
-alias g="git"
 alias gad="git add"
 alias gadp="git add -p"
 alias gap="git apply"
@@ -88,19 +87,19 @@ alias gst="git stash"
 
 alias gsmfc="gsmf 'git clean -dffx && git reset --hard' && gcle && grsh"
 
-gbrd() { gbr -d $b && gps origin :$b; }
+gbrd() { gbr -d $1 && gps origin :$1; }
 
 alias ssh="TERM=xterm ssh"
-alias weeserv="ssh mvdan.cc -t TERM=screen-256color LANG=en_US.UTF-8 tmux -u new weechat"
+alias weeserv="ssh mvdan.cc -t TERM=screen-256color tmux -u new weechat"
 
 [[ -n "$TMUX" ]] && export TERM=screen-256color
 
-command_test() {
+has_cmd() {
 	command -v $1 >/dev/null 2>&1
 	return $?
 }
 
-command_test pacman && {
+has_cmd pacman && {
 	alias spc="sudo pacman"
 	alias ssm="pacman -Ss"
 	alias ssi="pacman -Sii"
@@ -113,20 +112,16 @@ command_test pacman && {
 	alias syud="pacaur -Syu"
 }
 
-command_test systemctl && {
-	alias sc="sudo systemctl"
-	alias scu="systemctl --user"
-	alias jc="sudo journalctl --full"
-	alias scn="sudo systemctl restart netctl-auto@wlp3s0"
-}
+alias sc="sudo systemctl"
+alias scu="systemctl --user"
+alias jc="sudo journalctl --full"
+alias scn="sudo systemctl restart netctl-auto@wlp3s0"
 
-command_test netctl && {
-	alias ncl="sudo -E netctl"
-	alias nca="sudo -E netctl-auto"
-	alias wm="sudo -E wifi-menu"
-}
+alias ncl="sudo -E netctl"
+alias nca="sudo -E netctl-auto"
+alias wm="sudo -E wifi-menu"
 
-command_test fdroid && {
+has_cmd fdroid && {
 	alias fbld="fdroid build -l -v --no-tarball"
 	alias fchk="fdroid checkupdates -v"
 	alias flnt="fdroid lint -v"
@@ -170,9 +165,14 @@ else
 	PR_HOST="${PR_GREEN}\h${PR_CYAN}:${PR_GREEN}pts/\l"
 fi
 
-PR_PWD="${PR_BLUE}\${PWD}"
+case $TERM in
+    linux*|cons*) PR_TITLE="" ;;
+    *)
+        PR_TITLE="\[\033]0;[\u@\h:\l] [\w]\007\]"
+        ;;
+esac
 
-PS1="${PR_CYAN}[${PR_USER}${PR_CYAN}@${PR_HOST}${PR_CYAN}] [${PR_YELLOW}\${?}${PR_CYAN}] [${PR_PWD}${PR_CYAN}] 
+PS1="${PR_TITLE}${PR_CYAN}[${PR_USER}${PR_CYAN}@${PR_HOST}${PR_CYAN}] [${PR_YELLOW}\${?}${PR_CYAN}] [${PR_BLUE}\${PWD}${PR_CYAN}] 
  ${PR_USER_OP}${PR_NONE} "
 PS2='> '
 PS3='> '
