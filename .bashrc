@@ -1,5 +1,8 @@
 #!/bin/bash
 
+shopt -s globstar
+set -o vi
+
 alias l="less"
 alias s="sudo"
 alias se="s -E"
@@ -23,7 +26,7 @@ alias gclo="git clone"
 alias gco="git checkout"
 alias gdf="git diff"
 alias ggr="git grep -In"
-alias glo="git log --decorate"
+alias glo="git log --decorate --follow"
 alias gmr="git merge"
 alias gpl="git pull"
 alias gplr="git pull --rebase=preserve"
@@ -52,8 +55,6 @@ alias sim="sudo pacman -S --needed"
 
 alias sc="sudo systemctl"
 alias scu="systemctl --user"
-
-set -o vi
 
 alias-completion # Any aliases after this don't need completion
 
@@ -92,7 +93,7 @@ alias gdfo="git diff ORIG_HEAD..."
 alias gdfu="git diff @{u}..."
 alias gfea="git fetch --all -v -p"
 alias gloo="git log --decorate ORIG_HEAD.."
-alias glop="git log --decorate -p"
+alias glop="git log --decorate -p --follow"
 alias glopo="git log --decorate -p ORIG_HEAD.."
 alias glou="git log --decorate @{u}.."
 alias grbi="git rebase -i"
