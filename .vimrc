@@ -36,12 +36,7 @@ set ttimeout
 set timeoutlen=300
 set scrolloff=4
 
-set wildignore=*.swp,*.bak,*.pyc,*.o,*.so,*.a
-au BufNewFile,BufRead *.cabal set et
-au BufNewFile,BufRead *.hs set et
-au BufNewFile,BufRead *.md set filetype=markdown
-au BufNewFile,BufRead *.gradle set filetype=groovy
-au BufNewFile,BufRead *.pl set filetype=prolog
+set wildignore=*.pyc,*.o,*.so,*.a
 au BufNewFile,BufRead ~/sites/* set filetype=nginx
 au BufReadPost fugitive://* set bufhidden=delete
 set diffopt+=iwhite
@@ -88,10 +83,11 @@ au BufRead mutt-* silent /^$
 
 au BufNewFile,BufRead *.tex silent setl formatoptions+=t
 au BufNewFile,BufRead *.txt silent setl et sw=4
-au BufNewFile,BufRead ~/git/tor/*.[ch] silent setl et sw=2
 au BufNewFile,BufRead ~/git/fcl/* silent setl et sw=4
 au BufNewFile,BufRead ~/git/workcraft/* silent setl et sw=4
 au BufNewFile,BufRead ~/git/macfuzzer/* silent setl et sw=4
+au BufNewFile,BufRead *.hs silent setl et sw=4
+au BufNewFile,BufRead *.cabal silent setl et sw=4
 au BufNewFile,BufRead *.hs silent setl et sw=4
 
 inoremap jj <esc>
