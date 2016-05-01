@@ -3,6 +3,11 @@
 shopt -s globstar
 set -o vi
 
+HISTSIZE=4000
+HISTFILESIZE=8000
+HISTCONTROL=ignoreboth:erasedups
+shopt -s histappend
+
 alias l="less"
 alias s="sudo"
 alias se="s -E"
@@ -18,6 +23,7 @@ pgr() { ps aux | grep -v grep | grep -i "$@"; }
 fn() { find . -name "*$1*"; }
 fni() { find . -iname "*$1*"; }
 
+alias g="git"
 alias gad="git add"
 alias gbr="git branch"
 alias gcm="git commit -v"
@@ -95,11 +101,12 @@ alias gfea="git fetch --all -v -p"
 alias gloo="git log --decorate ORIG_HEAD.."
 alias glop="git log --decorate -p"
 alias glopo="git log --decorate -p ORIG_HEAD.."
-alias glou="git log --decorate @{u}.."
+alias glou="git log --decorate ..@{u}"
 alias grbi="git rebase -i"
 alias grbia="git rebase -i --autosquash"
-alias gs="git status -sbuno"
-alias gss="git status -sb"
+alias gs="git status -sb"
+alias gso="git status -sbuno"
+alias gss="git status -sb --ignored"
 alias gsmu="git submodule update --init --recursive"
 
 alias gsmfc="gsmf 'git clean -dffx && git reset --hard' && gcle && grsh"
@@ -128,7 +135,7 @@ alias ncs="sudo -E netctl-auto switch-to"
 
 logcat() { adb logcat | grep `adb shell ps | grep $1 | sed 1q | cut -c10-15`; }
 
-da() { du -hs ./{.[!.]*,*} 2>/dev/null | sort -h; }
+da() { du -h -d 1 ${@:-.} | sort -h; }
 
 PR_RED="\e[31m"
 PR_GREEN="\e[32m"
