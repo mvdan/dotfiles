@@ -1,0 +1,12 @@
+#!/bin/bash
+
+gometalinter \
+	--exclude='error return value not checked.*(Close|Log|Print).*\(errcheck\)$' \
+	--exclude='.*_test\.go:.*error return value not checked.*\(errcheck\)$' \
+	--exclude='duplicate of.*_test.go.*\(dupl\)$' \
+	--exclude='should have comment or be unexported \(golint\)$' \
+	--disable=aligncheck \
+	--disable=gotype \
+	--cyclo-over=20 \
+	--tests \
+	--deadline=10s
