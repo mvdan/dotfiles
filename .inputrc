@@ -1,5 +1,10 @@
 set show-all-if-ambiguous on
 set visible-stats on
+set enable-keypad on
+
 set editing-mode vi
 set keymap vi
-set enable-keypad on
+$if mode=vi
+set keymap vi-insert
+Control-l: clear-screen
+$endif

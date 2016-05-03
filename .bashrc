@@ -151,9 +151,9 @@ else
 fi
 
 if [[ -n $SSH_CLIENT || -n $SSH2_CLIENT ]]; then
-	PR_HOST="${PR_YELLOW}\h${PR_CYAN}:${PR_YELLOW}pts/\l"
+	PR_HOST="${PR_YELLOW}\h${PR_CYAN}:${PR_YELLOW}\l"
 else
-	PR_HOST="${PR_GREEN}\h${PR_CYAN}:${PR_GREEN}pts/\l"
+	PR_HOST="${PR_GREEN}\h${PR_CYAN}:${PR_GREEN}\l"
 fi
 
 case $TERM in
