@@ -1,2 +1,6 @@
 /*
 !/.*
+.mutt/headercache
+.gnupg/*.gpg*
+.ssh/id_rsa*
+.ssh/known_hosts
