@@ -49,7 +49,8 @@ alias gsm="git submodule"
 alias gsmf="git submodule foreach --recursive"
 alias gst="git stash"
 
-gbrd() { gbr -d $1 && gps origin :$1; }
+gbrd() { for b in $@; do gbr -d $b && gps origin :$b; done; }
+gbrdm() { gbrd $(git branch --merged | grep -vE '(^\*| master$)'); }
 
 [[ -n "$TMUX" ]] && export TERM=screen-256color
 
@@ -71,7 +72,7 @@ alias grep="grep --color=auto"
 
 alias ll="ls --color=auto -lhiF"
 alias la="ls --color=auto -alhiF"
-lt() { ls --color=always -Alhrt | tail -n 25; }
+lt() { ls --color=always -Alhrt; }
 
 alias zs="se $SHELL"
 alias rr="rm -rf"
@@ -95,6 +96,7 @@ alias syud="pacaur -Syu"
 
 alias gca="git commit -a -v"
 alias gcle="git clean -dffx"
+alias gdfs="git diff --stat"
 alias gdfc="git diff --cached"
 alias gdfm="git diff master..."
 alias gdfo="git diff ORIG_HEAD..."
@@ -121,7 +123,7 @@ alias rsv="rsync -ah --info=progress2"
 alias jc="sudo journalctl --full"
 alias scn="sudo systemctl restart netctl-auto@wlp3s0"
 
-alias pcat='curl -F "paste=<-" http://p.mvdan.cc'
+alias pcat='curl -F "paste=<-" https://p.mvdan.cc'
 alias grd="gradle --daemon"
 alias ncs="sudo -E netctl-auto switch-to"
 
@@ -159,10 +161,10 @@ else
 fi
 
 case $TERM in
-    linux*|cons*) PR_TITLE="" ;;
-    *)
-        PR_TITLE="\[\033]0;[\u@\h:\l] [\w]\007\]"
-        ;;
+	linux*|cons*) PR_TITLE="" ;;
+	*)
+		PR_TITLE="\[\033]0;[\u@\h:\l] [\w]\007\]"
+		;;
 esac
 
 PS1="${PR_TITLE}${PR_CYAN}[${PR_USER}${PR_CYAN}@${PR_HOST}${PR_CYAN}] [${PR_YELLOW}\${?}${PR_CYAN}] [${PR_BLUE}\${PWD}${PR_CYAN}]
