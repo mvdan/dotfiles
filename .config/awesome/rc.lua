@@ -11,7 +11,6 @@ require("gears.wallpaper").set(require("gears.color")("#000000"))
 beautiful.init(os.getenv("HOME").."/.config/awesome/theme.lua")
 
 terminal = "st"
---exec = awful.util.spawn
 sexec = awful.util.spawn_with_shell
 
 modkey = "Mod4"
@@ -142,7 +141,9 @@ function volume_get()
 	local mixer = f:read("*all")
 	f:close()
 	local volu, mute = string.match(mixer, "([%d]+)%%.*%[([%l]*)")
-	if volu == nil then return end
+	if volu == nil then
+		return
+	end
 	volume = tonumber(volu)
 	volume = volume + (5 - (volume % 5))
 	volume_muted = mute == "off" or (mute == "" and volume == 0)
@@ -200,7 +201,9 @@ local function wifi_n()
 	local o = f:read("*a")
 	f:close()
 	local name = string.match(o, "id_str=([a-zA-Z0-9_\\-.,]+)")
-	if name ~= nil then return name end
+	if name ~= nil then
+		return name
+	end
 	return "??"
 end
 
@@ -268,7 +271,7 @@ function imap_sync()
 	if net_ifaces["wlp3s0"] == false and net_ifaces["enp0s25"] == false then
 		return
 	end
-	sexec('mbsync -a -q; notmuch new --quiet')
+	sexec('mbsync -a -q && notmuch new --quiet')
 end
 
 local imap = timer({ timeout = 60 })
@@ -291,7 +294,9 @@ end
 mpdwidget = wibox.widget.textbox()
 vicious.register(mpdwidget, vicious.widgets.mpd,
 function (widget, args)
-	if args["{state}"] == "Stop" then return ' - MPD - ' end
+	if args["{state}"] == "Stop" then
+		return ' - MPD - '
+	end
 	return ellipsize(args["{Title}"], 24)..' - '..ellipsize(args['{Album}'], 20)
 end, 5)
 
@@ -414,7 +419,6 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey, altkey }, "k",     function() sexec(terminal .. " -c ranger -e ranger") end),
 	awful.key({ modkey, altkey }, "n",     function() sexec(terminal .. " -c ncmpc -e ncmpc") end),
 	awful.key({ modkey, altkey }, "i",     function() sexec("chromium") end),
-	awful.key({ modkey, altkey }, "o",     function() sexec(terminal .. " -c todo -e vim ~/TODO.txt") end),
 
 	awful.key({ modkey }, "s", function() sexec("maim -s ~/$(date +%F-%T).png") end),
 	awful.key({ modkey }, "i", function()
@@ -446,12 +450,7 @@ clientkeys = awful.util.table.join(
 	awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ),
 	awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end),
 	awful.key({ modkey,           }, "o",      awful.client.movetoscreen                        ),
-	awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end),
-	awful.key({ modkey,           }, "m",
-		function (c)
-			c.maximized_horizontal = not c.maximized_horizontal
-			c.maximized_vertical   = not c.maximized_vertical
-		end)
+	awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end)
 )
 
 for i = 1, 10 do
@@ -499,8 +498,6 @@ awful.rules.rules = {
 		size_hints_honor = false,
 		keys = clientkeys,
 		buttons = clientbuttons } },
-	{ rule = { class = "todo" },
-	properties = { tag = tags[1][1] } },
 	{ rule = { class = "ssh" },
 	properties = { tag = tags[1][2] } },
 	{ rule = { class = "mutt" },
@@ -529,7 +526,6 @@ client.connect_signal("manage", function (c, startup)
 			awful.placement.no_offscreen(c)
 		end
 	end
-
 end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
