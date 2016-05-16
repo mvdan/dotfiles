@@ -62,7 +62,9 @@ alias sim="sudo pacman -S --needed"
 alias sc="sudo systemctl"
 alias scu="systemctl --user"
 
-alias-completion # Any aliases after this don't need completion
+# Any aliases after this don't need completion
+. ~/.bin/alias-completion
+alias_completion
 
 alias ls="ls --color=auto -F"
 alias grep="grep --color=auto"
