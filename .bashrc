@@ -116,7 +116,7 @@ alias gsmu="git submodule update --init --recursive"
 alias gsmfc="gsmf 'git clean -dffx && git reset --hard' && gcle && grsh"
 
 alias ssh="TERM=xterm ssh"
-alias weeserv="ssh mvdan.cc -t TERM=screen-256color tmux -u new weechat"
+alias weeserv="ssh mvdan.cc -t TERM=screen-256color LANG=en_US.UTF-8 tmux -u new weechat"
 
 alias rsv="rsync -ah --info=progress2"
 
@@ -154,7 +154,7 @@ else
 	PR_USER="${PR_RED}\u"
 fi
 
-if [[ -n $SSH_CLIENT || -n $SSH2_CLIENT ]]; then
+if [[ -n $SSH_CLIENT ]]; then
 	PR_HOST="${PR_YELLOW}\h${PR_CYAN}:${PR_YELLOW}\l"
 else
 	PR_HOST="${PR_GREEN}\h${PR_CYAN}:${PR_GREEN}\l"
