@@ -1,17 +1,7 @@
-text/html;       chromium-block %s; nametemplate=%s.html
-text/html;       elinks -dump %s; nametemplate=%s.html; copiousoutput
-text/xhtml;      chromium-block %s; nametemplate=%s.html
-text/xhtml;      elinks -dump %s; nametemplate=%s.html; copiousoutput
+text/html; chromium-block %s; nametemplate=%s.html
+text/html; elinks -dump %s; nametemplate=%s.html; copiousoutput
+
 text/*;          vim %s
 application/pdf; zathura %s; nametemplate=%s.pdf
 application/ps;  zathura %s; nametemplate=%s.ps
-image/png;       imv %s; nametemplate=%s.png &
-image/png;       img2txt -W 100 %s; nametemplate=%s.png; copiousoutput
-image/jpg;       imv %s; nametemplate=%s.jpg &
-image/jpg;       img2txt -W 100 %s; nametemplate=%s.jpg; copiousoutput
-image/jpeg;      imv %s; nametemplate=%s.jpeg &
-image/jpeg;      img2txt -W 100 %s; nametemplate=%s.jpeg; copiousoutput
-image/bmp;       imv %s; nametemplate=%s.bmp &
-image/bmp;       img2txt -W 100 %s; nametemplate=%s.bmp; copiousoutput
-image/gif;       imv %s; nametemplate=%s.gif &
-image/gif;       img2txt -W 100 %s; nametemplate=%s.gif; copiousoutput
+image/*;         imv %s; nametemplate=%s.png

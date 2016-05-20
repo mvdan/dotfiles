@@ -31,8 +31,8 @@ set use_envelope_from
 alternates "mvdan@mvdan.cc|danielmarti@gmx.com|daniel.marti.i@est.fib.upc.edu"
 set record = +Sent
 
-folder-hook . set trash = +Trash
-folder-hook (Other|Announ|Spam) unset trash
+set trash = +Trash
+bind index D purge-message
 
 set query_command = "abook --mutt-query '%s'"
 macro index,pager B "<pipe-message>abook --add-email-quiet<return>" "Add this sender to Abook"
@@ -92,7 +92,7 @@ set pgp_verify_key_command = "gpg --no-verbose --batch --fingerprint --check-sig
 set pgp_list_pubring_command = "gpg --no-verbose --batch --with-colons --list-keys %r"
 set pgp_list_secring_command = "gpg --no-verbose --batch --with-colons --list-secret-keys %r"
 
-set sidebar_delim = " "
+set sidebar_divider_char = " "
 set sidebar_visible
 set sidebar_width = 28
 bind index,pager <esc>h sidebar-open
@@ -111,13 +111,10 @@ mailboxes "=Inbox"
 mailboxes "=Univ"
 mailboxes "=FDroid"
 mailboxes "=FD-reps"
-mailboxes "=Tor"
-mailboxes "=Cau"
 mailboxes "=Fsfe"
-mailboxes "=Announ"
 mailboxes "=Other"
 mailboxes "=Sent"
-mailboxes "=GLcat"
+mailboxes "=Announ"
 mailboxes "=Drafts"
 mailboxes "=Trash"
 mailboxes "=../gmx/Inbox"
