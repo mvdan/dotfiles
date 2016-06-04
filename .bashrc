@@ -128,14 +128,14 @@ alias grd="gradle --daemon"
 alias ncs="sudo -E netctl-auto switch-to"
 
 [[ -d ~/git/fsr ]] && {
-	alias fbld="fdroid build -l -v --no-tarball"
-	alias fchk="fdroid checkupdates -v"
-	alias flnt="fdroid lint -v"
-	. ~/git/fsr/completion/bash-completion
-	complete -F _fdroid_build fbld
-	complete -F _fdroid_checkupdates fchk
-	complete -F _fdroid_lint flnt
-}
+		alias fbld="fdroid build -l -v --no-tarball"
+		alias fchk="fdroid checkupdates -v"
+		alias flnt="fdroid lint -v"
+		. ~/git/fsr/completion/bash-completion
+		complete -F _fdroid_build fbld
+		complete -F _fdroid_checkupdates fchk
+		complete -F _fdroid_lint flnt
+	}
 
 logcat() { adb logcat | grep `adb shell ps | grep $1 | sed 1q | cut -c10-15`; }
 
@@ -161,10 +161,8 @@ else
 fi
 
 case $TERM in
-	linux*|cons*) PR_TITLE="" ;;
-	*)
-		PR_TITLE="\[\033]0;[\u@\h:\l] [\w]\007\]"
-		;;
+linux* | cons*) PR_TITLE="" ;;
+*) PR_TITLE="\[\033]0;[\u@\h:\l] [\w]\007\]" ;;
 esac
 
 PS1="${PR_TITLE}${PR_CYAN}[${PR_USER}${PR_CYAN}@${PR_HOST}${PR_CYAN}] [${PR_YELLOW}\${?}${PR_CYAN}] [${PR_BLUE}\${PWD}${PR_CYAN}]
