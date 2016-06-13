@@ -88,6 +88,13 @@ alias gd="go get -u -v -d"
 alias gb="go build -v"
 alias gi="go install -v"
 
+gbench() {
+	: >$1
+	for i in $(seq 1 ${2:-5}); do
+		go test -benchmem -bench=${3:-.} | tee -a $1
+	done
+}
+
 alias ssm="pacman -Ss"
 alias syu="sudo pacman -Syu"
 alias ssk="pacaur -Ss"
@@ -123,7 +130,7 @@ alias rsv="rsync -ah --info=progress2"
 alias jc="sudo journalctl --full"
 alias scn="sudo systemctl restart netctl-auto@wlp3s0"
 
-alias pcat='curl -F "paste=<-" https://p.mvdan.cc'
+alias spr='curl -F "sprunge=<-" http://sprunge.us'
 alias grd="gradle --daemon"
 alias ncs="sudo -E netctl-auto switch-to"
 

@@ -1,12 +1,14 @@
 #!/bin/bash
 
-gometalinter \
-	--exclude='error return value not checked.*(Close|Log|Print).*\(errcheck\)$' \
-	--exclude='.*_test\.go:.*error return value not checked.*\(errcheck\)$' \
-	--exclude='duplicate of.*_test.go.*\(dupl\)$' \
-	--exclude='should have comment or be unexported \(golint\)$' \
-	--disable=aligncheck \
-	--disable=gotype \
-	--cyclo-over=20 \
-	--tests \
-	--deadline=10s
+pkgs="${@:-.}"
+
+{
+	go tool vet --shadow=true $pkgs &
+	errcheck $pkgs | sed 's/$/ returns error/' &
+	unused $pkgs &
+	golint $pkgs | grep -vE 'or be unexported' &
+	unconvert $pkgs &
+	ineffassign $pkgs &
+	interfacer $pkgs &
+	gosimple $pkgs &
+} |& grep -v 'vendor/' | sed -r 's/(: |\t)/:\t/'
