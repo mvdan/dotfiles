@@ -1,8 +1,6 @@
 call pathogen#infect()
-Helptags
 
-syntax on
-set synmaxcol=500
+set synmaxcol=1000
 filetype plugin indent on
 
 set encoding=utf-8 nocompatible
