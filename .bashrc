@@ -23,36 +23,42 @@ pgr() { ps aux | grep -v grep | grep -i "$@"; }
 fn() { find . -name "*$1*"; }
 fni() { find . -iname "*$1*"; }
 
-alias g="git"
-alias gad="git add"
-alias gbr="git branch"
-alias gcm="git commit -v"
-alias gcp="git cherry-pick"
-alias gclo="git clone"
-alias gco="git checkout"
-alias gdf="git diff"
-alias ggr="git grep -In"
-alias glo="git log --decorate"
-alias gmr="git merge"
-alias gpl="git pull"
-alias gplr="git pull --rebase=preserve"
-alias gps="git push"
-alias grb="git rebase"
-alias grm="git rm"
-alias grmc="git rm --cached"
-alias grs="git reset"
-alias grsh="git reset --hard"
-alias grt="git remote"
-alias grv="git revert"
-alias gsh="git show"
-alias gsm="git submodule"
-alias gsmf="git submodule foreach --recursive"
-alias gst="git stash"
+[[ -f /usr/share/git/completion/git-completion.bash ]] && {
+	galias() {
+		alias $1="git $3"
+		__git_complete $1 _git$2
+	}
+	. /usr/share/git/completion/git-completion.bash
+	galias g "" ""
 
-gbrd() { for b in $@; do gbr -d $b && gps origin :$b; done; }
-gbrdm() { gbrd $(git branch --merged | grep -vE '(^\*| master$)'); }
+	galias gad  _add         "add"
+	galias gbr  _branch      "branch"
+	galias gcm  _commit      "commit -v"
+	galias gcp  _cherry_pick "cherry-pick"
+	galias gclo _clone       "clone"
+	galias gco  _checkout    "checkout"
+	galias gdf  _diff        "diff"
+	galias ggr  _grep        "grep -In"
+	galias glo  _log         "log --decorate"
+	galias gmr  _merge       "merge"
+	galias gpl  _pull        "pull"
+	galias gps  _push        "push"
+	galias grb  _rebase      "rebase"
+	galias grm  _rm          "rm"
+	galias grs  _reset       "reset"
+	galias grsh _reset       "reset --hard"
+	galias grt  _remote      "remote"
+	galias grv  _revert      "revert"
+	galias gsh  _show        "show"
+	galias gsm  _submodule   "submodule"
+	galias gst  _stash       "stash"
 
-[[ -n "$TMUX" ]] && export TERM=screen-256color
+	gbrd() { for b in $@; do gbr -d $b && gps origin :$b; done; }
+	__git_complete gbrd _git_branch
+	gbrdm() { gbrd $(git branch --merged | grep -vE '(^\*| master$)'); }
+}
+
+[[ -n $TMUX ]] && export TERM=screen-256color
 
 alias spc="sudo pacman"
 alias ssi="pacman -Sii"
@@ -62,10 +68,6 @@ alias sim="sudo pacman -S --needed"
 
 alias sc="sudo systemctl"
 alias scu="systemctl --user"
-
-# Any aliases after this don't need completion
-. ~/.bin/alias-completion
-alias_completion
 
 alias ls="ls --color=auto -F"
 alias grep="grep --color=auto"
@@ -90,8 +92,8 @@ alias gi="go install -v"
 
 gbench() {
 	: >$1
-	for i in $(seq 1 ${2:-5}); do
-		go test -benchmem -bench=${3:-.} | tee -a $1
+	for i in $(seq 1 ${2:-10}); do
+		go test -benchmem -bench=${3:-.} -benchtime=${4:-0.2s} | tee -a $1
 	done
 }
 
@@ -113,11 +115,14 @@ alias gloo="git log --decorate ORIG_HEAD.."
 alias glop="git log --decorate -p"
 alias glopo="git log --decorate -p ORIG_HEAD.."
 alias glou="git log --decorate ..@{u}"
+alias gplr="git pull --rebase=preserve"
 alias grbi="git rebase -i"
 alias grbia="git rebase -i --autosquash"
+alias grmc="git rm --cached"
 alias gs="git status -sb"
 alias gso="git status -sbuno"
 alias gss="git status -sb --ignored"
+alias gsmf="git submodule foreach --recursive"
 alias gsmu="git submodule update --init --recursive"
 
 alias gsmfc="gsmf 'git clean -dffx && git reset --hard' && gcle && grsh"
@@ -135,14 +140,14 @@ alias grd="gradle --daemon"
 alias ncs="sudo -E netctl-auto switch-to"
 
 [[ -d ~/git/fsr ]] && {
-		alias fbld="fdroid build -l -v --no-tarball"
-		alias fchk="fdroid checkupdates -v"
-		alias flnt="fdroid lint -v"
-		. ~/git/fsr/completion/bash-completion
-		complete -F _fdroid_build fbld
-		complete -F _fdroid_checkupdates fchk
-		complete -F _fdroid_lint flnt
-	}
+	alias fbld="fdroid build -l -v --no-tarball"
+	alias fchk="fdroid checkupdates -v"
+	alias flnt="fdroid lint -v"
+	. ~/git/fsr/completion/bash-completion
+	complete -F _fdroid_build fbld
+	complete -F _fdroid_checkupdates fchk
+	complete -F _fdroid_lint flnt
+}
 
 logcat() { adb logcat | grep `adb shell ps | grep $1 | sed 1q | cut -c10-15`; }
 
