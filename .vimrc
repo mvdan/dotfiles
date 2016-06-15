@@ -8,11 +8,11 @@ set number ruler smartindent
 set wrap linebreak nolist nojoinspaces
 set nobackup noswapfile nowritebackup
 set history=1000
-set noexpandtab tabstop=8 shiftwidth=8
+set noexpandtab tabstop=8 softtabstop=8 shiftwidth=8
 set textwidth=72 formatoptions-=t formatoptions+=j
-set laststatus=2 showcmd hidden wildmenu
+set laststatus=2 showcmd showmode hidden wildmenu
 set autoread magic matchtime=2
-set background=dark lazyredraw
+set background=dark lazyredraw ttyfast
 set incsearch ignorecase smartcase showmatch hlsearch
 
 noremap <F1> <nop>
@@ -20,9 +20,11 @@ noremap Q <nop>
 noremap K <nop>
 
 set shortmess+=I
-set backspace=eol,start,indent
+set backspace=indent,eol,start
 set complete-=i
 set noerrorbells novisualbell t_vb=
+
+imap ^? ^H
 
 set display+=lastline
 set nrformats-=octal
@@ -30,7 +32,6 @@ set ttimeout timeoutlen=300
 set scrolloff=4
 
 set wildignore=*.pyc,*.o,*.so,*.a
-au BufNewFile,BufRead ~/sites/* set filetype=nginx
 au BufReadPost fugitive://* set bufhidden=delete
 
 let mapleader = ","
