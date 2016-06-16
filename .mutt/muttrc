@@ -69,12 +69,9 @@ set include
 set postpone = ask-no
 set abort_nosubject = no
 
-#set pgp_autosign
 set pgp_use_gpg_agent = yes
 set pgp_auto_decode
 set pgp_sign_as = 4348041C
-#set pgp_replysign
-#set pgp_replyencrypt
 set pgp_timeout = 1800
 set pgp_good_sign = "^gpg: Good signature from"
 set pgp_verify_sig
@@ -119,26 +116,6 @@ mailboxes "=Drafts"
 mailboxes "=Trash"
 mailboxes "=../gmx/Inbox"
 
-color hdrdefault blue black
-color quoted blue black
-color signature blue black
-color attachment brightred black
-color message brightred black
-color error brightred black
-color indicator white color237
-color status white color235
-color tree color245 black
-color normal white black
-color markers red black
-color search white black
-color tilde brightmagenta black
-color index blue black ~F
-color index red black "~N|~O"
-folder-hook . color index color245 black "~P"
-folder-hook (Sent|Spam) color index white black "~P"
-
-color body brightwhite black '\*+[^*]+\*+'
-color body brightwhite black '_+[^_]+_+'
 
 macro index <F8> \
 "<enter-command>set my_old_pipe_decode=\$pipe_decode my_old_wait_key=\$wait_key nopipe_decode nowait_key<enter>\
@@ -159,3 +136,9 @@ macro index <F6> \
 <pipe-message>notmuch-mutt tag -- -inbox<enter>\
 <enter-command>set pipe_decode=\$my_old_pipe_decode wait_key=\$my_old_wait_key<enter>" \
       "notmuch: remove message from inbox"
+
+color index blue default ~F
+color index white default "~N|~O"
+
+color status    default black
+color indicator default black
