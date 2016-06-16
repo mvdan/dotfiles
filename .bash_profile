@@ -3,7 +3,7 @@ export FULLNAME="Daniel Martí" EMAIL="mvdan@mvdan.cc"
 export GOPATH="$HOME/go"
 export PATH="$HOME/.bin:$HOME/tip/bin:$GOPATH/bin:$PATH"
 
-export PAGER=less LESS=-FXRi
+export PAGER=less LESS=-FXRi LESSHISTFILE=-
 export EDITOR=vim DIFF_VIEWER=vimdiff
 export BROWSER=chromium
 

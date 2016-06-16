@@ -2,8 +2,6 @@
 	name = Daniel Martí
 	email = mvdan@mvdan.cc
 	signingkey = 4348041C
-[color]
-	ui = true
 [core]
 	editor = vim
 	askpass = /bin/true

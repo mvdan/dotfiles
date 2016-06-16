@@ -127,7 +127,7 @@ alias rsv="rsync -ah --info=progress2"
 alias jc="sudo journalctl --full"
 alias scn="sudo systemctl restart netctl-auto@wlp3s0"
 
-alias spr='curl -F "sprunge=<-" http://sprunge.us'
+alias clb='curl -F "clbin=<-" https://clbin.com'
 alias grd="gradle --daemon"
 alias ncs="sudo netctl-auto switch-to"
 
@@ -141,7 +141,7 @@ alias ncs="sudo netctl-auto switch-to"
 	complete -F _fdroid_lint flnt
 }
 
-logcat() { adb logcat | grep `adb shell ps | grep $1 | sed 1q | cut -c10-15`; }
+logcat() { adb logcat | grep $(adb shell ps | grep $1 | sed 1q | cut -c10-15); }
 
 da() { du -h -d 1 ${@:-.} | sort -h; }
 
@@ -150,5 +150,5 @@ linux* | cons*) ;;
 *) PS1="\[\033]0;[\u@\h:\l] [\w]\007\]" ;;
 esac
 
-PS1="$PS1[\u@\h:\l] [\${?}] [${PWD}]
+PS1="$PS1[\u@\h:\l] [\${?}] [\${PWD}]
  \$ "
