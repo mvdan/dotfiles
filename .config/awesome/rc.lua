@@ -40,10 +40,8 @@ layoutbox = {}
 taglist = {}
 tasklist = {}
 
-function green(str) return string.format('<span color="#4c4">%s</span>', str) end
-function blue(str) return string.format('<span color="#77f">%s</span>', str) end
 function red(str) return string.format('<span color="#f77">%s</span>', str) end
-function yellow(str) return string.format('<span color="#bb4">%s</span>', str) end
+function green(str) return string.format('<span color="#4c4">%s</span>', str) end
 function space(n, str) return string.format('%'..n..'s', str) end
 
 sep = wibox.widget.textbox()
@@ -68,20 +66,20 @@ batwidget = wibox.widget.textbox()
 vicious.register(batwidget, vicious.widgets.bat, function(widget, args)
 	if args[1] == "−" then
 		if args[2] < 10 then
-			return red(space(3, args[2].."!!"))..space(6, args[3])
+			return warn(space(3, args[2].."!!"))..space(6, args[3])
 		end
 		if args[2] < 20 then
-			return red(space(3, args[2].."!"))..space(6, args[3])
+			return warn(space(3, args[2].."!"))..space(6, args[3])
 		end
 		return space(3, args[2])..space(6, args[3])
 	end
 	if args[1] == '+' then
-		return green(space(3, args[2]))..space(6, args[3])
+		return space(3, args[2])..space(6, args[3])
 	end
 	if args[1] == '↯' then
-		return green(space(3, args[2])).." 00:00"
+		return space(3, args[2]).." 00:00"
 	end
-	return green(space(3, args[2])).." ??:??"
+	return space(3, args[2]).." ??:??"
 end, 4, "BAT0")
 
 blwidget = wibox.widget.textbox()
@@ -130,7 +128,7 @@ local volume_muted = true
 
 function volume_upd()
 	if volume_muted then
-		volwidget:set_markup(blue(space(3, tostring(volume))))
+		volwidget:set_text(" - ")
 	else
 		volwidget:set_text(space(3, tostring(volume)))
 	end
@@ -170,9 +168,9 @@ end
 memwidget = wibox.widget.textbox()
 vicious.register(memwidget, vicious.widgets.mem,
 function (widget, args)
-	local used = yellow(space(5, args[2]))
-	local nonfree = blue(space(4, args[9]))
-	local total = green(space(-5, args[3]))
+	local used = space(5, args[2])
+	local nonfree = space(4, args[9])
+	local total = space(-5, args[3])
 	return used..' '..nonfree..' '..total
 end, 1)
 
@@ -188,9 +186,9 @@ function (widget, args)
 		if dev ~= nil then table.insert(devices, dev) end
 	end
 	for i, dev in ipairs(devices) do
-		local write = yellow(space(4, args["{"..dev.." write_mb}"]))
-		local read = green(space(-4, args["{"..dev.." read_mb}"]))
-		if txt ~= "" then txt = txt..'  ' end
+		local write = space(4, args["{"..dev.." write_mb}"])
+		local read = space(-4, args["{"..dev.." read_mb}"])
+		if i == 1 then txt = txt..'  ' end
 		txt = txt..write..' '..dev:sub(3)..' '..read
 	end
 	return txt
@@ -229,9 +227,9 @@ function (widget, args)
 			local tx = args['{'..dev..' tx_mb}']
 			local dn = space(-5, args['{'..dev..' down_kb}'])
 			if dev == 'wlp3s0' then
-				txt = txt..yellow(up)..' '..tx..' '..wifi_n()..' '..wifi_q()..' '..rx..' '..green(dn)
+				txt = txt..up..' '..tx..' '..wifi_n()..' '..wifi_q()..' '..rx..' '..dn
 			else
-				txt = txt..yellow(up)..' '..tx..' '..dev..' '..rx..' '..green(dn)
+				txt = txt..up..' '..tx..' '..dev..' '..rx..' '..dn
 			end
 		end
 	end

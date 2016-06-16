@@ -146,26 +146,10 @@ logcat() { adb logcat | grep `adb shell ps | grep $1 | sed 1q | cut -c10-15`; }
 
 da() { du -h -d 1 ${@:-.} | sort -h; }
 
-_pr_green="\e[32m"
-_pr_yellow="\e[33m"
-_pr_cyan="\e[36m"
-
-if [[ $UID -ge 1000 ]]; then
-	_pr_user="${_pr_green}\u"
-else
-	_pr_user="\e[31m\u"
-fi
-
-if [[ -n $SSH_CLIENT ]]; then
-	_pr_host="${_pr_yellow}\h${_pr_cyan}:${_pr_yellow}\l"
-else
-	_pr_host="${_pr_green}\h${_pr_cyan}:${_pr_green}\l"
-fi
-
 case $TERM in
 linux* | cons*) ;;
-*) _pr_title="\[\033]0;[\u@\h:\l] [\w]\007\]" ;;
+*) PS1="\[\033]0;[\u@\h:\l] [\w]\007\]" ;;
 esac
 
-PS1="${_pr_title}${_pr_cyan}[${_pr_user}${_pr_cyan}@${_pr_host}${_pr_cyan}] [${_pr_yellow}\${?}${_pr_cyan}] [\e[34m\${PWD}${_pr_cyan}]
- \[${_pr_green}\]\$\[\e[39m\] "
+PS1="$PS1[\u@\h:\l] [\${?}] [${PWD}]
+ \$ "
