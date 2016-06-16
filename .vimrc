@@ -44,17 +44,22 @@ nnoremap <F10> 3<C-W>+
 nnoremap <F11> 3<C-W>-
 nnoremap <F12> 3<C-W>>
 
-au BufRead mutt-* silent setl fo+=t
-au BufRead mutt-* silent /^$
+nnoremap <F5> :%!xxd -g 1<CR>
+nnoremap <F6> :%!xxd -g 1 -r<CR>
 
-au BufNewFile,BufRead *.tex   silent setl fo+=t
-au BufNewFile,BufRead *.txt   silent setl et sw=4
-au BufNewFile,BufRead *.hs    silent setl et sw=4
-au BufNewFile,BufRead *.cabal silent setl et sw=4
+au BufEnter COMMIT_EDITMSG silent syntax on
+au BufEnter mutt-* silent syntax on
+au BufEnter mutt-* silent setl fo+=t
+au BufEnter mutt-* silent /^$
 
-au BufNewFile,BufRead ~/git/fcl/*       silent setl et sw=4
-au BufNewFile,BufRead ~/git/workcraft/* silent setl et sw=4
-au BufNewFile,BufRead ~/git/macfuzzer/* silent setl et sw=4
+au BufEnter *.tex   silent setl fo+=t
+au BufEnter *.txt   silent setl et sw=4
+au BufEnter *.hs    silent setl et sw=4
+au BufEnter *.cabal silent setl et sw=4
+
+au BufEnter ~/git/fcl/*       silent setl et sw=4
+au BufEnter ~/git/workcraft/* silent setl et sw=4
+au BufEnter ~/git/macfuzzer/* silent setl et sw=4
 
 inoremap jj <esc>
 nnoremap <space> :noh<cr>:echo<cr><esc>

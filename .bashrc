@@ -83,7 +83,6 @@ alias gh="grep <~/.bash_history"
 alias cd.="cd .."
 alias cd..="cd ../.."
 alias cd...="cd ../../.."
-alias cd....="cd ../../../.."
 
 alias gg="go get -u -v"
 alias gd="go get -u -v -d"
@@ -130,7 +129,7 @@ alias scn="sudo systemctl restart netctl-auto@wlp3s0"
 
 alias spr='curl -F "sprunge=<-" http://sprunge.us'
 alias grd="gradle --daemon"
-alias ncs="sudo -E netctl-auto switch-to"
+alias ncs="sudo netctl-auto switch-to"
 
 [[ -d ~/git/fsr ]] && {
 	alias fbld="fdroid build -l -v --no-tarball"

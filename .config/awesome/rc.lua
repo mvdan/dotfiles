@@ -238,6 +238,7 @@ end, 1)
 
 local maildirs = {
 	"/home/mvdan/mail/mvdan/Inbox/new",
+	"/home/mvdan/mail/mvdan/Univ/new",
 	"/home/mvdan/mail/mvdan/Other/new",
 }
 
