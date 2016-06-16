@@ -69,12 +69,12 @@ alias sim="sudo pacman -S --needed"
 alias sc="sudo systemctl"
 alias scu="systemctl --user"
 
-alias ls="ls --color=auto -F"
+alias ls="ls -F"
 alias grep="grep --color=auto"
 
-alias ll="ls --color=auto -lhiF"
-alias la="ls --color=auto -alhiF"
-lt() { ls --color=always -Alhrt; }
+alias ll="ls -lhiF"
+alias la="ls -alhiF"
+alias lt="ls -Alhrt"
 
 alias zs="se $SHELL"
 alias rr="rm -rf"
@@ -153,29 +153,26 @@ logcat() { adb logcat | grep `adb shell ps | grep $1 | sed 1q | cut -c10-15`; }
 
 da() { du -h -d 1 ${@:-.} | sort -h; }
 
-PR_RED="\e[31m"
-PR_GREEN="\e[32m"
-PR_YELLOW="\e[33m"
-PR_BLUE="\e[34m"
-PR_CYAN="\e[36m"
-PR_NONE="\e[39m"
+_pr_green="\e[32m"
+_pr_yellow="\e[33m"
+_pr_cyan="\e[36m"
 
 if [[ $UID -ge 1000 ]]; then
-	PR_USER="${PR_GREEN}\u"
+	_pr_user="${_pr_green}\u"
 else
-	PR_USER="${PR_RED}\u"
+	_pr_user="\e[31m\u"
 fi
 
 if [[ -n $SSH_CLIENT ]]; then
-	PR_HOST="${PR_YELLOW}\h${PR_CYAN}:${PR_YELLOW}\l"
+	_pr_host="${_pr_yellow}\h${_pr_cyan}:${_pr_yellow}\l"
 else
-	PR_HOST="${PR_GREEN}\h${PR_CYAN}:${PR_GREEN}\l"
+	_pr_host="${_pr_green}\h${_pr_cyan}:${_pr_green}\l"
 fi
 
 case $TERM in
-linux* | cons*) PR_TITLE="" ;;
-*) PR_TITLE="\[\033]0;[\u@\h:\l] [\w]\007\]" ;;
+linux* | cons*) ;;
+*) _pr_title="\[\033]0;[\u@\h:\l] [\w]\007\]" ;;
 esac
 
-PS1="${PR_TITLE}${PR_CYAN}[${PR_USER}${PR_CYAN}@${PR_HOST}${PR_CYAN}] [${PR_YELLOW}\${?}${PR_CYAN}] [${PR_BLUE}\${PWD}${PR_CYAN}]
- \[${PR_GREEN}\]\$\[${PR_NONE}\] "
+PS1="${_pr_title}${_pr_cyan}[${_pr_user}${_pr_cyan}@${_pr_host}${_pr_cyan}] [${_pr_yellow}\${?}${_pr_cyan}] [\e[34m\${PWD}${_pr_cyan}]
+ \[${_pr_green}\]\$\[\e[39m\] "

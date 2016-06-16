@@ -6,7 +6,7 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 vicious = require("vicious")
-require("gears.wallpaper").set(require("gears.color")("#000000"))
+require("gears.wallpaper").set(require("gears.color")("#002b36"))
 
 beautiful.init(os.getenv("HOME").."/.config/awesome/theme.lua")
 

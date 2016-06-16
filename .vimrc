@@ -11,9 +11,12 @@ set history=1000
 set noexpandtab tabstop=8 softtabstop=8 shiftwidth=8
 set textwidth=72 formatoptions-=t formatoptions+=j
 set laststatus=2 showcmd showmode hidden wildmenu
-set autoread magic matchtime=2
-set background=dark lazyredraw ttyfast
+set autoread magic matchtime=2 lazyredraw ttyfast
 set incsearch ignorecase smartcase showmatch hlsearch
+
+set t_Co=16
+set background=dark
+colorscheme solarized
 
 noremap <F1> <nop>
 noremap Q <nop>

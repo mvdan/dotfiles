@@ -2,19 +2,19 @@ theme = {}
 
 theme.font          = "inconsolata 20"
 
-theme.bg_normal     = "#111111"
-theme.bg_focus      = "#333333"
+theme.bg_normal     = "#002b36"
+theme.bg_focus      = "#073642"
 theme.bg_urgent     = "#ff0000"
-theme.bg_minimize   = "#333333"
+theme.bg_minimize   = theme.bg_focus
 theme.bg_systray    = theme.bg_normal
 
-theme.fg_normal     = "#aaaaaa"
-theme.fg_focus      = "#ffffff"
-theme.fg_urgent     = "#ffffff"
-theme.fg_minimize   = "#ffffff"
+theme.fg_normal     = "#839496"
+theme.fg_focus      = "#93a1a1"
+theme.fg_urgent     = theme.fg_focus
+theme.fg_minimize   = theme.fg_focus
 
 theme.border_width  = 1
-theme.border_normal = "#000000"
+theme.border_normal = "#222222"
 theme.border_focus  = "#535d6c"
 theme.border_marked = "#91231c"
 
