@@ -90,13 +90,6 @@ alias gd="go get -u -v -d"
 alias gb="go build -v"
 alias gi="go install -v"
 
-gbench() {
-	: >$1
-	for i in $(seq 1 ${2:-10}); do
-		go test -benchmem -bench=${3:-.} -benchtime=${4:-0.2s} | tee -a $1
-	done
-}
-
 alias ssm="pacman -Ss"
 alias syu="sudo pacman -Syu"
 alias ssk="pacaur -Ss"
