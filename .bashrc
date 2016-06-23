@@ -1,7 +1,6 @@
 #!/bin/bash
 
 shopt -s globstar
-set -o vi
 
 HISTSIZE=4000
 HISTFILESIZE=8000
@@ -33,7 +32,7 @@ fni() { find . -iname "*$1*"; }
 
 	galias gad  _add         "add"
 	galias gbr  _branch      "branch"
-	galias gcm  _commit      "commit -v"
+	galias gcm  _commit      "commit"
 	galias gcp  _cherry_pick "cherry-pick"
 	galias gclo _clone       "clone"
 	galias gco  _checkout    "checkout"
@@ -53,7 +52,7 @@ fni() { find . -iname "*$1*"; }
 	galias gsm  _submodule   "submodule"
 	galias gst  _stash       "stash"
 
-	gbrd() { for b in $@; do gbr -d $b && gps origin :$b; done; }
+	gbrd() { for b in $@; do git branch -d $b && git push origin :$b; done; }
 	__git_complete gbrd _git_branch
 	gbrdm() { gbrd $(git branch --merged | grep -vE '(^\*| master$)'); }
 }
@@ -95,7 +94,7 @@ alias ssk="pacaur -Ss"
 alias sik="pacaur -S"
 alias syud="pacaur -Syu"
 
-alias gca="git commit -a -v"
+alias gca="git commit -a"
 alias gcle="git clean -dffx"
 alias gdfs="git diff --stat"
 alias gdfc="git diff --cached"
