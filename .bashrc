@@ -57,6 +57,7 @@ fni() { find . -iname "*$1*"; }
 	gbrdm() { gbrd $(git branch --merged | grep -vE '(^\*| master$)'); }
 }
 
+alias tm="exec tmux"
 [[ -n $TMUX ]] && export TERM=screen-256color
 
 alias spc="sudo pacman"
@@ -105,6 +106,7 @@ alias gfea="git fetch --all -v -p"
 alias gloo="git log --decorate ORIG_HEAD.."
 alias glop="git log --decorate -p"
 alias glopo="git log --decorate -p ORIG_HEAD.."
+alias glos="git log --decorate --stat"
 alias glou="git log --decorate ..@{u}"
 alias gplr="git pull --rebase=preserve"
 alias grbi="git rebase -i"
