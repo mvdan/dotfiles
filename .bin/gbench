@@ -1,6 +1,0 @@
-#!/bin/bash
-
-: >$1
-for i in $(seq 1 ${2:-6}); do
-	go test -run='^$' -benchmem -bench=${3:-.} -benchtime=${4:-0.5s} | tee -a $1
-done

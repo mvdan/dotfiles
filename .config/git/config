@@ -14,3 +14,5 @@
 	signature =
 [diff]
 	compactionHeuristic = true
+[http]
+	cookiefile = /home/mvdan/.gitcookies

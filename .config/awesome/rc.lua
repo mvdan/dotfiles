@@ -56,7 +56,7 @@ cpuwidget = wibox.widget.textbox()
 vicious.register(cpuwidget, vicious.widgets.cpu,
 function (widget, args)
 	local txt=""
-	for cn=1, cpu_count do
+	for cn=2, cpu_count+1 do
 		txt = txt..space(4, args[cn])
 	end
 	return txt

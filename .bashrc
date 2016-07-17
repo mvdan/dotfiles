@@ -2,8 +2,8 @@
 
 shopt -s globstar
 
-HISTSIZE=4000
-HISTFILESIZE=8000
+HISTSIZE=8000
+HISTFILESIZE=16000
 HISTCONTROL=ignoreboth:erasedups
 shopt -s histappend
 
@@ -88,6 +88,11 @@ alias gg="go get -u -v"
 alias gd="go get -u -v -d"
 alias gb="go build -v"
 alias gi="go install -v"
+
+gbench() {
+	go test -run='^$' -benchmem -bench=${2:-.} \
+		-count=${3:-6} -benchtime=${4:-1s} | tee ${1:-cur}
+}
 
 alias ssm="pacman -Ss"
 alias syu="sudo pacman -Syu"
