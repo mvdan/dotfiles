@@ -8,7 +8,9 @@ pkgs="${@:-.}"
 	unused $pkgs &
 	golint $pkgs | grep -vE 'or be unexported' &
 	unconvert $pkgs &
+	maligned $pkgs &
 	ineffassign $pkgs &
 	interfacer $pkgs &
 	gosimple $pkgs &
+	staticcheck $pkgs &
 } |& grep -v 'vendor/' | sed -r 's/(: |\t)/:\t/'
