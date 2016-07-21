@@ -70,8 +70,6 @@ alias sc="sudo systemctl"
 alias scu="systemctl --user"
 
 alias ls="ls -F"
-alias grep="grep --color=auto"
-
 alias ll="ls -lhiF"
 alias la="ls -alhiF"
 alias lt="ls -Alhrt"
