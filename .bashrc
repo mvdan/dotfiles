@@ -88,7 +88,7 @@ alias gb="go build -v"
 alias gi="go install -v"
 
 gbench() {
-	go test -run='^$' -benchmem -bench=${2:-.} \
+	go test ./... -run='^$' -benchmem -bench=${2:-.} \
 		-count=${3:-6} -benchtime=${4:-1s} | tee ${1:-cur}
 }
 
@@ -108,7 +108,8 @@ alias gdfu="git diff @{u}..."
 alias gfea="git fetch --all -v -p"
 alias gloo="git log --decorate ORIG_HEAD.."
 alias glop="git log --decorate -p"
-alias glopo="git log --decorate -p ORIG_HEAD.."
+alias glopo="git log --decorate -p --reverse ORIG_HEAD.."
+alias glopu="git log --decorate -p --reverse master..origin/master"
 alias glos="git log --decorate --stat"
 alias glou="git log --decorate ..@{u}"
 alias gplr="git pull --rebase=preserve"

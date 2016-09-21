@@ -89,6 +89,8 @@ set pgp_verify_key_command = "gpg --no-verbose --batch --fingerprint --check-sig
 set pgp_list_pubring_command = "gpg --no-verbose --batch --with-colons --list-keys %r"
 set pgp_list_secring_command = "gpg --no-verbose --batch --with-colons --list-secret-keys %r"
 
+set sidebar_format = "%B%?F? [%F]?%* %?N?%N/?%S"
+set mail_check_stats = yes
 set sidebar_divider_char = " "
 set sidebar_visible
 set sidebar_width = 28

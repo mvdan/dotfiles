@@ -14,7 +14,7 @@ pkgs=(
 	github.com/mvdan/sh/cmd/shfmt
 
 	# gopath
-	github.com/shurcooL/Go-Package-Store
+	github.com/shurcooL/Go-Package-Store/cmd/Go-Package-Store
 	github.com/shurcooL/gostatus
 
 	# linters
