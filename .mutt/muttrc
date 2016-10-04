@@ -14,7 +14,8 @@ set assumed_charset = 'utf-8'
 
 set abort_unmodified
 set allow_8bit
-set mail_check = 5
+set mail_check = 0
+set nobeep
 set timeout = 10
 
 set sendmail = '/usr/bin/msmtp'

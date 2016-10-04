@@ -133,7 +133,6 @@ alias jc="sudo journalctl --full"
 alias scn="sudo systemctl restart netctl-auto@wlp3s0"
 
 alias clb='curl -F "clbin=<-" https://clbin.com'
-alias grd="gradle --daemon"
 alias ncs="sudo netctl-auto switch-to"
 
 [[ -d ~/git/fsr ]] && {
