@@ -37,6 +37,7 @@ fni() { find . -iname "*$1*"; }
 	galias gclo _clone       "clone"
 	galias gco  _checkout    "checkout"
 	galias gdf  _diff        "diff"
+	galias ggc  _gc          "gc --prune=all"
 	galias ggr  _grep        "grep -In"
 	galias glo  _log         "log --decorate"
 	galias gmr  _merge       "merge"
@@ -86,6 +87,9 @@ alias gg="go get -u -v"
 alias gd="go get -u -v -d"
 alias gb="go build -v"
 alias gi="go install -v"
+alias gt="go test"
+alias gts="go test -short -timeout 1s"
+alias gim="goimports -l -w ."
 
 gbench() {
 	go test ./... -run='^$' -benchmem -bench=${2:-.} \
