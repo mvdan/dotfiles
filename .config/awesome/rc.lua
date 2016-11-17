@@ -238,7 +238,7 @@ end, 1)
 
 local maildirs = {
 	"/home/mvdan/mail/mvdan/Inbox/new",
-	"/home/mvdan/mail/mvdan/Univ/new",
+	"/home/mvdan/mail/spec/Inbox/new",
 	"/home/mvdan/mail/mvdan/Other/new",
 }
 
@@ -413,7 +413,8 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey, altkey }, "Next",  function() backlight_inc(true) end),
 	awful.key({ modkey, altkey }, "1",     function() sexec("setxkbmap us altgr-intl -option caps:none") end),
 	awful.key({ modkey, altkey }, "2",     function() sexec("setxkbmap es cat -option caps:none") end),
-	awful.key({ modkey, altkey }, "h",     function() sexec(terminal .. " -c ssh -e ssh mvdan.cc -t TERM=screen-256color tmux -u a") end),
+	awful.key({ modkey, altkey }, "h",     function() sexec(terminal .. " -c ssh -e ssh shark.mvdan.cc -t TERM=screen-256color tmux -u a") end),
+	awful.key({ modkey, altkey }, "g",     function() sexec(terminal .. " -e ssh linode.mvdan.cc -t TERM=screen-256color tmux -u a") end),
 	awful.key({ modkey, altkey }, "j",     function() sexec(terminal .. " -c mutt -e mutt") end),
 	awful.key({ modkey, altkey }, "k",     function() sexec(terminal .. " -c ranger -e ranger") end),
 	awful.key({ modkey, altkey }, "n",     function() sexec(terminal .. " -c ncmpc -e ncmpc") end),

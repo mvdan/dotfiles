@@ -29,7 +29,7 @@ set reverse_alias
 set realname = 'Daniel Martí'
 set from = "mvdan@mvdan.cc"
 set use_envelope_from
-alternates "mvdan@mvdan.cc|danielmarti@gmx.com|daniel.marti.i@est.fib.upc.edu"
+alternates "mvdan@mvdan.cc|dan@specif.ai|danielmarti@gmx.com|daniel.marti.i@est.fib.upc.edu"
 set record = +Sent
 
 set trash = +Trash
@@ -56,6 +56,7 @@ set editor = vim
 set sleep_time = 0
 set narrow_tree
 folder-hook . set sort = threads
+folder-hook spec set from = "dan@specif.ai"
 folder-hook Sent set sort = date-sent
 folder-hook Spam set sort = date-received
 
@@ -108,6 +109,7 @@ bind index,pager \cu half-up
 bind index,pager \cd half-down
 
 mailboxes "=Inbox"
+mailboxes "=../spec/Inbox"
 mailboxes "=Univ"
 mailboxes "=FDroid"
 mailboxes "=FD-reps"

@@ -11,8 +11,8 @@ alias l="less"
 alias s="sudo"
 alias se="s -E"
 
-alias m="mount"
-alias um="umount"
+alias m="sudo mount"
+alias um="sudo umount"
 
 mkcd() { mkdir -p "$1" && cd "$1"; }
 cdg() { cd $GOPATH/src/github.com/mvdan; }
@@ -129,7 +129,7 @@ alias gsmu="git submodule update --init --recursive"
 alias gsmfc="gsmf 'git clean -dffx && git reset --hard' && gcle && grsh"
 
 alias ssh="TERM=xterm ssh"
-alias weeserv="ssh mvdan.cc -t TERM=screen-256color LANG=en_US.UTF-8 tmux -u new weechat"
+alias weeserv="ssh shark.mvdan.cc -t TERM=screen-256color LANG=en_US.UTF-8 tmux -u new weechat"
 
 alias rsv="rsync -ah --info=progress2"
 
@@ -137,6 +137,7 @@ alias jc="sudo journalctl --full"
 alias scn="sudo systemctl restart netctl-auto@wlp3s0"
 
 alias clb='curl -F "clbin=<-" https://clbin.com'
+alias ncl="sudo netctl"
 alias ncs="sudo netctl-auto switch-to"
 
 [[ -d ~/git/fsr ]] && {
