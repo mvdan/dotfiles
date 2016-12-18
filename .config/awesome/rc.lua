@@ -66,10 +66,10 @@ batwidget = wibox.widget.textbox()
 vicious.register(batwidget, vicious.widgets.bat, function(widget, args)
 	if args[1] == "−" then
 		if args[2] < 10 then
-			return warn(space(3, args[2].."!!"))..space(6, args[3])
+			return space(3, args[2].."!!")..space(6, args[3])
 		end
 		if args[2] < 20 then
-			return warn(space(3, args[2].."!"))..space(6, args[3])
+			return space(3, args[2].."!")..space(6, args[3])
 		end
 		return space(3, args[2])..space(6, args[3])
 	end
@@ -262,15 +262,33 @@ function mdir_str()
 end
 
 mdirwidget = wibox.widget.textbox()
-function mdirwidget_update()
-	mdirwidget:set_markup(mdir_str())
+imap_enabled = true
+imap_running = false
+function mdir_update()
+	if imap_enabled and not imap_running then
+		mdirwidget:set_markup(mdir_str())
+	end
 end
 
 function imap_sync()
+	if imap_running or not imap_enabled then
+		return
+	end
 	if net_ifaces["wlp3s0"] == false and net_ifaces["enp0s25"] == false then
 		return
 	end
-	sexec('mbsync -a -q && notmuch new --quiet')
+	imap_running = true
+	mdirwidget:set_markup(" mbsync ")
+	sexec('mbsync -a -q && notmuch new --quiet; echo "imap_running = false; mdir_update()" | awesome-client')
+end
+
+function flip_imap()
+	imap_enabled = not imap_enabled
+	if imap_enabled then
+		imap_sync()
+	else
+		mdirwidget:set_markup(" -off- ")
+	end
 end
 
 local imap = timer({ timeout = 60 })
@@ -278,10 +296,10 @@ imap:connect_signal("timeout", function() imap_sync() end)
 imap:start()
 
 local mdirtimer = timer({ timeout = 3 })
-mdirtimer:connect_signal("timeout", function() mdirwidget_update() end)
+mdirtimer:connect_signal("timeout", function() mdir_update() end)
 mdirtimer:start()
 
-mdirwidget_update()
+mdir_update()
 
 function ellipsize(str, l)
 	if string.len(str) <= l + 1 then
@@ -296,7 +314,7 @@ function (widget, args)
 	if args["{state}"] == "Stop" then
 		return ' - MPD - '
 	end
-	return ellipsize(args["{Title}"], 24)..' - '..ellipsize(args['{Album}'], 20)
+	return ellipsize(args["{Title}"], 24).." - "..ellipsize(args["{Album}"], 20)
 end, 5)
 
 for s = 1, screen.count() do
@@ -414,11 +432,14 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey, altkey }, "1",     function() sexec("setxkbmap us altgr-intl -option caps:none") end),
 	awful.key({ modkey, altkey }, "2",     function() sexec("setxkbmap es cat -option caps:none") end),
 	awful.key({ modkey, altkey }, "h",     function() sexec(terminal .. " -c ssh -e ssh shark.mvdan.cc -t TERM=screen-256color tmux -u a") end),
-	awful.key({ modkey, altkey }, "g",     function() sexec(terminal .. " -e ssh linode.mvdan.cc -t TERM=screen-256color tmux -u a") end),
 	awful.key({ modkey, altkey }, "j",     function() sexec(terminal .. " -c mutt -e mutt") end),
 	awful.key({ modkey, altkey }, "k",     function() sexec(terminal .. " -c ranger -e ranger") end),
+	awful.key({ modkey, altkey }, "m",     function() imap_sync() end),
 	awful.key({ modkey, altkey }, "n",     function() sexec(terminal .. " -c ncmpc -e ncmpc") end),
+	awful.key({ modkey, altkey }, "e",     function() sexec(terminal .. " -e vim TODO.txt") end),
 	awful.key({ modkey, altkey }, "i",     function() sexec("chromium") end),
+
+	awful.key({ modkey, "Shift" }, "m",     function() flip_imap() end),
 
 	awful.key({ modkey }, "s", function() sexec("maim -s ~/$(date +%F-%T).png") end),
 	awful.key({ modkey }, "i", function()

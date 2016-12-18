@@ -29,7 +29,7 @@ set reverse_alias
 set realname = 'Daniel Martí'
 set from = "mvdan@mvdan.cc"
 set use_envelope_from
-alternates "mvdan@mvdan.cc|dan@specif.ai|danielmarti@gmx.com|daniel.marti.i@est.fib.upc.edu"
+alternates "mvdan@mvdan.cc|dan@specif.ai|danielmarti@gmx.com"
 set record = +Sent
 
 set trash = +Trash
@@ -110,13 +110,14 @@ bind index,pager \cd half-down
 
 mailboxes "=Inbox"
 mailboxes "=../spec/Inbox"
-mailboxes "=Univ"
+mailboxes "=Go"
+mailboxes "=Other"
 mailboxes "=FDroid"
 mailboxes "=FD-reps"
 mailboxes "=Fsfe"
-mailboxes "=Other"
-mailboxes "=Sent"
+mailboxes "=Univ"
 mailboxes "=Announ"
+mailboxes "=Sent"
 mailboxes "=Drafts"
 mailboxes "=Trash"
 mailboxes "=../gmx/Inbox"

@@ -13,6 +13,6 @@
 	signoff = true
 	signature =
 [diff]
-	compactionHeuristic = true
+	indentHeuristic = true
 [http]
 	cookiefile = /home/mvdan/.gitcookies

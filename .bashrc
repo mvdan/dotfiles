@@ -3,7 +3,7 @@
 shopt -s globstar
 
 HISTSIZE=8000
-HISTFILESIZE=16000
+HISTFILESIZE=64000
 HISTCONTROL=ignoreboth:erasedups
 shopt -s histappend
 
@@ -69,6 +69,8 @@ alias sim="sudo pacman -S --needed"
 
 alias sc="sudo systemctl"
 alias scu="systemctl --user"
+alias jc="journalctl"
+alias jcu="journalctl --user"
 
 alias ls="ls -F"
 alias ll="ls -lhiF"
@@ -133,12 +135,11 @@ alias weeserv="ssh shark.mvdan.cc -t TERM=screen-256color LANG=en_US.UTF-8 tmux 
 
 alias rsv="rsync -ah --info=progress2"
 
-alias jc="sudo journalctl --full"
 alias scn="sudo systemctl restart netctl-auto@wlp3s0"
 
 alias clb='curl -F "clbin=<-" https://clbin.com'
 alias ncl="sudo netctl"
-alias ncs="sudo netctl-auto switch-to"
+alias nca="TERM=dumb sudo netctl-auto"
 
 [[ -d ~/git/fsr ]] && {
 	alias fbld="fdroid build -l -v --no-tarball"
@@ -156,7 +157,7 @@ da() { du -h -d 1 ${@:-.} | sort -h; }
 
 case $TERM in
 linux* | cons*) ;;
-*) PS1="\[\033]0;[\u@\h:\l] [\w]\007\]" ;;
+*) PS1="\[\033]0;[\w]\007\]" ;;
 esac
 
 PS1="$PS1[\u@\h:\l] [\${?}] [\${PWD}]

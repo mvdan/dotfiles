@@ -7,32 +7,30 @@ pkgs=(
 	golang.org/x/tools/cmd/goimports
 	golang.org/x/tools/cmd/stress
 	golang.org/x/tools/cmd/present
-
-	# vendoring
-	github.com/FiloSottile/vendorcheck
-	github.com/FiloSottile/gvt
+	golang.org/x/tools/cmd/stringer
 
 	# github.com/mvdan
 	github.com/mvdan/xurls/cmd/xurls
 	github.com/mvdan/sh/cmd/shfmt
 	github.com/mvdan/interfacer/cmd/interfacer
+	github.com/mvdan/fdroidcl/cmd/fdroidcl
 
 	# gopath
 	github.com/shurcooL/Go-Package-Store/cmd/Go-Package-Store
 	github.com/shurcooL/gostatus
 
-	# building
-	github.com/mitchellh/gox
-
-	# bench
+	# dev tools
 	rsc.io/benchstat
-
-	# fuzz
 	github.com/dvyukov/go-fuzz/go-fuzz
 	github.com/dvyukov/go-fuzz/go-fuzz-build
+	github.com/mitchellh/gox
+	github.com/FiloSottile/vendorcheck
+	github.com/FiloSottile/gvt
 
 	# misc
 	github.com/hanwen/go-mtpfs
+	github.com/astaxie/bat
+	github.com/davecheney/httpstat
 
 	# linters
 	github.com/kisielk/errcheck
