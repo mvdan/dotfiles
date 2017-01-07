@@ -56,7 +56,6 @@ set editor = vim
 set sleep_time = 0
 set narrow_tree
 folder-hook . set sort = threads
-folder-hook spec set from = "dan@specif.ai"
 folder-hook Sent set sort = date-sent
 folder-hook Spam set sort = date-received
 
