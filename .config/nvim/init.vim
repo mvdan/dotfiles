@@ -1,18 +1,18 @@
 call pathogen#infect()
 
-set synmaxcol=1000
+syntax off
+set synmaxcol=200
 filetype plugin indent on
 
-set encoding=utf-8 nocompatible
+set encoding=utf-8
 set number ruler smartindent
 set wrap linebreak nolist nojoinspaces
 set nobackup noswapfile nowritebackup
-set history=1000
 set noexpandtab tabstop=8 softtabstop=8 shiftwidth=8
-set textwidth=72 formatoptions-=t formatoptions+=j
-set laststatus=2 showcmd showmode hidden wildmenu
-set autoread magic matchtime=2 lazyredraw ttyfast
-set incsearch ignorecase smartcase showmatch hlsearch
+set textwidth=72 formatoptions-=t
+set showcmd showmode hidden
+set magic matchtime=2 lazyredraw
+set incsearch ignorecase smartcase showmatch
 
 set t_Co=16
 set background=dark
@@ -23,14 +23,10 @@ noremap Q <nop>
 noremap K <nop>
 
 set shortmess+=I
-set backspace=indent,eol,start
-set complete-=i
 set noerrorbells novisualbell t_vb=
 
 imap ^? ^H
 
-set display+=lastline
-set nrformats-=octal
 set ttimeout timeoutlen=300
 set scrolloff=4
 
@@ -57,15 +53,11 @@ au BufEnter *.txt   silent setl et sw=4
 au BufEnter *.hs    silent setl et sw=4
 au BufEnter *.cabal silent setl et sw=4
 
-au BufEnter ~/git/fcl/*       silent setl et sw=4
-au BufEnter ~/git/workcraft/* silent setl et sw=4
-au BufEnter ~/git/macfuzzer/* silent setl et sw=4
+au BufEnter ~/git/fcl/* silent setl et sw=4
 
-inoremap jj <esc>
 nnoremap <space> :noh<cr>:echo<cr><esc>
 
-noremap <leader>y :silent w !xsel -bi<cr>
-noremap <leader>p o<esc>:set paste<cr>:.!xsel -bo<cr>:set nopaste<cr>
-noremap <leader>P o<esc>:set paste<cr>:.!xsel -po<cr>:set nopaste<cr>
+vnoremap <leader>y "+y
+nnoremap <leader>p "+p
 
 inoremap <F8> Daniel Martí <mvdan@mvdan.cc>

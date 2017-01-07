@@ -10,6 +10,8 @@ shopt -s histappend
 alias l="less"
 alias s="sudo"
 alias se="s -E"
+alias v="nvim"
+alias vim="nvim"
 
 alias m="sudo mount"
 alias um="sudo umount"

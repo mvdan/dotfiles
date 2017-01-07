@@ -1,18 +1,12 @@
-[submodule ".vim/bundle/nerdcommenter"]
-	path = .vim/bundle/nerdcommenter
+[submodule ".config/nvim/bundle/commenter"]
+	path = .config/nvim/bundle/commenter
 	url = https://github.com/scrooloose/nerdcommenter
-[submodule ".vim/bundle/fugitive"]
-	path = .vim/bundle/fugitive
+[submodule ".config/nvim/bundle/fetch"]
+	path = .config/nvim/bundle/fetch
+	url = https://github.com/kopischke/vim-fetch
+[submodule ".config/nvim/bundle/fugitive"]
+	path = .config/nvim/bundle/fugitive
 	url = https://github.com/tpope/vim-fugitive
-[submodule ".vim/bundle/supertab"]
-	path = .vim/bundle/supertab
-	url = https://github.com/ervandew/supertab
-[submodule ".vim/bundle/surround"]
-	path = .vim/bundle/surround
-	url = https://github.com/tpope/vim-surround
-[submodule ".vim/bundle/fileline"]
-	path = .vim/bundle/fileline
-	url = https://github.com/bogado/file-line
-[submodule ".vim/bundle/solarized"]
-	path = .vim/bundle/solarized
+[submodule ".config/nvim/bundle/solarized"]
+	path = .config/nvim/bundle/solarized
 	url = https://github.com/altercation/vim-colors-solarized

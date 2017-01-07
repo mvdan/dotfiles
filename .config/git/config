@@ -3,7 +3,7 @@
 	email = mvdan@mvdan.cc
 	signingkey = 4348041C
 [core]
-	editor = vim
+	editor = nvim
 	askpass = /bin/true
 [push]
 	default = current
