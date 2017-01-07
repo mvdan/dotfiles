@@ -156,8 +156,8 @@ logcat() { adb logcat | grep $(adb shell ps | grep $1 | sed 1q | cut -c10-15); }
 da() { du -h -d 1 ${@:-.} | sort -h; }
 
 case $TERM in
-linux* | cons*) ;;
-*) PS1="\[\033]0;[\w]\007\]" ;;
+	linux* | cons*) ;;
+	*) PS1="\[\033]0;[\w]\007\]" ;;
 esac
 
 PS1="$PS1[\u@\h:\l] [\${?}] [\${PWD}]
