@@ -93,9 +93,17 @@ alias gt="go test"
 alias gts="go test -short -timeout 1s"
 alias gim="goimports -l -w ."
 
+gcov() {
+	go test $@ -coverprofile=/tmp/c && go tool cover -html=/tmp/c
+}
+
 gbench() {
 	go test ./... -run='^$' -benchmem -bench=${2:-.} \
 		-count=${3:-6} -benchtime=${4:-1s} | tee ${1:-cur}
+}
+
+goxg() {
+	gox -output="{{.Dir}}_$(git describe)_{{.OS}}_{{.Arch}}"
 }
 
 alias ssm="pacman -Ss"
