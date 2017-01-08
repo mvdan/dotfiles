@@ -4,7 +4,7 @@ export GOPATH="$HOME/go"
 export PATH="$HOME/.bin:$HOME/tip/bin:$GOPATH/bin:$PATH"
 
 export PAGER=less LESS=-FXRi LESSHISTFILE=-
-export EDITOR=vim DIFF_VIEWER=vimdiff
+export EDITOR=nvim DIFF_VIEWER='nvim -d'
 export BROWSER=chromium
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc

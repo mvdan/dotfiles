@@ -11,7 +11,7 @@ alias l="less"
 alias s="sudo"
 alias se="s -E"
 alias v="nvim"
-alias vim="nvim"
+alias vd="nvim -d"
 
 alias m="sudo mount"
 alias um="sudo umount"

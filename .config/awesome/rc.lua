@@ -436,7 +436,7 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey, altkey }, "k",     function() sexec(terminal .. " -c ranger -e ranger") end),
 	awful.key({ modkey, altkey }, "m",     function() imap_sync() end),
 	awful.key({ modkey, altkey }, "n",     function() sexec(terminal .. " -c ncmpc -e ncmpc -f ~/.config/ncmpc/config") end),
-	awful.key({ modkey, altkey }, "e",     function() sexec(terminal .. " -e vim TODO.txt") end),
+	awful.key({ modkey, altkey }, "e",     function() sexec(terminal .. " -e nvim TODO.txt") end),
 	awful.key({ modkey, altkey }, "i",     function() sexec("chromium") end),
 
 	awful.key({ modkey, "Shift" }, "m",     function() flip_imap() end),

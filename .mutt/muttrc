@@ -52,7 +52,7 @@ set fast_reply
 set noconfirmappend
 set pager_index_lines = 9
 
-set editor = vim
+set editor = nvim
 set sleep_time = 0
 set narrow_tree
 folder-hook . set sort = threads
