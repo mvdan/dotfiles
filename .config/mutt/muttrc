@@ -41,10 +41,10 @@ bind editor <Tab> complete-query
 
 set rfc2047_parameters = yes
 
-set certificate_file = ~/.mutt/certificates
-set mailcap_path = ~/.mutt/mailcap
-set signature = ~/.mutt/muttsig
-set header_cache = ~/.mutt/headercache
+set certificate_file = ~/.config/mutt/certificates
+set mailcap_path = ~/.config/mutt/mailcap
+set signature = ~/.config/mutt/muttsig
+set header_cache = ~/.config/mutt/headercache
 set tmpdir = ~/.cache
 
 set auto_tag
