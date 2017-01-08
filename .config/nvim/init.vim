@@ -13,6 +13,7 @@ set textwidth=72 formatoptions-=t
 set showcmd showmode hidden
 set magic matchtime=2 lazyredraw
 set incsearch ignorecase smartcase showmatch
+set mouse=
 
 set t_Co=16
 set background=dark
