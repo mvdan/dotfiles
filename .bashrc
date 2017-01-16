@@ -2,8 +2,7 @@
 
 shopt -s globstar
 
-HISTSIZE=8000
-HISTFILESIZE=64000
+HISTSIZE=8000 HISTFILESIZE=64000
 HISTCONTROL=ignoreboth:erasedups
 shopt -s histappend
 
@@ -17,7 +16,7 @@ alias m="sudo mount"
 alias um="sudo umount"
 
 mkcd() { mkdir -p "$1" && cd "$1"; }
-cdg() { cd $GOPATH/src/github.com/mvdan; }
+cdg() { cd $GOPATH/src/github.com; }
 cdr() { cd $(git rev-parse --show-toplevel); }
 pgr() { ps aux | grep -v grep | grep -i "$@"; }
 
@@ -55,9 +54,14 @@ fni() { find . -iname "*$1*"; }
 	galias gsm  _submodule   "submodule"
 	galias gst  _stash       "stash"
 
-	gbrd() { for b in $@; do git branch -d $b && git push origin :$b; done; }
+	gbrd() {
+		git branch -d $@
+		git push origin --delete $@
+	}
 	__git_complete gbrd _git_branch
-	gbrdm() { gbrd $(git branch --merged | grep -vE '(^\*| master$)'); }
+	gbrdm() {
+		gbrd $(git branch --merged | grep -vE '(^\*| master$)')
+	}
 }
 
 alias tm="exec tmux"
@@ -89,11 +93,11 @@ alias cd...="cd ../../.."
 
 alias gg="go get -u -v"
 alias gd="go get -u -v -d"
-alias gb="go build -v"
 alias gi="go install -v"
 alias gt="go test"
 alias gts="go test -short -timeout 1s"
-alias gim="goimports -l -w ."
+alias gim="goimports -l -w"
+alias gfm="gofmt -s -l -w"
 
 gcov() {
 	go test $@ -coverprofile=/tmp/c && go tool cover -html=/tmp/c
@@ -107,6 +111,8 @@ gbench() {
 goxg() {
 	gox -output="{{.Dir}}_$(git describe)_{{.OS}}_{{.Arch}}"
 }
+
+alias gr="GORRAM_CACHE=~/.cache/gorram gorram"
 
 alias ssm="pacman -Ss"
 alias syu="sudo pacman -Syu"
