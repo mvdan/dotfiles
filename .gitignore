@@ -1,6 +1,13 @@
 /*
 !/.*
-headercache
+*.d/
+/.config/mutt/headercache
 /.gnupg/*.gpg*
+/.gnupg/random_seed
 /.ssh/id_rsa*
 /.ssh/known_hosts
+/.config/mpd/mpd.db
+/.config/mpd/mpd.pid
+/.config/mpd/mpdstate
+*.conf
+*.env
