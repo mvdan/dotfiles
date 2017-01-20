@@ -96,8 +96,13 @@ alias gd="go get -u -v -d"
 alias gi="go install -v"
 alias gt="go test"
 alias gts="go test -short -timeout 1s"
-alias gim="goimports -l -w"
-alias gfm="gofmt -s -l -w"
+gim() {
+	goimports -l -w ${1:-*.go}
+}
+
+gfm() {
+	gofmt -s -l -w ${1:-*.go}
+}
 
 gcov() {
 	go test $@ -coverprofile=/tmp/c && go tool cover -html=/tmp/c
