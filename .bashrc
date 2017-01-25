@@ -55,12 +55,13 @@ fni() { find . -iname "*$1*"; }
 	galias gst  _stash       "stash"
 
 	gbrd() {
+		[[ $# -eq 0 ]] && return
 		git branch -d $@
 		git push origin --delete $@
 	}
 	__git_complete gbrd _git_branch
 	gbrdm() {
-		gbrd $(git branch --merged | grep -vE '(^\*| master$)')
+		gbrd $(git-picked)
 	}
 }
 

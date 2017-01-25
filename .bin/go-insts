@@ -13,6 +13,7 @@ pkgs=(
 	github.com/mvdan/xurls/cmd/xurls
 	github.com/mvdan/sh/cmd/shfmt
 	github.com/mvdan/interfacer/cmd/interfacer
+	github.com/mvdan/git-picked
 	github.com/mvdan/fdroidcl/cmd/fdroidcl
 
 	# gopath
@@ -39,6 +40,7 @@ pkgs=(
 	github.com/mdempsky/unconvert
 	github.com/mdempsky/maligned
 	github.com/gordonklaus/ineffassign
+	github.com/mibk/dupl
 	honnef.co/go/simple/cmd/gosimple
 	honnef.co/go/unused/cmd/unused
 	honnef.co/go/staticcheck/cmd/staticcheck
