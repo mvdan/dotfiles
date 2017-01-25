@@ -238,27 +238,24 @@ end, 1)
 
 local maildirs = {
 	"/home/mvdan/mail/mvdan/Inbox/new",
-	"/home/mvdan/mail/spec/Inbox/new",
 	"/home/mvdan/mail/mvdan/Other/new",
+	"/home/mvdan/mail/mvdan/Go/new",
 }
 
 function mdir_str()
-	local txt = ""
+	local total = 0
 	for i, path in ipairs(maildirs) do
 		local f = io.popen("find "..path.." -type f 2>/dev/null | wc -l")
 		local count = f:read("*n")
 		f:close()
-		local sp = 2
-		if i > 1 then sp = 3 end
-		if count == nil then
-			txt = txt.." ?"
-		elseif count > 0 then
-			txt = txt..green(space(sp, count))
-		else
-			txt = txt..space(sp, count)
+		if count ~= nil then
+			total = total + count
 		end
 	end
-	return txt
+	if total > 0 then
+		return green(space(2, total))
+	end
+	return space(2, total)
 end
 
 mdirwidget = wibox.widget.textbox()
