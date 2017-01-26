@@ -40,8 +40,6 @@ layoutbox = {}
 taglist = {}
 tasklist = {}
 
-function red(str) return string.format('<span color="#f77">%s</span>', str) end
-function green(str) return string.format('<span color="#4c4">%s</span>', str) end
 function space(n, str) return string.format('%'..n..'s', str) end
 
 sep = wibox.widget.textbox()
@@ -251,9 +249,6 @@ function mdir_str()
 		if count ~= nil then
 			total = total + count
 		end
-	end
-	if total > 0 then
-		return green(space(2, total))
 	end
 	return space(2, total)
 end
