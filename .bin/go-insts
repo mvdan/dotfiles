@@ -41,9 +41,9 @@ pkgs=(
 	github.com/mdempsky/maligned
 	github.com/gordonklaus/ineffassign
 	github.com/mibk/dupl
-	honnef.co/go/simple/cmd/gosimple
-	honnef.co/go/unused/cmd/unused
-	honnef.co/go/staticcheck/cmd/staticcheck
+	honnef.co/go/tools/cmd/gosimple
+	honnef.co/go/tools/cmd/unused
+	honnef.co/go/tools/cmd/staticcheck
 )
 
 go install -v "${pkgs[@]}"
