@@ -262,8 +262,8 @@ end
 
 local mdirwidget = wibox.widget.textbox()
 local imap_enabled = true
-local imap_running = false
-local function mdir_update()
+imap_running = false
+function mdir_update()
 	if imap_enabled and not imap_running then
 		mdirwidget:set_markup(mdir_str())
 	end
@@ -278,7 +278,7 @@ local function imap_sync()
 	end
 	imap_running = true
 	mdirwidget:set_markup(" mbsync ")
-	awful.spawn.with_shell('mbsync -a -q && notmuch new --quiet; echo "imap_running = false; mdir_update()" | awesome-client')
+	awful.spawn.with_shell("mbsync -a -q && notmuch new --quiet; awesome-client 'imap_running = false; mdir_update()'")
 end
 
 local function flip_imap()
@@ -473,7 +473,6 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey, altkey }, "k", function() awful.spawn(terminal .. " -c ranger -e ranger") end),
 	awful.key({ modkey, altkey }, "n", function() awful.spawn(terminal .. " -c ncmpc -e ncmpc -f ~/.config/ncmpc/config") end),
 	awful.key({ modkey, altkey }, "e", function() awful.spawn(terminal .. " -e nvim TODO.txt") end),
-	awful.key({ modkey, altkey }, "i", function() awful.spawn("chromium") end),
 
 	awful.key({ modkey, altkey }, "Down",  function() volume_mute() end),
 	awful.key({ modkey, altkey }, "Left",  function() volume_inc(false) end),
@@ -585,6 +584,7 @@ awful.rules.rules = {
 		buttons = clientbuttons,
 		screen = awful.screen.preferred,
 		placement = awful.placement.no_overlap+awful.placement.no_offscreen,
+		size_hints_honor = false,
 		},
 	},
 
