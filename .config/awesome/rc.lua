@@ -52,8 +52,6 @@ menubar.utils.terminal = terminal
 local sep = wibox.widget.textbox()
 sep.text = "   "
 
-local keyboardlayout = awful.widget.keyboardlayout()
-
 local textclock = wibox.widget.textclock()
 
 local function space(n, str) return string.format('%'..n..'s', str) end
@@ -186,16 +184,13 @@ end, 1)
 local iowidget = wibox.widget.textbox()
 vicious.register(iowidget, vicious.widgets.dio, function(widget, args)
 	local txt = ""
-	local devices = { }
 	for line in io.lines("/proc/diskstats") do
 		local dev = string.match(line, " (sd[a-z]) ")
-		if dev ~= nil then table.insert(devices, dev) end
-	end
-	for i, dev in ipairs(devices) do
-		local write = space(4, args["{"..dev.." write_mb}"])
-		local read = space(-4, args["{"..dev.." read_mb}"])
-		if i == 1 then txt = txt..'  ' end
-		txt = txt..write..' '..dev:sub(3)..' '..read
+		if dev ~= nil then
+			local write = space(4, args["{"..dev.." write_mb}"])
+			local read = space(-4, args["{"..dev.." read_mb}"])
+			txt = txt..write..' '..dev:sub(3)..' '..read
+		end
 	end
 	return txt
 end, 1)
@@ -367,7 +362,6 @@ awful.screen.connect_for_each_screen(function(s)
 		s.tasklist,
 		{
 			layout = wibox.layout.fixed.horizontal,
-			keyboardlayout,
 			wibox.widget.systray(),
 			textclock,
 			s.layoutbox,
@@ -453,7 +447,6 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey, "Control" }, "n",
 		function()
 			local c = awful.client.restore()
-			-- Focus restored client
 			if c then
 				client.focus = c
 				c:raise()
