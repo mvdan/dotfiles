@@ -16,7 +16,8 @@ alias m="sudo mount"
 alias um="sudo umount"
 
 mkcd() { mkdir -p "$1" && cd "$1"; }
-cdg() { cd $GOPATH/src/github.com; }
+cdg() { cd $HOME/go/src/github.com; }
+cdl() { cd $HOME/go/land/src/github.com; }
 cdr() { cd $(git rev-parse --show-toplevel); }
 pgr() { ps aux | grep -v grep | grep -i "$@"; }
 

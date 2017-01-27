@@ -1,7 +1,7 @@
 export FULLNAME="Daniel Martí" EMAIL="mvdan@mvdan.cc"
 
-export GOPATH="$HOME/go"
-export PATH="$HOME/.bin:$HOME/tip/bin:$GOPATH/bin:$PATH"
+export GOPATH="$HOME/go/land:$HOME/go"
+export PATH="$HOME/.bin:$HOME/tip/bin:$HOME/go/bin:$HOME/go/land/bin:$PATH"
 
 export PAGER=less LESS=-FXRi LESSHISTFILE=-
 export EDITOR=nvim DIFF_VIEWER='nvim -d'
