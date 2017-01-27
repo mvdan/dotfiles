@@ -43,4 +43,3 @@ theme.layout_dwindle = "/usr/share/awesome/themes/default/layouts/dwindlew.png"
 theme.icon_theme = nil
 
 return theme
--- vim: et ts=4 sw=4
