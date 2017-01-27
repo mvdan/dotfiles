@@ -54,7 +54,9 @@ sep.text = "   "
 
 local textclock = wibox.widget.textclock()
 
-local function space(n, str) return string.format('%'..n..'s', str) end
+local function space(n, str)
+	return string.format('%'..n..'s', str)
+end
 
 local cpu_count = 0
 for line in io.lines("/proc/stat") do
@@ -288,8 +290,8 @@ local function flip_imap()
 	end
 end
 
-gears.timer.start_new(60, imap_sync)
-gears.timer.start_new(3, mdir_update)
+gears.timer.start_new(60, function() imap_sync(); return true; end)
+gears.timer.start_new(3, function() mdir_update(); return true; end)
 
 mdir_update()
 
@@ -444,7 +446,7 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey, altkey }, "h", function() awful.spawn(terminal .. " -c ssh -e ssh shark.mvdan.cc -t TERM=screen-256color tmux -u a") end),
 	awful.key({ modkey, altkey }, "j", function() awful.spawn(terminal .. " -c mutt -e mutt") end),
 	awful.key({ modkey, altkey }, "k", function() awful.spawn(terminal .. " -c ranger -e ranger") end),
-	awful.key({ modkey, altkey }, "n", function() awful.spawn(terminal .. " -c ncmpc -e ncmpc -f ~/.config/ncmpc/config") end),
+	awful.key({ modkey, altkey }, "n", function() awful.spawn(terminal .. " -c ncmpc -e ncmpc -f .config/ncmpc/config") end),
 	awful.key({ modkey, altkey }, "e", function() awful.spawn(terminal .. " -e nvim TODO.txt") end),
 
 	awful.key({ modkey, altkey }, "Down",  volume_mute),
@@ -457,7 +459,7 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey, altkey }, "m", imap_sync),
 	awful.key({ modkey, "Shift" }, "m", flip_imap),
 
-	awful.key({ modkey }, "s", function() awful.spawn.with_shell("maim -s ~/$(date +%F-%T).png") end),
+	awful.key({ modkey }, "s", function() awful.spawn.with_shell("maim -s $(date +%F-%T).png") end),
 	awful.key({ modkey }, "i", function()
 		local f = io.popen("timeout 1 ip route")
 		local t = f:read("*a"):sub(0, -2)
