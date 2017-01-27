@@ -288,13 +288,8 @@ local function flip_imap()
 	end
 end
 
-local imap = timer({ timeout = 60 })
-imap:connect_signal("timeout", imap_sync)
-imap:start()
-
-local mdirtimer = timer({ timeout = 3 })
-mdirtimer:connect_signal("timeout", mdir_update)
-mdirtimer:start()
+gears.timer.start_new(60, imap_sync)
+gears.timer.start_new(3, mdir_update)
 
 mdir_update()
 
