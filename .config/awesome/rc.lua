@@ -310,24 +310,6 @@ vicious.register(mpdwidget, vicious.widgets.mpd, function(widget, args)
 	return ellipsize(args["{Title}"], 24).." - "..ellipsize(args["{Album}"], 20)
 end, 5)
 
-local tasklist_buttons = awful.util.table.join(
-	awful.button({ }, 1, function(c)
-		if c == client.focus then
-			c.minimized = true
-		else
-			-- Without this, the following
-			-- :isvisible() makes no sense
-			c.minimized = false
-			if not c:isvisible() and c.first_tag then
-				c.first_tag:view_only()
-			end
-			-- This will also un-minimize
-			-- the client, if needed
-			client.focus = c
-			c:raise()
-		end
-	end))
-
 local function set_wallpaper(s)
 	if beautiful.wallpaper then
 		local wallpaper = beautiful.wallpaper
@@ -516,8 +498,6 @@ clientkeys = awful.util.table.join(
 	awful.key({ modkey, }, "o", function(c) c:move_to_screen() end,
 		{group = "client"}),
 	awful.key({ modkey, }, "t", function(c) c.ontop = not c.ontop end,
-		{group = "client"}),
-	awful.key({ modkey, }, "n", function(c) c.minimized = true end,
 		{group = "client"}),
 	awful.key({ modkey, }, "m", function(c)
 			c.maximized = not c.maximized
