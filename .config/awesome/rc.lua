@@ -103,9 +103,12 @@ end
 
 local function backlight_get()
 	local f = io.popen("xbacklight -get")
-	backlight = round(f:read("*n"))
+	local num = f:read("*n")
 	f:close()
-	blwidget.text = space(3, tostring(backlight))
+	if num ~= nil then
+		backlight = round(num)
+		blwidget.text = space(3, tostring(backlight))
+	end
 end
 backlight_get()
 
