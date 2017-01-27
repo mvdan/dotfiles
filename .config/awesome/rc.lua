@@ -291,11 +291,11 @@ local function flip_imap()
 end
 
 local imap = timer({ timeout = 60 })
-imap:connect_signal("timeout", function() imap_sync() end)
+imap:connect_signal("timeout", imap_sync)
 imap:start()
 
 local mdirtimer = timer({ timeout = 3 })
-mdirtimer:connect_signal("timeout", function() mdir_update() end)
+mdirtimer:connect_signal("timeout", mdir_update)
 mdirtimer:start()
 
 mdir_update()
@@ -474,15 +474,15 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey, altkey }, "n", function() awful.spawn(terminal .. " -c ncmpc -e ncmpc -f ~/.config/ncmpc/config") end),
 	awful.key({ modkey, altkey }, "e", function() awful.spawn(terminal .. " -e nvim TODO.txt") end),
 
-	awful.key({ modkey, altkey }, "Down",  function() volume_mute() end),
+	awful.key({ modkey, altkey }, "Down",  volume_mute),
 	awful.key({ modkey, altkey }, "Left",  function() volume_inc(false) end),
 	awful.key({ modkey, altkey }, "Right", function() volume_inc(true) end),
 
 	awful.key({ modkey, altkey }, "Prior", function() backlight_inc(false) end),
 	awful.key({ modkey, altkey }, "Next", function() backlight_inc(true) end),
 
-	awful.key({ modkey, altkey }, "m", function() imap_sync() end),
-	awful.key({ modkey, "Shift" }, "m", function() flip_imap() end),
+	awful.key({ modkey, altkey }, "m", imap_sync),
+	awful.key({ modkey, "Shift" }, "m", flip_imap),
 
 	awful.key({ modkey }, "s", function() awful.spawn.with_shell("maim -s ~/$(date +%F-%T).png") end),
 	awful.key({ modkey }, "i", function()
