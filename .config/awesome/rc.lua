@@ -240,23 +240,17 @@ vicious.register(netwidget, vicious.widgets.net, function(widget, args)
 	return txt
 end, 1)
 
-local maildirs = {
+local mdirs = table.concat({
 	"/home/mvdan/mail/mvdan/Inbox/new",
 	"/home/mvdan/mail/mvdan/Other/new",
 	"/home/mvdan/mail/mvdan/Go/new",
-}
+}, " ")
 
-local function mdir_str()
-	local total = 0
-	for i, path in ipairs(maildirs) do
-		local f = io.popen("find "..path.." -type f 2>/dev/null | wc -l")
-		local count = f:read("*n")
-		f:close()
-		if count ~= nil then
-			total = total + count
-		end
-	end
-	return space(2, total)
+local function mdir_count()
+	local f = io.popen("find "..mdirs.." -type f 2>/dev/null | wc -l")
+	local count = f:read("*n")
+	f:close()
+	return count
 end
 
 local mdirwidget = wibox.widget.textbox()
@@ -264,7 +258,7 @@ local imap_enabled = true
 imap_running = false
 function mdir_update()
 	if imap_enabled and not imap_running then
-		mdirwidget:set_markup(mdir_str())
+		mdirwidget.text = space(2, mdir_count())
 	end
 end
 
@@ -273,7 +267,7 @@ local function imap_sync()
 		return
 	end
 	imap_running = true
-	mdirwidget:set_markup(" mbsync ")
+	mdirwidget.text = " mbsync "
 	awful.spawn.with_shell("mbsync -a -q && notmuch new --quiet; awesome-client 'imap_running = false; mdir_update()'")
 end
 
@@ -282,7 +276,7 @@ local function flip_imap()
 	if imap_enabled then
 		imap_sync()
 	else
-		mdirwidget:set_markup(" -off- ")
+		mdirwidget.text = " -off- "
 	end
 end
 
