@@ -220,14 +220,13 @@ local function wifi_q()
 	return "??"
 end
 
-local net_ifaces = { enp0s25 = false, wlp3s0 = false, enp0s20u1 = false, enp0s20u2 = false }
+local net_ifaces = { "enp0s25", "wlp3s0", "enp0s20u1" }
 local netwidget = wibox.widget.textbox()
 vicious.register(netwidget, vicious.widgets.net, function(widget, args)
 	local txt = ""
-	for dev, enabled in pairs(net_ifaces) do
+	for i, dev in ipairs(net_ifaces) do
 		local rx = args['{'..dev..' rx_mb}']
 		if rx ~= '0.0' and rx ~= nil then
-			net_ifaces[dev] = true
 			local up = space(5, args['{'..dev..' up_kb}'])
 			local tx = args['{'..dev..' tx_mb}']
 			local dn = space(-5, args['{'..dev..' down_kb}'])
@@ -271,9 +270,6 @@ end
 
 local function imap_sync()
 	if imap_running or not imap_enabled then
-		return
-	end
-	if net_ifaces["wlp3s0"] == false and net_ifaces["enp0s25"] == false then
 		return
 	end
 	imap_running = true
