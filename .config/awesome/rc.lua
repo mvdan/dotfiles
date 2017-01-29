@@ -452,13 +452,12 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey }, "s", function() awful.spawn.with_shell("maim -s $(date +%F-%T).png") end),
 	awful.key({ modkey }, "i", function()
 		local f = io.popen("timeout 1 ip route")
-		local t = f:read("*a"):sub(0, -2)
-		f:close()
 		naughty.notify({
 			title = " % ip route",
-			text = t,
+			text = f:read("*a"):sub(0, -2),
 			position = "bottom_right"
 		})
+		f:close()
 	end),
 
 	awful.key({ modkey }, "r", function() awful.screen.focused().promptbox:run() end),
