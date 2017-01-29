@@ -58,18 +58,9 @@ local function space(n, str)
 	return string.format('%'..n..'s', str)
 end
 
-local cpu_count = 0
-for line in io.lines("/proc/stat") do
-	if string.match(line, "^cpu[%d]+") then cpu_count = cpu_count + 1 end
-end
-
 local cpuwidget = wibox.widget.textbox()
 vicious.register(cpuwidget, vicious.widgets.cpu, function(widget, args)
-	local txt=""
-	for cn=2, cpu_count+1 do
-		txt = txt..space(4, args[cn])
-	end
-	return txt
+	return space(4, args[1])..space(4, args[2])..space(4, args[3])..space(4, args[4])
 end, 1)
 
 local batwidget = wibox.widget.textbox()
@@ -90,7 +81,7 @@ vicious.register(batwidget, vicious.widgets.bat, function(widget, args)
 		return space(3, args[2]).." 00:00"
 	end
 	return space(3, args[2]).." ??:??"
-end, 4, "BAT0")
+end, 10, "BAT0")
 
 local blwidget = wibox.widget.textbox()
 local backlight = 0
