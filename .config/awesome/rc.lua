@@ -60,28 +60,22 @@ end
 
 local cpuwidget = wibox.widget.textbox()
 vicious.register(cpuwidget, vicious.widgets.cpu, function(widget, args)
-	return space(4, args[1])..space(4, args[2])..space(4, args[3])..space(4, args[4])
+	return string.format("%3s %3s %3s %3s", args[1], args[2], args[3], args[4])
 end, 1)
 
 local batwidget = wibox.widget.textbox()
 vicious.register(batwidget, vicious.widgets.bat, function(widget, args)
 	if args[1] == "−" then
-		if args[2] < 10 then
-			return space(3, args[2].."!!")..space(6, args[3])
-		end
 		if args[2] < 20 then
-			return space(3, args[2].."!")..space(6, args[3])
+			return space(3, args[2].."!!")..space(6, args[3])
 		end
 		return space(3, args[2])..space(6, args[3])
 	end
 	if args[1] == '+' then
 		return space(3, args[2])..space(6, args[3])
 	end
-	if args[1] == '↯' then
-		return space(3, args[2]).." 00:00"
-	end
 	return space(3, args[2]).." ??:??"
-end, 10, "BAT0")
+end, 20, "BAT0")
 
 local blwidget = wibox.widget.textbox()
 local backlight = 0
@@ -94,7 +88,7 @@ local function round(number)
 	return floor
 end
 
-local function backlight_get()
+do
 	local f = io.popen("xbacklight -get")
 	local num = f:read("*n")
 	f:close()
@@ -103,14 +97,13 @@ local function backlight_get()
 		blwidget.text = space(3, tostring(backlight))
 	end
 end
-backlight_get()
 
-local function betw(val, min, max)
-	if val < min then
-		return min
+local function percent(val)
+	if val < 0 then
+		return 0
 	end
-	if val > max then
-		return max
+	if val > 100 then
+		return 100
 	end
 	return val
 end
@@ -121,7 +114,7 @@ local function backlight_inc(increasing)
 	if not increasing then
 		num = -num
 	end
-	backlight = betw(backlight + num, 0, 100)
+	backlight = percent(backlight + num)
 	awful.spawn(string.format("xbacklight -set %d", backlight))
 	blwidget.text = space(3, tostring(backlight))
 end
@@ -138,27 +131,24 @@ local function volume_upd()
 	end
 end
 
-local function volume_get()
+do
 	local f = io.popen("amixer -M get Master")
-	local mixer = f:read("*all")
+	local volu, mute = string.match(f:read("*all"), "([%d]+)%%.*%[([%l]*)")
 	f:close()
-	local volu, mute = string.match(mixer, "([%d]+)%%.*%[([%l]*)")
-	if volu == nil then
-		return
+	if volu ~= nil then
+		local v = tonumber(volu)
+		volume = v + (5 - (v % 5))
+		volume_muted = mute == "off" or (mute == "" and volume == 0)
+		volume_upd()
 	end
-	volume = tonumber(volu)
-	volume = volume + (5 - (volume % 5))
-	volume_muted = mute == "off" or (mute == "" and volume == 0)
-	volume_upd()
 end
-volume_get()
 
 local function volume_inc(increasing)
 	local num = 5
 	if not increasing then
 		num = -num
 	end
-	volume = betw(volume + num, 0, 100)
+	volume = percent(volume + num)
 	awful.spawn(string.format("amixer -M -q set Master %d%%", volume))
 	volume_upd()
 end
@@ -171,21 +161,18 @@ end
 
 local memwidget = wibox.widget.textbox()
 vicious.register(memwidget, vicious.widgets.mem, function(widget, args)
-	local used = space(5, args[2])
-	local nonfree = space(4, args[9])
-	local total = space(-5, args[3])
-	return used..' '..nonfree..' '..total
+	return string.format("%5s %4s %-5s", args[2], args[9], args[3])
 end, 1)
 
 local iowidget = wibox.widget.textbox()
 vicious.register(iowidget, vicious.widgets.dio, function(widget, args)
 	local txt = ""
 	for line in io.lines("/proc/diskstats") do
-		local dev = string.match(line, " (sd[a-z]) ")
+		local dev = string.match(line, " sd([a-z]) ")
 		if dev ~= nil then
-			local write = space(4, args["{"..dev.." write_mb}"])
-			local read = space(-4, args["{"..dev.." read_mb}"])
-			txt = txt..write..' '..dev:sub(3)..' '..read
+			local write = args["{sd"..dev.." write_mb}"]
+			local read = args["{sd"..dev.." read_mb}"]
+			txt = string.format("%s%4s %s %-4s", txt, write, dev, read)
 		end
 	end
 	return txt
@@ -272,7 +259,7 @@ local function flip_imap()
 end
 
 gears.timer.start_new(60, function() imap_sync(); return true; end)
-gears.timer.start_new(3, function() mdir_update(); return true; end)
+gears.timer.start_new(5, function() mdir_update(); return true; end)
 
 mdir_update()
 
