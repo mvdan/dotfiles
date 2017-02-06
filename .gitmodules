@@ -10,3 +10,6 @@
 [submodule ".config/nvim/bundle/solarized"]
 	path = .config/nvim/bundle/solarized
 	url = https://github.com/altercation/vim-colors-solarized
+[submodule ".config/nvim/bundle/supertab"]
+	path = .config/nvim/bundle/supertab
+	url = https://github.com/ervandew/supertab
