@@ -93,6 +93,7 @@ alias cd.="cd .."
 alias cd..="cd ../.."
 alias cd...="cd ../../.."
 
+alias go1="/usr/bin/go"
 alias gg="go get -u -v"
 alias gd="go get -u -v -d"
 alias gi="go install -v"
