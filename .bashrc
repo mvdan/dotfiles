@@ -100,11 +100,11 @@ alias gi="go install -v"
 alias gt="go test"
 alias gts="go test -short -timeout 1s"
 gim() {
-	goimports -l -w ${1:-*.go}
+	goimports -l -w ${@:-*.go}
 }
 
 gfm() {
-	gofmt -s -l -w ${1:-*.go}
+	gofmt -s -l -w ${@:-*.go}
 }
 
 gcov() {
@@ -112,8 +112,8 @@ gcov() {
 }
 
 gbench() {
-	go test ./... -run='^$' -benchmem -bench=${2:-.} \
-		-count=${3:-6} -benchtime=${4:-1s} | tee ${1:-cur}
+	go test . -run='^$' -benchmem -bench=${2:-.} \
+		-count=${3:-6} -benchtime=${4:-1s} | tee ${1:-cur} | grep -v :
 }
 
 goxg() {

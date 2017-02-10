@@ -3,11 +3,10 @@
 pkgs=(
 	# golang.org
 	golang.org/x/review/git-codereview
-	golang.org/x/tools/cmd/godoc
 	golang.org/x/tools/cmd/goimports
 	golang.org/x/tools/cmd/stress
-	golang.org/x/tools/cmd/present
 	golang.org/x/tools/cmd/stringer
+	golang.org/x/perf/cmd/benchstat
 
 	# github.com/mvdan
 	github.com/mvdan/xurls/cmd/xurls
@@ -18,10 +17,8 @@ pkgs=(
 
 	# gopath
 	github.com/shurcooL/Go-Package-Store/cmd/Go-Package-Store
-	github.com/shurcooL/gostatus
 
 	# dev tools
-	rsc.io/benchstat
 	github.com/dvyukov/go-fuzz/go-fuzz
 	github.com/dvyukov/go-fuzz/go-fuzz-build
 	github.com/mitchellh/gox
