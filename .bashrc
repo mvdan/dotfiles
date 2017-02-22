@@ -96,7 +96,7 @@ alias cd...="cd ../../.."
 alias go1="/usr/bin/go"
 alias gg="go get -u -v"
 alias gd="go get -u -v -d"
-alias gi="go install -v"
+alias gi="go install -ldflags='-w -s' -v"
 alias gt="go test"
 alias gts="go test -short -timeout 1s"
 gim() {
@@ -117,7 +117,7 @@ gbench() {
 }
 
 goxg() {
-	gox -output="{{.Dir}}_$(git describe)_{{.OS}}_{{.Arch}}"
+	gox -gocmd=/usr/bin/go -ldflags='-w -s' -output="{{.Dir}}_$(git describe)_{{.OS}}_{{.Arch}}"
 }
 
 alias gr="GORRAM_CACHE=~/.cache/gorram gorram"

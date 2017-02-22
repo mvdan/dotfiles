@@ -43,4 +43,4 @@ pkgs=(
 	honnef.co/go/tools/cmd/staticcheck
 )
 
-go install -v "${pkgs[@]}"
+go install -v -ldflags="-w -s" "${pkgs[@]}"
