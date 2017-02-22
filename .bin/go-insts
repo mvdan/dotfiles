@@ -24,6 +24,7 @@ pkgs=(
 	github.com/mitchellh/gox
 	github.com/FiloSottile/vendorcheck
 	github.com/FiloSottile/gvt
+	github.com/kardianos/govendor
 
 	# misc
 	github.com/hanwen/go-mtpfs
