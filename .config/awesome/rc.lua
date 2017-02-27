@@ -60,7 +60,7 @@ end
 
 local cpuwidget = wibox.widget.textbox()
 vicious.register(cpuwidget, vicious.widgets.cpu, function(widget, args)
-	return string.format("%3s %3s %3s %3s", args[1], args[2], args[3], args[4])
+	return string.format("%3s %3s %3s %3s", args[2], args[3], args[4], args[5])
 end, 1)
 
 local batwidget = wibox.widget.textbox()
