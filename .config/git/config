@@ -15,4 +15,4 @@
 [diff]
 	indentHeuristic = true
 [http]
-	cookiefile = /home/mvdan/.gitcookies
+	cookiefile = /home/mvdan/.config/git/cookies
