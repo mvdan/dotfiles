@@ -30,7 +30,6 @@ fni() { find . -iname "*$1*"; }
 		__git_complete $1 _git$2
 	}
 	. /usr/share/git/completion/git-completion.bash
-	galias g "" ""
 
 	galias gad  _add         "add"
 	galias gbr  _branch      "branch"
@@ -46,7 +45,6 @@ fni() { find . -iname "*$1*"; }
 	galias gpl  _pull        "pull"
 	galias gps  _push        "push"
 	galias grb  _rebase      "rebase"
-	galias grm  _rm          "rm"
 	galias grs  _reset       "reset"
 	galias grsh _reset       "reset --hard"
 	galias grt  _remote      "remote"
