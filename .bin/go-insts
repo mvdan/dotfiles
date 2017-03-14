@@ -12,6 +12,7 @@ pkgs=(
 	github.com/mvdan/xurls/cmd/xurls
 	github.com/mvdan/sh/cmd/shfmt
 	github.com/mvdan/interfacer/cmd/interfacer
+	github.com/mvdan/unparam
 	github.com/mvdan/git-picked
 	github.com/mvdan/fdroidcl/cmd/fdroidcl
 
@@ -33,15 +34,14 @@ pkgs=(
 	npf.io/gorram
 
 	# linters
-	github.com/kisielk/errcheck
 	github.com/golang/lint/golint
 	github.com/mdempsky/unconvert
 	github.com/mdempsky/maligned
-	github.com/gordonklaus/ineffassign
 	github.com/mibk/dupl
 	honnef.co/go/tools/cmd/gosimple
 	honnef.co/go/tools/cmd/unused
 	honnef.co/go/tools/cmd/staticcheck
+	honnef.co/go/tools/cmd/errcheck-ng
 )
 
 go install -v -ldflags="-w -s" "${pkgs[@]}"
