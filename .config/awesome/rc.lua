@@ -132,15 +132,11 @@ local function volume_upd()
 end
 
 do
-	local f = io.popen("amixer -M get Master")
-	local volu, mute = string.match(f:read("*all"), "([%d]+)%%.*%[([%l]*)")
-	f:close()
-	if volu ~= nil then
-		local v = tonumber(volu)
-		volume = v + (5 - (v % 5))
-		volume_muted = mute == "off" or (mute == "" and volume == 0)
-		volume_upd()
-	end
+	local f = io.popen("ponymix get-volume && ponymix is-muted")
+	volume = f:read("*n")
+	volume_muted = f:close() ~= nil
+	naughty.notify({ text = tostring(rc), position = "bottom_right" })
+	volume_upd()
 end
 
 local function volume_inc(increasing)
@@ -149,13 +145,13 @@ local function volume_inc(increasing)
 		num = -num
 	end
 	volume = percent(volume + num)
-	awful.spawn(string.format("amixer -M -q set Master %d%%", volume))
+	awful.spawn(string.format("ponymix set-volume %d", volume))
 	volume_upd()
 end
 
 local function volume_mute(increasing)
 	volume_muted = not volume_muted
-	awful.spawn("amixer -q set Master toggle")
+	awful.spawn("ponymix toggle")
 	volume_upd()
 end
 
