@@ -64,7 +64,7 @@ fni() { find . -iname "*$1*"; }
 	}
 }
 
-alias tm="exec tmux"
+tm() { [[ -z $TMUX ]] && exec tmux; }
 [[ -n $TMUX ]] && export TERM=screen-256color
 
 alias spc="sudo pacman"
