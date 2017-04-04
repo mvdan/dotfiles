@@ -98,12 +98,12 @@ do
 	end
 end
 
-local function percent(val)
+local function percent(val, max)
 	if val < 0 then
 		return 0
 	end
-	if val > 100 then
-		return 100
+	if val > max then
+		return max
 	end
 	return val
 end
@@ -114,7 +114,7 @@ local function backlight_inc(increasing)
 	if not increasing then
 		num = -num
 	end
-	backlight = percent(backlight + num)
+	backlight = percent(backlight + num, 100)
 	awful.spawn(string.format("xbacklight -set %d", backlight))
 	blwidget.text = space(3, tostring(backlight))
 end
@@ -144,7 +144,7 @@ local function volume_inc(increasing)
 	if not increasing then
 		num = -num
 	end
-	volume = percent(volume + num)
+	volume = percent(volume + num, 150)
 	awful.spawn(string.format("ponymix set-volume %d", volume))
 	volume_upd()
 end
