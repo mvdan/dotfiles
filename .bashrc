@@ -17,7 +17,7 @@ alias um="sudo umount"
 
 mkcd() { mkdir -p "$1" && cd "$1"; }
 cdg() { cd $HOME/go/src/github.com; }
-cdl() { cd $HOME/go/land/src/github.com; }
+cdl() { cd $(go list -e -f {{.Dir}} $1); }
 cdr() { cd $(git rev-parse --show-toplevel); }
 pgr() { ps aux | grep -v grep | grep -i "$@"; }
 
@@ -32,6 +32,7 @@ fni() { find . -iname "*$1*"; }
 	. /usr/share/git/completion/git-completion.bash
 
 	galias gad  _add         "add"
+	galias gbi  _bisect      "bisect"
 	galias gbr  _branch      "branch"
 	galias gcm  _commit      "commit"
 	galias gcp  _cherry_pick "cherry-pick"
@@ -94,6 +95,7 @@ alias cd...="cd ../../.."
 alias go1="/usr/bin/go"
 alias gg="go get -u -v"
 alias gd="go get -u -v -d"
+alias gb="go build -ldflags='-w -s' -v"
 alias gi="go install -ldflags='-w -s' -v"
 alias gt="go test"
 alias gts="go test -short -timeout 1s"
