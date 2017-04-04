@@ -160,13 +160,14 @@ vicious.register(memwidget, vicious.widgets.mem, function(widget, args)
 	return string.format("%5s %4s %-5s", args[2], args[9], args[3])
 end, 1)
 
+local possible_io = {"a", "b", "c"}
+
 local iowidget = wibox.widget.textbox()
 vicious.register(iowidget, vicious.widgets.dio, function(widget, args)
 	local txt = ""
-	for line in io.lines("/proc/diskstats") do
-		local dev = string.match(line, " sd([a-z]) ")
-		if dev ~= nil then
-			local write = args["{sd"..dev.." write_mb}"]
+	for i, dev in ipairs(possible_io) do
+		local write = args["{sd"..dev.." write_mb}"]
+		if write ~= nil then
 			local read = args["{sd"..dev.." read_mb}"]
 			txt = string.format("%s%4s %s %-4s", txt, write, dev, read)
 		end
