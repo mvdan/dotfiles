@@ -49,7 +49,6 @@ au BufEnter mutt-* silent syntax on
 au BufEnter mutt-* silent setl fo+=tn comments=fb:*
 au BufEnter mutt-* silent /^$
 
-au BufEnter *.tex   silent setl fo+=t
 au BufEnter *.txt   silent setl et sw=4
 au BufEnter *.hs    silent setl et sw=4
 au BufEnter *.cabal silent setl et sw=4
