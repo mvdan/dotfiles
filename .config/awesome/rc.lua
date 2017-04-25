@@ -1,4 +1,5 @@
 -- Tested on Awesome 4.0
+io.popen("mkdir -p ~/.cache/awesome")
 
 local gears = require("gears")
 local awful = require("awful")
@@ -176,7 +177,7 @@ vicious.register(iowidget, vicious.widgets.dio, function(widget, args)
 end, 1)
 
 local function wifi_n()
-	local f = io.popen("wpa_cli status wlp3s0")
+	local f = io.popen("timeout 1 wpa_cli status wlp3s0")
 	local o = f:read("*a")
 	f:close()
 	local name = string.match(o, "id_str=([a-zA-Z0-9_\\-.,]+)")
@@ -195,16 +196,21 @@ local function wifi_q()
 	return "??"
 end
 
-local net_ifaces = { "enp0s25", "wlp3s0", "enp0s20u1" }
+local ifaces = { enp0s25=false, wlp3s0=false, enp0s20u1=false }
 local netwidget = wibox.widget.textbox()
 vicious.register(netwidget, vicious.widgets.net, function(widget, args)
 	local txt = ""
-	for i, dev in ipairs(net_ifaces) do
-		local rx = args['{'..dev..' rx_mb}']
-		if rx ~= '0.0' and rx ~= nil then
+	for dev, act in pairs(ifaces) do
+		local dn = args['{'..dev..' down_kb}']
+		if not act and dn ~= nil and dn ~= '0.0' then
+			act = true
+			ifaces[dev] = true
+		end
+		if act then
 			local up = space(5, args['{'..dev..' up_kb}'])
 			local tx = args['{'..dev..' tx_mb}']
-			local dn = space(-5, args['{'..dev..' down_kb}'])
+			local rx = args['{'..dev..' rx_mb}']
+			dn = space(-5, dn)
 			if dev == 'wlp3s0' then
 				txt = txt..up..' '..tx..' '..wifi_n()..' '..wifi_q()..' '..rx..' '..dn
 			else

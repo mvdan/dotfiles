@@ -46,7 +46,7 @@ nnoremap <F6> :%!xxd -g 1 -r<CR>
 
 au BufEnter COMMIT_EDITMSG silent syntax on
 au BufEnter mutt-* silent syntax on
-au BufEnter mutt-* silent setl fo+=tn comments=fb:*
+au BufEnter mutt-* silent setl fo+=tn comments+=fb:*
 au BufEnter mutt-* silent /^$
 
 au BufEnter *.txt   silent setl et sw=4

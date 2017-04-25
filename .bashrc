@@ -21,8 +21,8 @@ cdl() { cd $(go list -e -f {{.Dir}} $1); }
 cdr() { cd $(git rev-parse --show-toplevel); }
 pgr() { ps aux | grep -v grep | grep -i "$@"; }
 
-fn() { find . -name "*$1*"; }
-fni() { find . -iname "*$1*"; }
+fn() { find . -name "$1"; }
+fni() { find . -iname "$1"; }
 
 [[ -f /usr/share/git/completion/git-completion.bash ]] && {
 	galias() {
