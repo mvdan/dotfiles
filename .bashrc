@@ -41,7 +41,7 @@ fni() { find . -iname "$1"; }
 	galias gdf  _diff        "diff"
 	galias ggc  _gc          "gc --prune=all"
 	galias ggr  _grep        "grep -In"
-	galias glo  _log         "log --decorate"
+	galias glo  _log         "-c core.pager='less -p ^commit' log --decorate"
 	galias gmr  _merge       "merge"
 	galias gpl  _pull        "pull"
 	galias gps  _push        "push"
@@ -52,7 +52,7 @@ fni() { find . -iname "$1"; }
 	galias grv  _revert      "revert"
 	galias gsh  _show        "show"
 	galias gsm  _submodule   "submodule"
-	galias gst  _stash       "stash"
+	galias gst  _stash       "-c core.pager='less -p ^stash' stash"
 
 	gbrd() {
 		[[ $# -eq 0 ]] && return
