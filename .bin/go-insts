@@ -16,6 +16,7 @@ pkgs=(
 	github.com/mvdan/unparam
 	github.com/mvdan/git-picked
 	github.com/mvdan/fdroidcl/cmd/...
+	github.com/mvdan/lint/cmd/...
 
 	# gopath
 	github.com/shurcooL/Go-Package-Store/cmd/...
@@ -39,6 +40,7 @@ pkgs=(
 	github.com/mdempsky/unconvert
 	github.com/mdempsky/maligned
 	github.com/mibk/dupl
+	honnef.co/go/tools/cmd/megacheck
 	honnef.co/go/tools/cmd/gosimple
 	honnef.co/go/tools/cmd/unused
 	honnef.co/go/tools/cmd/staticcheck

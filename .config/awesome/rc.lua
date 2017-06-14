@@ -406,7 +406,7 @@ globalkeys = awful.util.table.join(
 			end
 		end, {group = "client"}),
 
-	awful.key({ modkey, altkey }, "i", function() awful.spawn("chromium") end),
+	awful.key({ modkey, altkey }, "i", function() awful.spawn("chromium --force-device-scale-factor=1.5") end),
 	awful.key({ modkey, altkey }, ".", function() awful.spawn.with_shell("mpc next; awesome-client 'vicious.force({mpdwidget})'") end),
 	awful.key({ modkey, altkey }, ",", function() awful.spawn.with_shell("mpc prev; awesome-client 'vicious.force({mpdwidget})'") end),
 	awful.key({ modkey, altkey }, "-", function() awful.spawn("mpc toggle") end),

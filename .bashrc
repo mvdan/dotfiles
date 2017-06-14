@@ -11,6 +11,7 @@ alias s="sudo"
 alias se="s -E"
 alias v="nvim"
 alias vd="nvim -d"
+alias sp="sed -r 's/([^:]*:[^:]*:)/\1\t/'"
 
 alias m="sudo mount"
 alias um="sudo umount"
@@ -57,11 +58,15 @@ fni() { find . -iname "$1"; }
 	gbrd() {
 		[[ $# -eq 0 ]] && return
 		git branch -d $@
-		git push origin --delete $@
+		if git remote | grep -q mvdan; then
+			git push mvdan --delete $@
+		else
+			git push origin --delete $@
+		fi
 	}
 	__git_complete gbrd _git_branch
 	gbrdm() {
-		gbrd $(git-picked)
+		gbrd $(git-picked | grep -vE '^(release|backport|master)')
 	}
 }
 
@@ -108,7 +113,7 @@ gfm() {
 }
 
 gcov() {
-	go test $@ -coverprofile=/tmp/c && go tool cover -html=/tmp/c
+	go test $@ -coverprofile=/tmp/c; go tool cover -html=/tmp/c
 }
 
 gbench() {
@@ -153,6 +158,12 @@ alias gsmf="gsm foreach --recursive"
 alias gsmu="gsm update --init --recursive"
 
 alias gsmfc="gsmf 'git clean -dffx && git reset --hard' && gcle && grsh"
+
+git-repos() {
+	for d in $(find * -name .git -type d -prune); do
+		echo ${d::-5}
+	done
+}
 
 alias ssh="TERM=xterm ssh"
 alias weeserv="ssh shark.mvdan.cc -t TERM=screen-256color LANG=en_US.UTF-8 tmux -u new weechat"
