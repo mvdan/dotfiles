@@ -168,7 +168,7 @@ git-repos() {
 alias ssh="TERM=xterm ssh"
 alias weeserv="ssh shark.mvdan.cc -t TERM=screen-256color LANG=en_US.UTF-8 tmux -u new weechat"
 
-alias rsv="rsync -ah --info=progress2"
+alias rsv="rsync -avh --info=progress2"
 
 alias scn="sudo systemctl restart netctl-auto@wlp3s0"
 
