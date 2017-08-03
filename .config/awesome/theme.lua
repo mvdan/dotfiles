@@ -1,6 +1,6 @@
 theme = {}
 
-theme.font          = "inconsolata 20"
+theme.font          = "inconsolata 14"
 
 theme.bg_normal     = "#002b36"
 theme.bg_focus      = "#073642"

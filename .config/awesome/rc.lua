@@ -1,4 +1,4 @@
--- Tested on Awesome 4.0
+-- Tested on Awesome 4.2
 io.popen("mkdir -p ~/.cache/awesome")
 
 local gears = require("gears")
