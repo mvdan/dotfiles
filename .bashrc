@@ -17,6 +17,7 @@ alias m="sudo mount"
 alias um="sudo umount"
 
 mkcd() { mkdir -p "$1" && cd "$1"; }
+cdm() { cd $HOME/go/src/mvdan.cc; }
 cdg() { cd $HOME/go/src/github.com; }
 cdl() { cd $(go list -e -f {{.Dir}} $1); }
 cdr() { cd $(git rev-parse --show-toplevel); }
@@ -43,6 +44,7 @@ fni() { find . -iname "$1"; }
 	galias ggc  _gc          "gc --prune=all"
 	galias ggr  _grep        "grep -In"
 	galias glo  _log         "-c core.pager='less -p ^commit' log --decorate"
+	galias glop _log         "-c core.pager='less -p ^commit' log --decorate -p"
 	galias gmr  _merge       "merge"
 	galias gpl  _pull        "pull"
 	galias gps  _push        "push"
@@ -142,7 +144,6 @@ alias gdfo="gdf ORIG_HEAD..."
 alias gdfu="gdf @{u}..."
 alias gfea="git fetch --all -v -p"
 alias gloo="glo ORIG_HEAD.."
-alias glop="glo -p"
 alias glopo="glo -p --reverse ORIG_HEAD.."
 alias glopu="glo -p --reverse master..origin/master"
 alias glos="glo --stat"
