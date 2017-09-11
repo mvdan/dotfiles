@@ -248,7 +248,7 @@ local function imap_sync()
 		return
 	end
 	imap_running = true
-	mdirwidget.text = " mbsync "
+	mdirwidget.text = " *"
 	awful.spawn.with_shell("mbsync -a -q && NOTMUCH_CONFIG=~/.config/notmuch/config notmuch new --quiet; awesome-client 'imap_running = false; mdir_update()'")
 end
 
@@ -257,7 +257,7 @@ local function flip_imap()
 	if imap_enabled then
 		imap_sync()
 	else
-		mdirwidget.text = " -off- "
+		mdirwidget.text = " -"
 	end
 end
 
