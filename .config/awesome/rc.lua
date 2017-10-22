@@ -415,7 +415,7 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey, altkey }, "1", function() awful.spawn("setxkbmap us altgr-intl -option caps:none") end),
 	awful.key({ modkey, altkey }, "2", function() awful.spawn("setxkbmap es cat -option caps:none") end),
 	awful.key({ modkey, altkey }, "h", function() awful.spawn(terminal .. " -c ssh -e ssh shark.mvdan.cc -t TERM=screen-256color tmux -u a") end),
-	awful.key({ modkey, altkey }, "j", function() awful.spawn(terminal .. " -c mutt -e mutt") end),
+	awful.key({ modkey, altkey }, "j", function() awful.spawn(terminal .. " -c mutt -e neomutt") end),
 	awful.key({ modkey, altkey }, "k", function() awful.spawn(terminal .. " -c ranger -e ranger") end),
 	awful.key({ modkey, altkey }, "n", function() awful.spawn(terminal .. " -c ncmpc -e ncmpc -f .config/ncmpc/config") end),
 	awful.key({ modkey, altkey }, "e", function() awful.spawn(terminal .. " -e nvim TODO.txt") end),
