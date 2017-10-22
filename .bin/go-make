@@ -1,3 +1,4 @@
 #!/bin/bash
 
+[[ -d src ]] && cd src
 GOROOT_BOOTSTRAP=/usr/lib/go ./make.bash

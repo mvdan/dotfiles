@@ -127,7 +127,8 @@ goxg() {
 	gox -gocmd=/usr/bin/go -ldflags='-w -s' -output="{{.Dir}}_$(git describe)_{{.OS}}_{{.Arch}}"
 }
 
-alias gr="GORRAM_CACHE=~/.cache/gorram gorram"
+alias gtoolcmp='go build -toolexec "toolstash -cmp" -a -v std cmd'
+#alias gr="GORRAM_CACHE=~/.cache/gorram gorram"
 
 alias ssm="pacman -Ss"
 alias syu="sudo pacman -Syu"
@@ -176,18 +177,7 @@ alias scn="sudo systemctl restart netctl-auto@wlp3s0"
 alias clb='curl -F "clbin=<-" https://clbin.com'
 alias ncl="sudo netctl"
 alias nca="TERM=dumb sudo netctl-auto"
-
-[[ -d ~/git/fsr ]] && {
-	alias fbld="fdroid build -l -v --no-tarball"
-	alias fchk="fdroid checkupdates -v"
-	alias flnt="fdroid lint -v"
-	. ~/git/fsr/completion/bash-completion
-	complete -F _fdroid_build fbld
-	complete -F _fdroid_checkupdates fchk
-	complete -F _fdroid_lint flnt
-}
-
-logcat() { adb logcat | grep $(adb shell ps | grep $1 | sed 1q | cut -c10-15); }
+alias bat='bat --pretty=false'
 
 da() { du -h -d 1 ${@:-.} | sort -h; }
 

@@ -7,9 +7,11 @@ pkgs=(
 	golang.org/x/tools/cmd/present
 	golang.org/x/tools/cmd/stress
 	golang.org/x/tools/cmd/stringer
+	golang.org/x/tools/cmd/toolstash
 	golang.org/x/perf/cmd/benchstat
 
 	# mvdan.cc
+	mvdan.cc/gogrep
 	mvdan.cc/sh/cmd/...
 	mvdan.cc/xurls/cmd/...
 	mvdan.cc/goreduce
@@ -34,8 +36,8 @@ pkgs=(
 	# misc
 	github.com/hanwen/go-mtpfs
 	github.com/astaxie/bat
-	github.com/davecheney/httpstat
-	npf.io/gorram
+	#github.com/davecheney/httpstat
+	#npf.io/gorram
 
 	# linters
 	github.com/golang/lint/golint
