@@ -128,6 +128,11 @@ goxg() {
 }
 
 alias gtoolcmp='go build -toolexec "toolstash -cmp" -a -v std cmd'
+gtoolbench() {
+	compilebench -count 10 -compile $(toolstash -n compile) $@ | tee old
+	compilebench -count 10 $@ | tee new
+	benchstat old new
+}
 #alias gr="GORRAM_CACHE=~/.cache/gorram gorram"
 
 alias ssm="pacman -Ss"
