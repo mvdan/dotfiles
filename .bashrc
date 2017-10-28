@@ -115,7 +115,8 @@ gfm() {
 }
 
 gcov() {
-	go test $@ -coverprofile=/tmp/c; go tool cover -html=/tmp/c
+	go test $@ -coverprofile=/tmp/c
+	go tool cover -html=/tmp/c
 }
 
 gbench() {
@@ -187,8 +188,8 @@ alias bat='bat --pretty=false'
 da() { du -h -d 1 ${@:-.} | sort -h; }
 
 case $TERM in
-	linux* | cons*) ;;
-	*) PS1="\[\033]0;[\w]\007\]" ;;
+linux* | cons*) ;;
+*) PS1="\[\033]0;[\w]\007\]" ;;
 esac
 
 PS1="$PS1[\u@\h:\l] [\${?}] [\${PWD}]
