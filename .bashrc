@@ -102,8 +102,8 @@ alias cd...="cd ../../.."
 alias go1="/usr/bin/go"
 alias gg="go get -u -v"
 alias gd="go get -u -v -d"
-alias gb="go build -ldflags='-w -s' -v"
-alias gi="go install -ldflags='-w -s' -v"
+alias gb="go build -v"
+alias gi="go install -v"
 alias gt="go test"
 alias gts="go test -short -timeout 2s"
 gim() {
@@ -130,8 +130,8 @@ goxg() {
 
 alias gtoolcmp='go build -toolexec "toolstash -cmp" -a -v std cmd'
 gtoolbench() {
-	compilebench -count 10 -compile $(toolstash -n compile) $@ | tee old
-	compilebench -count 10 $@ | tee new
+	compilebench -short -alloc -count 6 -compile $(toolstash -n compile) $@ | tee old
+	compilebench -short -alloc -count 6 $@ | tee new
 	benchstat old new
 }
 #alias gr="GORRAM_CACHE=~/.cache/gorram gorram"
