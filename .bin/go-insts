@@ -16,10 +16,7 @@ pkgs=(
 	mvdan.cc/xurls/cmd/...
 	mvdan.cc/goreduce
 	mvdan.cc/git-picked
-	mvdan.cc/lint/cmd/...
 	mvdan.cc/unparam
-	mvdan.cc/unindent
-	mvdan.cc/interfacer
 
 	# github.com/mvdan
 	github.com/mvdan/fdroidcl/cmd/...
