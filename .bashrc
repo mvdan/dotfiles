@@ -19,6 +19,7 @@ alias um="sudo umount"
 mkcd() { mkdir -p "$1" && cd "$1"; }
 cdm() { cd $HOME/go/src/mvdan.cc; }
 cdg() { cd $HOME/go/src/github.com; }
+cdb() { cd $HOME/go/src/git.brank.as; }
 cdl() { cd $(go list -e -f {{.Dir}} $1); }
 cdr() { cd $(git rev-parse --show-toplevel); }
 pgr() { ps aux | grep -v grep | grep -i "$@"; }
