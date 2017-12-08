@@ -16,3 +16,6 @@
 	indentHeuristic = true
 [http]
 	cookiefile = /home/mvdan/.config/git/cookies
+
+[includeIf "gitdir:~/go/src/git.brank.as/"]
+	path = ~/.config/git/config-brankas
