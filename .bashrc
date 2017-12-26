@@ -10,7 +10,6 @@ alias l="less"
 alias s="sudo"
 alias se="s -E"
 alias v="nvim"
-alias vd="nvim -d"
 alias sp="sed -r 's/([^:]*:[^:]*:)/\1\t/'"
 
 alias m="sudo mount"
@@ -83,9 +82,7 @@ alias srm="spc -Rns"
 alias sim="spc -S --needed"
 
 alias sc="sudo systemctl"
-alias scu="systemctl --user"
 alias jc="journalctl"
-alias jcu="jc --user"
 
 alias ls="ls -F"
 alias ll="ls -lhiF"
@@ -135,7 +132,6 @@ gtoolbench() {
 	compilebench -short -alloc -count 6 $@ | tee new
 	benchstat old new
 }
-#alias gr="GORRAM_CACHE=~/.cache/gorram gorram"
 
 alias ssm="pacman -Ss"
 alias syu="sudo pacman -Syu"
@@ -185,6 +181,7 @@ alias clb='curl -F "clbin=<-" https://clbin.com'
 alias ncl="sudo netctl"
 alias nca="TERM=dumb sudo netctl-auto"
 alias bat='bat --pretty=false'
+alias kc='kubectl'
 
 da() { du -h -d 1 ${@:-.} | sort -h; }
 
