@@ -19,3 +19,6 @@
 
 [includeIf "gitdir:~/go/src/git.brank.as/"]
 	path = ~/.config/git/config-brankas
+
+[url "git@bitbucket.org:"]
+	insteadof = https://bitbucket.org/
