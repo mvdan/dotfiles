@@ -80,6 +80,7 @@ alias ssi="pacman -Sii"
 ssq() { pacman -Qs "$@" | sed -n 's_local/__p'; }
 alias srm="spc -Rns"
 alias sim="spc -S --needed"
+alias mksrcinfo="makepkg --printsrcinfo >.SRCINFO"
 
 alias sc="sudo systemctl"
 alias jc="journalctl"
