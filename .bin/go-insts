@@ -17,9 +17,7 @@ pkgs=(
 	mvdan.cc/goreduce
 	mvdan.cc/git-picked
 	mvdan.cc/unparam
-
-	# github.com/mvdan
-	github.com/mvdan/fdroidcl/cmd/...
+	mvdan.cc/fdroidcl/cmd/...
 
 	# gopath
 	github.com/shurcooL/Go-Package-Store/cmd/...
