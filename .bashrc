@@ -141,6 +141,7 @@ alias sik="pacaur -S"
 alias syud="pacaur -Syu"
 
 alias gca="gcm -a"
+alias gcam="gcm -a --amend"
 alias gcle="git clean -dffx"
 alias gdfs="gdf --stat"
 alias gdfc="gdf --cached"
@@ -182,9 +183,27 @@ alias clb='curl -F "clbin=<-" https://clbin.com'
 alias ncl="sudo netctl"
 alias nca="TERM=dumb sudo netctl-auto"
 alias bat='bat --pretty=false'
+
+alias tf='terraform'
 alias kc='kubectl'
+kcc() {
+	if [[ $# -eq 0 ]]; then
+		kc config get-contexts
+	else
+		kubectl config use-context $@
+	fi
+}
 
 da() { du -h -d 1 ${@:-.} | sort -h; }
+
+docker-cleanup() {
+	echo "removing exited containers"
+	docker ps -qa --no-trunc --filter "status=exited" | xargs -r docker rm
+	echo "removing untagged images"
+	docker images | grep "none" | awk '/ / { print $3 }' | xargs -r docker rmi
+	echo "removing dangling volumes"
+	docker volume ls -qf dangling=true | xargs -r docker volume rm
+}
 
 case $TERM in
 linux* | cons*) ;;
