@@ -90,13 +90,14 @@ local function round(number)
 end
 
 do
-	local f = io.popen("xbacklight -get")
-	local num = f:read("*n")
+	local f = io.popen("brightnessctl get")
+	local curlight = f:read("*n")
 	f:close()
-	if num ~= nil then
-		backlight = round(num)
-		blwidget.text = space(3, tostring(backlight))
-	end
+	local f = io.popen("brightnessctl max")
+	local maxlight = f:read("*n")
+	f:close()
+	backlight = round(100.0 * (curlight / maxlight))
+	blwidget.text = space(3, tostring(backlight))
 end
 
 local function percent(val, max)
@@ -111,12 +112,14 @@ end
 
 local function backlight_inc(increasing)
 	local num = 1 + math.floor(backlight / 20.0)
-	if num % 2 == 1 then num = num + 1 end
+	if backlight > 10 and num % 2 == 1 then
+		num = num + 1
+	end
 	if not increasing then
 		num = -num
 	end
 	backlight = percent(backlight + num, 100)
-	awful.spawn(string.format("xbacklight -set %d", backlight))
+	awful.spawn(string.format("brightnessctl set %d%%", backlight))
 	blwidget.text = space(3, tostring(backlight))
 end
 
