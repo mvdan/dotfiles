@@ -11,6 +11,8 @@ local menubar = require("menubar")
 vicious = require("vicious")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
 
+naughty.config.defaults['icon_size'] = 50
+
 if awesome.startup_errors then
 	naughty.notify({ preset = naughty.config.presets.critical,
 		title = "Oops, there were errors during startup!",
@@ -408,7 +410,12 @@ globalkeys = awful.util.table.join(
 			end
 		end, {group = "client"}),
 
-	awful.key({ modkey, altkey }, "i", function() awful.spawn("chromium --force-device-scale-factor=1.5") end),
+	awful.key({ modkey, altkey }, "u", function() awful.spawn(
+		"chromium --force-device-scale-factor=1.5 --profile-directory=Work"
+	) end),
+	awful.key({ modkey, altkey }, "i", function() awful.spawn(
+		"chromium --force-device-scale-factor=1.5 --profile-directory=Default"
+	) end),
 	awful.key({ modkey, altkey }, ".", function() awful.spawn.with_shell("mpc next; awesome-client 'vicious.force({mpdwidget})'") end),
 	awful.key({ modkey, altkey }, ",", function() awful.spawn.with_shell("mpc prev; awesome-client 'vicious.force({mpdwidget})'") end),
 	awful.key({ modkey, altkey }, "-", function() awful.spawn("mpc toggle") end),
@@ -549,8 +556,7 @@ awful.rules.rules = {
 	}, properties = { floating = true }},
 	{ rule = { class = "ssh" }, properties = { tag = "2" } },
 	{ rule = { class = "mutt" }, properties = { tag = "3" } },
-	{ rule = { class = "Telegram" }, properties = { tag = "7" } },
-	{ rule = { class = "Chromium" }, properties = { tag = "8" } },
+	{ rule = { class = "Telegram" }, properties = { tag = "6" } },
 	{ rule = { class = "ranger" }, properties = { tag = "9" } },
 	{ rule = { class = "ncmpc" }, properties = { tag = "0" } },
 }

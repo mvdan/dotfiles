@@ -26,12 +26,12 @@ pkgs=(
 	github.com/dvyukov/go-fuzz/go-fuzz
 	github.com/dvyukov/go-fuzz/go-fuzz-build
 	github.com/mitchellh/gox
-	github.com/kardianos/govendor
+	github.com/golang/dep/cmd/dep
 
 	# misc
 	github.com/hanwen/go-mtpfs
 	github.com/astaxie/bat
-	#github.com/davecheney/httpstat
+	github.com/davecheney/httpstat
 	#npf.io/gorram
 
 	# linters

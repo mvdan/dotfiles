@@ -5,7 +5,7 @@ set synmaxcol=200
 filetype plugin indent on
 
 set encoding=utf-8
-set number ruler smartindent
+set ruler smartindent
 set wrap linebreak nolist nojoinspaces
 set nobackup noswapfile nowritebackup
 set noexpandtab tabstop=8 softtabstop=8 shiftwidth=8
