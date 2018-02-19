@@ -68,7 +68,7 @@ fni() { find . -iname "$1"; }
 	}
 	__git_complete gbrd _git_branch
 	gbrdm() {
-		gbrd $(git-picked | grep -vE '^(release|backport|master|stage)')
+		gbrd $(git-picked | grep -vE '^(release|backport|master|prod|stag)')
 	}
 }
 
