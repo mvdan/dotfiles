@@ -136,9 +136,9 @@ gtoolbench() {
 
 alias ssm="pacman -Ss"
 alias syu="sudo pacman -Syu"
-alias ssk="pacaur -Ss"
-alias sik="pacaur -S"
-alias syud="pacaur -Syu"
+alias ssk="yay -Ss"
+alias sik="yay -S"
+alias syud="yay -Syu"
 
 alias gca="gcm -a"
 alias gcam="gcm -a --amend"
