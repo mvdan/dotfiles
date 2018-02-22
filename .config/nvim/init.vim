@@ -14,7 +14,7 @@ set showcmd showmode hidden
 set magic matchtime=2 lazyredraw
 set incsearch ignorecase smartcase showmatch
 set mouse=
-set rulerformat=%17(%l,%c%V\ %o\ %p%%%)
+set rulerformat=%22(%l,%c%V\ %o\ %p%%%)
 
 set t_Co=16
 set background=dark
