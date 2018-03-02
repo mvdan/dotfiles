@@ -8,7 +8,9 @@ pkgs=(
 	golang.org/x/tools/cmd/stress
 	golang.org/x/tools/cmd/stringer
 	golang.org/x/tools/cmd/toolstash
+	golang.org/x/tools/cmd/compilebench
 	golang.org/x/perf/cmd/benchstat
+	golang.org/x/lint/golint
 
 	# mvdan.cc
 	mvdan.cc/gogrep
@@ -36,7 +38,6 @@ pkgs=(
 	#npf.io/gorram
 
 	# linters
-	github.com/golang/lint/golint
 	github.com/mdempsky/unconvert
 	github.com/mdempsky/maligned
 	github.com/mibk/dupl
