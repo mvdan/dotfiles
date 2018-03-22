@@ -39,8 +39,8 @@ fni() { find . -iname "$1"; }
 	galias gdf  _diff        "diff"
 	galias ggc  _gc          "gc --prune=all"
 	galias ggr  _grep        "grep -In"
-	galias glo  _log         "-c core.pager='less -p ^commit' log --decorate"
-	galias glop _log         "-c core.pager='less -p ^commit' log --decorate -p"
+	galias glo  _log         "-c core.pager='less -p ^commit ' log --decorate"
+	galias glop _log         "-c core.pager='less -p ^commit ' log --decorate -p"
 	galias gmr  _merge       "merge"
 	galias gpl  _pull        "pull"
 	galias gps  _push        "push"
@@ -125,8 +125,10 @@ goxg() {
 
 alias gtoolcmp='go build -toolexec "toolstash -cmp" -a -v std cmd'
 gtoolbench() {
-	compilebench -short -alloc -count 6 -compile $(toolstash -n compile) $@ | tee old
-	compilebench -short -alloc -count 6 $@ | tee new
+	if [[ ! -f old ]]; then
+		compilebench -short -alloc -count 10 -compile $(toolstash -n compile) $@ | tee old
+	fi
+	compilebench -short -alloc -count 10 $@ | tee new
 	benchstat old new
 }
 
@@ -190,7 +192,7 @@ kcc() {
 	fi
 }
 
-da() { du -h -d 1 ${@:-.} | sort -h; }
+da() { du -h -d 1 "${@:-.}" | sort -h; }
 
 docker-cleanup() {
 	echo "removing exited containers"
