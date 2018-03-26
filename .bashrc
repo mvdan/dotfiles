@@ -192,6 +192,12 @@ kcc() {
 	fi
 }
 
+alias kcg='kc get -o wide'
+alias kcga='kc get -o wide deploy,po,svc'
+alias kcp='{ sleep 1; chromium http://127.0.0.1:8001/ui &>/dev/null; } & kc proxy'
+alias kcd='kc describe'
+alias kcl='kc logs --tail=200 -f'
+
 da() { du -h -d 1 "${@:-.}" | sort -h; }
 
 docker-cleanup() {
