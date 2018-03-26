@@ -29,6 +29,7 @@ pkgs=(
 	github.com/dvyukov/go-fuzz/go-fuzz-build
 	github.com/mitchellh/gox
 	github.com/golang/dep/cmd/dep
+	github.com/google/wuffs/cmd/...
 
 	# misc
 	github.com/Jguer/yay
