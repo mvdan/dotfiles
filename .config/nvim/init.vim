@@ -9,7 +9,7 @@ set ruler smartindent
 set wrap linebreak nolist nojoinspaces
 set nobackup noswapfile nowritebackup
 set noexpandtab tabstop=8 softtabstop=8 shiftwidth=8
-set textwidth=72 formatoptions-=t
+set textwidth=80 formatoptions-=t
 set showcmd showmode hidden
 set magic matchtime=2 lazyredraw
 set incsearch ignorecase smartcase showmatch
@@ -47,7 +47,7 @@ nnoremap <F6> :%!xxd -g 1 -r<CR>
 
 au BufEnter COMMIT_EDITMSG silent syntax on
 au BufEnter neomutt-* silent syntax on
-au BufEnter neomutt-* silent setl ft=mail fo+=tn comments+=fb:*
+au BufEnter neomutt-* silent setl ft=mail tw=72 fo+=tn comments+=fb:*
 au BufEnter neomutt-* silent /^$
 
 au BufEnter *.txt   silent setl et sw=4
