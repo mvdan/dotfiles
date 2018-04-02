@@ -182,13 +182,21 @@ alias ncl="sudo netctl"
 alias nca="TERM=dumb sudo netctl-auto"
 alias bat='bat --pretty=false'
 
-alias tf='terraform'
 alias kc='kubectl'
 kcc() {
 	if [[ $# -eq 0 ]]; then
 		kc config get-contexts
 	else
-		kubectl config use-context $@
+		kc config use-context $@
+	fi
+}
+
+alias gcl='gcloud'
+gclc() {
+	if [[ $# -eq 0 ]]; then
+		gcl config configurations list
+	else
+		gcl config configurations activate $@
 	fi
 }
 
