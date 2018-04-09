@@ -16,8 +16,21 @@ alias m="sudo mount"
 alias um="sudo umount"
 
 mkcd() { mkdir -p "$1" && cd "$1"; }
+cdl() { cd $(go list -e -f {{.Dir}} $1); }
 cdr() { cd $(git rev-parse --show-toplevel); }
 pgr() { ps aux | grep -v grep | grep -i "$@"; }
+
+cdm() { cd $HOME/go/src/mvdan.cc; }
+cdg() { cd $HOME/go/src/github.com; }
+cdb() {
+	if [[ $# == 0 ]]; then
+		cd $HOME/go/src/brank.as
+	elif [[ -d $HOME/go/src/brank.as/brankas-$1 ]]; then
+		cd $HOME/go/src/brank.as/brankas-$1
+	else
+		cd $HOME/go/src/brank.as/$1
+	fi
+}
 
 fn() { find . -name "$1"; }
 fni() { find . -iname "$1"; }
