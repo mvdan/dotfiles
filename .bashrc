@@ -20,15 +20,25 @@ cdl() { cd $(go list -e -f {{.Dir}} $1); }
 cdr() { cd $(git rev-parse --show-toplevel); }
 pgr() { ps aux | grep -v grep | grep -i "$@"; }
 
-cdm() { cd $HOME/go/src/mvdan.cc; }
-cdg() { cd $HOME/go/src/github.com; }
+cdm() {
+	if [[ $# == 0 ]]; then
+		cd $HOME/go/src/mvdan.cc
+	else
+		cd $HOME/go/src/mvdan.cc/*$1*
+	fi
+}
+cdg() {
+	if [[ $# == 0 ]]; then
+		cd $HOME/go/src/github.com
+	else
+		cd $HOME/go/src/github.com/*$1*
+	fi
+}
 cdb() {
 	if [[ $# == 0 ]]; then
 		cd $HOME/go/src/brank.as
-	elif [[ -d $HOME/go/src/brank.as/brankas-$1 ]]; then
-		cd $HOME/go/src/brank.as/brankas-$1
 	else
-		cd $HOME/go/src/brank.as/$1
+		cd $HOME/go/src/brank.as/*$1*
 	fi
 }
 
@@ -68,7 +78,7 @@ fni() { find . -iname "$1"; }
 
 	gbrd() {
 		[[ $# -eq 0 ]] && return
-		git branch -d $@
+		git branch -D $@
 		if git remote | grep -q mvdan; then
 			git push mvdan --delete $@
 		else
@@ -183,6 +193,9 @@ git-repos() {
 	done
 }
 
+alias gpr="gps -u mvdan && hub pull-request -f"
+alias gml="git-codereview mail"
+
 alias ssh="TERM=xterm ssh"
 alias weeserv="ssh shark.mvdan.cc -t TERM=screen-256color LANG=en_US.UTF-8 tmux -u new weechat"
 
@@ -213,8 +226,8 @@ gclc() {
 	fi
 }
 
-alias kcg='kc get -o wide'
-alias kcga='kc get -o wide deploy,po,svc'
+alias kcg='kc get'
+alias kcga='kc get deploy,po,svc'
 alias kcp='{ sleep 1; chromium http://127.0.0.1:8001/ui &>/dev/null; } & kc proxy'
 alias kcd='kc describe'
 alias kcl='kc logs --tail=200 -f'
