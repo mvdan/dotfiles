@@ -64,7 +64,7 @@ end
 local cpuwidget = wibox.widget.textbox()
 vicious.register(cpuwidget, vicious.widgets.cpu, function(widget, args)
 	return string.format("%3s %3s %3s %3s", args[2], args[3], args[4], args[5])
-end, 1)
+end, 2)
 
 local batwidget = wibox.widget.textbox()
 vicious.register(batwidget, vicious.widgets.bat, function(widget, args)
@@ -163,7 +163,7 @@ end
 local memwidget = wibox.widget.textbox()
 vicious.register(memwidget, vicious.widgets.mem, function(widget, args)
 	return string.format("%5s %4s %-5s", args[2], args[9], args[3])
-end, 1)
+end, 2)
 
 local possible_io = {"a", "b", "c"}
 
@@ -178,7 +178,7 @@ vicious.register(iowidget, vicious.widgets.dio, function(widget, args)
 		end
 	end
 	return txt
-end, 1)
+end, 2)
 
 local function wifi_n()
 	local f = io.popen("timeout 1 wpa_cli status wlp3s0")
@@ -223,7 +223,7 @@ vicious.register(netwidget, vicious.widgets.net, function(widget, args)
 		end
 	end
 	return txt
-end, 1)
+end, 2)
 
 local mdirs = table.concat({
 	"/home/mvdan/mail/mvdan/Inbox/new",

@@ -1,5 +1,6 @@
 xrandr --dpi 144
 brightnessctl set 40%
 ponymix set-volume 50 && ponymix mute
-redshift -l 51:0 &
+setxkbmap us altgr-intl -option caps:none
+redshift -l 51.5:-0.1 &
 exec awesome
