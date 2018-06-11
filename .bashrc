@@ -31,14 +31,14 @@ cdg() {
 	if [[ $# == 0 ]]; then
 		cd $HOME/go/src/github.com
 	else
-		cd $HOME/go/src/github.com/*$1*
+		cd $HOME/go/src/github.com/*$1
 	fi
 }
 cdb() {
 	if [[ $# == 0 ]]; then
 		cd $HOME/go/src/brank.as
 	else
-		cd $HOME/go/src/brank.as/*$1*
+		cd $HOME/go/src/brank.as/*$1
 	fi
 }
 
@@ -89,6 +89,7 @@ fni() { find . -iname "$1"; }
 	gbrdm() {
 		gbrd $(git-picked | grep -vE '^(release|backport|master|prod|stag)')
 	}
+	alias grbc="git rebase --continue"
 }
 
 tm() { [[ -z $TMUX ]] && exec tmux; }
@@ -193,7 +194,10 @@ git-repos() {
 	done
 }
 
-alias gpr="gps -u mvdan && hub pull-request -f"
+gprf() {
+	git fetch origin pull/$1/head:pr-$1
+}
+alias gprc="gps -u mvdan && hub pull-request -f"
 alias gml="git-codereview mail"
 
 alias ssh="TERM=xterm ssh"
@@ -216,6 +220,7 @@ kcc() {
 		kc config use-context $@
 	fi
 }
+alias tf='terraform'
 
 alias gcl='gcloud'
 gclc() {
