@@ -162,7 +162,7 @@ end
 
 local memwidget = wibox.widget.textbox()
 vicious.register(memwidget, vicious.widgets.mem, function(widget, args)
-	return string.format("%5s %4s %-5s", args[2], args[9], args[3])
+	return string.format("%4s %-4s", args[2], args[3])
 end, 2)
 
 local possible_io = {"a", "b", "c"}
@@ -282,7 +282,7 @@ vicious.register(mpdwidget, vicious.widgets.mpd, function(widget, args)
 	if args["{state}"] == "Stop" then
 		return ' - MPD - '
 	end
-	return ellipsize(args["{Title}"], 24).." - "..ellipsize(args["{Album}"], 20)
+	return ellipsize(args["{Title}"], 24).." - "..ellipsize(args["{Album}"], 24)
 end, 5)
 
 local function set_wallpaper(s)
