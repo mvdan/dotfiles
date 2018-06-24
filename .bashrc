@@ -170,7 +170,8 @@ alias gdfc="gdf --cached"
 alias gdfm="gdf master..."
 alias gdfo="gdf ORIG_HEAD..."
 alias gdfu="gdf @{u}..."
-alias gfea="git fetch --all -v -p"
+alias gfe="git fetch -v -p"
+alias gfea="git fetch -v -p --all"
 alias gloo="glo ORIG_HEAD.."
 alias glopo="glo -p --reverse ORIG_HEAD.."
 alias glopu="glo -p --reverse master..origin/master"
@@ -197,7 +198,7 @@ git-repos() {
 gprf() {
 	git fetch origin pull/$1/head:pr-$1
 }
-alias gprc="gps -u mvdan && hub pull-request -f"
+alias gprc="gps -u mvdan && hub pull-request -f --no-edit"
 alias gml="git-codereview mail"
 
 alias ssh="TERM=xterm ssh"
