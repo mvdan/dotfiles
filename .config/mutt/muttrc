@@ -110,7 +110,6 @@ bind index,pager \cd half-down
 mailboxes "=Inbox"
 mailboxes "=Go"
 mailboxes "=Other"
-mailboxes "=Announ"
 mailboxes "=Sent"
 mailboxes "=Drafts"
 mailboxes "=Trash"
