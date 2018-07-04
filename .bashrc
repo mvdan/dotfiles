@@ -195,9 +195,6 @@ git-repos() {
 	done
 }
 
-gprf() {
-	git fetch origin pull/$1/head:pr-$1
-}
 alias gprc="gps -u mvdan && hub pull-request -f --no-edit"
 alias gml="git-codereview mail"
 
