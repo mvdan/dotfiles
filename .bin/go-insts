@@ -28,12 +28,10 @@ pkgs=(
 	github.com/dvyukov/go-fuzz/go-fuzz
 	github.com/dvyukov/go-fuzz/go-fuzz-build
 	github.com/mitchellh/gox
-	github.com/golang/dep/cmd/dep
 	github.com/google/wuffs/cmd/...
 	github.com/aclements/perflock/cmd/...
 
 	# misc
-	github.com/Jguer/yay
 	github.com/hanwen/go-mtpfs
 	github.com/astaxie/bat
 	github.com/davecheney/httpstat
