@@ -30,6 +30,7 @@ pkgs=(
 	github.com/mitchellh/gox
 	github.com/golang/dep/cmd/dep
 	github.com/google/wuffs/cmd/...
+	github.com/aclements/perflock/cmd/...
 
 	# misc
 	github.com/Jguer/yay

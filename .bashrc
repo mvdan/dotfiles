@@ -139,7 +139,7 @@ gcov() {
 }
 
 gbench() {
-	go test . -run='^$' -benchmem -bench=${2:-.} \
+	perflock go test . -run='^$' -benchmem -bench=${2:-.} \
 		-count=${3:-6} -benchtime=${4:-1s} | tee ${1:-cur} | grep -v :
 }
 
@@ -150,9 +150,9 @@ goxg() {
 alias gtoolcmp='go build -toolexec "toolstash -cmp" -a -v std cmd'
 gtoolbench() {
 	if [[ ! -f old ]]; then
-		compilebench -short -alloc -count 10 -compile $(toolstash -n compile) $@ | tee old
+		perflock compilebench -short -alloc -count 10 -compile $(toolstash -n compile) $@ | tee old
 	fi
-	compilebench -short -alloc -count 10 $@ | tee new
+	perflock compilebench -short -alloc -count 10 $@ | tee new
 	benchstat old new
 }
 
