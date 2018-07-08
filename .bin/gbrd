@@ -1,0 +1,57 @@
+#!/bin/bash
+
+# Deletes all specified or cherry-picked branches, both locally and on the
+# remotes. Complicated, since it's impossible to delete remote branches in bulk
+# while ignoring if they don't exist.
+
+if [[ $# -eq 0 ]]; then
+	# If no branchess are specified, use the cherry-picked ones.
+	set -- $(git-picked | grep -vE '^(release|backport|master|prod|stag)')
+fi
+
+# create a set of the branches to delete
+declare -A delete=()
+for branch in $@; do
+	delete[$branch]=1
+done
+
+# create a set of the potentially active branches
+declare -A active=()
+while read branch; do
+	active[$branch]=1
+done < <(git branch --format='%(refname:lstrip=2)')
+
+# find which of the branches to delete are on either remote
+declare -A mvdan=() origin=()
+while read remote branch; do
+	if [[ $remote == origin ]]; then
+		if [[ ${delete[$branch]} ]]; then
+			origin[$branch]=1
+		fi
+		continue
+	fi
+	# on the fork, also delete inactive branches
+	if [[ ${delete[$branch]} || ! ${active[$branch]} ]]; then
+		mvdan[$branch]=1
+	fi
+done < <(git branch -a --format='%(refname:lstrip=1)' |
+	sed -nr 's@remotes/(origin|mvdan)/(.*)@\1 \2@p')
+
+# perform the remote deletes concurrently
+if [[ ${#mvdan[@]} -gt 0 ]]; then
+	#echo git push mvdan --delete ${!mvdan[@]}
+	git push mvdan --delete ${!mvdan[@]} &
+fi
+if [[ ${#origin[@]} -gt 0 ]]; then
+	#echo git push origin --delete ${!origin[@]}
+	git push origin --delete ${!origin[@]} &
+fi
+
+# perform the local deletes
+if [[ ${#delete[@]} -gt 0 ]]; then
+	#echo git branch -D ${!delete[@]}
+	git branch -D ${!delete[@]}
+fi
+
+# wait for the remote deletes to finish
+wait

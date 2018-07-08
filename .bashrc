@@ -76,19 +76,7 @@ fni() { find . -iname "$1"; }
 	galias gsm  _submodule   "submodule"
 	galias gst  _stash       "-c core.pager='less -p ^stash' stash"
 
-	gbrd() {
-		[[ $# -eq 0 ]] && return
-		git branch -D $@
-		if git remote | grep -q mvdan; then
-			git push mvdan --delete $@
-		else
-			git push origin --delete $@
-		fi
-	}
 	__git_complete gbrd _git_branch
-	gbrdm() {
-		gbrd $(git-picked | grep -vE '^(release|backport|master|prod|stag)')
-	}
 	alias grbc="git rebase --continue"
 }
 
