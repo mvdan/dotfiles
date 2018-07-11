@@ -113,13 +113,8 @@ alias gb="go build -v"
 alias gi="go install -v"
 alias gt="go test"
 alias gts="go test -short -timeout 2s"
-gim() {
-	goimports -l -w ${@:-*.go}
-}
-
-gfm() {
-	gofmt -s -l -w ${@:-*.go}
-}
+gim() { goimports -l -w ${@:-*.go}; }
+gfm() { gofmt -s -l -w ${@:-*.go}; }
 
 gcov() {
 	go test $@ -coverprofile=/tmp/c
@@ -143,6 +138,8 @@ gtoolbench() {
 	perflock compilebench -short -alloc -count 10 $@ | tee new
 	benchstat old new
 }
+
+sfm() { shfmt -s -l -w ${@:-.}; }
 
 alias ssm="pacman -Ss"
 alias syu="sudo pacman -Syu"
