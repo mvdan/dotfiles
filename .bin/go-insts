@@ -1,6 +1,8 @@
 #!/bin/bash
 
-pkgs=(
+set -e
+
+from_gopath=(
 	# golang.org
 	golang.org/x/review/git-codereview
 	golang.org/x/tools/cmd/goimports
@@ -13,13 +15,8 @@ pkgs=(
 	golang.org/x/lint/golint
 
 	# mvdan.cc
-	mvdan.cc/gogrep
 	mvdan.cc/sh/cmd/...
 	mvdan.cc/xurls/cmd/...
-	mvdan.cc/goreduce
-	mvdan.cc/git-picked
-	mvdan.cc/unparam
-	mvdan.cc/fdroidcl/cmd/...
 
 	# gopath
 	github.com/shurcooL/Go-Package-Store/cmd/...
@@ -45,4 +42,17 @@ pkgs=(
 	honnef.co/go/tools/cmd/errcheck-ng
 )
 
-go install -v -ldflags="-w -s" "${pkgs[@]}"
+from_src=(
+	fdroidcl
+	goreduce
+	unparam
+	gogrep
+	git-picked
+)
+
+go install -v -ldflags="-w -s" "${from_gopath[@]}"
+
+for name in "${from_src[@]}"; do
+	cd ~/src/$name
+	go install -v -ldflags="-w -s" ./...
+done
