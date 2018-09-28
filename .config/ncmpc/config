@@ -1,3 +1,4 @@
+enable-colors = no
 enable-mouse = no
 bell-on-wrap = no
 audible-bell = no
