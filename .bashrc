@@ -93,6 +93,14 @@ alias mksrcinfo="makepkg --printsrcinfo >.SRCINFO"
 alias sc="sudo systemctl"
 alias jc="journalctl"
 
+wifi-down() {
+	sudo systemctl stop netctl-auto@wlp3s0
+	sudo echo auto >/sys/bus/usb/devices/2-4/power/control
+}
+wifi-up() {
+	sudo systemctl start netctl-auto@wlp3s0
+}
+
 alias ls="ls -F"
 alias ll="ls -lhiF"
 alias la="ls -alhiF"
@@ -178,6 +186,10 @@ git-repos() {
 	for d in $(find * -name .git -type d -prune); do
 		echo ${d::-5}
 	done
+}
+
+git-file-sizes() {
+	git ls-files | xargs du -b | sort -n
 }
 
 alias gprc="gps -u mvdan && hub pull-request -f --no-edit"
