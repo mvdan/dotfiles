@@ -124,7 +124,8 @@ gim() { goimports -l -w ${@:-*.go}; }
 gfm() { gofmt -s -l -w ${@:-*.go}; }
 
 gcov() {
-	go test $@ -coverprofile=/tmp/c
+	local commas=$(IFS=,; echo "$*")
+	go test -coverpkg=$commas $@ -coverprofile=/tmp/c
 	go tool cover -html=/tmp/c
 }
 
@@ -240,6 +241,13 @@ docker-cleanup() {
 	docker images | grep "none" | awk '/ / { print $3 }' | xargs -r docker rmi
 	echo "removing dangling volumes"
 	docker volume ls -qf dangling=true | xargs -r docker volume rm
+}
+
+wakeup() {
+	sudo modprobe -r psmouse
+	sudo modprobe psmouse
+	rfkill unblock wlan
+	sudo systemctl restart netctl-auto@wlp3s0
 }
 
 case $TERM in

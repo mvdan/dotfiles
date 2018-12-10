@@ -7,7 +7,8 @@ export GOCACHE="$HOME/go/cache"
 
 # Never include debug symbols in Go binaries, to speed up builds and save
 # space. We don't use a debugger anyway.
-export GOFLAGS="-ldflags=-s -ldflags=-w"
+#export GOFLAGS="-ldflags=-s -ldflags=-w"
+export GOFLAGS="-ldflags=-w"
 
 export PATH="$HOME/.bin:$HOME/tip/bin:$HOME/go/bin:$PATH"
 
