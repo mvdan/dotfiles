@@ -413,10 +413,10 @@ globalkeys = awful.util.table.join(
 		end, {group = "client"}),
 
 	awful.key({ modkey, altkey }, "u", function() awful.spawn(
-		"chromium --force-device-scale-factor=1.75 --profile-directory=Work"
+		"chromium --profile-directory=Work"
 	) end),
 	awful.key({ modkey, altkey }, "i", function() awful.spawn(
-		"chromium --force-device-scale-factor=1.75 --profile-directory=Default"
+		"chromium --profile-directory=Default"
 	) end),
 	awful.key({ modkey, altkey }, ".", function() awful.spawn.with_shell("mpc next; awesome-client 'vicious.force({mpdwidget})'") end),
 	awful.key({ modkey, altkey }, ",", function() awful.spawn.with_shell("mpc prev; awesome-client 'vicious.force({mpdwidget})'") end),
