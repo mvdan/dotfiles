@@ -53,7 +53,7 @@ awful.layout.layouts = {
 menubar.utils.terminal = terminal
 
 local sep = wibox.widget.textbox()
-sep.text = "   "
+sep.text = "  "
 
 local textclock = wibox.widget.textclock()
 
@@ -63,7 +63,8 @@ end
 
 local cpuwidget = wibox.widget.textbox()
 vicious.register(cpuwidget, vicious.widgets.cpu, function(widget, args)
-	return string.format("%3s %3s %3s %3s", args[2], args[3], args[4], args[5])
+	return string.format("%3s %3s %3s %3s %3s %3s %3s %3s",
+		args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9])
 end, 2)
 
 local batwidget = wibox.widget.textbox()
@@ -165,23 +166,24 @@ vicious.register(memwidget, vicious.widgets.mem, function(widget, args)
 	return string.format("%4s %-4s", args[2], args[3])
 end, 2)
 
-local possible_io = {"a", "b", "c"}
+local possible_io = {"nvme0n1", "sda", "sdb"}
 
 local iowidget = wibox.widget.textbox()
 vicious.register(iowidget, vicious.widgets.dio, function(widget, args)
 	local txt = ""
 	for i, dev in ipairs(possible_io) do
-		local write = args["{sd"..dev.." write_mb}"]
+		local write = args["{"..dev.." write_mb}"]
 		if write ~= nil then
-			local read = args["{sd"..dev.." read_mb}"]
-			txt = string.format("%s%4s %s %-4s", txt, write, dev, read)
+			local read = args["{"..dev.." read_mb}"]
+			local short = string.sub(dev, -2)
+			txt = string.format("%s%4s %s %-4s", txt, write, short, read)
 		end
 	end
 	return txt
 end, 2)
 
 local function wifi_n()
-	local f = io.popen("timeout 1 wpa_cli status wlp3s0")
+	local f = io.popen("timeout 1 wpa_cli status wlp2s0")
 	local o = f:read("*a")
 	f:close()
 	local name = string.match(o, "id_str=([a-zA-Z0-9_\\-.,]+)")
@@ -193,14 +195,14 @@ end
 
 local function wifi_q()
 	for line in io.lines("/proc/net/wireless") do
-		if line:sub(1, 6) == 'wlp3s0' then
+		if line:sub(1, 6) == 'wlp2s0' then
 			return string.match(line, "([%d]+)[.]")
 		end
 	end
 	return "??"
 end
 
-local ifaces = { enp0s25=false, wlp3s0=false, enp0s20u1=false }
+local ifaces = { enp0s25=false, wlp2s0=false, enp0s20u1=false }
 local netwidget = wibox.widget.textbox()
 vicious.register(netwidget, vicious.widgets.net, function(widget, args)
 	local txt = ""
@@ -211,11 +213,11 @@ vicious.register(netwidget, vicious.widgets.net, function(widget, args)
 			ifaces[dev] = true
 		end
 		if act then
-			local up = space(5, args['{'..dev..' up_kb}'])
-			local tx = args['{'..dev..' tx_mb}']
-			local rx = args['{'..dev..' rx_mb}']
-			dn = space(-5, dn)
-			if dev == 'wlp3s0' then
+			local up = space(4, args['{'..dev..' up_kb}'])
+			local tx = string.sub(args['{'..dev..' tx_mb}'], 1, -3)
+			local rx = string.sub(args['{'..dev..' rx_mb}'], 1, -3)
+			dn = space(-4, dn)
+			if dev == 'wlp2s0' then
 				txt = txt..up..' '..tx..' '..wifi_n()..' '..wifi_q()..' '..rx..' '..dn
 			else
 				txt = txt..up..' '..tx..' '..dev..' '..rx..' '..dn

@@ -93,11 +93,11 @@ alias sc="sudo systemctl"
 alias jc="journalctl"
 
 wifi-down() {
-	sudo systemctl stop netctl-auto@wlp3s0
+	sudo systemctl stop netctl-auto@wlp2s0
 	sudo echo auto >/sys/bus/usb/devices/2-4/power/control
 }
 wifi-up() {
-	sudo systemctl start netctl-auto@wlp3s0
+	sudo systemctl start netctl-auto@wlp2s0
 }
 
 alias ls="ls -F"
@@ -152,7 +152,7 @@ sfm() { shfmt -s -l -w ${@:-.}; }
 alias ssm="pacman -Ss"
 alias syu="sudo pacman -Syu"
 alias ssk="yay -Ss"
-alias sik="yay -S"
+alias sik="yay -S --needed"
 alias syud="yay -Syu"
 
 alias gca="gcm -a"
@@ -200,7 +200,7 @@ alias weeserv="ssh shark.mvdan.cc -t TERM=screen-256color LANG=en_US.UTF-8 tmux 
 
 alias rsv="rsync -avh --info=progress2"
 
-alias scn="sudo systemctl restart netctl-auto@wlp3s0"
+alias scn="sudo systemctl restart netctl-auto@wlp2s0"
 
 alias clb='curl -F "clbin=<-" https://clbin.com'
 alias ncl="sudo netctl"
@@ -247,7 +247,7 @@ wakeup() {
 	sudo modprobe -r psmouse
 	sudo modprobe psmouse
 	rfkill unblock wlan
-	sudo systemctl restart netctl-auto@wlp3s0
+	sudo systemctl restart netctl-auto@wlp2s0
 }
 
 case $TERM in
