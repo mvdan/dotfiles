@@ -9,6 +9,7 @@
 /.config/transmission/
 /.config/user-dirs*
 /.config/nvim/.netrwhist
+/.config/systemd/
 /.gnupg/*.gpg*
 /.gnupg/random_seed
 /.ssh/id_rsa*

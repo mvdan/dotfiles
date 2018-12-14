@@ -90,6 +90,7 @@ alias sim="spc -S --needed"
 alias mksrcinfo="makepkg --printsrcinfo >.SRCINFO"
 
 alias sc="sudo systemctl"
+alias scu="systemctl --user"
 alias jc="journalctl"
 
 wifi-down() {
