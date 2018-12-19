@@ -2,7 +2,7 @@
 
 shopt -s globstar
 
-HISTSIZE=8000 HISTFILESIZE=64000
+HISTSIZE=32000 HISTFILESIZE=256000
 HISTCONTROL=ignoreboth:erasedups
 shopt -s histappend
 
@@ -61,8 +61,8 @@ fni() { find . -iname "$1"; }
 	galias gdf  _diff        "diff"
 	galias ggc  _gc          "gc --prune=all"
 	galias ggr  _grep        "grep -In"
-	galias glo  _log         "-c core.pager='less -p ^commit ' log"
-	galias glop _log         "-c core.pager='less -p ^commit ' log -p"
+	galias glo  _log         "-c core.pager='less -p \"^commit \"' log"
+	galias glop _log         "-c core.pager='less -p \"^commit \"' log -p"
 	galias gmr  _merge       "merge"
 	galias gpl  _pull        "pull"
 	galias gps  _push        "push"
@@ -93,13 +93,8 @@ alias sc="sudo systemctl"
 alias scu="systemctl --user"
 alias jc="journalctl"
 
-wifi-down() {
-	sudo systemctl stop netctl-auto@wlp2s0
-	sudo echo auto >/sys/bus/usb/devices/2-4/power/control
-}
-wifi-up() {
-	sudo systemctl start netctl-auto@wlp2s0
-}
+alias wifi-down="sudo systemctl stop netctl-auto@wlp2s0"
+alias wifi-up="sudo systemctl start netctl-auto@wlp2s0"
 
 alias ls="ls -F"
 alias ll="ls -lhiF"

@@ -5,5 +5,8 @@ xrandr --dpi 144
 	ponymix mute
 	setxkbmap us altgr-intl -option caps:none
 } &
-redshift -l 51.5:-0.1 &
+# London
+# redshift -l 53.4:-1.6 &
+# Barcelona
+redshift -l 41.4:2.0 &
 exec awesome
