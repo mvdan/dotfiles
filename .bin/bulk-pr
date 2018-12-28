@@ -1,0 +1,52 @@
+#!/bin/bash
+
+if [[ $# < 3 ]]; then
+	cat <<'EOF'
+./bulk-pr.sh ci-go-bump "CI: bump to Go 1.10.2" sed -i 's/1.10.2/1.10.3/' '$(git ls-files .drone.yml "*Dockerfile")'
+EOF
+	exit 1
+fi
+
+branch=$1
+shift
+msg=$1
+shift
+
+for d in */; do
+	pushd $d
+	git diff --exit-code >/dev/null || echo "skipping $d due to changes"
+	git checkout -q master || { popd &>/dev/null; continue; }
+
+	git pull -q || { popd &>/dev/null; continue; }
+
+	{ eval "$@"; } || exit 1
+	if git diff --exit-code >/dev/null; then
+		echo "skipping $d since there is nothing to do"
+		popd &>/dev/null
+		continue
+	fi
+
+	if git rev-parse --verify $branch >/dev/null; then
+		git branch -q -D $branch || exit 1
+	fi
+	git checkout -q -b $branch || exit 1
+
+	git commit -q -a -m "$msg" || exit 1
+
+	git --no-pager show HEAD
+	echo "Looks OK? (Enter/^C)"
+	read
+	if [[ $branch == staging-test ]]; then
+		git push -f -u origin || exit 1
+		head=brankas:$branch
+	else
+		if ! git config remote.mvdan.url >/dev/null; then
+			hub fork || exit 1
+		fi
+		git push -f -u mvdan || exit 1
+		head=mvdan:$branch
+	fi
+	hub pull-request -f -h $head -m "$msg"
+	git checkout master
+	popd &>/dev/null
+done
