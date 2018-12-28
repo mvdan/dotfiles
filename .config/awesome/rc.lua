@@ -139,7 +139,7 @@ local function volume_upd()
 end
 
 do
-	local f = io.popen("ponymix get-volume && ponymix is-muted")
+	local f = io.popen("ponymix --sink get-volume && ponymix --sink is-muted")
 	volume = f:read("*n")
 	volume_muted = f:close() ~= nil
 	volume_upd()
@@ -151,13 +151,13 @@ local function volume_inc(increasing)
 		num = -num
 	end
 	volume = percent(volume + num, 150)
-	awful.spawn(string.format("ponymix set-volume %d", volume))
+	awful.spawn(string.format("ponymix --sink set-volume %d", volume))
 	volume_upd()
 end
 
 local function volume_mute(increasing)
 	volume_muted = not volume_muted
-	awful.spawn("ponymix toggle")
+	awful.spawn("ponymix --sink toggle")
 	volume_upd()
 end
 
@@ -431,10 +431,16 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey, altkey }, "n", function() awful.spawn(terminal .. " -c ncmpc -e ncmpc") end),
 	awful.key({ modkey, altkey }, "e", function() awful.spawn(terminal .. " -e nvim TODO.txt") end),
 
+	awful.key({ }, "#121",  volume_mute),
 	awful.key({ modkey, altkey }, "Down",  volume_mute),
+	awful.key({ }, "#122",  function() volume_inc(false) end),
+	awful.key({ }, "#123", function() volume_inc(true) end),
 	awful.key({ modkey, altkey }, "Left",  function() volume_inc(false) end),
 	awful.key({ modkey, altkey }, "Right", function() volume_inc(true) end),
+	awful.key({ }, "#198", function() awful.spawn("ponymix --source toggle") end),
 
+	awful.key({ }, "#232", function() backlight_inc(false) end),
+	awful.key({ }, "#233", function() backlight_inc(true) end),
 	awful.key({ modkey, altkey }, "Prior", function() backlight_inc(false) end),
 	awful.key({ modkey, altkey }, "Next", function() backlight_inc(true) end),
 

@@ -1,10 +1,8 @@
 xrandr --dpi 144
-{
-	brightnessctl set 40%
-	ponymix set-volume 50
-	ponymix mute
-	setxkbmap us altgr-intl -option caps:none
-} &
+ponymix set-volume 20
+brightnessctl set 40%
+setxkbmap us altgr-intl -option caps:none
+
 # London
 # redshift -l 53.4:-1.6 &
 # Barcelona
