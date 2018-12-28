@@ -12,7 +12,7 @@
 /.config/systemd/
 /.gnupg/*.gpg*
 /.gnupg/random_seed
-/.ssh/id_rsa*
+/.ssh/id_*
 /.ssh/known_hosts
 *cache
 *cookie*
