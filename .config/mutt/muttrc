@@ -115,6 +115,9 @@ mailboxes "=Drafts"
 mailboxes "=Trash"
 mailboxes "=../gmx/Inbox"
 
+folder-hook . "set from = mvdan@mvdan.cc"
+folder-hook gmx/Inbox "set from = danielmarti@gmx.com"
+
 set nm_default_uri = "notmuch:///home/mvdan/mail"
 virtual-mailboxes "All" "notmuch://?query=tag:inbox"
 

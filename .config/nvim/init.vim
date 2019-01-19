@@ -50,11 +50,8 @@ au BufEnter neomutt-* silent syntax on
 au BufEnter neomutt-* silent setl ft=mail tw=72 fo+=tn comments+=fb:*
 au BufEnter neomutt-* silent /^$
 
-au BufEnter *.txt   silent setl et sw=4
-au BufEnter *.hs    silent setl et sw=4
-au BufEnter *.cabal silent setl et sw=4
-
-au BufEnter ~/git/fcl/* silent setl et sw=4
+au BufEnter *.gunk         silent setl ft=go
+au BufEnter testdata/*.txt silent setl ft=go
 
 nnoremap <space> :noh<cr>:echo<cr><esc>
 

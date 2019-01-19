@@ -427,7 +427,7 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey, altkey }, "2", function() awful.spawn("setxkbmap es cat -option caps:none") end),
 	awful.key({ modkey, altkey }, "h", function() awful.spawn(terminal .. " -c ssh -e ssh shark.mvdan.cc -t TERM=screen-256color tmux -u a") end),
 	awful.key({ modkey, altkey }, "j", function() awful.spawn(terminal .. " -c mutt -e neomutt") end),
-	awful.key({ modkey, altkey }, "k", function() awful.spawn(terminal .. " -c ranger -e ranger") end),
+	awful.key({ modkey, altkey }, "k", function() awful.spawn(terminal .. " -c nnn -e nnn") end),
 	awful.key({ modkey, altkey }, "n", function() awful.spawn(terminal .. " -c ncmpc -e ncmpc") end),
 	awful.key({ modkey, altkey }, "e", function() awful.spawn(terminal .. " -e nvim TODO.txt") end),
 
@@ -565,7 +565,7 @@ awful.rules.rules = {
 	{ rule = { class = "ssh" }, properties = { tag = "2" } },
 	{ rule = { class = "mutt" }, properties = { tag = "3" } },
 	{ rule = { class = "Telegram" }, properties = { tag = "6" } },
-	{ rule = { class = "ranger" }, properties = { tag = "9" } },
+	{ rule = { class = "nnn" }, properties = { tag = "9" } },
 	{ rule = { class = "ncmpc" }, properties = { tag = "0" } },
 }
 
