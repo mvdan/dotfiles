@@ -230,15 +230,6 @@ alias kcl='kc logs --tail=200 -f'
 
 da() { du -h -d 1 "${@:-.}" | sort -h; }
 
-docker-cleanup() {
-	echo "removing exited containers"
-	docker ps -qa --no-trunc --filter "status=exited" | xargs -r docker rm
-	echo "removing untagged images"
-	docker images | grep "none" | awk '/ / { print $3 }' | xargs -r docker rmi
-	echo "removing dangling volumes"
-	docker volume ls -qf dangling=true | xargs -r docker volume rm
-}
-
 wakeup() {
 	sudo modprobe -r psmouse
 	sudo modprobe psmouse
