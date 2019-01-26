@@ -2,7 +2,7 @@
 
 set -e
 
-from_gopath=(
+from_remote=(
 	# golang.org
 	golang.org/x/review/git-codereview
 	golang.org/x/tools/cmd/goimports

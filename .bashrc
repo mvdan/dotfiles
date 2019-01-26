@@ -110,8 +110,8 @@ alias cd..="cd ../.."
 alias cd...="cd ../../.."
 
 alias go1="/usr/bin/go"
-alias gg="go get -u -v"
-alias gd="go get -u -v -d"
+alias gg="go get -u"
+alias gd="go get -u -d"
 alias gb="go build -v"
 alias gi="go install -v"
 alias gt="go test"
@@ -126,8 +126,18 @@ gcov() {
 }
 
 gbench() {
-	perflock go test . -run='^$' -benchmem -bench=${2:-.} \
-		-count=${3:-6} -benchtime=${4:-1s} | tee ${1:-cur} | grep -v :
+	if [[ $# == 0 || $1 == help ]]; then
+		echo "gbench runs 'go test . -run=- -vet=off' with some args."
+		echo ""
+		echo "gbench cur -benchmem -bench=. -count=6"
+		return
+	fi
+	local file=$1
+	shift
+	if [[ $# == 0 ]]; then
+		set -- -benchmem -bench=. -count=6
+	fi
+	perflock go test . -run='^$' -vet=off "$@" | tee $file | grep -vE '^(goos|goarch|pkg):'
 }
 
 goxg() {
