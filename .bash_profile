@@ -1,8 +1,8 @@
 export FULLNAME="Daniel Martí" EMAIL="mvdan@mvdan.cc"
 
 # Where to put Go binaries, code, and cache
+export GOPATH="$HOME/go"
 export GOBIN="$HOME/go/bin"
-export GOPATH="$HOME/go/land:$HOME/go"
 export GOCACHE="$HOME/go/cache"
 
 # Never include debug symbols in Go binaries, to speed up builds and save

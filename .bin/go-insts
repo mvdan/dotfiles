@@ -2,7 +2,9 @@
 
 set -e
 
-from_remote=(
+export GO111MODULE=on
+
+installs=(
 	# golang.org
 	golang.org/x/review/git-codereview
 	golang.org/x/tools/cmd/goimports
@@ -15,13 +17,19 @@ from_remote=(
 	golang.org/x/lint/golint
 
 	# mvdan.cc
-	mvdan.cc/sh/cmd/...
+	mvdan.cc/sh/cmd/shfmt
+	mvdan.cc/fdroidcl
+	mvdan.cc/goreduce
+	mvdan.cc/unparam
+	mvdan.cc/gogrep
+	mvdan.cc/git-picked
+	mvdan.cc/xurls/v2
 
 	# dev tools
 	github.com/dvyukov/go-fuzz/go-fuzz
 	github.com/dvyukov/go-fuzz/go-fuzz-build
 	github.com/mitchellh/gox
-	github.com/aclements/perflock/cmd/...
+	github.com/aclements/perflock/cmd/perflock
 
 	# misc
 	github.com/hanwen/go-mtpfs
@@ -35,18 +43,4 @@ from_remote=(
 	honnef.co/go/tools/cmd/errcheck-ng
 )
 
-from_src=(
-	fdroidcl
-	goreduce
-	unparam
-	gogrep
-	git-picked
-	xurls
-)
-
-go install -v -ldflags="-w -s" "${from_gopath[@]}"
-
-for name in "${from_src[@]}"; do
-	cd ~/src/$name
-	go install -v -ldflags="-w -s" ./...
-done
+go get -ldflags="-w -s" "${installs[@]}"
