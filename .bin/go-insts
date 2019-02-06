@@ -23,7 +23,7 @@ installs=(
 	mvdan.cc/unparam
 	mvdan.cc/gogrep
 	mvdan.cc/git-picked
-	mvdan.cc/xurls/v2
+	mvdan.cc/xurls/v2/cmd/xurls
 
 	# dev tools
 	github.com/dvyukov/go-fuzz/go-fuzz

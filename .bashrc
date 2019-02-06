@@ -110,6 +110,10 @@ alias cd..="cd ../.."
 alias cd...="cd ../../.."
 
 alias go1="/usr/bin/go"
+withgo1() {
+	PATH=${PATH//$HOME\/tip\/bin/} "$@"
+}
+
 alias gg="go get -u"
 alias gd="go get -u -d"
 alias gb="go build -v"
@@ -127,7 +131,7 @@ gcov() {
 
 gbench() {
 	if [[ $# == 0 || $1 == help ]]; then
-		echo "gbench runs 'go test . -run=- -vet=off' with some args."
+		echo "gbench runs 'perflock go test . -run=- -vet=off' with some args."
 		echo ""
 		echo "gbench cur -benchmem -bench=. -count=6"
 		return
