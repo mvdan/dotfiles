@@ -119,7 +119,7 @@ alias gd="go get -u -d"
 alias gb="go build -v"
 alias gi="go install -v"
 alias gt="go test"
-alias gts="go test -short -timeout 2s"
+alias gts="go test -vet=off -short -timeout 4s"
 gim() { goimports -l -w ${@:-*.go}; }
 gfm() { gofmt -s -l -w ${@:-*.go}; }
 
@@ -145,6 +145,7 @@ gbench() {
 }
 
 goxg() {
+	export CGO_ENABLED=0
 	gox -gocmd=/usr/bin/go -ldflags='-w -s' -output="{{.Dir}}_$(git describe)_{{.OS}}_{{.Arch}}"
 }
 

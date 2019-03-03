@@ -30,6 +30,8 @@ installs=(
 	github.com/dvyukov/go-fuzz/go-fuzz-build
 	github.com/mitchellh/gox
 	github.com/aclements/perflock/cmd/perflock
+	github.com/aclements/go-misc/benchcmd
+	github.com/rogpeppe/go-internal/cmd/testscript
 
 	# misc
 	github.com/hanwen/go-mtpfs
