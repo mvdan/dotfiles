@@ -9,6 +9,8 @@
 	default = current
 [commit]
 	verbose = true
+[rebase]
+	autoStash = true
 [format]
 	signoff = true
 	signature =
