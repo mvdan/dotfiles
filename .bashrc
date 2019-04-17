@@ -121,7 +121,7 @@ alias gi="go install -v"
 alias gt="go test"
 alias gts="go test -vet=off -short -timeout 4s"
 gim() { goimports -l -w ${@:-*.go}; }
-gfm() { gofmt -s -l -w ${@:-*.go}; }
+gfm() { gofumpt -s -l -w ${@:-*.go}; }
 
 gcov() {
 	local commas=$(IFS=,; echo "$*")
@@ -152,9 +152,9 @@ goxg() {
 alias gtoolcmp='go build -toolexec "toolstash -cmp" -a -v std cmd'
 gtoolbench() {
 	if [[ ! -f old ]]; then
-		perflock compilebench -short -alloc -count 10 -compile $(toolstash -n compile) $@ | tee old
+		perflock -governor=70% compilebench -short -alloc -count 10 -compile $(toolstash -n compile) $@ | tee old
 	fi
-	perflock compilebench -short -alloc -count 10 $@ | tee new
+	perflock -governor=70% compilebench -short -alloc -count 10 $@ | tee new
 	benchstat old new
 }
 

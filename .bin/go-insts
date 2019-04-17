@@ -42,7 +42,6 @@ installs=(
 	github.com/mdempsky/maligned
 	github.com/mibk/dupl
 	honnef.co/go/tools/cmd/staticcheck
-	honnef.co/go/tools/cmd/errcheck-ng
 )
 
 go get -ldflags="-w -s" "${installs[@]}"
