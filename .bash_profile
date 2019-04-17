@@ -13,7 +13,7 @@ export GOFLAGS="-ldflags=-w"
 export PATH="$HOME/.bin:$HOME/tip/bin:$HOME/go/bin:$PATH"
 
 export PAGER=less LESS=-FXRi LESSHISTFILE=-
-export EDITOR=nvim DIFF_VIEWER='nvim -d' DIFFPROG='nvim -d'
+export EDITOR=vim DIFF_VIEWER='vim -d' DIFFPROG='vim -d'
 export BROWSER=chromium
 
 [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx

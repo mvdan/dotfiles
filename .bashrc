@@ -9,7 +9,7 @@ shopt -s histappend
 alias l="less"
 alias s="sudo"
 alias se="s -E"
-alias v="nvim"
+alias v="vim"
 alias sp="sed -r 's/([^:]*:[^:]*:)/\1\t/'"
 
 alias m="sudo mount"

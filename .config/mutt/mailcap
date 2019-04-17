@@ -1,7 +1,7 @@
 text/html; chromium-block %s; nametemplate=%s.html
 text/html; elinks -no-home -dump %s; nametemplate=%s.html; copiousoutput
 
-text/*;          nvim %s
+text/*;          vim %s
 application/pdf; zathura %s; nametemplate=%s.pdf
 application/ps;  zathura %s; nametemplate=%s.ps
 image/*;         imv %s; nametemplate=%s.png

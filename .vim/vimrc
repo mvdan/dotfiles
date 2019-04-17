@@ -1,5 +1,3 @@
-call pathogen#infect()
-
 syntax off
 set synmaxcol=200
 filetype plugin indent on
@@ -12,7 +10,7 @@ set noexpandtab tabstop=8 softtabstop=8 shiftwidth=8
 set textwidth=80 formatoptions-=t
 set showcmd showmode hidden
 set magic matchtime=2 lazyredraw
-set incsearch ignorecase smartcase showmatch
+set incsearch ignorecase smartcase showmatch hlsearch
 set mouse=
 set rulerformat=%22(%l,%c%V\ %o\ %p%%%)
 
