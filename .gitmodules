@@ -10,3 +10,15 @@
 [submodule ".vim/pack/plugins/start/solarized"]
 	path = .vim/pack/plugins/start/solarized
 	url = https://github.com/altercation/vim-colors-solarized
+[submodule ".vim/pack/plugins/start/airline"]
+	path = .vim/pack/plugins/start/airline
+	url = https://github.com/vim-airline/vim-airline
+[submodule ".vim/pack/plugins/start/airline-themes"]
+	path = .vim/pack/plugins/start/airline-themes
+	url = https://github.com/vim-airline/vim-airline-themes
+[submodule ".vim/pack/plugins/start/commentary"]
+	path = .vim/pack/plugins/start/commentary
+	url = https://github.com/tpope/vim-commentary
+[submodule ".vim/pack/plugins/start/surround"]
+	path = .vim/pack/plugins/start/surround
+	url = https://github.com/tpope/vim-surround
