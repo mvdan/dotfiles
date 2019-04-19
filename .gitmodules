@@ -4,9 +4,6 @@
 [submodule ".vim/pack/plugins/start/fetch"]
 	path = .vim/pack/plugins/start/fetch
 	url = https://github.com/kopischke/vim-fetch
-[submodule ".vim/pack/plugins/start/commenter"]
-	path = .vim/pack/plugins/start/commenter
-	url = https://github.com/scrooloose/nerdcommenter
 [submodule ".vim/pack/plugins/start/solarized"]
 	path = .vim/pack/plugins/start/solarized
 	url = https://github.com/altercation/vim-colors-solarized

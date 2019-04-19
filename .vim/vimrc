@@ -7,14 +7,17 @@ set ruler smartindent
 set wrap linebreak nolist nojoinspaces
 set nobackup noswapfile nowritebackup
 set noexpandtab tabstop=8 softtabstop=8 shiftwidth=8
-set textwidth=80 formatoptions-=t
+set textwidth=80 formatoptions-=t formatoptions+=j
 set showcmd showmode hidden
 set magic matchtime=2 lazyredraw
 set incsearch ignorecase smartcase showmatch hlsearch
 set mouse=
 set rulerformat=%22(%l,%c%V\ %o\ %p%%%)
+set autoread laststatus=2
 
-set t_Co=16
+if &t_Co == 8 && $TERM !~# '^linux\|^Eterm'
+	set t_Co=16
+endif
 set background=dark
 colorscheme solarized
 

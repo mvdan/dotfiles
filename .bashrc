@@ -131,17 +131,11 @@ gcov() {
 
 gbench() {
 	if [[ $# == 0 || $1 == help ]]; then
-		echo "gbench runs 'perflock go test . -run=- -vet=off' with some args."
-		echo ""
-		echo "gbench cur -benchmem -bench=. -count=6"
+		echo "gbench [cur] [.] [6] [1s]"
 		return
 	fi
-	local file=$1
-	shift
-	if [[ $# == 0 ]]; then
-		set -- -benchmem -bench=. -count=6
-	fi
-	perflock go test . -run='^$' -vet=off "$@" | tee $file | grep -vE '^(goos|goarch|pkg):'
+	perflock -governor=70% go test . -run='^$' -vet=off -bench=${2:-.} \
+		-count=${3:-6} -benchtime=${4:-1s} | tee ${1:-cur} | grep -v :
 }
 
 goxg() {
@@ -203,7 +197,15 @@ git-file-sizes() {
 	git ls-files | xargs du -b | sort -n
 }
 
-alias gprc="gps -u mvdan && hub pull-request -f --no-edit"
+gprc() {
+	git push -u mvdan
+	if [[ $(git rev-list --count HEAD ^origin/master) == 1 ]]; then
+		hub pull-request -f --no-edit
+	else
+		# Edit the PR body if there are many commits.
+		hub pull-request -f
+	fi
+}
 alias gml="git-codereview mail"
 
 alias ssh="TERM=xterm ssh"

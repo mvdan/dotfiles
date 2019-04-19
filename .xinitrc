@@ -6,5 +6,7 @@ setxkbmap us altgr-intl -option caps:none
 # London
 # redshift -l 53.4:-1.6 &
 # Barcelona
-redshift -l 41.4:2.0 &
+# redshift -l 41.4:2.0 &
+# Seoul
+redshift -l 37.5:126.8 &
 exec awesome
