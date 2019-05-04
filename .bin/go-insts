@@ -35,13 +35,14 @@ installs=(
 
 	# misc
 	github.com/hanwen/go-mtpfs
+	github.com/hanwen/go-fuse@master
 	github.com/astaxie/bat
 
 	# linters
 	github.com/mdempsky/unconvert
 	github.com/mdempsky/maligned
 	github.com/mibk/dupl
-	honnef.co/go/tools/cmd/staticcheck
+	honnef.co/go/tools/cmd/staticcheck@incr
 )
 
 go get -ldflags="-w -s" "${installs[@]}"

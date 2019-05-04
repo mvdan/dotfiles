@@ -30,7 +30,7 @@ set noerrorbells novisualbell t_vb=
 
 imap ^? ^H
 
-set ttimeout timeoutlen=300
+set ttimeout timeoutlen=300 ttimeoutlen=0
 set scrolloff=4
 
 set wildignore=*.pyc,*.o,*.so,*.a
@@ -42,6 +42,11 @@ nnoremap <F9> 3<C-W><
 nnoremap <F10> 3<C-W>+
 nnoremap <F11> 3<C-W>-
 nnoremap <F12> 3<C-W>>
+
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
 nnoremap <F5> :%!xxd -g 1<CR>
 nnoremap <F6> :%!xxd -g 1 -r<CR>
