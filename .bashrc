@@ -19,27 +19,7 @@ mkcd() { mkdir -p "$1" && cd "$1"; }
 cdr() { cd $(git rev-parse --show-toplevel); }
 pgr() { ps aux | grep -v grep | grep -i "$@"; }
 
-cdm() {
-	if [[ $# == 0 ]]; then
-		cd $HOME/go/src/mvdan.cc
-	else
-		cd $HOME/go/src/mvdan.cc/*$1*
-	fi
-}
-cdg() {
-	if [[ $# == 0 ]]; then
-		cd $HOME/go/src/github.com
-	else
-		cd $HOME/go/src/github.com/*$1
-	fi
-}
-cdb() {
-	if [[ $# == 0 ]]; then
-		cd $HOME/go/src/brank.as
-	else
-		cd $HOME/go/src/brank.as/*$1
-	fi
-}
+cdb() { cd $HOME/brankas/*$1; }
 
 fn() { find . -name "$1"; }
 fni() { find . -iname "$1"; }
@@ -244,6 +224,7 @@ alias kcga='kc get deploy,po,svc'
 alias kcp='{ sleep 1; chromium http://127.0.0.1:8001/ui &>/dev/null; } & kc proxy'
 alias kcd='kc describe'
 alias kcl='kc logs --tail=200 -f'
+alias kce='kc get events --sort-by=.metadata.creationTimestamp'
 
 da() { du -h -d 1 "${@:-.}" | sort -h; }
 

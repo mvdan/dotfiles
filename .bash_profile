@@ -4,6 +4,7 @@ export FULLNAME="Daniel Martí" EMAIL="mvdan@mvdan.cc"
 export GOPATH="$HOME/go"
 export GOBIN="$HOME/go/bin"
 export GOCACHE="$HOME/go/cache"
+export GO111MODULE=on
 
 # Never include debug symbols in Go binaries, to speed up builds and save
 # space. We don't use a debugger anyway.
