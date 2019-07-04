@@ -32,17 +32,21 @@ installs=(
 	github.com/aclements/perflock/cmd/perflock
 	github.com/aclements/go-misc/benchcmd
 	github.com/rogpeppe/go-internal/cmd/testscript
+	github.com/rogpeppe/go-internal/cmd/txtar-addmod
+	github.com/rogpeppe/gohack
 
 	# misc
 	github.com/hanwen/go-mtpfs
 	github.com/hanwen/go-fuse@master
 	github.com/astaxie/bat
+	github.com/mholt/archiver/cmd/arc
+	github.com/FiloSottile/mkcert
 
 	# linters
 	github.com/mdempsky/unconvert
 	github.com/mdempsky/maligned
 	github.com/mibk/dupl
-	honnef.co/go/tools/cmd/staticcheck@incr
+	honnef.co/go/tools/cmd/staticcheck@master
 )
 
 go get -ldflags="-w -s" "${installs[@]}"

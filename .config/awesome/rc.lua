@@ -565,7 +565,8 @@ awful.rules.rules = {
 	{ rule = { class = "ssh" }, properties = { tag = "2" } },
 	{ rule = { class = "mutt" }, properties = { tag = "3" } },
 	{ rule = { class = "Telegram" }, properties = { tag = "6" } },
-	{ rule = { class = "nnn" }, properties = { tag = "9" } },
+	{ rule = { class = "Firefox" }, properties = { tag = "8" } },
+	{ rule = { class = "ranger" }, properties = { tag = "9" } },
 	{ rule = { class = "ncmpc" }, properties = { tag = "0" } },
 }
 

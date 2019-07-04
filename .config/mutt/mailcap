@@ -1,4 +1,4 @@
-text/html; chromium-block %s; nametemplate=%s.html
+text/html; browser-block %s
 text/html; elinks -no-home -dump %s; nametemplate=%s.html; copiousoutput
 
 text/*;          vim %s

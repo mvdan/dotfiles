@@ -58,6 +58,7 @@ au BufEnter neomutt-* silent /^$
 
 au BufEnter *.gunk         silent setl ft=go
 au BufEnter testdata/*.txt silent setl ft=go
+let g:airline#extensions#whitespace#skip_indent_check_ft = {'go': ['mixed-indent-file']}
 
 nnoremap <space> :noh<cr>:echo<cr><esc>
 

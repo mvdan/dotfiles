@@ -1,8 +1,8 @@
 #!/bin/bash
 
-if [[ $# < 3 ]]; then
+if [[ $# -lt 3 ]]; then
 	cat <<'EOF'
-./bulk-pr.sh ci-go-bump "CI: bump to Go 1.10.2" sed -i 's/1.10.2/1.10.3/' '$(git ls-files .drone.yml "*Dockerfile")'
+bulk-pr ci-go-bump "CI: bump to Go 1.11.4" sed -i 's/1.11.3/1.11.4/' '$(git ls-files .drone.yml "*Dockerfile")'
 EOF
 	exit 1
 fi
@@ -13,40 +13,52 @@ msg=$1
 shift
 
 for d in */; do
-	pushd $d
+	popd &>/dev/null # ok to error, e.g. if the stack is empty
+	pushd $d || exit 1
 	git diff --exit-code >/dev/null || echo "skipping $d due to changes"
-	git checkout -q master || { popd &>/dev/null; continue; }
+	git checkout -q master || continue
 
-	git pull -q || { popd &>/dev/null; continue; }
+	git fetch -q || continue
+	git reset -q --hard origin/master || continue
 
-	{ eval "$@"; } || exit 1
+	{ echo "$@"; eval "$@"; } || exit 1
 	if git diff --exit-code >/dev/null; then
 		echo "skipping $d since there is nothing to do"
-		popd &>/dev/null
 		continue
 	fi
 
-	if git rev-parse --verify $branch >/dev/null; then
-		git branch -q -D $branch || exit 1
+	if [[ $branch != "master" ]]; then
+		if git rev-parse --verify $branch >/dev/null; then
+			git branch -q -D $branch || exit 1
+		fi
+		git checkout -q -b $branch || exit 1
 	fi
-	git checkout -q -b $branch || exit 1
 
 	git commit -q -a -m "$msg" || exit 1
 
 	git --no-pager show HEAD
-	echo "Looks OK? (Enter/^C)"
-	read
-	if [[ $branch == staging-test ]]; then
+	echo "Looks OK? (Enter/[nN]/^C)"
+	read answer
+	if [[ -n $answer ]]; then
+		continue
+	fi
+	case "$branch" in
+	master)
 		git push -f -u origin || exit 1
+		continue # no PR needed
+		;;
+	staging-test)
+		git push -f -u origin || exit 1
+		continue # no PR wanted?
 		head=brankas:$branch
-	else
+		;;
+	*)
 		if ! git config remote.mvdan.url >/dev/null; then
 			hub fork || exit 1
 		fi
 		git push -f -u mvdan || exit 1
 		head=mvdan:$branch
-	fi
+	esac
 	hub pull-request -f -h $head -m "$msg"
 	git checkout master
-	popd &>/dev/null
 done

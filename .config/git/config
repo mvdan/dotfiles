@@ -26,5 +26,5 @@
 [http]
 	cookiefile = /home/mvdan/.config/git/cookies
 
-[includeIf "gitdir:~/go/src/brank.as/"]
+[includeIf "gitdir:~/src/brankas/"]
 	path = ~/.config/git/config-brankas

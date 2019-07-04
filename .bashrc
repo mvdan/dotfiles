@@ -19,7 +19,7 @@ mkcd() { mkdir -p "$1" && cd "$1"; }
 cdr() { cd $(git rev-parse --show-toplevel); }
 pgr() { ps aux | grep -v grep | grep -i "$@"; }
 
-cdb() { cd $HOME/brankas/*$1; }
+cdb() { cd $HOME/src/brankas/*$1; }
 
 fn() { find . -name "$1"; }
 fni() { find . -iname "$1"; }
@@ -155,7 +155,7 @@ alias glopo="glo -p --reverse ORIG_HEAD.."
 alias glopu="glo -p --reverse master..origin/master"
 alias glos="glo --stat"
 alias glou="glo ..@{u}"
-alias gplr="git pull --rebase=preserve"
+alias gplr="git pull --rebase=merges"
 alias grbi="grb -i"
 alias grbia="grb -i --autosquash"
 alias grmc="git rm --cached"
@@ -178,7 +178,7 @@ git-file-sizes() {
 }
 
 gprc() {
-	git push -u mvdan
+	git push -u mvdan || git push -u origin
 	if [[ $(git rev-list --count HEAD ^origin/master) == 1 ]]; then
 		hub pull-request -f --no-edit
 	else
@@ -221,7 +221,7 @@ gclc() {
 
 alias kcg='kc get'
 alias kcga='kc get deploy,po,svc'
-alias kcp='{ sleep 1; chromium http://127.0.0.1:8001/ui &>/dev/null; } & kc proxy'
+alias kcp='{ sleep 1; firefox http://127.0.0.1:8001/ui &>/dev/null; } & kc proxy'
 alias kcd='kc describe'
 alias kcl='kc logs --tail=200 -f'
 alias kce='kc get events --sort-by=.metadata.creationTimestamp'
