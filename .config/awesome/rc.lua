@@ -412,24 +412,20 @@ globalkeys = awful.util.table.join(
 			end
 		end, {group = "client"}),
 
-	awful.key({ modkey, altkey }, "u", function() awful.spawn(
-		"chromium --profile-directory=Work"
-	) end),
-	awful.key({ modkey, altkey }, "i", function() awful.spawn(
-		"chromium --profile-directory=Default"
-	) end),
+	awful.key({ modkey, altkey }, "i", function() awful.spawn("firefox") end),
 	awful.key({ modkey, altkey }, ".", function() awful.spawn.with_shell("mpc next; awesome-client 'vicious.force({mpdwidget})'") end),
 	awful.key({ modkey, altkey }, ",", function() awful.spawn.with_shell("mpc prev; awesome-client 'vicious.force({mpdwidget})'") end),
 	awful.key({ modkey, altkey }, "-", function() awful.spawn("mpc toggle") end),
 	awful.key({ modkey, altkey }, "/", function() awful.spawn("mpc toggle") end),
 	awful.key({ modkey, altkey }, "Up", function() awful.spawn("slock") end),
-	awful.key({ modkey, altkey }, "1", function() awful.spawn("setxkbmap us altgr-intl -option caps:none") end),
-	awful.key({ modkey, altkey }, "2", function() awful.spawn("setxkbmap es cat -option caps:none") end),
+	awful.key({ modkey, altkey }, "1", function() awful.spawn("setxkbmap us dvorak-alt-intl -option caps:none") end),
+	awful.key({ modkey, altkey }, "2", function() awful.spawn("setxkbmap us altgr-intl -option caps:none") end),
+	awful.key({ modkey, altkey }, "3", function() awful.spawn("setxkbmap es cat -option caps:none") end),
 	awful.key({ modkey, altkey }, "h", function() awful.spawn(terminal .. " -c ssh -e ssh shark.mvdan.cc -t TERM=screen-256color tmux -u a") end),
 	awful.key({ modkey, altkey }, "j", function() awful.spawn(terminal .. " -c mutt -e neomutt") end),
-	awful.key({ modkey, altkey }, "k", function() awful.spawn(terminal .. " -c nnn -e nnn") end),
+	awful.key({ modkey, altkey }, "k", function() awful.spawn(terminal .. " -c ranger -e ranger") end),
 	awful.key({ modkey, altkey }, "n", function() awful.spawn(terminal .. " -c ncmpc -e ncmpc") end),
-	awful.key({ modkey, altkey }, "e", function() awful.spawn(terminal .. " -e nvim TODO.txt") end),
+	awful.key({ modkey, altkey }, "e", function() awful.spawn(terminal .. " -e vim TODO.txt") end),
 
 	awful.key({ }, "#121",  volume_mute),
 	awful.key({ modkey, altkey }, "Down",  volume_mute),

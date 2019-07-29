@@ -28,3 +28,5 @@
 
 [includeIf "gitdir:~/src/brankas/"]
 	path = ~/.config/git/config-brankas
+[merge]
+	conflictstyle = diff3

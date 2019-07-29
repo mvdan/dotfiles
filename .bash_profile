@@ -5,11 +5,6 @@ export GOPATH="$HOME/go"
 export GOBIN="$HOME/go/bin"
 export GOCACHE="$HOME/go/cache"
 
-# Never include debug symbols in Go binaries, to speed up builds and save
-# space. We don't use a debugger anyway.
-#export GOFLAGS="-ldflags=-s -ldflags=-w"
-export GOFLAGS="-ldflags=-w"
-
 export GO111MODULE=on
 export GOPROXY="https://proxy.golang.org"
 export GOPRIVATE='brank.as/*'
