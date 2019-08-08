@@ -37,7 +37,6 @@ installs=(
 
 	# misc
 	github.com/hanwen/go-mtpfs
-	github.com/hanwen/go-fuse@master
 	github.com/astaxie/bat
 	github.com/mholt/archiver/cmd/arc
 	github.com/FiloSottile/mkcert

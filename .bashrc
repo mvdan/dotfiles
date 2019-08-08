@@ -242,3 +242,7 @@ esac
 
 PS1="$PS1[\u@\h:\l] [\${?}] [\${PWD}]
  \$ "
+
+repro() {
+	export PS1='$ '
+}
