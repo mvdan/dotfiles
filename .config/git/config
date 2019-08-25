@@ -13,7 +13,6 @@
 	autoStash = true
 [format]
 	signoff = true
-	signature =
 [diff]
 	indentHeuristic = true
 	colorMoved = zebra
@@ -30,3 +29,6 @@
 	path = ~/.config/git/config-brankas
 [merge]
 	conflictstyle = diff3
+[sendemail]
+	smtpserver = "/usr/bin/msmtp"
+	confirm = auto
