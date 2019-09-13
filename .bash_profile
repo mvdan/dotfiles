@@ -1,14 +1,5 @@
 export FULLNAME="Daniel Martí" EMAIL="mvdan@mvdan.cc"
 
-# Where to put Go binaries, and the cache
-export GOPATH="$HOME/go"
-export GOBIN="$HOME/go/bin"
-export GOCACHE="$HOME/go/cache"
-
-export GO111MODULE=on
-export GOPROXY="https://proxy.golang.org"
-export GOPRIVATE='brank.as/*'
-
 export PATH="$HOME/.bin:$HOME/tip/bin:$HOME/go/bin:$PATH"
 
 export PAGER=less LESS=-FXRi LESSHISTFILE=-

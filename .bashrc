@@ -168,9 +168,12 @@ alias gsmu="gsm update --init --recursive"
 alias gsmfc="gsmf 'git clean -dffx && git reset --hard' && gcle && grsh"
 
 git-repos() {
-	for d in $(find * -name .git -type d -prune); do
-		echo ${d::-5}
+	for d in $(find . -name .git -type d -prune); do
+		echo ${d:2:-5}
 	done
+}
+go-modules() {
+	find . \( -name vendor -o -name '[._].*' -o -name node_modules \) -prune -o -name go.mod -print | sed 's:/go.mod$::'
 }
 
 git-file-sizes() {
@@ -199,6 +202,7 @@ alias clb='curl -F "clbin=<-" https://clbin.com'
 alias ncl="sudo netctl"
 alias nca="TERM=dumb sudo netctl-auto"
 alias bat='bat --pretty=false'
+alias unr='arc unarchive'
 
 alias kc='kubectl'
 kcc() {
@@ -243,6 +247,4 @@ esac
 PS1="$PS1[\u@\h:\l] [\${?}] [\${PWD}]
  \$ "
 
-repro() {
-	export PS1='$ '
-}
+repro() { export PS1='$ '; }
