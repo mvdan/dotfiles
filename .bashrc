@@ -90,9 +90,7 @@ alias cd..="cd ../.."
 alias cd...="cd ../../.."
 
 alias go1="/usr/bin/go"
-withgo1() {
-	PATH=${PATH//$HOME\/tip\/bin/} "$@"
-}
+withgo1() { PATH=${PATH//$HOME\/tip\/bin/} "$@"; }
 
 alias gg="go get -u"
 alias gd="go get -u -d"
@@ -116,11 +114,6 @@ gbench() {
 	fi
 	perflock -governor=70% go test . -run='^$' -vet=off -bench=${2:-.} \
 		-count=${3:-6} -benchtime=${4:-1s} | tee ${1:-cur} | grep -v :
-}
-
-goxg() {
-	export CGO_ENABLED=0
-	gox -gocmd=/usr/bin/go -ldflags='-w -s' -output="{{.Dir}}_$(git describe)_{{.OS}}_{{.Arch}}"
 }
 
 alias gtoolcmp='go build -toolexec "toolstash -cmp" -a -v std cmd'
@@ -181,7 +174,7 @@ git-file-sizes() {
 }
 
 gprc() {
-	git push -u mvdan || git push -u origin
+	git push -f -u mvdan || git push -u origin
 	if [[ $(git rev-list --count HEAD ^origin/master) == 1 ]]; then
 		hub pull-request -f --no-edit
 	else

@@ -55,6 +55,7 @@ au BufEnter COMMIT_EDITMSG silent syntax on
 au BufEnter neomutt-* silent syntax on
 au BufEnter neomutt-* silent setl ft=mail tw=72 fo+=tn comments+=fb:*
 au BufEnter neomutt-* silent /^$
+au FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
 au BufEnter *.gunk         silent setl ft=go
 au BufEnter testdata/*.txt silent setl ft=go
