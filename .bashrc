@@ -17,6 +17,14 @@ alias um="sudo umount"
 
 mkcd() { mkdir -p "$1" && cd "$1"; }
 cdr() { cd $(git rev-parse --show-toplevel); }
+cdc() {
+	local ref=${1:-HEAD}
+	# cd into the repo root first
+	cd $(git rev-parse --show-toplevel)
+	# cd into the directory containing all the changes
+	cd $(git diff-tree --no-commit-id --name-only -r $ref | sed -e 'N;s/^\(.*\).*\n\1.*$/\1\n\1/;D')
+}
+
 pgr() { ps aux | grep -v grep | grep -i "$@"; }
 
 cdb() { cd $HOME/src/brankas/*$1; }
@@ -26,34 +34,34 @@ fni() { find . -iname "$1"; }
 
 [[ -f /usr/share/git/completion/git-completion.bash ]] && {
 	galias() {
-		alias $1="git $3"
-		__git_complete $1 _git$2
+		alias $1="git ${3:-$2}"
+		__git_complete $1 _git_$2
 	}
 	. /usr/share/git/completion/git-completion.bash
 
-	galias gad  _add         "add"
-	galias gbi  _bisect      "bisect"
-	galias gbr  _branch      "branch"
-	galias gcm  _commit      "commit"
-	galias gcp  _cherry_pick "cherry-pick"
-	galias gclo _clone       "clone"
-	galias gco  _checkout    "checkout"
-	galias gdf  _diff        "diff"
-	galias ggc  _gc          "gc --prune=all"
-	galias ggr  _grep        "grep -In"
-	galias glo  _log         "-c core.pager='less -p \"^commit \"' log"
-	galias glop _log         "-c core.pager='less -p \"^commit \"' log -p"
-	galias gmr  _merge       "merge"
-	galias gpl  _pull        "pull"
-	galias gps  _push        "push"
-	galias grb  _rebase      "rebase"
-	galias grs  _reset       "reset"
-	galias grsh _reset       "reset --hard"
-	galias grt  _remote      "remote"
-	galias grv  _revert      "revert"
-	galias gsh  _show        "show"
-	galias gsm  _submodule   "submodule"
-	galias gst  _stash       "-c core.pager='less -p ^stash' stash"
+	galias gad  add
+	galias gbi  bisect
+	galias gbr  branch
+	galias gcm  commit
+	galias gcp  cherry_pick "cherry-pick"
+	galias gclo clone
+	galias gco  checkout
+	galias gdf  diff
+	galias ggc  gc   "gc --prune=all"
+	galias ggr  grep "grep -In"
+	galias glo  log  "-c core.pager='less -p \"^commit \"' log"
+	galias glop log  "-c core.pager='less -p \"^commit \"' log -p"
+	galias gmr  merge
+	galias gpl  pull
+	galias gps  push
+	galias grb  rebase
+	galias grs  reset
+	galias grsh reset "reset --hard"
+	galias grt  remote
+	galias grv  revert
+	galias gsh  show
+	galias gsm  submodule
+	galias gst  stash "-c core.pager='less -p ^stash' stash"
 
 	__git_complete gbrd _git_branch
 	alias grbc="git rebase --continue"
@@ -73,8 +81,8 @@ alias sc="sudo systemctl"
 alias scu="systemctl --user"
 alias jc="journalctl"
 
-alias wifi-down="sudo systemctl stop netctl-auto@wlp2s0"
-alias wifi-up="sudo systemctl start netctl-auto@wlp2s0"
+alias wifi-down="sudo systemctl stop netctl-auto@wlan0"
+alias wifi-up="sudo systemctl start netctl-auto@wlan0"
 
 alias ls="ls -F"
 alias ll="ls -lhiF"
@@ -119,9 +127,9 @@ gbench() {
 alias gtoolcmp='go build -toolexec "toolstash -cmp" -a -v std cmd'
 gtoolbench() {
 	if [[ ! -f old ]]; then
-		perflock -governor=70% compilebench -short -alloc -count 10 -compile $(toolstash -n compile) $@ | tee old
+		perflock -governor=70% compilebench -short -alloc -count 10 -compile $(toolstash -n compile) "$@" | tee old
 	fi
-	perflock -governor=70% compilebench -short -alloc -count 10 $@ | tee new
+	perflock -governor=70% compilebench -short -alloc -count 10 "$@" | tee new
 	benchstat old new
 }
 
@@ -131,7 +139,6 @@ alias ssm="pacman -Ss"
 alias syu="sudo pacman -Syu"
 alias ssk="yay -Ss"
 alias sik="yay -S --needed"
-alias syud="yay -Syu"
 
 alias gca="gcm -a"
 alias gcam="gcm -a --amend"
@@ -174,7 +181,12 @@ git-file-sizes() {
 }
 
 gprc() {
-	git push -f -u mvdan || git push -u origin
+	if git config remote.mvdan.url >/dev/null; then
+		git push -f -u mvdan || return 1
+	else
+		# No fork present, so assume we are the only owner.
+		git push -u origin || return 1
+	fi
 	if [[ $(git rev-list --count HEAD ^origin/master) == 1 ]]; then
 		hub pull-request -f --no-edit
 	else
@@ -189,7 +201,7 @@ alias weeserv="ssh shark.mvdan.cc -t TERM=screen-256color LANG=en_US.UTF-8 tmux 
 
 alias rsv="rsync -avh --info=progress2"
 
-alias scn="sudo systemctl restart netctl-auto@wlp2s0"
+alias scn="sudo systemctl restart netctl-auto@wlan0"
 
 alias clb='curl -F "clbin=<-" https://clbin.com'
 alias ncl="sudo netctl"
@@ -202,7 +214,7 @@ kcc() {
 	if [[ $# -eq 0 ]]; then
 		kc config get-contexts
 	else
-		kc config use-context $@
+		kc config use-context "$@"
 	fi
 }
 alias tf='terraform'
@@ -212,7 +224,7 @@ gclc() {
 	if [[ $# -eq 0 ]]; then
 		gcl config configurations list
 	else
-		gcl config configurations activate $@
+		gcl config configurations activate "$@"
 	fi
 }
 
@@ -229,7 +241,7 @@ wakeup() {
 	sudo modprobe -r psmouse
 	sudo modprobe psmouse
 	rfkill unblock wlan
-	sudo systemctl restart netctl-auto@wlp2s0
+	sudo systemctl restart netctl-auto@wlan0
 }
 
 case $TERM in

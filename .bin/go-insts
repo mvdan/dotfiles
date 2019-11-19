@@ -1,9 +1,5 @@
 #!/bin/bash
 
-set -e
-
-export GO111MODULE=on
-
 installs=(
 	# golang.org
 	golang.org/x/review/git-codereview
@@ -11,6 +7,7 @@ installs=(
 	golang.org/x/tools/cmd/present
 	golang.org/x/tools/cmd/stress
 	golang.org/x/tools/cmd/stringer
+	golang.org/x/tools/cmd/bundle
 	golang.org/x/tools/cmd/toolstash
 	golang.org/x/tools/cmd/compilebench
 	golang.org/x/perf/cmd/benchstat
@@ -24,6 +21,7 @@ installs=(
 	mvdan.cc/gogrep
 	mvdan.cc/git-picked
 	mvdan.cc/xurls/v2/cmd/xurls
+	mvdan.cc/gofumpt
 
 	# dev tools
 	github.com/dvyukov/go-fuzz/go-fuzz
@@ -40,6 +38,8 @@ installs=(
 	github.com/astaxie/bat
 	github.com/mholt/archiver/cmd/arc
 	github.com/FiloSottile/mkcert
+	cuelang.org/go/cmd/cue
+	github.com/gokcehan/lf
 
 	# linters
 	github.com/mdempsky/unconvert
@@ -48,4 +48,4 @@ installs=(
 	honnef.co/go/tools/cmd/staticcheck@master
 )
 
-go get -ldflags="-w -s" "${installs[@]}"
+GO111MODULE=on go get -ldflags="-w -s" "${installs[@]}" || exit 1

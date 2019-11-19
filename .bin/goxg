@@ -3,4 +3,4 @@
 export GOFLAGS="-trimpath"
 export CGO_ENABLED=0
 
-gox -gocmd=/usr/bin/go -ldflags='-w -s' -output="{{.Dir}}_$(git describe)_{{.OS}}_{{.Arch}}"
+gox -gocmd=/usr/bin/go -ldflags='-w -s' -parallel=2 -output="{{.Dir}}_$(git describe)_{{.OS}}_{{.Arch}}"

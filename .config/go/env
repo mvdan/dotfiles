@@ -1,3 +1,1 @@
-GO111MODULE=on
-GOCACHE=/home/mvdan/go/cache
 GOPRIVATE=brank.as/*

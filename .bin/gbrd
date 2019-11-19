@@ -6,7 +6,7 @@
 
 if [[ $# -eq 0 ]]; then
 	# If no branchess are specified, use the cherry-picked ones.
-	set -- $(git-picked | grep -vE '^(release|backport|master|prod|stag|v[0-9])')
+	set -- $(git-picked | grep -vE '^(release|backport|master|prod|stag|endto|v[0-9])')
 fi
 
 # create a set of the branches to delete

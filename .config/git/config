@@ -16,7 +16,7 @@
 [diff]
 	indentHeuristic = true
 	colorMoved = zebra
-
+	noprefix = true
 [color.diff]
 	oldMoved = blue
 	newMoved = blue

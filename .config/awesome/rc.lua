@@ -36,7 +36,7 @@ gears.wallpaper.set(gears.color("#002b36"))
 
 beautiful.init(os.getenv("HOME").."/.config/awesome/theme.lua")
 
-terminal = "st"
+terminal = "termite"
 editor = os.getenv("EDITOR") or "neovim"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -183,7 +183,7 @@ vicious.register(iowidget, vicious.widgets.dio, function(widget, args)
 end, 2)
 
 local function wifi_n()
-	local f = io.popen("timeout 1 wpa_cli status wlp2s0")
+	local f = io.popen("timeout 1 wpa_cli status wlan0")
 	local o = f:read("*a")
 	f:close()
 	local name = string.match(o, "id_str=([a-zA-Z0-9_\\-.,]+)")
@@ -195,14 +195,14 @@ end
 
 local function wifi_q()
 	for line in io.lines("/proc/net/wireless") do
-		if line:sub(1, 6) == 'wlp2s0' then
+		if line:sub(2, 6) == 'wlan0' then
 			return string.match(line, "([%d]+)[.]")
 		end
 	end
 	return "??"
 end
 
-local ifaces = { enp0s25=false, wlp2s0=false, enp0s20u1=false }
+local ifaces = { enp0s25=false, wlan0=false, enp0s20u1=false }
 local netwidget = wibox.widget.textbox()
 vicious.register(netwidget, vicious.widgets.net, function(widget, args)
 	local txt = ""
@@ -217,7 +217,7 @@ vicious.register(netwidget, vicious.widgets.net, function(widget, args)
 			local tx = string.sub(args['{'..dev..' tx_mb}'], 1, -3)
 			local rx = string.sub(args['{'..dev..' rx_mb}'], 1, -3)
 			dn = space(-4, dn)
-			if dev == 'wlp2s0' then
+			if dev == 'wlan0' then
 				txt = txt..up..' '..tx..' '..wifi_n()..' '..wifi_q()..' '..rx..' '..dn
 			else
 				txt = txt..up..' '..tx..' '..dev..' '..rx..' '..dn
@@ -421,11 +421,11 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey, altkey }, "1", function() awful.spawn("setxkbmap us dvorak-alt-intl -option caps:none") end),
 	awful.key({ modkey, altkey }, "2", function() awful.spawn("setxkbmap us altgr-intl -option caps:none") end),
 	awful.key({ modkey, altkey }, "3", function() awful.spawn("setxkbmap es cat -option caps:none") end),
-	awful.key({ modkey, altkey }, "h", function() awful.spawn(terminal .. " -c ssh -e ssh shark.mvdan.cc -t TERM=screen-256color tmux -u a") end),
-	awful.key({ modkey, altkey }, "j", function() awful.spawn(terminal .. " -c mutt -e neomutt") end),
-	awful.key({ modkey, altkey }, "k", function() awful.spawn(terminal .. " -c lf -e lf") end),
-	awful.key({ modkey, altkey }, "n", function() awful.spawn(terminal .. " -c ncmpc -e ncmpc") end),
-	awful.key({ modkey, altkey }, "e", function() awful.spawn(terminal .. " -e vim TODO.txt") end),
+	awful.key({ modkey, altkey }, "h", function() awful.spawn(terminal .. " -r ssh -e 'ssh shark.mvdan.cc -t tmux -u a'") end),
+	awful.key({ modkey, altkey }, "j", function() awful.spawn(terminal .. " -r mutt -e neomutt") end),
+	awful.key({ modkey, altkey }, "k", function() awful.spawn(terminal .. " -r lf -e lf") end),
+	awful.key({ modkey, altkey }, "n", function() awful.spawn(terminal .. " -r ncmpc -e ncmpc") end),
+	awful.key({ modkey, altkey }, "e", function() awful.spawn(terminal .. " -e vim Documents/TODO.txt") end),
 
 	awful.key({ }, "#121",  volume_mute),
 	awful.key({ modkey, altkey }, "Down",  volume_mute),
@@ -443,7 +443,7 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey, altkey }, "m", imap_sync),
 	awful.key({ modkey, "Shift" }, "m", flip_imap),
 
-	awful.key({ modkey }, "s", function() awful.spawn.with_shell("maim -s $(date +%F-%T).png") end),
+	awful.key({ modkey }, "s", function() awful.spawn.with_shell("maim -s Pictures/Screenshots/$(date +%F-%T).png") end),
 	awful.key({ modkey }, "i", function()
 		local f = io.popen("timeout 1 ip route")
 		naughty.notify({
@@ -558,13 +558,13 @@ awful.rules.rules = {
 			"pop-up",
 		},
 	}, properties = { floating = true }},
-	{ rule = { class = "ssh" }, properties = { tag = "2" } },
-	{ rule = { class = "mutt" }, properties = { tag = "3" } },
+	{ rule = { role = "ssh" }, properties = { tag = "2" } },
+	{ rule = { role = "mutt" }, properties = { tag = "3" } },
 	{ rule = { class = "Telegram" }, properties = { tag = "6" } },
 	{ rule = { class = "Slack" }, properties = { tag = "7" } },
 	{ rule = { class = "Firefox" }, properties = { tag = "8" } },
-	{ rule = { class = "lf" }, properties = { tag = "9" } },
-	{ rule = { class = "ncmpc" }, properties = { tag = "0" } },
+	{ rule = { role = "lf" }, properties = { tag = "9" } },
+	{ rule = { role = "ncmpc" }, properties = { tag = "0" } },
 }
 
 client.connect_signal("manage", function(c)
