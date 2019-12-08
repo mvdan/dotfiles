@@ -1,5 +1,5 @@
 #!/bin/bash
 
 [[ -d src ]] && cd src
-GOROOT_BOOTSTRAP=/usr/lib/go GOGC=off ./make.bash -v
-toolstash save
+GOROOT_BOOTSTRAP=/usr/lib/go GOGC=off ./make.bash -v || exit 1
+toolstash save || exit 1

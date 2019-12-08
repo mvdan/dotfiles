@@ -58,7 +58,7 @@ au BufEnter neomutt-* silent /^$
 au FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
 au BufEnter *.gunk         silent setl ft=go
-au BufEnter testdata/*.txt silent setl ft=go
+au BufEnter testdata/*.txt silent setl ft=sh
 let g:airline#extensions#whitespace#skip_indent_check_ft = {'go': ['mixed-indent-file']}
 
 nnoremap <space> :noh<cr>:echo<cr><esc>

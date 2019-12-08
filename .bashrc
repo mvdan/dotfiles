@@ -67,9 +67,6 @@ fni() { find . -iname "$1"; }
 	alias grbc="git rebase --continue"
 }
 
-tm() { [[ -z $TMUX ]] && exec tmux; }
-[[ -n $TMUX ]] && export TERM=screen-256color
-
 alias spc="sudo pacman"
 alias ssi="pacman -Sii"
 ssq() { pacman -Qs "$@" | sed -n 's_local/__p'; }
@@ -188,10 +185,10 @@ gprc() {
 		git push -u origin || return 1
 	fi
 	if [[ $(git rev-list --count HEAD ^origin/master) == 1 ]]; then
-		hub pull-request -f --no-edit
+		hub pull-request -f --no-edit "$@"
 	else
 		# Edit the PR body if there are many commits.
-		hub pull-request -f
+		hub pull-request -f "$@"
 	fi
 }
 alias gml="git-codereview mail"

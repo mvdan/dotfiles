@@ -425,7 +425,7 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey, altkey }, "j", function() awful.spawn(terminal .. " -r mutt -e neomutt") end),
 	awful.key({ modkey, altkey }, "k", function() awful.spawn(terminal .. " -r lf -e lf") end),
 	awful.key({ modkey, altkey }, "n", function() awful.spawn(terminal .. " -r ncmpc -e ncmpc") end),
-	awful.key({ modkey, altkey }, "e", function() awful.spawn(terminal .. " -e vim Documents/TODO.txt") end),
+	awful.key({ modkey, altkey }, "e", function() awful.spawn(terminal .. " -e 'vim Documents/TODO.txt'") end),
 
 	awful.key({ }, "#121",  volume_mute),
 	awful.key({ modkey, altkey }, "Down",  volume_mute),
