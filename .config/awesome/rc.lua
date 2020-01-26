@@ -279,14 +279,6 @@ local function ellipsize(str, l)
 	return string.format("%s…", str:sub(1, l))
 end
 
-mpdwidget = wibox.widget.textbox()
-vicious.register(mpdwidget, vicious.widgets.mpd, function(widget, args)
-	if args["{state}"] == "Stop" then
-		return ' - MPD - '
-	end
-	return ellipsize(args["{Title}"], 24).." - "..ellipsize(args["{Album}"], 24)
-end, 5)
-
 local function set_wallpaper(s)
 	if beautiful.wallpaper then
 		local wallpaper = beautiful.wallpaper
@@ -329,32 +321,23 @@ awful.screen.connect_for_each_screen(function(s)
 
 	s.botwibox = awful.wibar({ position = "bottom", screen = s })
 	s.botwibox:setup {
-		layout = wibox.layout.align.horizontal,
-		{
-			layout = wibox.layout.fixed.horizontal,
-			sep,
-			cpuwidget,
-			sep,
-			batwidget,
-			sep,
-			blwidget,
-			sep,
-			volwidget,
-			sep,
-			memwidget,
-			sep,
-			iowidget,
-			sep,
-			netwidget,
-			sep,
-			mdirwidget,
-		},
+		layout = wibox.layout.fixed.horizontal,
 		sep,
-		{
-			layout = wibox.layout.fixed.horizontal,
-			mpdwidget,
-			sep,
-		},
+		cpuwidget,
+		sep,
+		batwidget,
+		sep,
+		blwidget,
+		sep,
+		volwidget,
+		sep,
+		memwidget,
+		sep,
+		iowidget,
+		sep,
+		netwidget,
+		sep,
+		mdirwidget,
 	}
 end)
 
