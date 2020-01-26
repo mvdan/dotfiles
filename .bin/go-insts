@@ -10,6 +10,7 @@ installs=(
 	golang.org/x/tools/cmd/bundle
 	golang.org/x/tools/cmd/toolstash
 	golang.org/x/tools/cmd/compilebench
+	golang.org/x/tools/cmd/godoc
 	golang.org/x/perf/cmd/benchstat
 	golang.org/x/lint/golint
 

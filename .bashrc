@@ -25,7 +25,7 @@ cdc() {
 	cd $(git diff-tree --no-commit-id --name-only -r $ref | sed -e 'N;s/^\(.*\).*\n\1.*$/\1\n\1/;D')
 }
 
-pgr() { ps aux | grep -v grep | grep -i "$@"; }
+pgr() { ps aux | grep -v grep | grep -iE "$@"; }
 
 cdb() { cd $HOME/src/brankas/*$1; }
 
@@ -48,9 +48,9 @@ fni() { find . -iname "$1"; }
 	galias gco  checkout
 	galias gdf  diff
 	galias ggc  gc   "gc --prune=all"
-	galias ggr  grep "grep -In"
+	galias ggr  grep "grep -InE"
 	galias glo  log  "-c core.pager='less -p \"^commit \"' log"
-	galias glop log  "-c core.pager='less -p \"^commit \"' log -p"
+	galias glop log  "-c core.pager='less -p \"^commit \"' log -p --format=fuller"
 	galias gmr  merge
 	galias gpl  pull
 	galias gps  push
@@ -88,7 +88,7 @@ alias lt="ls -Alhrt"
 
 alias zs="se $SHELL"
 alias rr="rm -rf"
-alias gh="grep <~/.bash_history"
+alias gh="grep -E <~/.bash_history"
 
 alias cd.="cd .."
 alias cd..="cd ../.."
@@ -102,7 +102,7 @@ alias gd="go get -u -d"
 alias gb="go build -v"
 alias gi="go install -v"
 alias gt="go test"
-alias gts="go test -vet=off -short -timeout 4s"
+alias gts="go test -vet=off -short -timeout 10s"
 gim() { goimports -l -w ${@:-*.go}; }
 gfm() { gofumpt -s -l -w ${@:-*.go}; }
 
@@ -147,11 +147,9 @@ alias gdfo="gdf ORIG_HEAD..."
 alias gdfu="gdf @{u}..."
 alias gfe="git fetch -v -p"
 alias gfea="git fetch -v -p --all"
-alias gloo="glo ORIG_HEAD.."
-alias glopo="glo -p --reverse ORIG_HEAD.."
-alias glopu="glo -p --reverse master..origin/master"
+alias glopo="glop --reverse ORIG_HEAD.."
+alias glopu="glop --reverse ..@{u}"
 alias glos="glo --stat"
-alias glou="glo ..@{u}"
 alias gplr="git pull --rebase=merges"
 alias grbi="grb -i"
 alias grbia="grb -i --autosquash"
@@ -174,7 +172,7 @@ go-modules() {
 }
 
 git-file-sizes() {
-	git ls-files | xargs du -b | sort -n
+	git ls-files -z | xargs -0 du -b | sort -n
 }
 
 gprc() {
