@@ -182,26 +182,6 @@ vicious.register(iowidget, vicious.widgets.dio, function(widget, args)
 	return txt
 end, 2)
 
-local function wifi_n()
-	local f = io.popen("timeout 1 wpa_cli status wlan0")
-	local o = f:read("*a")
-	f:close()
-	local name = string.match(o, "id_str=([a-zA-Z0-9_\\-.,]+)")
-	if name ~= nil then
-		return name
-	end
-	return "??"
-end
-
-local function wifi_q()
-	for line in io.lines("/proc/net/wireless") do
-		if line:sub(2, 6) == 'wlan0' then
-			return string.match(line, "([%d]+)[.]")
-		end
-	end
-	return "??"
-end
-
 local ifaces = { enp0s25=false, wlan0=false, enp0s20u1=false }
 local netwidget = wibox.widget.textbox()
 vicious.register(netwidget, vicious.widgets.net, function(widget, args)
@@ -217,11 +197,7 @@ vicious.register(netwidget, vicious.widgets.net, function(widget, args)
 			local tx = string.sub(args['{'..dev..' tx_mb}'], 1, -3)
 			local rx = string.sub(args['{'..dev..' rx_mb}'], 1, -3)
 			dn = space(-4, dn)
-			if dev == 'wlan0' then
-				txt = txt..up..' '..tx..' '..wifi_n()..' '..wifi_q()..' '..rx..' '..dn
-			else
-				txt = txt..up..' '..tx..' '..dev..' '..rx..' '..dn
-			end
+			txt = txt..up..' '..tx..' '..dev..' '..rx..' '..dn
 		end
 	end
 	return txt
@@ -271,6 +247,17 @@ gears.timer.start_new(60, function() imap_sync(); return true; end)
 gears.timer.start_new(5, function() mdir_update(); return true; end)
 
 mdir_update()
+
+local cat_keyboard = false
+
+local function flip_keyboard()
+	cat_keyboard = not cat_keyboard
+	if cat_keyboard then
+		awful.spawn("setxkbmap es cat -option caps:none")
+	else
+		awful.spawn("setxkbmap us altgr-intl -option caps:none")
+	end
+end
 
 local function ellipsize(str, l)
 	if string.len(str) <= l + 1 then
@@ -401,27 +388,19 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey, altkey }, "-", function() awful.spawn("mpc toggle") end),
 	awful.key({ modkey, altkey }, "/", function() awful.spawn("mpc toggle") end),
 	awful.key({ modkey, altkey }, "Up", function() awful.spawn("slock") end),
-	awful.key({ modkey, altkey }, "1", function() awful.spawn("setxkbmap us dvorak-alt-intl -option caps:none") end),
-	awful.key({ modkey, altkey }, "2", function() awful.spawn("setxkbmap us altgr-intl -option caps:none") end),
-	awful.key({ modkey, altkey }, "3", function() awful.spawn("setxkbmap es cat -option caps:none") end),
 	awful.key({ modkey, altkey }, "h", function() awful.spawn(terminal .. " -r ssh -e 'ssh shark.mvdan.cc -t tmux -u a'") end),
 	awful.key({ modkey, altkey }, "j", function() awful.spawn(terminal .. " -r mutt -e neomutt") end),
 	awful.key({ modkey, altkey }, "k", function() awful.spawn(terminal .. " -r lf -e lf") end),
 	awful.key({ modkey, altkey }, "n", function() awful.spawn(terminal .. " -r ncmpc -e ncmpc") end),
 	awful.key({ modkey, altkey }, "e", function() awful.spawn(terminal .. " -e 'vim Documents/TODO.txt'") end),
 
-	awful.key({ }, "#121",  volume_mute),
-	awful.key({ modkey, altkey }, "Down",  volume_mute),
-	awful.key({ }, "#122",  function() volume_inc(false) end),
+	awful.key({ }, "#121", volume_mute),
+	awful.key({ }, "#122", function() volume_inc(false) end),
 	awful.key({ }, "#123", function() volume_inc(true) end),
-	awful.key({ modkey, altkey }, "Left",  function() volume_inc(false) end),
-	awful.key({ modkey, altkey }, "Right", function() volume_inc(true) end),
 	awful.key({ }, "#198", function() awful.spawn("ponymix --source toggle") end),
-
 	awful.key({ }, "#232", function() backlight_inc(false) end),
 	awful.key({ }, "#233", function() backlight_inc(true) end),
-	awful.key({ modkey, altkey }, "Prior", function() backlight_inc(false) end),
-	awful.key({ modkey, altkey }, "Next", function() backlight_inc(true) end),
+	awful.key({ }, "#164", flip_keyboard),
 
 	awful.key({ modkey, altkey }, "m", imap_sync),
 	awful.key({ modkey, "Shift" }, "m", flip_imap),

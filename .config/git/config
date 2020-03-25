@@ -16,19 +16,23 @@
 [diff]
 	indentHeuristic = true
 	colorMoved = zebra
-	noprefix = true
+	; noprefix = true ; it affects git-send-email!
 [color.diff]
 	oldMoved = blue
 	newMoved = blue
 	oldMovedAlternative = blue
 	newMovedAlternative = blue
 [http]
-	cookiefile = /home/mvdan/.config/git/cookies
-
-[includeIf "gitdir:~/src/brankas/"]
-	path = ~/.config/git/config-brankas
+	cookiefile = /home/mvdan/.gitcookies
 [merge]
 	conflictstyle = diff3
 [sendemail]
 	smtpserver = "/usr/bin/msmtp"
 	confirm = auto
+
+[includeIf "gitdir:~/src/brankas/"]
+	path = ~/.config/git/config-brankas
+[includeIf "gitdir:~/src/t/"]
+	path = ~/src/t/.gitconfig
+[includeIf "gitdir:~/src/d/"]
+	path = ~/src/d/.gitconfig

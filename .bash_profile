@@ -10,5 +10,7 @@ export BROWSER=firefox
 export GDK_DPI_SCALE=1.5
 # Make Firefox use pixel-perfect scrolling
 export MOZ_USE_XINPUT2=1
+# Keep Wine quiet by default.
+export WINEDEBUG=-all
 
 [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx

@@ -54,6 +54,7 @@ fni() { find . -iname "$1"; }
 	galias gmr  merge
 	galias gpl  pull
 	galias gps  push
+	galias gpsf push "push --force-with-lease"
 	galias grb  rebase
 	galias grs  reset
 	galias grsh reset "reset --hard"
@@ -88,7 +89,6 @@ alias lt="ls -Alhrt"
 
 alias zs="se $SHELL"
 alias rr="rm -rf"
-alias gh="grep -E <~/.bash_history"
 
 alias cd.="cd .."
 alias cd..="cd ../.."

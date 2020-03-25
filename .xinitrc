@@ -2,6 +2,7 @@ xrandr --dpi 144
 ponymix set-volume 20
 brightnessctl set 40%
 setxkbmap us altgr-intl -option caps:none
+nm-applet --no-agent &
 
 # London
 redshift -l 53.4:-1.6 &

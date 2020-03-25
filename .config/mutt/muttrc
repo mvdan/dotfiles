@@ -119,9 +119,12 @@ mailboxes "=Other"
 mailboxes "=Sent"
 mailboxes "=Drafts"
 mailboxes "=Trash"
+mailboxes "=../riseup/Inbox"
+mailboxes "=../migadu/Inbox"
 mailboxes "=../gmx/Inbox"
 
 folder-hook . "set from = mvdan@mvdan.cc"
+folder-hook migadu/Inbox "set from = dani@migadu.mvdan.cc"
 folder-hook gmx/Inbox "set from = danielmarti@gmx.com"
 
 # set nm_default_uri = "notmuch:///home/mvdan/mail"

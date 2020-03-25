@@ -15,13 +15,13 @@ installs=(
 	golang.org/x/lint/golint
 
 	# mvdan.cc
-	mvdan.cc/sh/cmd/shfmt
+	mvdan.cc/sh/v3/cmd/shfmt@master
+	mvdan.cc/xurls/v2/cmd/xurls@master
 	mvdan.cc/fdroidcl
 	mvdan.cc/goreduce
 	mvdan.cc/unparam
 	mvdan.cc/gogrep
 	mvdan.cc/git-picked
-	mvdan.cc/xurls/v2/cmd/xurls
 	mvdan.cc/gofumpt
 
 	# dev tools
@@ -38,8 +38,7 @@ installs=(
 	github.com/hanwen/go-mtpfs
 	github.com/astaxie/bat
 	github.com/mholt/archiver/cmd/arc
-	github.com/FiloSottile/mkcert
-	cuelang.org/go/cmd/cue
+	cuelang.org/go/cmd/cue@master
 	github.com/gokcehan/lf
 
 	# linters
