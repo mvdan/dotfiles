@@ -99,7 +99,7 @@ set sidebar_format = "%B%?F? [%F]?%* %?N?%N/?%S"
 set mail_check_stats = yes
 set sidebar_divider_char = " "
 set sidebar_visible
-set sidebar_width = 28
+set sidebar_width = 38
 bind index,pager <esc>h sidebar-open
 bind index,pager <esc>k sidebar-prev
 bind index,pager <esc>j sidebar-next

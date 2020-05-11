@@ -34,5 +34,3 @@
 	path = ~/.config/git/config-brankas
 [includeIf "gitdir:~/src/t/"]
 	path = ~/src/t/.gitconfig
-[includeIf "gitdir:~/src/d/"]
-	path = ~/src/d/.gitconfig

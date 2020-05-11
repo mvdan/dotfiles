@@ -182,7 +182,7 @@ vicious.register(iowidget, vicious.widgets.dio, function(widget, args)
 	return txt
 end, 2)
 
-local ifaces = { enp0s25=false, wlan0=false, enp0s20u1=false }
+local ifaces = { ens8u2=false, wlan0=false }
 local netwidget = wibox.widget.textbox()
 vicious.register(netwidget, vicious.widgets.net, function(widget, args)
 	local txt = ""
