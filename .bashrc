@@ -2,7 +2,7 @@
 
 shopt -s globstar
 
-HISTSIZE=32000 HISTFILESIZE=256000
+HISTSIZE=256 HISTFILESIZE=16000
 HISTCONTROL=ignoreboth:erasedups
 shopt -s histappend
 
@@ -32,41 +32,39 @@ cdb() { cd $HOME/src/brankas/*$1; }
 fn() { find . -name "$1"; }
 fni() { find . -iname "$1"; }
 
-[[ -f /usr/share/git/completion/git-completion.bash ]] && {
-	galias() {
-		alias $1="git ${3:-$2}"
-		__git_complete $1 _git_$2
-	}
-	. /usr/share/git/completion/git-completion.bash
-
-	galias gad  add
-	galias gbi  bisect
-	galias gbr  branch
-	galias gcm  commit
-	galias gcp  cherry_pick "cherry-pick"
-	galias gclo clone
-	galias gco  checkout
-	galias gdf  diff
-	galias ggc  gc   "gc --prune=all"
-	galias ggr  grep "grep -InE"
-	galias glo  log  "-c core.pager='less -p \"^commit \"' log"
-	galias glop log  "-c core.pager='less -p \"^commit \"' log -p --format=fuller"
-	galias gmr  merge
-	galias gpl  pull
-	galias gps  push
-	galias gpsf push "push --force-with-lease"
-	galias grb  rebase
-	galias grs  reset
-	galias grsh reset "reset --hard"
-	galias grt  remote
-	galias grv  revert
-	galias gsh  show
-	galias gsm  submodule
-	galias gst  stash "-c core.pager='less -p ^stash' stash"
-
-	__git_complete gbrd _git_branch
-	alias grbc="git rebase --continue"
+_completion_loader git
+galias() {
+	alias $1="git ${3:-$2}"
+	__git_complete $1 _git_$2
 }
+
+galias gad  add
+galias gbi  bisect
+galias gbr  branch
+galias gcm  commit
+galias gcp  cherry_pick "cherry-pick"
+galias gclo clone
+galias gco  checkout
+galias gdf  diff
+galias ggc  gc   "gc --prune=all"
+galias ggr  grep "grep -InE"
+galias glo  log  "-c core.pager='less -p \"^commit \"' log"
+galias glop log  "-c core.pager='less -p \"^commit \"' log -p --format=fuller"
+galias gmr  merge
+galias gpl  pull
+galias gps  push
+galias gpsf push "push --force-with-lease"
+galias grb  rebase
+galias grs  reset
+galias grsh reset "reset --hard"
+galias grt  remote
+galias grv  revert
+galias gsh  show
+galias gsm  submodule
+galias gst  stash "-c core.pager='less -p ^stash' stash"
+
+__git_complete gbrd _git_branch
+alias grbc="git rebase --continue"
 
 alias spc="sudo pacman"
 alias ssi="pacman -Sii"
@@ -232,19 +230,9 @@ alias kce='kc get events --sort-by=.metadata.creationTimestamp'
 
 da() { du -h -d 1 "${@:-.}" | sort -h; }
 
-wakeup() {
-	sudo modprobe -r psmouse
-	sudo modprobe psmouse
-	rfkill unblock wlan
-	sudo systemctl restart netctl-auto@wlan0
-}
-
 case $TERM in
 linux* | cons*) ;;
-*) PS1="\[\033]0;[\w]\007\]" ;;
+*) PS1="\[\033]0;\w\007\]" ;;
 esac
 
-PS1="$PS1[\u@\h:\l] [\${?}] [\${PWD}]
- \$ "
-
-repro() { export PS1='$ '; }
+export PS1="$PS1$ "
