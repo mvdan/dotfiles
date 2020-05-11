@@ -4,6 +4,9 @@ export GOFLAGS="-trimpath"
 export CGO_ENABLED=0
 
 gocmd=${1:-"/usr/bin/go"}
-echo "Using $gocmd"
+version=$(git describe --always --dirty)
 
-gox -gocmd="$gocmd" -ldflags='-w -s' -parallel=2 -output="{{.Dir}}_$(git describe)_{{.OS}}_{{.Arch}}"
+$gocmd version
+echo "Building at $version"
+
+gox -gocmd="$gocmd" -ldflags="-w -s -extldflags '-static' -X 'main.version=$version'" -parallel=2 -output="{{.Dir}}_$(git describe)_{{.OS}}_{{.Arch}}"

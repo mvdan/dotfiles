@@ -17,12 +17,12 @@ installs=(
 	# mvdan.cc
 	mvdan.cc/sh/v3/cmd/shfmt@master
 	mvdan.cc/xurls/v2/cmd/xurls@master
-	mvdan.cc/fdroidcl
-	mvdan.cc/goreduce
-	mvdan.cc/unparam
-	mvdan.cc/gogrep
-	mvdan.cc/git-picked
-	mvdan.cc/gofumpt
+	mvdan.cc/fdroidcl@master
+	mvdan.cc/goreduce@master
+	mvdan.cc/unparam@master
+	mvdan.cc/gogrep@master
+	mvdan.cc/git-picked@master
+	mvdan.cc/gofumpt@master
 
 	# dev tools
 	github.com/dvyukov/go-fuzz/go-fuzz
