@@ -34,3 +34,7 @@
 	path = ~/.config/git/config-brankas
 [includeIf "gitdir:~/src/t/"]
 	path = ~/src/t/.gitconfig
+[pull]
+	rebase = merges
+[fetch]
+	parallel = 8
