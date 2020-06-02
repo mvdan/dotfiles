@@ -390,7 +390,7 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey, altkey }, "Up", function() awful.spawn("slock") end),
 	awful.key({ modkey, altkey }, "h", function() awful.spawn(terminal .. " -r ssh -e 'ssh shark.mvdan.cc -t tmux -u a'") end),
 	awful.key({ modkey, altkey }, "j", function() awful.spawn(terminal .. " -r mutt -e neomutt") end),
-	awful.key({ modkey, altkey }, "k", function() awful.spawn(terminal .. " -r lf -e lf") end),
+	awful.key({ modkey, altkey }, "k", function() awful.spawn(terminal .. " -r nnn -e nnn") end),
 	awful.key({ modkey, altkey }, "n", function() awful.spawn(terminal .. " -r ncmpc -e ncmpc") end),
 	awful.key({ modkey, altkey }, "e", function() awful.spawn(terminal .. " -e 'vim Documents/TODO.txt'") end),
 
@@ -525,7 +525,7 @@ awful.rules.rules = {
 	{ rule = { class = "Telegram" }, properties = { tag = "6" } },
 	{ rule = { class = "Slack" }, properties = { tag = "7" } },
 	{ rule = { class = "Firefox" }, properties = { tag = "8" } },
-	{ rule = { role = "lf" }, properties = { tag = "9" } },
+	{ rule = { role = "nnn" }, properties = { tag = "9" } },
 	{ rule = { role = "ncmpc" }, properties = { tag = "0" } },
 }
 
