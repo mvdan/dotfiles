@@ -5,6 +5,7 @@ shopt -s globstar
 HISTSIZE=256 HISTFILESIZE=16000
 HISTCONTROL=ignoreboth:erasedups
 shopt -s histappend
+gh() { grep "$@" ~/.bash_history; history -d $((HISTCMD-1)); }
 
 alias l="less"
 alias s="sudo"
@@ -77,9 +78,6 @@ alias sc="sudo systemctl"
 alias scu="systemctl --user"
 alias jc="journalctl"
 
-alias wifi-down="sudo systemctl stop netctl-auto@wlan0"
-alias wifi-up="sudo systemctl start netctl-auto@wlan0"
-
 alias ls="ls -F"
 alias ll="ls -lhiF"
 alias la="ls -alhiF"
@@ -101,8 +99,6 @@ alias gb="go build -v"
 alias gi="go install -v"
 alias gt="go test"
 alias gts="go test -vet=off -short -timeout 10s"
-gim() { goimports -l -w ${@:-*.go}; }
-gfm() { gofumpt -s -l -w ${@:-*.go}; }
 
 gcov() {
 	local commas=$(IFS=,; echo "$*")
@@ -128,6 +124,8 @@ gtoolbench() {
 	benchstat old new
 }
 
+gim() { goimports -l -w ${@:-*.go}; }
+gfm() { gofumpt -s -l -w ${@:-*.go}; }
 sfm() { shfmt -s -l -w ${@:-.}; }
 
 alias ssm="pacman -Ss"
@@ -169,9 +167,7 @@ go-modules() {
 	find . \( -name vendor -o -name '[._].*' -o -name node_modules \) -prune -o -name go.mod -print | sed 's:/go.mod$::'
 }
 
-git-file-sizes() {
-	git ls-files -z | xargs -0 du -b | sort -n
-}
+git-file-sizes() { git ls-files -z | xargs -0 du -b | sort -n; }
 
 gprc() {
 	if git config remote.mvdan.url >/dev/null; then
@@ -187,6 +183,7 @@ gprc() {
 		hub pull-request -f "$@"
 	fi
 }
+gmrc() { git push -u origin -o merge_request.create; }
 alias gml="git-codereview mail"
 
 alias ssh="TERM=xterm ssh"
@@ -194,11 +191,7 @@ alias weeserv="ssh shark.mvdan.cc -t TERM=screen-256color LANG=en_US.UTF-8 tmux 
 
 alias rsv="rsync -avh --info=progress2"
 
-alias scn="sudo systemctl restart netctl-auto@wlan0"
-
 alias clb='curl -F "clbin=<-" https://clbin.com'
-alias ncl="sudo netctl"
-alias nca="TERM=dumb sudo netctl-auto"
 alias bat='bat --pretty=false'
 alias unr='arc unarchive'
 
@@ -208,16 +201,6 @@ kcc() {
 		kc config get-contexts
 	else
 		kc config use-context "$@"
-	fi
-}
-alias tf='terraform'
-
-alias gcl='gcloud'
-gclc() {
-	if [[ $# -eq 0 ]]; then
-		gcl config configurations list
-	else
-		gcl config configurations activate "$@"
 	fi
 }
 
