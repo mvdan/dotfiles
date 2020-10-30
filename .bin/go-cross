@@ -19,8 +19,8 @@ echo "Building version ${version} with $($gocmd version)"
 while read goos goarch; do
 	(
 		export GOOS=$goos GOARCH=$goarch
-		out="${dir}_${version}_${goos}_${goarch}$(go env GOEXE)"
-		go build -trimpath -ldflags="-w -s -X 'main.version=${version}'" -o="${out}"
+		out="${dir}_${version}_${goos}_${goarch}$($gocmd env GOEXE)"
+		$gocmd build -trimpath -ldflags="-w -s -X 'main.version=${version}'" -o="${out}"
 		echo $out
 	) &
 done <<-EOF # Hard-code the list for now, until https://golang.org/issues/38874 is fixed.
