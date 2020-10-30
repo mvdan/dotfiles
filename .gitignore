@@ -4,6 +4,7 @@
 /.config/*
 !/.config/awesome/
 !/.config/chromium-flags.conf
+!/.config/environment.d/
 !/.config/git/
 !/.config/go/
 !/.config/mpd/
