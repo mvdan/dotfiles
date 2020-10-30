@@ -1,4 +1,4 @@
-xrandr --dpi 144
+#xrandr --dpi 144
 ponymix set-volume 20
 brightnessctl set 40%
 setxkbmap us altgr-intl -option caps:none

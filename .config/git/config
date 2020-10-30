@@ -30,8 +30,6 @@
 	smtpserver = "/usr/bin/msmtp"
 	confirm = auto
 
-[includeIf "gitdir:~/src/brankas/"]
-	path = ~/.config/git/config-brankas
 [includeIf "gitdir:~/src/t/"]
 	path = ~/src/t/.gitconfig
 [pull]

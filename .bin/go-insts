@@ -12,7 +12,6 @@ installs=(
 	golang.org/x/tools/cmd/compilebench
 	golang.org/x/tools/cmd/godoc
 	golang.org/x/perf/cmd/benchstat
-	golang.org/x/lint/golint
 
 	# mvdan.cc
 	mvdan.cc/sh/v3/cmd/shfmt@master
@@ -27,7 +26,6 @@ installs=(
 	# dev tools
 	github.com/dvyukov/go-fuzz/go-fuzz
 	github.com/dvyukov/go-fuzz/go-fuzz-build
-	github.com/mitchellh/gox
 	github.com/aclements/perflock/cmd/perflock
 	github.com/aclements/go-misc/benchcmd
 	github.com/rogpeppe/go-internal/cmd/testscript
@@ -35,11 +33,10 @@ installs=(
 	github.com/rogpeppe/gohack
 
 	# misc
-	github.com/hanwen/go-mtpfs
+	# github.com/hanwen/go-mtpfs
 	github.com/astaxie/bat
 	github.com/mholt/archiver/cmd/arc
 	cuelang.org/go/cmd/cue@master
-	github.com/gokcehan/lf
 
 	# linters
 	github.com/mdempsky/unconvert

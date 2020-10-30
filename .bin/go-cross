@@ -1,9 +1,17 @@
 #!/bin/bash
 
 # go-cross [go binary] [version]
+#
+# go-cross builds the main package under the current directory for all the first
+# class Go ports. The optional parameters configure which Go command to build
+# with, and a version override.
+#
+# This script is meant to be simple. If you need more, copy and adapt it.
+
+export CGO_ENABLED=0
 
 gocmd=${1:-"go"}
-version=${2:-$(git describe --always --dirty --tags)}
+version=${2:-"$(git describe --always --dirty --tags)"}
 dir=$(basename "$PWD")
 
 echo "Building version ${version} with $($gocmd version)"
@@ -12,7 +20,7 @@ while read goos goarch; do
 	(
 		export GOOS=$goos GOARCH=$goarch
 		out="${dir}_${version}_${goos}_${goarch}$(go env GOEXE)"
-		GOOS=$goos GOARCH=$goarch CGO_ENABLED=0 go build -trimpath -ldflags="-w -s -X 'main.version=${version}'" -o=${out}
+		go build -trimpath -ldflags="-w -s -X 'main.version=${version}'" -o="${out}"
 		echo $out
 	) &
 done <<-EOF # Hard-code the list for now, until https://golang.org/issues/38874 is fixed.

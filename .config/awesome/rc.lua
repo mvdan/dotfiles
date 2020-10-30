@@ -146,7 +146,7 @@ do
 end
 
 local function volume_inc(increasing)
-	local num = 5
+	local num = 3
 	if not increasing then
 		num = -num
 	end
@@ -243,10 +243,10 @@ local function flip_imap()
 	end
 end
 
-gears.timer.start_new(60, function() imap_sync(); return true; end)
-gears.timer.start_new(5, function() mdir_update(); return true; end)
+--gears.timer.start_new(60, function() imap_sync(); return true; end)
+--gears.timer.start_new(5, function() mdir_update(); return true; end)
 
-mdir_update()
+--mdir_update()
 
 local cat_keyboard = false
 
@@ -306,26 +306,26 @@ awful.screen.connect_for_each_screen(function(s)
 		},
 	}
 
-	s.botwibox = awful.wibar({ position = "bottom", screen = s })
-	s.botwibox:setup {
-		layout = wibox.layout.fixed.horizontal,
-		sep,
-		cpuwidget,
-		sep,
-		batwidget,
-		sep,
-		blwidget,
-		sep,
-		volwidget,
-		sep,
-		memwidget,
-		sep,
-		iowidget,
-		sep,
-		netwidget,
-		sep,
-		mdirwidget,
-	}
+	--s.botwibox = awful.wibar({ position = "bottom", screen = s })
+	--s.botwibox:setup {
+	--	layout = wibox.layout.fixed.horizontal,
+	--	sep,
+	--	cpuwidget,
+	--	sep,
+	--	batwidget,
+	--	sep,
+	--	blwidget,
+	--	sep,
+	--	volwidget,
+	--	sep,
+	--	memwidget,
+	--	sep,
+	--	iowidget,
+	--	sep,
+	--	netwidget,
+	--	sep,
+	--	mdirwidget,
+	--}
 end)
 
 globalkeys = awful.util.table.join(
@@ -354,7 +354,8 @@ globalkeys = awful.util.table.join(
 
 	awful.key({ modkey, }, "Return", function() awful.spawn(terminal) end),
 	awful.key({ modkey, "Control" }, "r", awesome.restart, {group = "awesome"}),
-	awful.key({ modkey, "Shift" }, "q", awesome.quit, {group = "awesome"}),
+	-- awful.key({ modkey, "Shift" }, "q", awesome.quit, {group = "awesome"}),
+	awful.key({ modkey, "Shift" }, "p", awesome.quit, {group = "awesome"}),
 
 	awful.key({ modkey, }, "l", function() awful.tag.incmwfact( 0.05) end,
 		{group = "layout"}),
@@ -389,7 +390,7 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey, altkey }, "/", function() awful.spawn("mpc toggle") end),
 	awful.key({ modkey, altkey }, "Up", function() awful.spawn("slock") end),
 	awful.key({ modkey, altkey }, "h", function() awful.spawn(terminal .. " -r ssh -e 'ssh shark.mvdan.cc -t tmux -u a'") end),
-	awful.key({ modkey, altkey }, "j", function() awful.spawn(terminal .. " -r mutt -e neomutt") end),
+	awful.key({ modkey, altkey }, "j", function() awful.spawn(terminal .. " -r neomutt -e neomutt") end),
 	awful.key({ modkey, altkey }, "k", function() awful.spawn(terminal .. " -r nnn -e nnn") end),
 	awful.key({ modkey, altkey }, "n", function() awful.spawn(terminal .. " -r ncmpc -e ncmpc") end),
 	awful.key({ modkey, altkey }, "e", function() awful.spawn(terminal .. " -e 'vim Documents/TODO.txt'") end),
@@ -435,6 +436,8 @@ clientkeys = awful.util.table.join(
 			c:raise()
 		end, {group = "client"}),
 	awful.key({ modkey, "Shift" }, "c", function(c) c:kill() end,
+		{group = "client"}),
+	awful.key({ modkey, "Shift" }, "q", function(c) c:kill() end,
 		{group = "client"}),
 	awful.key({ modkey, "Control" }, "space", awful.client.floating.toggle,
 		{group = "client"}),

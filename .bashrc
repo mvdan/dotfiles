@@ -2,10 +2,9 @@
 
 shopt -s globstar
 
-HISTSIZE=256 HISTFILESIZE=16000
+HISTSIZE=8192 HISTFILESIZE=32000
 HISTCONTROL=ignoreboth:erasedups
 shopt -s histappend
-gh() { grep "$@" ~/.bash_history; history -d $((HISTCMD-1)); }
 
 alias l="less"
 alias s="sudo"
@@ -27,12 +26,10 @@ cdc() {
 }
 
 pgr() { ps aux | grep -v grep | grep -iE "$@"; }
+alias rg="rg --no-heading --max-columns=150 --max-columns-preview"
 
-cdb() { cd $HOME/src/brankas/*$1; }
-
-fn() { find . -name "$1"; }
-fni() { find . -iname "$1"; }
-
+source /usr/share/fzf/key-bindings.bash
+source /usr/share/fzf/completion.bash
 _completion_loader git
 galias() {
 	alias $1="git ${3:-$2}"
@@ -52,7 +49,7 @@ galias ggr  grep "grep -InE"
 galias glo  log  "-c core.pager='less -p \"^commit \"' log"
 galias glop log  "-c core.pager='less -p \"^commit \"' log -p --format=fuller"
 galias gmr  merge
-galias gpl  pull
+galias gpl  pull "pull --stat"
 galias gps  push
 galias gpsf push "push --force-with-lease"
 galias grb  rebase
@@ -100,9 +97,15 @@ alias gi="go install -v"
 alias gt="go test"
 alias gts="go test -vet=off -short -timeout 10s"
 
+gstr() {
+	if [[ $# == 0 || $1 == help ]]; then
+		echo "gstr [stress flags] ./test [test flags]"
+		return
+	fi
+	go test -c -vet=off -o test && stress "$@"
+}
 gcov() {
-	local commas=$(IFS=,; echo "$*")
-	go test -coverpkg=$commas $@ -coverprofile=/tmp/c
+	go test -coverpkg=./... "$@" -coverprofile=/tmp/c
 	go tool cover -html=/tmp/c
 }
 
@@ -131,7 +134,6 @@ sfm() { shfmt -s -l -w ${@:-.}; }
 alias ssm="pacman -Ss"
 alias syu="sudo pacman -Syu"
 alias ssk="yay -Ss"
-alias sik="yay -S --needed"
 
 alias gca="gcm -a"
 alias gcam="gcm -a --amend"
@@ -217,4 +219,4 @@ linux* | cons*) ;;
 *) PS1="\[\033]0;\w\007\]" ;;
 esac
 
-export PS1="$PS1$ "
+export PS1='\$ '
