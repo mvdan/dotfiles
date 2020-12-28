@@ -23,7 +23,7 @@ exec gammastep >/tmp/gammastep.log 2>&1
 
 ### Output configuration
 
-output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+output * background #202025 solid_color
 
 default_border pixel 1
 default_floating_border normal
