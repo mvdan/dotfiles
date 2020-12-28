@@ -1,48 +1,41 @@
 #!/bin/bash
 
-installs=(
-	# golang.org
-	golang.org/x/review/git-codereview
-	golang.org/x/tools/cmd/goimports
-	golang.org/x/tools/cmd/present
-	golang.org/x/tools/cmd/stress
-	golang.org/x/tools/cmd/stringer
-	golang.org/x/tools/cmd/bundle
-	golang.org/x/tools/cmd/toolstash
-	golang.org/x/tools/cmd/compilebench
-	golang.org/x/tools/cmd/godoc
-	golang.org/x/perf/cmd/benchstat
+install() {
+	go install -ldflags="-w -s" "$@" &
+}
 
-	# mvdan.cc
-	mvdan.cc/sh/v3/cmd/shfmt@master
-	mvdan.cc/xurls/v2/cmd/xurls@master
-	mvdan.cc/fdroidcl@master
-	mvdan.cc/goreduce@master
-	mvdan.cc/unparam@master
-	mvdan.cc/gogrep@master
-	mvdan.cc/git-picked@master
-	mvdan.cc/gofumpt@master
+# golang.org
+install golang.org/x/review/git-codereview@master
+install golang.org/x/tools/cmd/{goimports,present,stress,stringer,bundle,toolstash,compilebench,godoc}@master
+install golang.org/x/perf/cmd/benchstat@master
 
-	# dev tools
-	github.com/dvyukov/go-fuzz/go-fuzz
-	github.com/dvyukov/go-fuzz/go-fuzz-build
-	github.com/aclements/perflock/cmd/perflock
-	github.com/aclements/go-misc/benchcmd
-	github.com/rogpeppe/go-internal/cmd/testscript
-	github.com/rogpeppe/go-internal/cmd/txtar-addmod
-	github.com/rogpeppe/gohack
+# mvdan.cc
+install mvdan.cc/sh/v3/cmd/shfmt@master
+install mvdan.cc/xurls/v2/cmd/xurls@master
+install mvdan.cc/fdroidcl@master
+install mvdan.cc/unparam@master
+install mvdan.cc/gogrep@master
+install mvdan.cc/git-picked@master
+install mvdan.cc/gofumpt@master
+# install mvdan.cc/goreduce@master
 
-	# misc
-	# github.com/hanwen/go-mtpfs
-	github.com/astaxie/bat
-	github.com/mholt/archiver/cmd/arc
-	cuelang.org/go/cmd/cue@master
+# dev tools
+install github.com/dvyukov/go-fuzz/go-fuzz@master
+install github.com/dvyukov/go-fuzz/go-fuzz-build@master
+install github.com/aclements/perflock/cmd/perflock@master
+install github.com/aclements/go-misc/benchcmd@master
+install github.com/rogpeppe/go-internal/cmd/{testscript,txtar-addmod}@master
 
-	# linters
-	github.com/mdempsky/unconvert
-	github.com/mdempsky/maligned
-	github.com/mibk/dupl
-	honnef.co/go/tools/cmd/staticcheck@master
-)
+# misc
+# install github.com/hanwen/go-mtpfs@latest
+install github.com/astaxie/bat@latest
+install github.com/mholt/archiver/cmd/arc@latest
+install cuelang.org/go/cmd/cue@master
 
-GO111MODULE=on go get -ldflags="-w -s" "${installs[@]}" || exit 1
+# linters
+install github.com/mdempsky/unconvert@latest
+install github.com/mdempsky/maligned@latest
+install github.com/mibk/dupl@latest
+install honnef.co/go/tools/cmd/staticcheck@master
+
+wait
