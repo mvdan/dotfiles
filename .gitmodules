@@ -19,3 +19,6 @@
 [submodule ".vim/pack/plugins/start/surround"]
 	path = .vim/pack/plugins/start/surround
 	url = https://github.com/tpope/vim-surround
+[submodule ".vim/pack/plugins/start/govim"]
+	path = .vim/pack/plugins/start/govim
+	url = https://github.com/govim/govim

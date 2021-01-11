@@ -184,7 +184,7 @@ gprc() {
 		hub pull-request -f "$@"
 	fi
 }
-gmrc() { git push -u origin -o merge_request.create; }
+gmrc() { git push -u origin -o merge_request.create "$@"; }
 alias gml="git-codereview mail"
 
 alias ssh="TERM=xterm ssh"
