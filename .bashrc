@@ -178,11 +178,14 @@ gprc() {
 		git push -u origin || return 1
 	fi
 	if [[ $(git rev-list --count HEAD ^origin/master) == 1 ]]; then
-		hub pull-request -f --no-edit "$@"
+		gh pr create --title="$(git show -s --format=%s)" --body="(see commit message)"
 	else
 		# Edit the PR body if there are many commits.
-		hub pull-request -f "$@"
+		gh pr create --body="(see commit message)" --web
 	fi
+}
+gfork() {
+	gh repo fork --remote --remote-name mvdan
 }
 gmrc() { git push -u origin -o merge_request.create "$@"; }
 alias gml="git-codereview mail"
