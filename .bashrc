@@ -60,6 +60,7 @@ galias grv  revert
 galias gsh  show
 galias gsm  submodule
 galias gst  stash "-c core.pager='less -p ^stash' stash"
+galias gw   switch
 
 __git_complete gbrd _git_branch
 alias grbc="git rebase --continue"
@@ -87,8 +88,13 @@ alias cd.="cd .."
 alias cd..="cd ../.."
 alias cd...="cd ../../.."
 
-alias go1="/usr/bin/go"
-withgo1() { PATH=${PATH//$HOME\/tip\/bin/} "$@"; }
+wgo1() { PATH=/usr/bin:${PATH} "$@"; }
+wgo() {
+	local gocmd=go${1}
+	shift
+
+	PATH=$(${gocmd} env GOROOT)/bin:${PATH} "$@"
+}
 
 alias gg="go get -u"
 alias gd="go get -u -d"
@@ -191,8 +197,6 @@ gmrc() { git push -u origin -o merge_request.create "$@"; }
 alias gml="git-codereview mail"
 
 alias ssh="TERM=xterm ssh"
-alias weeserv="ssh shark.mvdan.cc -t TERM=screen-256color LANG=en_US.UTF-8 tmux -u new weechat"
-
 alias rsv="rsync -avh --info=progress2"
 
 alias clb='curl -F "clbin=<-" https://clbin.com'
