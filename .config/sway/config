@@ -32,8 +32,8 @@ hide_edge_borders smart
 ### Idle configuration
 
 exec swayidle -w \
-	timeout 300 '$lock -f' \
-	timeout 600 'swaymsg "output * dpms off"' \
+	timeout 600 '$lock -f' \
+	timeout 660 'swaymsg "output * dpms off"' \
 	resume 'swaymsg "output * dpms on"' \
 	before-sleep '$lock -f'
 
@@ -219,8 +219,8 @@ bindsym $mod+r mode "resize"
 
 # Multimedia
 
-bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +3dB
-bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -3dB
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +2dB
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -2dB
 bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
 bindsym XF86MonBrightnessDown exec brightnessctl --exponent=2 set 5%-
@@ -260,7 +260,7 @@ bar {
 	id top
 	position top
 
-	status_command i3status-rs
+	swaybar_command waybar
 	font pango:Inconsolata 16
 
 	colors {
