@@ -76,21 +76,14 @@ set crypt_use_pka = no
 set crypt_autosign = no
 set crypt_autoencrypt = no
 set crypt_autopgp = yes 
-set pgp_sign_as = 4348041C
 
 set pgp_timeout = 1800
 set pgp_verify_sig
 set pgp_auto_decode
 set pgp_use_gpg_agent = yes
 
-# Sign replies to signed emails
-set crypt_replysign = yes
-
 # Encrypt replies to encrypted emails
 set crypt_replyencrypt = yes
-
-# Encrypt and sign replies to encrypted and signed email
-set crypt_replysignencrypted = yes
 
 # Attempt to verify signatures automatically
 set crypt_verify_sig = yes
