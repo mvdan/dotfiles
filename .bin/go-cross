@@ -29,6 +29,7 @@ done <<-EOF # Hard-code the list for now, until https://golang.org/issues/38874 
 	linux arm
 	linux arm64
 	darwin amd64
+	darwin arm64
 	windows amd64
 	windows 386
 EOF
