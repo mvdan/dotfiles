@@ -7,6 +7,8 @@
 	askpass = /bin/true
 [push]
 	default = current
+[checkout]
+	defaultRemote = origin
 [commit]
 	verbose = true
 [rebase]
