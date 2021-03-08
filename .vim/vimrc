@@ -67,8 +67,8 @@ nnoremap <space> :noh<cr>:echo<cr><esc>
 inoremap <F8> Daniel Martí <mvdan@mvdan.cc>
 
 " Extras useful for govim.
-set mouse=a
-set ttymouse=sgr
+" set mouse=a
+" set ttymouse=sgr
 set updatetime=500
 set balloondelay=250
 set signcolumn=number
@@ -80,3 +80,13 @@ if has("patch-8.1.1904")
 	set completeopt+=popup
 	set completepopup=align:menu,border:off,highlight:Pmenu
 endif
+
+packadd govim
+let $GOVIM_GOPLS_FLAGS="-remote=auto; -remote.listen.timeout=5m"
+" call govim#config#Set("QuickfixAutoDiagnostics", 0)
+" call govim#config#Set("QuickfixSigns", 0)
+call govim#config#Set("HighlightDiagnostics", 0)
+call govim#config#Set("HighlightReferences", 0)
+call govim#config#Set("HoverDiagnostics", 0)
+" call govim#config#Set("CompletionDeepCompletions", 0)
+" call govim#config#Set("CompleteUnimported", 0)
