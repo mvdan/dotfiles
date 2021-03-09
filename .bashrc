@@ -96,8 +96,8 @@ wgo() {
 	PATH=$(${gocmd} env GOROOT)/bin:${PATH} "$@"
 }
 
-alias gg="go get -u"
-alias gd="go get -u -d"
+alias gg="go get"
+alias gd="go get -d"
 alias gb="go build -v"
 alias gi="go install -v"
 alias gt="go test"
