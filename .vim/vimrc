@@ -81,8 +81,8 @@ if has("patch-8.1.1904")
 	set completepopup=align:menu,border:off,highlight:Pmenu
 endif
 
-packadd govim
 let $GOVIM_GOPLS_FLAGS="-remote=auto; -remote.listen.timeout=5m"
+packadd govim
 " call govim#config#Set("QuickfixAutoDiagnostics", 0)
 " call govim#config#Set("QuickfixSigns", 0)
 call govim#config#Set("HighlightDiagnostics", 0)
