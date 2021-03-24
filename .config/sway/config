@@ -237,15 +237,15 @@ bindsym $mod+Alt+slash exec mpc toggle
 
 bindsym $mod+Alt+h exec $term -r ssh -e 'ssh shark.mvdan.cc -t tmux -u a'
 bindsym $mod+Alt+j exec $term -r neomutt -e neomutt
-bindsym $mod+Alt+k exec $term -r nnn -e nnn
+bindsym $mod+Alt+k exec $term -r lf -e lf
 bindsym $mod+Alt+n exec $term -r ncmpc -e ncmpc
 bindsym $mod+Alt+e exec $term -r todo -e 'bash -c "sleep 0.1; vim Documents/TODO.txt"'
 bindsym $mod+Alt+i exec firefox
 
 # Other custom binds
 
-bindsym $mod+g exec grim
-bindsym $mod+Shift+g exec slurp | grim -g -
+bindsym $mod+g exec grim - | swappy -f -
+bindsym $mod+Shift+g exec grim -g "$(slurp)" - | swappy -f -
 bindsym $mod+Alt+m exec systemctl --user start mbsync
 
 font pango:Inconsolata 16
