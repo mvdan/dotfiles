@@ -41,11 +41,8 @@ galias gbi  bisect
 galias gbr  branch
 galias gcm  commit
 galias gcp  cherry_pick "cherry-pick"
-galias gclo clone
 galias gco  checkout
 galias gdf  diff
-galias ggc  gc   "gc --prune=all"
-galias ggr  grep "grep -InE"
 galias glo  log  "-c core.pager='less -p \"^commit \"' log"
 galias glop log  "-c core.pager='less -p \"^commit \"' log -p --format=fuller"
 galias gmr  merge
@@ -63,7 +60,10 @@ galias gst  stash "-c core.pager='less -p ^stash' stash"
 galias gw   switch
 
 __git_complete gbrd _git_branch
+alias gclo="git clone"
 alias grbc="git rebase --continue"
+alias ggc="git gc --prune=all"
+alias ggr="git grep -InE"
 
 alias spc="sudo pacman"
 alias ssi="pacman -Sii"
@@ -187,7 +187,7 @@ gprc() {
 		gh pr create --title="$(git show -s --format=%s)" --body="(see commit message)"
 	else
 		# Edit the PR body if there are many commits.
-		gh pr create --body="(see commit message)" --web
+		gh pr create --title="TODO" --body="(see commit messages - please do not squash)" --web
 	fi
 }
 gfork() {
