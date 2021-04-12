@@ -117,11 +117,11 @@ gcov() {
 
 gbench() {
 	if [[ $# == 0 || $1 == help ]]; then
-		echo "gbench [cur] [.] [6] [1s]"
+		echo "gbench [cur] [.] [6] [1s] [flags]"
 		return
 	fi
 	perflock -governor=70% go test . -run='^$' -vet=off -bench=${2:-.} \
-		-count=${3:-6} -benchtime=${4:-1s} | tee ${1:-cur} | grep -v :
+		-count=${3:-6} -benchtime=${4:-1s} ${@:5} | tee ${1:-cur} | grep -v :
 }
 
 alias gtoolcmp='go build -toolexec "toolstash -cmp" -a -v std cmd'
