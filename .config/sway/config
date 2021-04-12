@@ -18,8 +18,9 @@ set $lock swaylock -c 323232
 ### Daemons
 
 exec mako >/tmp/mako.log 2>&1
+exec poweralertd >/tmp/poweralertd.log 2>&1
 exec kanshi >/tmp/kanshi.log 2>&1
-exec gammastep >/tmp/gammastep.log 2>&1
+exec wlsunset -l 53.5 -L -2.1 >/tmp/wlsunset.log 2>&1
 
 ### Output configuration
 
