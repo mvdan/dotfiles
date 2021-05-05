@@ -183,7 +183,7 @@ gprc() {
 		# No fork present, so assume we are the only owner.
 		git push -u origin || return 1
 	fi
-	if [[ $(git rev-list --count HEAD ^origin/master) == 1 ]]; then
+	if [[ $(git rev-list --count HEAD ^origin/HEAD) == 1 ]]; then
 		gh pr create --title="$(git show -s --format=%s)" --body="(see commit message)"
 	else
 		# Edit the PR body if there are many commits.
