@@ -22,3 +22,6 @@
 [submodule ".vim/pack/plugins/start/govim"]
 	path = .vim/pack/plugins/start/govim
 	url = https://github.com/govim/govim
+[submodule ".vim/pack/plugins/start/unimpaired"]
+	path = .vim/pack/plugins/start/unimpaired
+	url = https://github.com/tpope/vim-unimpaired
