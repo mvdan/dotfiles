@@ -2,9 +2,9 @@
 !/.*
 *.d/
 /.config/*
-!/.config/awesome/
 !/.config/chromium-flags.conf
 !/.config/environment.d/
+!/.config/foot/
 !/.config/git/
 !/.config/go/
 !/.config/mpd/
@@ -12,6 +12,7 @@
 !/.config/mutt/
 !/.config/ncmpc/
 !/.config/notmuch/
+!/.config/sway/
 !/.config/zathura/
 
 /.gnupg/*.gpg*
