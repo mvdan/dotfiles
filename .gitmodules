@@ -25,3 +25,6 @@
 [submodule ".vim/pack/plugins/start/unimpaired"]
 	path = .vim/pack/plugins/start/unimpaired
 	url = https://github.com/tpope/vim-unimpaired
+[submodule ".vim/pack/plugins/start/oscyank"]
+	path = .vim/pack/plugins/start/oscyank
+	url = https://github.com/ojroques/vim-oscyank
