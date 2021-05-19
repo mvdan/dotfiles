@@ -40,6 +40,9 @@ au BufReadPost fugitive://* set bufhidden=delete
 
 let mapleader = ","
 
+" Copy the selection into the clipboard via OSC52.
+vnoremap <leader>c :OSCYank<CR>
+
 nnoremap <F9> 3<C-W><
 nnoremap <F10> 3<C-W>+
 nnoremap <F11> 3<C-W>-

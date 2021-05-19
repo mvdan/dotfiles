@@ -45,6 +45,7 @@ set certificate_file = ~/.config/mutt/certificates
 set mailcap_path = ~/.config/mutt/mailcap
 set header_cache = ~/.config/mutt/headercache
 set tmpdir = ~/.cache
+unset signature
 
 set auto_tag
 set fast_reply
@@ -56,7 +57,7 @@ set sleep_time = 0
 set narrow_tree
 folder-hook . set sort = threads
 folder-hook Sent set sort = date-sent
-folder-hook Spam set sort = date-received
+folder-hook Junk set sort = date-received
 
 ignore *
 unignore from date subject to cc x-mailing-list
@@ -97,7 +98,7 @@ bind index,pager <esc>h sidebar-open
 bind index,pager <esc>k sidebar-prev
 bind index,pager <esc>j sidebar-next
 color sidebar_new yellow default
-macro index,pager <esc>a <change-folder>=Spam<enter>
+macro index,pager <esc>a <change-folder>=Junk<enter>
 macro index,pager <esc>s <change-folder>=Sent<enter>
 macro index,pager <esc>d <change-vfolder>All<enter>
 
@@ -112,13 +113,11 @@ mailboxes "=Other"
 mailboxes "=../protocol/Inbox"
 mailboxes "=../gmx/Inbox"
 mailboxes "=../riseup/Inbox"
-mailboxes "=../migadu/Inbox"
 mailboxes "=Sent"
 mailboxes "=Drafts"
 mailboxes "=Trash"
 
 folder-hook . "set from = mvdan@mvdan.cc"
-folder-hook migadu/Inbox "set from = dani@migadu.mvdan.cc"
 folder-hook gmx/Inbox "set from = danielmarti@gmx.com"
 
 # set nm_default_uri = "notmuch:///home/mvdan/mail"

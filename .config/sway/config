@@ -230,11 +230,10 @@ bindsym $mod+Alt+slash exec mpc toggle
 
 # Apps
 
-bindsym $mod+Alt+h exec $term -r ssh -e 'ssh shark.mvdan.cc -t tmux -u a'
-bindsym $mod+Alt+j exec $term -r neomutt -e neomutt
-bindsym $mod+Alt+k exec $term -r lf -e lf
-bindsym $mod+Alt+n exec $term -r ncmpc -e ncmpc
-bindsym $mod+Alt+e exec $term -r todo -e 'bash -c "sleep 0.1; vim Documents/TODO.txt"'
+bindsym $mod+Alt+j exec $term --app-id=neomutt neomutt
+bindsym $mod+Alt+k exec $term --app-id=lf lf
+bindsym $mod+Alt+n exec $term --app-id=ncmpc ncmpc
+bindsym $mod+Alt+e exec $term --app-id=todo bash -c "sleep 0.1; vim Documents/TODO.txt"
 bindsym $mod+Alt+i exec firefox
 
 # Other custom binds
@@ -277,7 +276,9 @@ exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DE
 
 ### Daemons
 
-exec mako >/tmp/mako.log 2>&1
-exec poweralertd >/tmp/poweralertd.log 2>&1
-exec kanshi >/tmp/kanshi.log 2>&1
-exec wlsunset -l 53.5 -L -2.1 >/tmp/wlsunset.log 2>&1
+# Use "exec exec" to avoid keeping a shell process around.
+
+exec exec mako >/tmp/mako.log 2>&1
+exec exec poweralertd >/tmp/poweralertd.log 2>&1
+exec exec kanshi >/tmp/kanshi.log 2>&1
+exec exec wlsunset -l 53.5 -L -2.1 >/tmp/wlsunset.log 2>&1

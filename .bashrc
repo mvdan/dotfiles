@@ -226,4 +226,4 @@ linux* | cons*) ;;
 *) PS1="\[\033]0;\w\007\]" ;;
 esac
 
-export PS1='\$ '
+export PS1+='\$ '
