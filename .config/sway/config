@@ -238,8 +238,9 @@ bindsym $mod+Alt+i exec firefox
 
 # Other custom binds
 
-bindsym $mod+g exec grim - | swappy -f -
-bindsym $mod+Shift+g exec grim -g "$(slurp)" - | swappy -f -
+bindsym $mod+g exec grim - | swappy -f -                     # all displays + swappy
+bindsym $mod+Shift+g exec grim -g "$(slurp)" - | swappy -f - # slurp + swappy
+bindsym $mod+Alt+g exec cd /tmp && grim                      # current dislay + /tmp
 bindsym $mod+Alt+m exec systemctl --user start mbsync
 
 font pango:Inconsolata 16
