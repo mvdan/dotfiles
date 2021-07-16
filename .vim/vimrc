@@ -43,6 +43,10 @@ let mapleader = ","
 " Copy the selection into the clipboard via OSC52.
 vnoremap <leader>c :OSCYank<CR>
 
+" Paste from Wayland, until Vim supports it natively.
+" See: https://github.com/vim/vim/issues/5157
+noremap <leader>p o<esc>:set paste<cr>:.!wl-paste<cr>:set nopaste<cr>
+
 nnoremap <F9> 3<C-W><
 nnoremap <F10> 3<C-W>+
 nnoremap <F11> 3<C-W>-

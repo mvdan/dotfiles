@@ -33,6 +33,8 @@ alternates "mvdan@mvdan.cc|danielmarti@gmx.com|daniel.marti@protocol.ai"
 set record = +Sent
 
 set trash = +Trash
+folder-hook . set trash = +Trash
+folder-hook Junk unset trash
 bind index D purge-message
 
 set query_command = "abook --mutt-query '%s'"
