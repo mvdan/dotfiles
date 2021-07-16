@@ -30,6 +30,11 @@ alias rg="rg --no-heading --max-columns=150 --max-columns-preview"
 
 source /usr/share/fzf/key-bindings.bash
 source /usr/share/fzf/completion.bash
+
+# Git 2.32 broke completions with __git_complete.
+# For now, use this as a workaround.
+__git_cmd_idx=1
+
 _completion_loader git
 galias() {
 	alias $1="git ${3:-$2}"
