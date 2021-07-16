@@ -182,17 +182,26 @@ go-modules() {
 git-file-sizes() { git ls-files -z | xargs -0 du -b | sort -n; }
 
 gprc() {
+	local base=${1:-HEAD}
 	if git config remote.mvdan.url >/dev/null; then
 		git push -f -u mvdan || return 1
 	else
 		# No fork present, so assume we are the only owner.
 		git push -u origin || return 1
 	fi
-	if [[ $(git rev-list --count HEAD ^origin/HEAD) == 1 ]]; then
-		gh pr create --title="$(git show -s --format=%s)" --body="(see commit message)"
+
+	# "gh pr create" doesn't seem to like "--base=HEAD".
+	# Luckily, its default behavior is to target the default branch anyway.
+	local baseflag=""
+	if [[ $base != "HEAD" ]]; then
+		baseflag="--base=${base}"
+	fi
+
+	if [[ $(git rev-list --count HEAD ^origin/${base}) == 1 ]]; then
+		gh pr create --title="$(git show -s --format=%s)" --body="(see commit message)" $baseflag
 	else
 		# Edit the PR body if there are many commits.
-		gh pr create --title="TODO" --body="(see commit messages - please do not squash)" --web
+		gh pr create --title="TODO" --body="(see commit messages - please do not squash)" $baseflag --web
 	fi
 }
 gfork() {
