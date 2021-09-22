@@ -9,7 +9,7 @@ set encoding=utf-8
 set ruler autoindent smartindent
 set wrap linebreak nolist nojoinspaces
 
-set noexpandtab tabstop=8 softtabstop=8 shiftwidth=8
+set noexpandtab tabstop=4 softtabstop=4 shiftwidth=4
 set textwidth=80 formatoptions-=t formatoptions+=j
 set showcmd showmode hidden
 set magic matchtime=2 lazyredraw
@@ -98,3 +98,4 @@ call govim#config#Set("HighlightReferences", 0)
 call govim#config#Set("HoverDiagnostics", 0)
 " call govim#config#Set("CompletionDeepCompletions", 0)
 " call govim#config#Set("CompleteUnimported", 0)
+call govim#config#Set("ExperimentalAllowModfileModifications", 0)

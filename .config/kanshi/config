@@ -1,8 +1,8 @@
 profile docked {
-	output eDP-1 mode 2560x1440 scale 1.5 position 0,480
-	output DP-1  mode 2560x1440 scale 1 position 1707,0
+	output eDP-1 mode 1920x1080 scale 1 position 0,0
+	output DP-1  mode 2560x1440 scale 1 position 1920,0
 }
 
 profile mobile {
-	output eDP-1 mode 2560x1440 scale 1 position 0,0
+	output eDP-1 mode 1920x1080 scale 1 position 0,0
 }

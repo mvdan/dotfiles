@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if [[ ! -f old ]]; then
+	compilebench -short -alloc -count 10 -compile $(toolstash -n compile) "$@" | tee old
+fi
+compilebench -short -alloc -count 10 "$@" | tee new
+benchstat old new

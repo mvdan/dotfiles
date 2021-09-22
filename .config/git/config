@@ -5,6 +5,7 @@
 [core]
 	editor = vim
 	askpass = /bin/true
+	pager = less -F ; other programs always expect less to stick around
 [push]
 	default = current
 [checkout]

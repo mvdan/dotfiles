@@ -1,8 +1,8 @@
 set nohelp
 set mbox_type = Maildir
-set folder = ~/mail/mvdan
-set spoolfile = +Inbox
-set postponed = +Drafts
+set folder = ~/mail
+set spoolfile = +mvdan/Inbox
+set postponed = +mvdan/Drafts
 auto_view text/html
 alternative_order text/enriched text/plain text/html
 
@@ -30,10 +30,10 @@ set realname = 'Daniel Martí'
 set from = "mvdan@mvdan.cc"
 set use_envelope_from
 alternates "mvdan@mvdan.cc|danielmarti@gmx.com|daniel.marti@protocol.ai"
-set record = +Sent
+set record = +mvdan/Sent
 
-set trash = +Trash
-folder-hook . set trash = +Trash
+set trash = +mvdan/Trash
+folder-hook . set trash = +mvdan/Trash
 folder-hook Junk unset trash
 bind index D purge-message
 
@@ -95,13 +95,13 @@ set sidebar_format = "%B%?F? [%F]?%* %?N?%N/?%S"
 set mail_check_stats = yes
 set sidebar_divider_char = " "
 set sidebar_visible
-set sidebar_width = 38
+set sidebar_width = 25
 bind index,pager <esc>h sidebar-open
 bind index,pager <esc>k sidebar-prev
 bind index,pager <esc>j sidebar-next
 color sidebar_new yellow default
-macro index,pager <esc>a <change-folder>=Junk<enter>
-macro index,pager <esc>s <change-folder>=Sent<enter>
+macro index,pager <esc>a <change-folder>=mvdan/Junk<enter>
+macro index,pager <esc>s <change-folder>=mvdan/Sent<enter>
 macro index,pager <esc>d <change-vfolder>All<enter>
 
 bind index G last-entry
@@ -109,15 +109,15 @@ bind pager G bottom
 bind index,pager \cu half-up
 bind index,pager \cd half-down
 
-mailboxes "=Inbox"
-mailboxes "=Go"
-mailboxes "=Other"
-mailboxes "=../protocol/Inbox"
-mailboxes "=../gmx/Inbox"
-mailboxes "=../riseup/Inbox"
-mailboxes "=Sent"
-mailboxes "=Drafts"
-mailboxes "=Trash"
+mailboxes "=mvdan/Inbox"
+mailboxes "=mvdan/Go"
+mailboxes "=mvdan/Other"
+mailboxes "=protocol/Inbox"
+mailboxes "=gmx/Inbox"
+mailboxes "=riseup/Inbox"
+mailboxes "=mvdan/Sent"
+mailboxes "=mvdan/Drafts"
+mailboxes "=mvdan/Trash"
 
 folder-hook . "set from = mvdan@mvdan.cc"
 folder-hook gmx/Inbox "set from = danielmarti@gmx.com"

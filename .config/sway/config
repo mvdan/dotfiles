@@ -14,6 +14,7 @@ set $term foot
 # on the original workspace that the command was run on.
 set $menu wofi --show drun | xargs swaymsg exec --
 set $lock swaylock -c 323232
+set $tweakcpu sudo ryzenadj --fast-limit=45000 --slow-limit=40000 --stapm-limit=30000 --tctl-temp=90 --apu-skin-temp=50
 
 ### Output configuration
 
@@ -29,11 +30,12 @@ exec swayidle -w \
 	timeout 600 '$lock -f' \
 	timeout 660 'swaymsg "output * dpms off"' \
 	resume 'swaymsg "output * dpms on"' \
-	before-sleep '$lock -f'
+	before-sleep '$lock -f' \
+	after-resume '$tweakcpu'
 
 ### Input configuration
 
-input "1739:0:Synaptics_TM3289-021" {
+input "2:7:SynPS/2_Synaptics_TouchPad" {
 	dwt enabled
 	natural_scroll enabled
 	pointer_accel 0.8
@@ -144,11 +146,18 @@ workspace 9 output DP-1 eDP-1
 workspace 10 output DP-1 eDP-1
 
 # App positions.
+assign [app_id="neomutt"] workspace 3
+assign [app_id="Element"] workspace 5
+assign [app_id="discord"] workspace 5
 assign [app_id="telegramdesktop"] workspace 6
+assign [app_id="Slack"] workspace 7
+# xwayland electron...
 assign [class="Slack"] workspace 7
 assign [app_id="firefox"] workspace 8
-assign [class="Chromium"] workspace 9
-assign [class="discord"] workspace 10
+assign [app_id="Chromium"] workspace 9
+assign [app_id="nnn"] workspace 9
+assign [class="zoom"] workspace 9
+assign [app_id="ncmpc"] workspace 10
 
 # Layout stuff:
 #
@@ -231,14 +240,14 @@ bindsym $mod+Alt+slash exec mpc toggle
 # Apps
 
 bindsym $mod+Alt+j exec $term --app-id=neomutt neomutt
-bindsym $mod+Alt+k exec $term --app-id=lf lf
+bindsym $mod+Alt+k exec $term --app-id=nnn nnn -d -u -U
 bindsym $mod+Alt+n exec $term --app-id=ncmpc ncmpc
 bindsym $mod+Alt+e exec $term --app-id=todo bash -c "sleep 0.1; vim Documents/TODO.txt"
 bindsym $mod+Alt+i exec firefox
 
 # Other custom binds
 
-bindsym $mod+g exec grim - | swappy -f -                     # all displays + swappy
+# bindsym $mod+g exec grim - | swappy -f -                   # all displays + swappy
 bindsym $mod+Shift+g exec grim -g "$(slurp)" - | swappy -f - # slurp + swappy
 bindsym $mod+Alt+g exec cd /tmp && grim                      # current dislay + /tmp
 bindsym $mod+Alt+m exec systemctl --user start mbsync
@@ -270,6 +279,7 @@ include /etc/sway/config.d/*
 #exec ponymix set-volume 20
 exec brightnessctl set 70%
 exec sudo ddcutil setvcp --sleep-less --noverify 10 70 &
+exec $tweakcpu
 exec xrdb -load .Xresources
 
 exec systemd-notify --ready || true
@@ -283,3 +293,4 @@ exec exec mako >/tmp/mako.log 2>&1
 exec exec poweralertd >/tmp/poweralertd.log 2>&1
 exec exec kanshi >/tmp/kanshi.log 2>&1
 exec exec wlsunset -l 53.5 -L -2.1 >/tmp/wlsunset.log 2>&1
+exec exec nm-applet --indicator

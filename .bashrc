@@ -8,7 +8,7 @@ shopt -s histappend
 
 alias l="less"
 alias s="sudo"
-alias se="s -E"
+alias se="sudoedit"
 alias v="vim"
 alias sp="sed -r 's/([^:]*:[^:]*:)/\1\t/'"
 
@@ -86,7 +86,7 @@ alias ll="ls -lhiF"
 alias la="ls -alhiF"
 alias lt="ls -Alhrt"
 
-alias zs="se $SHELL"
+alias zs="sudo -E $SHELL"
 alias rr="rm -rf"
 
 alias cd.="cd .."
@@ -113,6 +113,7 @@ gstr() {
 		echo "gstr [stress flags] ./test [test flags]"
 		return
 	fi
+	echo "go test -c -vet=off -o test && stress $@"
 	go test -c -vet=off -o test && stress "$@"
 }
 gcov() {
@@ -120,23 +121,7 @@ gcov() {
 	go tool cover -html=/tmp/c
 }
 
-gbench() {
-	if [[ $# == 0 || $1 == help ]]; then
-		echo "gbench [cur] [.] [6] [1s] [flags]"
-		return
-	fi
-	perflock -governor=70% go test . -run='^$' -vet=off -bench=${2:-.} \
-		-count=${3:-6} -benchtime=${4:-1s} ${@:5} | tee ${1:-cur} | grep -v :
-}
-
 alias gtoolcmp='go build -toolexec "toolstash -cmp" -a -v std cmd'
-gtoolbench() {
-	if [[ ! -f old ]]; then
-		perflock -governor=70% compilebench -short -alloc -count 10 -compile $(toolstash -n compile) "$@" | tee old
-	fi
-	perflock -governor=70% compilebench -short -alloc -count 10 "$@" | tee new
-	benchstat old new
-}
 
 gim() { goimports -l -w ${@:-*.go}; }
 gfm() { gofumpt -s -l -w ${@:-*.go}; }
@@ -178,8 +163,20 @@ git-repos() {
 go-modules() {
 	find . \( -name vendor -o -name '[._].*' -o -name node_modules \) -prune -o -name go.mod -print | sed 's:/go.mod$::'
 }
+go-modules-foreach() {
+	for dir in $(go-modules); do
+		(
+			echo $dir
+			cd $dir
+			"$@"
+		)
+	done
+}
 
 git-file-sizes() { git ls-files -z | xargs -0 du -b | sort -n; }
+
+# If a remote does not know what its HEAD is, use:
+#   git remote set-head origin -a
 
 gprc() {
 	local base=${1:-HEAD}

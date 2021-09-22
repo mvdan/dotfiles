@@ -1,4 +1,4 @@
 #!/bin/bash
 
 [[ -d src ]] && cd src
-time GOGC=off ./make.bash -v
+time GOGC=off GOAMD64=v3 ./make.bash -v

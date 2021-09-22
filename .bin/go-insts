@@ -1,7 +1,11 @@
 #!/bin/bash
 
 install() {
-	go install -ldflags="-w -s" "$@" &
+	(
+		if ! go install -ldflags="-w -s" "$@"; then
+			echo "failed to install $@"
+		fi
+	) &
 }
 
 # golang.org

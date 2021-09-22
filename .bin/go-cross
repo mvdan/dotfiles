@@ -8,7 +8,12 @@
 #
 # This script is meant to be simple. If you need more, copy and adapt it.
 
+# Consistently turn cgo off, even for our local linux/amd64.
 export CGO_ENABLED=0
+
+# Since we use GOAMD64=v3 locally,
+# turn that off for cross-builds for greater compatibility.
+export GOAMD64=v1
 
 gocmd=${1:-"go"}
 version=${2:-"$(git describe --always --dirty --tags)"}
@@ -23,15 +28,11 @@ while read goos goarch; do
 		$gocmd build -trimpath -ldflags="-w -s -X 'main.version=${version}'" -o="${out}"
 		echo $out
 	) &
-done <<-EOF # Hard-code the list for now, until https://golang.org/issues/38874 is fixed.
-	linux amd64
-	linux 386
-	linux arm
-	linux arm64
-	darwin amd64
-	darwin arm64
-	windows amd64
-	windows 386
-EOF
+done < <(
+	# "dist list -json" gives us a list of all targets in JSON format.
+	# Flatten the list, and only keep the first-class ports.
+	# Then print the GOOS/GOARCH pairs in a way that shell can easily read.
+	$gocmd tool dist list -json | jq -r '.[] | select(.FirstClass) | [.GOOS, .GOARCH] | @tsv'
+)
 
 wait
