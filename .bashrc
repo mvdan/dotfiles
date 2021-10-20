@@ -46,7 +46,6 @@ galias gbi  bisect
 galias gbr  branch
 galias gcm  commit
 galias gcp  cherry_pick "cherry-pick"
-galias gco  checkout
 galias gdf  diff
 galias glo  log  "-c core.pager='less -p \"^commit \"' log"
 galias glop log  "-c core.pager='less -p \"^commit \"' log -p --format=fuller --stat"
@@ -63,6 +62,10 @@ galias gsh  show
 galias gsm  submodule
 galias gst  stash "-c core.pager='less -p ^stash' stash"
 galias gw   switch
+galias gr   restore
+
+gwm() { gw $(git-default-branch); }
+gdfm() { gdf $(git-default-branch)...; }
 
 __git_complete gbrd _git_branch
 alias gclo="git clone"
@@ -93,7 +96,7 @@ alias cd.="cd .."
 alias cd..="cd ../.."
 alias cd...="cd ../../.."
 
-wgo1() { PATH=/usr/bin:${PATH} "$@"; }
+wgo1() { PATH=/usr/lib/go/bin:${PATH} "$@"; }
 wgo() {
 	local gocmd=go${1}
 	shift
@@ -102,7 +105,6 @@ wgo() {
 }
 
 alias gg="go get"
-alias gd="go get -d"
 alias gb="go build -v"
 alias gi="go install -v"
 alias gt="go test"
@@ -124,7 +126,7 @@ gcov() {
 alias gtoolcmp='go build -toolexec "toolstash -cmp" -a -v std cmd'
 
 gim() { goimports -l -w ${@:-*.go}; }
-gfm() { gofumpt -s -l -w ${@:-*.go}; }
+gfm() { gofumpt -l -w ${@:-*.go}; }
 sfm() { shfmt -s -l -w ${@:-.}; }
 
 alias ssm="pacman -Ss"
@@ -136,7 +138,6 @@ alias gcam="gcm -a --amend"
 alias gcle="git clean -dffx"
 alias gdfs="gdf --stat"
 alias gdfc="gdf --cached"
-alias gdfm="gdf master..."
 alias gdfo="gdf ORIG_HEAD..."
 alias gdfu="gdf @{u}..."
 alias gfe="git fetch -v -p"
@@ -173,6 +174,7 @@ go-modules-foreach() {
 	done
 }
 
+git-default-branch() { git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'; }
 git-file-sizes() { git ls-files -z | xargs -0 du -b | sort -n; }
 
 # If a remote does not know what its HEAD is, use:

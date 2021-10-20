@@ -76,7 +76,7 @@ floating_modifier $mod normal
 bindsym $mod+Shift+c reload
 
 # Exit sway (logs you out of your Wayland session)
-bindsym $mod+Shift+e exit
+#bindsym $mod+Shift+e exit
 bindsym $mod+Shift+p exec systemctl poweroff
 bindsym $mod+Shift+o exec systemctl reboot
 bindsym $mod+Shift+s exec systemctl suspend

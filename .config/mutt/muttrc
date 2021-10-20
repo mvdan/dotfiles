@@ -109,18 +109,19 @@ bind pager G bottom
 bind index,pager \cu half-up
 bind index,pager \cd half-down
 
-mailboxes "=mvdan/Inbox"
-mailboxes "=mvdan/Go"
-mailboxes "=mvdan/Other"
-mailboxes "=protocol/Inbox"
-mailboxes "=gmx/Inbox"
-mailboxes "=riseup/Inbox"
-mailboxes "=mvdan/Sent"
-mailboxes "=mvdan/Drafts"
-mailboxes "=mvdan/Trash"
+mailboxes +mvdan/Inbox
+mailboxes +mvdan/Go
+mailboxes +mvdan/Other
+mailboxes +protocol/Inbox
+mailboxes +gmx/Inbox
+mailboxes +riseup/Inbox
+mailboxes +mvdan/Sent
+mailboxes +mvdan/Drafts
+mailboxes +mvdan/Trash
 
 folder-hook . "set from = mvdan@mvdan.cc"
 folder-hook gmx/Inbox "set from = danielmarti@gmx.com"
+folder-hook protocol/Inbox "set from = daniel.marti@protocol.ai"
 
 # set nm_default_uri = "notmuch:///home/mvdan/mail"
 # virtual-mailboxes "All" "notmuch://?query=tag:inbox"

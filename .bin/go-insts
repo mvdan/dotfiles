@@ -10,7 +10,7 @@ install() {
 
 # golang.org
 install golang.org/x/review/git-codereview@master
-install golang.org/x/tools/cmd/{goimports,present,stress,stringer,bundle,toolstash,compilebench,godoc}@master
+install golang.org/x/tools/cmd/{goimports,present,stress,stringer,bundle,toolstash,compilebench}@master
 install golang.org/x/perf/cmd/benchstat@master
 
 # mvdan.cc
@@ -24,8 +24,6 @@ install mvdan.cc/gofumpt@master
 # install mvdan.cc/goreduce@master
 
 # dev tools
-install github.com/dvyukov/go-fuzz/go-fuzz@master
-install github.com/dvyukov/go-fuzz/go-fuzz-build@master
 install github.com/aclements/perflock/cmd/perflock@master
 install github.com/aclements/go-misc/benchcmd@master
 install github.com/rogpeppe/go-internal/cmd/{testscript,txtar-addmod}@master

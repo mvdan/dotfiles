@@ -61,10 +61,13 @@ set pastetoggle=<F3>
 nnoremap <F5> :%!xxd -g 1<CR>
 nnoremap <F6> :%!xxd -g 1 -r<CR>
 
-au BufEnter COMMIT_EDITMSG silent syntax on
-au BufEnter neomutt-* silent syntax on
-au BufEnter neomutt-* silent setl ft=mail tw=72 fo+=tn comments+=fb:*
-au BufEnter neomutt-* silent /^$
+au FileType gitcommit silent syntax on
+au FileType gitcommit setlocal ts=4 " otherwise the builtin default of 8 kicks in
+
+au FileType mail silent syntax on
+au FileType mail silent setl ft=mail tw=72 fo+=tn comments+=fb:*
+au FileType mail silent /^$
+
 au FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
 au BufEnter testdata/*.txt silent setl ft=sh
