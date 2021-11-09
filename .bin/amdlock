@@ -1,0 +1,13 @@
+echo 0 | sudo tee /sys/devices/system/cpu/cpufreq/boost >/dev/null
+sudo renice -n -15 $$ >/dev/null
+
+function finish {
+	  sudo renice -n 0 $$ >/dev/null
+	  echo 1 | sudo tee /sys/devices/system/cpu/cpufreq/boost >/dev/null
+}
+trap finish EXIT
+
+"$@"
+result=$?
+
+exit $result
