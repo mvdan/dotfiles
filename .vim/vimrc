@@ -17,11 +17,23 @@ set incsearch ignorecase smartcase showmatch hlsearch
 set rulerformat=%22(%l,%c%V\ %o\ %p%%%)
 set autoread laststatus=2
 
-if &t_Co == 8 && $TERM !~# '^linux\|^Eterm'
-	set t_Co=16
-endif
-set background=dark
-colorscheme solarized
+" if &t_Co == 8 && $TERM !~# '^linux\|^Eterm'
+" 	set t_Co=16
+" endif
+" if (empty($TMUX))
+"   if (has("termguicolors"))
+"     set termguicolors
+"   endif
+" endif
+
+" Truecolor support.
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+set termguicolors
+
+set background=light
+let g:gruvbox_contrast_light='hard'
+colorscheme gruvbox
 
 noremap <F1> <nop>
 noremap Q <nop>
@@ -41,7 +53,7 @@ au BufReadPost fugitive://* set bufhidden=delete
 let mapleader = ","
 
 " Copy the selection into the clipboard via OSC52.
-vnoremap <leader>c :OSCYank<CR>
+vnoremap <leader>y :OSCYank<CR>
 
 " Paste from Wayland, until Vim supports it natively.
 " See: https://github.com/vim/vim/issues/5157
@@ -72,6 +84,7 @@ au FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
 au BufEnter testdata/*.txt silent setl ft=sh
 let g:airline#extensions#whitespace#skip_indent_check_ft = {'go': ['mixed-indent-file']}
+let g:airline_theme='gruvbox'
 
 nnoremap <space> :noh<cr>:echo<cr><esc>
 

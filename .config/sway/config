@@ -14,11 +14,12 @@ set $term foot
 # on the original workspace that the command was run on.
 set $menu wofi --show drun | xargs swaymsg exec --
 set $lock swaylock -c 323232
-set $tweakcpu sudo ryzenadj --fast-limit=45000 --slow-limit=40000 --stapm-limit=30000 --tctl-temp=90 --apu-skin-temp=50
+# set $tweakcpu sudo ryzenadj --fast-limit=45000 --slow-limit=40000 --stapm-limit=30000 --tctl-temp=90 --apu-skin-temp=55 --max-performance
+set $tweakcpu sudo ryzenadj --stapm-limit=30000 --fast-limit=30000 --slow-limit=25000 --tctl-temp=90 --apu-skin-temp=55 --max-performance
 
 ### Output configuration
 
-output * background #202025 solid_color
+output * background #fbf1c7 solid_color
 
 default_border pixel 1
 default_floating_border normal
@@ -146,17 +147,20 @@ workspace 9 output DP-1 eDP-1
 workspace 10 output DP-1 eDP-1
 
 # App positions.
+# class= dupes are for xwayland.
 assign [app_id="neomutt"] workspace 3
 assign [app_id="Element"] workspace 5
+assign [class="discord"] workspace 5
 assign [app_id="discord"] workspace 5
 assign [app_id="telegramdesktop"] workspace 6
 assign [app_id="Slack"] workspace 7
-# xwayland electron...
 assign [class="Slack"] workspace 7
+assign [app_id="Slack"] workspace 7
 assign [app_id="firefox"] workspace 8
 assign [app_id="Chromium"] workspace 9
 assign [app_id="nnn"] workspace 9
 assign [class="zoom"] workspace 9
+assign [app_id="zoom"] workspace 9
 assign [app_id="ncmpc"] workspace 10
 
 # Layout stuff:
@@ -230,8 +234,6 @@ bindsym XF86MonBrightnessDown exec brightnessctl --exponent=2 set 5%-
 bindsym XF86MonBrightnessUp exec brightnessctl --exponent=2 set +5%
 bindsym XF86Display exec sudo ddcutil setvcp --sleep-less --noverify 10 $(( ($(brightnessctl get)*100) / $(brightnessctl max) ))
 bindsym XF86Eject exec sudo ddcutil setvcp --sleep-less --noverify 10 $(( ($(brightnessctl get)*100) / $(brightnessctl max) ))
-# bindsym XF86Keyboard input * xkb_switch_layout 0
-# bindsym XF86Favorites input * xkb_switch_layout 1
 bindsym $mod+Alt+comma exec mpc prev
 bindsym $mod+Alt+period exec mpc next
 bindsym $mod+Alt+minus exec mpc toggle
@@ -239,10 +241,10 @@ bindsym $mod+Alt+slash exec mpc toggle
 
 # Apps
 
-bindsym $mod+Alt+j exec $term --app-id=neomutt neomutt
+bindsym $mod+Alt+j exec $term --app-id=neomutt bash -c "sleep 0.1; exec neomutt"
 bindsym $mod+Alt+k exec $term --app-id=nnn nnn -d -u -U
 bindsym $mod+Alt+n exec $term --app-id=ncmpc ncmpc
-bindsym $mod+Alt+e exec $term --app-id=todo bash -c "sleep 0.1; vim Documents/TODO.txt"
+bindsym $mod+Alt+e exec $term --app-id=todo bash -c "sleep 0.1; exec vim Documents/TODO.txt"
 bindsym $mod+Alt+i exec firefox
 
 # Other custom binds
@@ -269,7 +271,7 @@ bar {
 
 	colors {
 		statusline #ffffff
-		background #323232
+		background #282828
 		inactive_workspace #32323200 #32323200 #5c5c5c
 	}
 }
@@ -277,7 +279,7 @@ bar {
 include /etc/sway/config.d/*
 
 #exec ponymix set-volume 20
-exec brightnessctl set 70%
+exec brightnessctl set 40%
 exec sudo ddcutil setvcp --sleep-less --noverify 10 70 &
 exec $tweakcpu
 exec xrdb -load .Xresources

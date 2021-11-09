@@ -16,12 +16,12 @@ install golang.org/x/perf/cmd/benchstat@master
 # mvdan.cc
 install mvdan.cc/sh/v3/cmd/shfmt@master
 install mvdan.cc/xurls/v2/cmd/xurls@master
-install mvdan.cc/fdroidcl@master
 install mvdan.cc/unparam@master
 install mvdan.cc/gogrep@master
 install mvdan.cc/git-picked@master
 install mvdan.cc/gofumpt@master
 # install mvdan.cc/goreduce@master
+# install mvdan.cc/fdroidcl@master
 
 # dev tools
 install github.com/aclements/perflock/cmd/perflock@master
@@ -30,15 +30,16 @@ install github.com/rogpeppe/go-internal/cmd/{testscript,txtar-addmod}@master
 install golang.org/x/exp/cmd/txtar@master
 
 # misc
-# install github.com/hanwen/go-mtpfs@latest
+install cuelang.org/go/cmd/cue@master
 install github.com/astaxie/bat@latest
 install github.com/mholt/archiver/cmd/arc@latest
-install cuelang.org/go/cmd/cue@master
+install github.com/itchyny/mmv/cmd/mmv@latest
+# install github.com/hanwen/go-mtpfs@latest
 
 # linters
+install honnef.co/go/tools/cmd/staticcheck@master
 install github.com/mdempsky/unconvert@latest
 install github.com/mdempsky/maligned@latest
 install github.com/mibk/dupl@latest
-install honnef.co/go/tools/cmd/staticcheck@master
 
 wait

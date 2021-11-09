@@ -4,9 +4,6 @@
 [submodule ".vim/pack/plugins/start/fetch"]
 	path = .vim/pack/plugins/start/fetch
 	url = https://github.com/kopischke/vim-fetch
-[submodule ".vim/pack/plugins/start/solarized"]
-	path = .vim/pack/plugins/start/solarized
-	url = https://github.com/altercation/vim-colors-solarized
 [submodule ".vim/pack/plugins/start/airline"]
 	path = .vim/pack/plugins/start/airline
 	url = https://github.com/vim-airline/vim-airline
@@ -28,3 +25,6 @@
 [submodule ".vim/pack/plugins/start/oscyank"]
 	path = .vim/pack/plugins/start/oscyank
 	url = https://github.com/ojroques/vim-oscyank
+[submodule ".vim/pack/plugins/start/gruvbox"]
+	path = .vim/pack/plugins/start/gruvbox
+	url = https://github.com/morhetz/gruvbox
