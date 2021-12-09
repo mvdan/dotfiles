@@ -1,0 +1,8 @@
+default=$(pactl get-default-sink)
+pactl list short sinks | while read _ device _; do
+	if [[ $device == $default ]]; then
+		continue
+	fi
+	pactl set-default-sink $device
+	break
+done
