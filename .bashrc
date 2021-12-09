@@ -196,11 +196,15 @@ gprc() {
 		baseflag="--base=${base}"
 	fi
 
+	# Keep "Fixes #123" lines in the PR body.
+	# This helps GitHub properly link the issues,
+	# as it won't do that for commit messages as nicely.
+	local issuelines="$(git rev-list --no-commit-header --reverse --format=%b HEAD ^origin/${base} | grep -E ' #[1-9]+\.')"
 	if [[ $(git rev-list --count HEAD ^origin/${base}) == 1 ]]; then
-		gh pr create --title="$(git show -s --format=%s)" --body="(see commit message)" $baseflag
+		gh pr create --title="$(git show -s --format=%s)" --body=$'(see commit message)\n\n'"${issuelines}" $baseflag
 	else
 		# Edit the PR body if there are many commits.
-		gh pr create --title="TODO" --body="(see commit messages - please do not squash)" $baseflag --web
+		gh pr create --title="TODO" --body=$'(see commit messages - please do not squash)\n\n'"${issuelines}" $baseflag --web
 	fi
 }
 gfork() {
