@@ -14,7 +14,6 @@ set $term foot
 # on the original workspace that the command was run on.
 set $menu wofi --show drun | xargs swaymsg exec --
 set $lock swaylock -c 323232
-# set $tweakcpu sudo ryzenadj --fast-limit=45000 --slow-limit=40000 --stapm-limit=30000 --tctl-temp=90 --apu-skin-temp=55 --max-performance
 set $tweakcpu sudo ryzenadj --stapm-limit=30000 --fast-limit=30000 --slow-limit=25000 --tctl-temp=90 --apu-skin-temp=55 --max-performance
 
 ### Output configuration
@@ -229,11 +228,18 @@ bindsym $mod+r mode "resize"
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +2dB
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -2dB
 bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+
 bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+bindsym XF86Tools exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+
 bindsym XF86MonBrightnessDown exec brightnessctl --exponent=2 set 5%-
 bindsym XF86MonBrightnessUp exec brightnessctl --exponent=2 set +5%
+
 bindsym XF86Display exec sudo ddcutil setvcp --sleep-less --noverify 10 $(( ($(brightnessctl get)*100) / $(brightnessctl max) ))
-bindsym XF86Eject exec sudo ddcutil setvcp --sleep-less --noverify 10 $(( ($(brightnessctl get)*100) / $(brightnessctl max) ))
+bindsym XF86Launch5 exec sudo ddcutil setvcp --sleep-less --noverify 10 $(( ($(brightnessctl get)*100) / $(brightnessctl max) ))
+
+bindsym XF86Launch6 exec pactl-cycle-sink
+
 bindsym $mod+Alt+comma exec mpc prev
 bindsym $mod+Alt+period exec mpc next
 bindsym $mod+Alt+minus exec mpc toggle
@@ -278,7 +284,6 @@ bar {
 
 include /etc/sway/config.d/*
 
-#exec ponymix set-volume 20
 exec brightnessctl set 40%
 exec sudo ddcutil setvcp --sleep-less --noverify 10 70 &
 exec $tweakcpu
