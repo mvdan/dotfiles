@@ -1,7 +1,6 @@
 [user]
 	name = Daniel Martí
 	email = mvdan@mvdan.cc
-	signingkey = 4348041C
 [core]
 	editor = vim
 	askpass = /bin/true
@@ -15,7 +14,7 @@
 [rebase]
 	autoStash = true
 [format]
-	signoff = true
+	; signoff = true
 [diff]
 	indentHeuristic = true
 	colorMoved = zebra

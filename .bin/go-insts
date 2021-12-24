@@ -20,6 +20,7 @@ install mvdan.cc/unparam@master
 install mvdan.cc/gogrep@master
 install mvdan.cc/git-picked@master
 install mvdan.cc/gofumpt@master
+install mvdan.cc/dockexec@master
 # install mvdan.cc/goreduce@master
 # install mvdan.cc/fdroidcl@master
 
