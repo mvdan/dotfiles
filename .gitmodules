@@ -3,7 +3,7 @@
 	url = https://github.com/tpope/vim-fugitive
 [submodule ".vim/pack/plugins/start/fetch"]
 	path = .vim/pack/plugins/start/fetch
-	url = https://github.com/kopischke/vim-fetch
+	url = https://github.com/wsdjeg/vim-fetch
 [submodule ".vim/pack/plugins/start/airline"]
 	path = .vim/pack/plugins/start/airline
 	url = https://github.com/vim-airline/vim-airline
