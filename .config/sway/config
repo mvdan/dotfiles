@@ -14,11 +14,12 @@ set $term foot
 # on the original workspace that the command was run on.
 set $menu wofi --show drun | xargs swaymsg exec --
 set $lock swaylock -c 323232
-set $tweakcpu sudo ryzenadj --stapm-limit=30000 --fast-limit=30000 --slow-limit=25000 --tctl-temp=90 --apu-skin-temp=55 --max-performance
+set $tweakcpu sudo ryzenadj --stapm-limit=28000 --fast-limit=35000 --slow-limit=28000 --tctl-temp=90 --apu-skin-temp=55 --max-performance
 
 ### Output configuration
 
 output * background #fbf1c7 solid_color
+output * subpixel rgb
 
 default_border pixel 1
 default_floating_border normal
@@ -36,9 +37,14 @@ exec swayidle -w \
 ### Input configuration
 
 input "2:7:SynPS/2_Synaptics_TouchPad" {
-	dwt enabled
+	tap  enabled
+	drag enabled
+	dwt  enabled # disable while typing
+
+	scroll_method  two_finger
 	natural_scroll enabled
-	pointer_accel 0.8
+	pointer_accel  0.8
+	click_method   clickfinger # 2/3 fingers is right/middle click
 }
 
 input "1133:16495:Logitech_MX_Ergo" {
@@ -47,7 +53,7 @@ input "1133:16495:Logitech_MX_Ergo" {
 }
 
 input type:keyboard {
-	xkb_layout us,es
+	xkb_layout  us,es
 	xkb_variant altgr-intl,cat
 	xkb_options caps:escape,grp:alt_space_toggle
 }
@@ -257,7 +263,7 @@ bindsym $mod+Alt+i exec firefox
 
 # bindsym $mod+g exec grim - | swappy -f -                   # all displays + swappy
 bindsym $mod+Shift+g exec grim -g "$(slurp)" - | swappy -f - # slurp + swappy
-bindsym $mod+Alt+g exec cd /tmp && grim                      # current dislay + /tmp
+bindsym $mod+Alt+g exec cd /tmp && grim -o $(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name') # current dislay + /tmp
 bindsym $mod+Alt+m exec systemctl --user start mbsync
 
 font pango:Inconsolata 16
