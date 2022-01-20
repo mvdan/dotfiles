@@ -66,6 +66,7 @@ galias gr   restore
 
 gwm() { gw $(git-default-branch); }
 gdfm() { gdf $(git-default-branch)...; }
+grbm() { grb $(git-default-branch); }
 
 __git_complete gbrd _git_branch
 alias gclo="git clone"

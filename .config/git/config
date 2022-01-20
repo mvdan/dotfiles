@@ -38,3 +38,5 @@
 	rebase = merges
 [fetch]
 	parallel = 8
+[advice]
+	skippedCherryPicks = false
