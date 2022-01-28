@@ -179,33 +179,6 @@ git-default-branch-set() { git remote set-head origin -a; }
 git-default-branch() { git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'; }
 git-file-sizes() { git ls-files -z | xargs -0 du -b | sort -n; }
 
-gprc() {
-	local base=${1:-HEAD}
-	if git config remote.mvdan.url >/dev/null; then
-		git push -f -u mvdan || return 1
-	else
-		# No fork present, so assume we are the only owner.
-		git push -u origin || return 1
-	fi
-
-	# "gh pr create" doesn't seem to like "--base=HEAD".
-	# Luckily, its default behavior is to target the default branch anyway.
-	local baseflag=""
-	if [[ $base != "HEAD" ]]; then
-		baseflag="--base=${base}"
-	fi
-
-	# Keep "Fixes #123" lines in the PR body.
-	# This helps GitHub properly link the issues,
-	# as it won't do that for commit messages as nicely.
-	local issuelines="$(git rev-list --no-commit-header --reverse --format=%b HEAD ^origin/${base} | grep -E ' #[0-9]+\.')"
-	if [[ $(git rev-list --count HEAD ^origin/${base}) == 1 ]]; then
-		gh pr create --title="$(git show -s --format=%s)" --body=$'(see commit message)\n\n'"${issuelines}" $baseflag
-	else
-		# Edit the PR body if there are many commits.
-		gh pr create --title="TODO" --body=$'(see commit messages - please do not squash)\n\n'"${issuelines}" $baseflag --web
-	fi
-}
 gfork() {
 	gh repo fork --remote --remote-name mvdan
 }
