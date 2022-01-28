@@ -64,9 +64,9 @@ galias gst  stash "-c core.pager='less -p ^stash' stash"
 galias gw   switch
 galias gr   restore
 
-gwm() { gw $(git-default-branch); }
-gdfm() { gdf $(git-default-branch)...; }
-grbm() { grb $(git-default-branch); }
+gwm() { gw "$@" $(git-default-branch); }
+gdfm() { gdf "$@" $(git-default-branch)...; }
+grbm() { grb "$@" $(git-default-branch); }
 
 __git_complete gbrd _git_branch
 alias gclo="git clone"
@@ -175,11 +175,9 @@ go-modules-foreach() {
 	done
 }
 
+git-default-branch-set() { git remote set-head origin -a; }
 git-default-branch() { git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'; }
 git-file-sizes() { git ls-files -z | xargs -0 du -b | sort -n; }
-
-# If a remote does not know what its HEAD is, use:
-#   git remote set-head origin -a
 
 gprc() {
 	local base=${1:-HEAD}
@@ -200,7 +198,7 @@ gprc() {
 	# Keep "Fixes #123" lines in the PR body.
 	# This helps GitHub properly link the issues,
 	# as it won't do that for commit messages as nicely.
-	local issuelines="$(git rev-list --no-commit-header --reverse --format=%b HEAD ^origin/${base} | grep -E ' #[1-9]+\.')"
+	local issuelines="$(git rev-list --no-commit-header --reverse --format=%b HEAD ^origin/${base} | grep -E ' #[0-9]+\.')"
 	if [[ $(git rev-list --count HEAD ^origin/${base}) == 1 ]]; then
 		gh pr create --title="$(git show -s --format=%s)" --body=$'(see commit message)\n\n'"${issuelines}" $baseflag
 	else
