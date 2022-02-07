@@ -192,24 +192,6 @@ alias clb='curl -F "clbin=<-" https://clbin.com'
 alias bat='bat --pretty=false'
 alias unr='arc unarchive'
 
-alias kc='kubectl'
-kcc() {
-	if [[ $# -eq 0 ]]; then
-		kc config get-contexts
-	else
-		kc config use-context "$@"
-	fi
-}
-
-alias kcg='kc get'
-alias kcga='kc get deploy,po,svc'
-alias kcp='{ sleep 1; firefox http://127.0.0.1:8001/ui &>/dev/null; } & kc proxy'
-alias kcd='kc describe'
-alias kcl='kc logs --tail=200 -f'
-alias kce='kc get events --sort-by=.metadata.creationTimestamp'
-
-da() { du -h -d 1 "${@:-.}" | sort -h; }
-
 case $TERM in
 linux* | cons*) ;;
 *) PS1="\[\033]0;\w\007\]" ;;
