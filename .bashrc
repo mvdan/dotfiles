@@ -110,6 +110,7 @@ alias gb="go build -v"
 alias gi="go install -v"
 alias gt="go test"
 alias gts="go test -vet=off -short -timeout 10s"
+alias gf="go test -run=- -vet=off -fuzz"
 
 gstr() {
 	if [[ $# == 0 || $1 == help ]]; then
@@ -131,8 +132,18 @@ gfm() { gofumpt -l -w ${@:-*.go}; }
 sfm() { shfmt -s -l -w ${@:-.}; }
 
 alias ssm="pacman -Ss"
-alias syu="sudo pacman -Syu"
 alias ssk="yay -Ss"
+syu() {
+	echo " -- yay --"
+	yay -Syu || return 1
+
+	echo " -- flatpak --"
+	flatpak update || return 1
+
+	echo " -- fwupdmgr --"
+	sudo fwupdmgr refresh || return 1
+	sudo fwupdmgr get-updates || true # no updates is code 1
+}
 
 alias gca="gcm -a"
 alias gcam="gcm -a --amend"

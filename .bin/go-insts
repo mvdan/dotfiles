@@ -12,6 +12,7 @@ install() {
 install golang.org/x/review/git-codereview@master
 install golang.org/x/tools/cmd/{goimports,present,stress,stringer,bundle,toolstash,compilebench}@master
 install golang.org/x/perf/cmd/benchstat@master
+install golang.org/x/exp/cmd/gorelease@master
 
 # mvdan.cc
 install mvdan.cc/sh/v3/cmd/shfmt@master

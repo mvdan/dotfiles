@@ -191,7 +191,8 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 
 # Move focus to the parent container
-bindsym $mod+a focus parent
+# TODO: disabled because it confuses me when I press it by mistake.
+#bindsym $mod+a focus parent
 #
 # Scratchpad:
 #
@@ -295,8 +296,8 @@ exec sudo ddcutil setvcp --sleep-less --noverify 10 70 &
 exec $tweakcpu
 exec xrdb -load .Xresources
 
-exec systemd-notify --ready || true
-exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+exec systemd-notify --ready
 
 ### Daemons
 
