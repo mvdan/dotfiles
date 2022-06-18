@@ -306,5 +306,8 @@ exec systemd-notify --ready
 exec exec mako >/tmp/mako.log 2>&1
 exec exec poweralertd >/tmp/poweralertd.log 2>&1
 exec exec kanshi >/tmp/kanshi.log 2>&1
-exec exec wlsunset -l 53.5 -L -2.1 >/tmp/wlsunset.log 2>&1
 exec exec nm-applet --indicator
+
+exec exec /usr/lib/geoclue-2.0/demos/agent
+exec exec gammastep -v >/tmp/gammastep.log 2>&1
+# exec exec wlsunset -l 53.5 -L -2.1 >/tmp/wlsunset.log 2>&1
