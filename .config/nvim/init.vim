@@ -1,3 +1,9 @@
+call plug#begin()
+
+Plug 'gruvbox-community/gruvbox'
+
+call plug#end()
+
 syntax off
 set synmaxcol=200
 filetype plugin indent on
@@ -32,8 +38,8 @@ let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 set termguicolors
 
 set background=light
-" let g:gruvbox_contrast_light='hard'
-" colorscheme gruvbox
+let g:gruvbox_contrast_light='hard'
+colorscheme gruvbox
 
 noremap <F1> <nop>
 noremap Q <nop>
