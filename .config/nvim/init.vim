@@ -1,69 +1,111 @@
 call plug#begin()
 
-Plug 'gruvbox-community/gruvbox'
+Plug 'ajgrf/parchment', {'branch': 'HEAD'}
+
+Plug 'ojroques/vim-oscyank', {'branch': 'HEAD'}
+
+Plug 'numToStr/Comment.nvim', {'branch': 'HEAD'}
+
+Plug 'neovim/nvim-lspconfig', {'branch': 'HEAD'}
 
 call plug#end()
 
-syntax off
-set synmaxcol=200
-filetype plugin indent on
+lua <<EOF
 
-set nocompatible
+	require('Comment').setup()
+
+	-- Mappings.
+	-- See `:help vim.diagnostic.*` for documentation on any of the below functions
+	local opts = { noremap=true, silent=true }
+	vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
+	vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+	vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+	vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+
+	-- Use an on_attach function to only map the following keys
+	-- after the language server attaches to the current buffer
+	local on_attach = function(client, bufnr)
+		-- Enable completion triggered by <c-x><c-o>
+		vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+		-- Mappings.
+		-- See `:help vim.lsp.*` for documentation on any of the below functions
+		local bufopts = { noremap=true, silent=true, buffer=bufnr }
+		vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+		vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+		vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+		vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+		vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+		vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+		vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+		vim.keymap.set('n', '<space>wl', function()
+			print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+		end, bufopts)
+		vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
+		vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
+		vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+		vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+		vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
+	end
+
+	require('lspconfig').gopls.setup{
+		cmd = {"gopls", "-remote=auto", "-remote.listen.timeout=5m", "serve"},
+		on_attach = on_attach,
+		flags = lsp_flags,
+	}
+
+EOF
+
+function! SynGroup()
+	let l:s = synID(line('.'), col('.'), 1)
+	echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
+endfun
+map gm :call SynGroup()<CR>
+
+" Parchment, similar to Acme or solarized-light with fewer colors.
+set background=light
+colorscheme parchment
+highlight clear Type " not a big fan, plus incomplete for Go
+
+" not really Special
+highlight link shOption NONE
+highlight link shCommandSub NONE
+
 set nobackup noswapfile nowritebackup
 
-set encoding=utf-8
-set ruler autoindent smartindent
-set wrap linebreak nolist nojoinspaces
+set smartindent
+set wrap linebreak nolist
 
 set noexpandtab tabstop=4 softtabstop=4 shiftwidth=4
 set textwidth=80 formatoptions-=t formatoptions+=j
-set showcmd showmode hidden
 set magic matchtime=2 lazyredraw
-set incsearch ignorecase smartcase showmatch hlsearch
+set ignorecase smartcase showmatch
 set rulerformat=%22(%l,%c%V\ %o\ %p%%%)
-set autoread laststatus=2
 
-" if &t_Co == 8 && $TERM !~# '^linux\|^Eterm'
-" 	set t_Co=16
-" endif
-" if (empty($TMUX))
-"   if (has("termguicolors"))
-"     set termguicolors
-"   endif
-" endif
-
-" Truecolor support.
-let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-set termguicolors
-
-set background=light
-let g:gruvbox_contrast_light='hard'
-colorscheme gruvbox
+set termguicolors " truecolor support.
 
 noremap <F1> <nop>
 noremap Q <nop>
 noremap K <nop>
 
-set shortmess+=I
-set noerrorbells novisualbell t_vb=
+set shortmess+=I " no intro message
+" set noerrorbells novisualbell t_vb=
 
-imap ^? ^H
+" imap ^? ^H
 
-set ttimeout timeoutlen=300 ttimeoutlen=0
+" set ttimeout timeoutlen=300 ttimeoutlen=0
 set scrolloff=4
 
 set wildignore=*.pyc,*.o,*.so,*.a
-au BufReadPost fugitive://* set bufhidden=delete
 
 let mapleader = ","
 
 " Copy the selection into the clipboard via OSC52.
 vnoremap <leader>y :OSCYank<CR>
 
-" Paste from Wayland, until Vim supports it natively.
-" See: https://github.com/vim/vim/issues/5157
-noremap <leader>p o<esc>:set paste<cr>:.!wl-paste<cr>:set nopaste<cr>
+" Paste from the system clipboard.
+" TODO: would be nice if this used OSC52 as well.
+noremap <leader>p "+p
 
 nnoremap <F9> 3<C-W><
 nnoremap <F10> 3<C-W>+
@@ -79,18 +121,14 @@ set pastetoggle=<F3>
 nnoremap <F5> :%!xxd -g 1<CR>
 nnoremap <F6> :%!xxd -g 1 -r<CR>
 
-au FileType gitcommit silent syntax on
 au FileType gitcommit setlocal ts=4 " otherwise the builtin default of 8 kicks in
 
-au FileType mail silent syntax on
 au FileType mail silent setl ft=mail tw=72 fo+=tn comments+=fb:*
 au FileType mail silent /^$
 
 au FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
 au BufEnter testdata/*.txt silent setl ft=sh
-let g:airline#extensions#whitespace#skip_indent_check_ft = {'go': ['mixed-indent-file']}
-let g:airline_theme='gruvbox'
 
 nnoremap <space> :noh<cr>:echo<cr><esc>
 
