@@ -1,7 +1,7 @@
 text/html; browser-block %s
 text/html; elinks -no-home -dump %s; nametemplate=%s.html; copiousoutput
 
-text/*;          vim %s
+text/*;          nvim %s
 application/pdf; zathura %s; nametemplate=%s.pdf
 application/ps;  zathura %s; nametemplate=%s.ps
 image/*;         imv %s; nametemplate=%s.png

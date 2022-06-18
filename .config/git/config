@@ -2,7 +2,7 @@
 	name = Daniel Martí
 	email = mvdan@mvdan.cc
 [core]
-	editor = vim
+	editor = nvim
 	askpass = /bin/true
 	pager = less -F ; other programs always expect less to stick around
 [push]

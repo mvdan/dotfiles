@@ -257,7 +257,7 @@ bindsym $mod+Alt+slash exec mpc toggle
 bindsym $mod+Alt+j exec $term --app-id=neomutt bash -c "sleep 0.1; exec neomutt"
 bindsym $mod+Alt+k exec $term --app-id=nnn nnn -d -u -U
 bindsym $mod+Alt+n exec $term --app-id=ncmpc ncmpc
-bindsym $mod+Alt+e exec $term --app-id=todo bash -c "sleep 0.1; exec vim Documents/TODO.txt"
+bindsym $mod+Alt+e exec $term --app-id=todo bash -c "sleep 0.1; exec nvim Documents/TODO.txt"
 bindsym $mod+Alt+i exec firefox
 
 # Other custom binds
