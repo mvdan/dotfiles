@@ -32,8 +32,8 @@ let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 set termguicolors
 
 set background=light
-let g:gruvbox_contrast_light='hard'
-colorscheme gruvbox
+" let g:gruvbox_contrast_light='hard'
+" colorscheme gruvbox
 
 noremap <F1> <nop>
 noremap Q <nop>
@@ -89,29 +89,3 @@ let g:airline_theme='gruvbox'
 nnoremap <space> :noh<cr>:echo<cr><esc>
 
 inoremap <F8> Daniel Martí <mvdan@mvdan.cc>
-
-" Extras useful for govim.
-" set mouse=a
-" set ttymouse=sgr
-set updatetime=500
-set balloondelay=250
-set signcolumn=number
-"autocmd! BufEnter,BufNewFile *.go,go.mod syntax on
-"autocmd! BufLeave *.go,go.mod syntax off
-set backspace=2
-
-if has("patch-8.1.1904")
-	set completeopt+=popup
-	set completepopup=align:menu,border:off,highlight:Pmenu
-endif
-
-let $GOVIM_GOPLS_FLAGS="-remote=auto; -remote.listen.timeout=5m"
-packadd govim
-" call govim#config#Set("QuickfixAutoDiagnostics", 0)
-" call govim#config#Set("QuickfixSigns", 0)
-call govim#config#Set("HighlightDiagnostics", 0)
-call govim#config#Set("HighlightReferences", 0)
-call govim#config#Set("HoverDiagnostics", 0)
-" call govim#config#Set("CompletionDeepCompletions", 0)
-" call govim#config#Set("CompleteUnimported", 0)
-call govim#config#Set("ExperimentalAllowModfileModifications", 0)
