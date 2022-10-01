@@ -8,11 +8,38 @@ install() {
 	) &
 }
 
+# modInstall is like install, but for modules using replaces, like gopls.
+modInstall() {
+	(
+		dir="$(mktemp -d)"
+		cd "$dir"
+		go mod init test 2>/dev/null
+
+		main="$1"
+		shift
+		if ! {
+			go get "$@"
+			go install -ldflags="-w -s" "$main"
+		}; then
+			echo "failed to install $main with $@"
+		fi
+		cd - >/dev/null
+		rm -rf "$dir"
+	) &
+}
+
 # golang.org
 install golang.org/x/review/git-codereview@master
 install golang.org/x/tools/cmd/{goimports,present,stress,stringer,bundle,toolstash,compilebench}@master
 install golang.org/x/perf/cmd/benchstat@master
 install golang.org/x/exp/cmd/gorelease@master
+
+# cuelang.org
+install cuelang.org/go/cmd/cue@master
+install github.com/cue-sh/tools/cmd/cueckoo@master
+
+# lsp
+modInstall golang.org/x/tools/gopls golang.org/x/tools/gopls@master golang.org/x/tools@master
 
 # mvdan.cc
 install mvdan.cc/sh/v3/cmd/shfmt@master
@@ -22,6 +49,8 @@ install mvdan.cc/gogrep@master
 install mvdan.cc/git-picked@master
 install mvdan.cc/gofumpt@master
 install mvdan.cc/dockexec@master
+install mvdan.cc/garble@master
+install mvdan.cc/bitw@master
 # install mvdan.cc/goreduce@master
 # install mvdan.cc/fdroidcl@master
 
@@ -29,14 +58,15 @@ install mvdan.cc/dockexec@master
 install github.com/aclements/perflock/cmd/perflock@master
 install github.com/aclements/go-misc/benchcmd@master
 install github.com/rogpeppe/go-internal/cmd/{testscript,txtar-addmod}@master
-install golang.org/x/exp/cmd/txtar@master
+#install golang.org/x/exp/cmd/txtar@master (modified)
+install github.com/kortschak/gospel@master
 
 # misc
-install cuelang.org/go/cmd/cue@master
 install github.com/astaxie/bat@latest
 install github.com/mholt/archiver/cmd/arc@latest
 install github.com/itchyny/mmv/cmd/mmv@latest
 # install github.com/hanwen/go-mtpfs@latest
+install github.com/mdlayher/keylight/cmd/keylight@latest
 
 # linters
 install honnef.co/go/tools/cmd/staticcheck@master

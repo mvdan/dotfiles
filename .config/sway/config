@@ -15,6 +15,7 @@ set $term foot
 set $menu wofi --show drun | xargs swaymsg exec --
 set $lock swaylock -c 323232
 set $tweakcpu sudo ryzenadj --stapm-limit=28000 --fast-limit=35000 --slow-limit=28000 --tctl-temp=90 --apu-skin-temp=55 --max-performance
+set $keylight keylight -a 'http://192.168.1.137:9123'
 
 ### Output configuration
 
@@ -139,9 +140,9 @@ bindsym $mod+Shift+0 move container to workspace 10
 # Note: workspaces can have any name you want, not just numbers.
 # We just use 1-10 as the default.
 
-# All workspaces but the first default to the external monitor.
+# All workspaces but the first two default to the external monitor.
 workspace 1 output eDP-1
-workspace 2 output DP-1 eDP-1
+workspace 2 output eDP-1
 workspace 3 output DP-1 eDP-1
 workspace 4 output DP-1 eDP-1
 workspace 5 output DP-1 eDP-1
@@ -154,7 +155,6 @@ workspace 10 output DP-1 eDP-1
 # App positions.
 # class= dupes are for xwayland.
 assign [app_id="neomutt"] workspace 3
-assign [app_id="Element"] workspace 5
 assign [class="discord"] workspace 5
 assign [app_id="discord"] workspace 5
 assign [app_id="telegramdesktop"] workspace 6
@@ -232,20 +232,26 @@ bindsym $mod+r mode "resize"
 
 # Multimedia
 
+# Fn+1, Fn+2, Fn+3
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +2dB
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -2dB
 bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 
+# Fn+4 or Fn+F4
 bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
 bindsym XF86Tools exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
+# Fn+5, Fn+6
 bindsym XF86MonBrightnessDown exec brightnessctl --exponent=2 set 5%-
 bindsym XF86MonBrightnessUp exec brightnessctl --exponent=2 set +5%
 
+# Fn+7 or Fn+F7 (only useful when docked)
 bindsym XF86Display exec sudo ddcutil setvcp --sleep-less --noverify 10 $(( ($(brightnessctl get)*100) / $(brightnessctl max) ))
 bindsym XF86Launch5 exec sudo ddcutil setvcp --sleep-less --noverify 10 $(( ($(brightnessctl get)*100) / $(brightnessctl max) ))
 
+# Fn+F8, Fn+F9 (only useful when docked)
 bindsym XF86Launch6 exec pactl-cycle-sink
+bindsym XF86Launch7 exec camera-config
 
 bindsym $mod+Alt+comma exec mpc prev
 bindsym $mod+Alt+period exec mpc next

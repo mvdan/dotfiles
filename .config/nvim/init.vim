@@ -21,10 +21,12 @@ lua <<EOF
 	-- Mappings.
 	-- See `:help vim.diagnostic.*` for documentation on any of the below functions
 	local opts = { noremap=true, silent=true }
-	vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-	vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-	vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-	vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+	-- vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
+	-- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+	-- vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+	vim.keymap.set('n', '[q', ":cprev<CR>", opts)
+	vim.keymap.set('n', ']q', ":cnext<CR>", opts)
+	vim.keymap.set('n', '<space>q', vim.diagnostic.setqflist, opts)
 
 	-- Use an on_attach function to only map the following keys
 	-- after the language server attaches to the current buffer
@@ -57,6 +59,8 @@ lua <<EOF
 
 	require('lspconfig').gopls.setup{
 		cmd = {"gopls", "-remote=auto", "-remote.listen.timeout=5m", "serve"},
+		-- Uncomment to debug gopls:
+		-- cmd = {"gopls", "-logfile=auto", "-rpc.trace", "serve"},
 		on_attach = on_attach,
 		flags = lsp_flags,
 	}
@@ -104,7 +108,7 @@ set undofile
 set mouse=a
 
 set smartindent
-set wrap linebreak nolist
+set wrap linebreak
 
 set noexpandtab tabstop=4 softtabstop=4 shiftwidth=4
 set textwidth=80 formatoptions-=t formatoptions+=j
@@ -137,15 +141,22 @@ vnoremap <leader>y :OSCYank<CR>
 " TODO: would be nice if this used OSC52 as well.
 noremap <leader>p "+p
 
+" resize splits
 nnoremap <F9> 3<C-W><
 nnoremap <F10> 3<C-W>+
 nnoremap <F11> 3<C-W>-
 nnoremap <F12> 3<C-W>>
 
+" navigate splits
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
+
+" fzf
+nnoremap <silent> <leader>f :Files<CR>
+nnoremap <silent> <leader>l :Lines<CR>
+nnoremap <leader>g :Rg<space>
 
 set pastetoggle=<F3>
 nnoremap <F5> :%!xxd -g 1<CR>
@@ -160,6 +171,6 @@ au FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
 au BufEnter testdata/*.txt silent setl ft=sh
 
-nnoremap <space> :noh<cr>:echo<cr><esc>
+nnoremap <silent> <space> :noh<cr>:echo<cr><esc>
 
 inoremap <F8> Daniel Martí <mvdan@mvdan.cc>

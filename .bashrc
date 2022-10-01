@@ -26,14 +26,10 @@ cdc() {
 }
 
 pgr() { ps aux | grep -v grep | grep -iE "$@"; }
-alias rg="rg --no-heading --max-columns=150 --max-columns-preview"
+# alias rg="rg --no-heading --max-columns=150 --max-columns-preview"
 
 source /usr/share/fzf/key-bindings.bash
 source /usr/share/fzf/completion.bash
-
-# Git 2.32 broke completions with __git_complete.
-# For now, use this as a workaround.
-__git_cmd_idx=1
 
 _completion_loader git
 galias() {
@@ -175,7 +171,7 @@ git-file-sizes() { git ls-files -z | xargs -0 du -b | sort -n; }
 gfork() {
 	gh repo fork --remote --remote-name mvdan
 }
-gmrc() { git push -u origin -o merge_request.create "$@"; }
+gmrc() { git push origin -o merge_request.create "$@"; }
 alias gml="git-codereview mail"
 
 alias ssh="TERM=xterm ssh"

@@ -7,6 +7,7 @@
 	pager = less -F ; other programs always expect less to stick around
 [push]
 	default = current
+	autoSetupRemote = true
 [checkout]
 	defaultRemote = origin
 [commit]
@@ -25,18 +26,18 @@
 	oldMovedAlternative = blue
 	newMovedAlternative = blue
 [http]
-	cookiefile = /home/mvdan/.gitcookies
+	cookiefile = ~/.config/git/cookies
 [merge]
 	conflictstyle = diff3
 [sendemail]
 	smtpserver = "/usr/bin/msmtp"
 	confirm = auto
 
-[includeIf "gitdir:~/src/t/"]
-	path = ~/src/t/.gitconfig
 [pull]
 	rebase = merges
 [fetch]
 	parallel = 8
 [advice]
 	skippedCherryPicks = false
+[gpg]
+	format = ssh
