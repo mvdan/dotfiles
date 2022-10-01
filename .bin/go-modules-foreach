@@ -1,0 +1,9 @@
+#!/bin/bash
+
+for dir in $(go-modules); do
+	(
+		echo $dir
+		cd $dir
+		eval "$@" # allow multiple commands like "foo && bar"
+	)
+done

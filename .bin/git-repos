@@ -1,0 +1,5 @@
+#!/bin/bash
+
+for d in $(find . -name .git -type d -prune); do
+	echo ${d:2:-5}
+done

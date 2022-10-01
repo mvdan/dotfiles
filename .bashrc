@@ -168,25 +168,7 @@ alias gsmu="gsm update --init --recursive"
 
 alias gsmfc="gsmf 'git clean -dffx && git reset --hard' && gcle && grsh"
 
-git-repos() {
-	for d in $(find . -name .git -type d -prune); do
-		echo ${d:2:-5}
-	done
-}
-go-modules() {
-	find . \( -name vendor -o -name '[._].*' -o -name node_modules \) -prune -o -name go.mod -print | sed 's:/go.mod$::'
-}
-go-modules-foreach() {
-	for dir in $(go-modules); do
-		(
-			echo $dir
-			cd $dir
-			"$@"
-		)
-	done
-}
-
-git-default-branch-set() { git remote set-head origin -a; }
+git-default-branch-fix() { git remote set-head origin -a; }
 git-default-branch() { git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'; }
 git-file-sizes() { git ls-files -z | xargs -0 du -b | sort -n; }
 

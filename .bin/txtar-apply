@@ -1,0 +1,29 @@
+#!/bin/bash
+
+script="$1"
+shift
+
+# TODO: Could we somehow support goproxytest directories from a shell script?
+# Otherwise commands like `go mod tidy` will likely fail if they are required.
+
+for file in "$@"; do
+	echo "> $file"
+	file="$(realpath "$file")" # we need an absolute path since we cd below
+	tempcomment="$(mktemp)"
+	tempdir="$(mktemp -d)"
+	(
+		cd "$tempdir"
+
+		# TODO: support filenames containing spaces.
+		filenames="$(txtar --list <"$file")"
+
+		txtar --extract <"$file" >"$tempcomment"
+		eval "$script" || echo "$file: script failed; will still update the txtar file"
+
+		# TODO: allow including some new files created by the script,
+		# such as `go mod tidy` adding a go.sum file.
+		# We don't want to always do this due to e.g. built binaries.
+		txtar $filenames <"$tempcomment" >"$file"
+	)
+	echo
+done

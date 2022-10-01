@@ -1,0 +1,3 @@
+#!/bin/bash
+
+find . \( -name vendor -o -name '[._].*' -o -name node_modules \) -prune -o -name go.mod -print | sed 's:/go.mod$::'
