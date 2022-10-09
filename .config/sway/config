@@ -272,6 +272,7 @@ bindsym $mod+Alt+i exec firefox
 bindsym $mod+Shift+g exec grim -g "$(slurp)" - | swappy -f - # slurp + swappy
 bindsym $mod+Alt+g exec cd /tmp && grim -o $(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name') # current dislay + /tmp
 bindsym $mod+Alt+m exec systemctl --user start mbsync
+bindsym $mod+o exec killall -SIGUSR1 waybar
 
 font pango:Inconsolata 16
 

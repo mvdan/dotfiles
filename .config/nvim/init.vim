@@ -2,7 +2,7 @@ call plug#begin()
 
 Plug 'ajgrf/parchment', {'branch': 'HEAD'}
 
-Plug 'ojroques/vim-oscyank', {'branch': 'HEAD'}
+Plug 'ojroques/nvim-osc52', {'branch': 'HEAD'}
 
 Plug 'numToStr/Comment.nvim', {'branch': 'HEAD'}
 
@@ -14,9 +14,23 @@ Plug 'junegunn/fzf.vim', {'branch': 'HEAD'}
 
 call plug#end()
 
+let mapleader = ","
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+
 lua <<EOF
 
 	require('Comment').setup()
+
+	-- Copy the selection into the clipboard via OSC52.
+	vim.keymap.set('n', '<leader>y', require('osc52').copy_operator, {expr = true})
+	vim.keymap.set('n', '<leader>yy', '<leader>y_', {remap = true})
+	vim.keymap.set('x', '<leader>y', require('osc52').copy_visual)
+
+	vim.keymap.set('n', '<leader>f', ":GFiles<CR>", {silent = true}) -- all git files
+	vim.keymap.set('n', '<leader>F', ":Files<CR>", {silent = true}) -- all files
+	vim.keymap.set('n', '<leader>g', ":call fzf#run(fzf#wrap({'source': 'git diff --name-only refs/remotes/origin/HEAD', 'sink': 'e'}))<CR>", {silent = true}) -- changed git files
+	vim.keymap.set('n', '<leader>l', ":Lines<CR>", {silent = true})
+	vim.keymap.set('n', '<leader>r', ":Rg<space>")
 
 	-- Mappings.
 	-- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -31,12 +45,6 @@ lua <<EOF
 	-- Use an on_attach function to only map the following keys
 	-- after the language server attaches to the current buffer
 	local on_attach = function(client, bufnr)
-		-- Enable completion triggered by <c-x><c-o>
-		vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-		-- Enable go-to-definition with <C-]> as well.
-		vim.api.nvim_buf_set_option(bufnr, "tagfunc", "v:lua.vim.lsp.tagfunc")
-
 		-- Mappings.
 		-- See `:help vim.lsp.*` for documentation on any of the below functions
 		local bufopts = { noremap=true, silent=true, buffer=bufnr }
@@ -105,6 +113,8 @@ highlight link shCommandSub NONE
 set nobackup noswapfile nowritebackup
 set undofile
 
+set autochdir
+
 set mouse=a
 
 set smartindent
@@ -132,11 +142,6 @@ set scrolloff=4
 
 set wildignore=*.pyc,*.o,*.so,*.a
 
-let mapleader = ","
-
-" Copy the selection into the clipboard via OSC52.
-vnoremap <leader>y :OSCYank<CR>
-
 " Paste from the system clipboard.
 " TODO: would be nice if this used OSC52 as well.
 noremap <leader>p "+p
@@ -153,11 +158,6 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-" fzf
-nnoremap <silent> <leader>f :Files<CR>
-nnoremap <silent> <leader>l :Lines<CR>
-nnoremap <leader>g :Rg<space>
-
 set pastetoggle=<F3>
 nnoremap <F5> :%!xxd -g 1<CR>
 nnoremap <F6> :%!xxd -g 1 -r<CR>
@@ -170,6 +170,7 @@ au FileType mail silent /^$
 au FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
 au BufEnter testdata/*.txt silent setl ft=sh
+au BufEnter *.txtar silent setl ft=sh
 
 nnoremap <silent> <space> :noh<cr>:echo<cr><esc>
 
