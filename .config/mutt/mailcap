@@ -1,4 +1,4 @@
-text/html; browser-block %s
+text/html; $BROWSER %s &; x-neomutt-keep; nametemplate=%s.html
 text/html; elinks -no-home -dump %s; nametemplate=%s.html; copiousoutput
 
 text/*;          nvim %s
