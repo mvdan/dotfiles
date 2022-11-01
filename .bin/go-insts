@@ -62,7 +62,6 @@ install github.com/rogpeppe/go-internal/cmd/{testscript,txtar-addmod}@master
 install github.com/kortschak/gospel@master
 
 # misc
-install github.com/astaxie/bat@latest
 install github.com/mholt/archiver/cmd/arc@latest
 install github.com/itchyny/mmv/cmd/mmv@latest
 # install github.com/hanwen/go-mtpfs@latest
