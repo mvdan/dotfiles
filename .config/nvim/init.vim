@@ -93,7 +93,7 @@ EOF
 " add missing imports for Go
 autocmd BufWritePre *.go lua OrgImports(1000)
 " gofmt or equivalent on save
-autocmd BufWritePre * lua vim.lsp.buf.formatting_sync()
+autocmd BufWritePre * lua vim.lsp.buf.format({ async = false })
 
 function! SynGroup()
 	let l:s = synID(line('.'), col('.'), 1)
