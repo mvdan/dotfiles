@@ -61,7 +61,7 @@ galias gw   switch
 galias gr   restore
 
 gwm() { gw "$@" $(git-default-branch); }
-gdfm() { gdf "$@" $(git-default-branch)...; }
+gdfm() { gdf "$@" $(git-default-branch); }
 grbm() { grb "$@" $(git-default-branch); }
 
 __git_complete gbrd _git_branch
@@ -146,8 +146,8 @@ alias gcam="gcm -a --amend"
 alias gcle="git clean -dffx"
 alias gdfs="gdf --stat"
 alias gdfc="gdf --cached"
-alias gdfo="gdf ORIG_HEAD..."
-alias gdfu="gdf @{u}..."
+alias gdfo="gdf ORIG_HEAD"
+alias gdfu="gdf @{u}"
 alias gfe="git fetch -v -p"
 alias gfea="git fetch -v -p --all"
 alias glopo="glop --reverse ORIG_HEAD.."
