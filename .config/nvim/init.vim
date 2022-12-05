@@ -62,7 +62,7 @@ lua <<EOF
 		vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
 		vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
 		vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-		vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
+		vim.keymap.set('n', '<space>f', vim.lsp.buf.format, bufopts)
 	end
 
 	require('lspconfig').gopls.setup{
@@ -93,7 +93,7 @@ EOF
 " add missing imports for Go
 autocmd BufWritePre *.go lua OrgImports(1000)
 " gofmt or equivalent on save
-autocmd BufWritePre * lua vim.lsp.buf.format({ async = false })
+autocmd BufWritePre * lua vim.lsp.buf.format()
 
 function! SynGroup()
 	let l:s = synID(line('.'), col('.'), 1)
@@ -109,6 +109,7 @@ highlight clear Type " not a big fan, plus incomplete for Go
 " not really Special
 highlight link shOption NONE
 highlight link shCommandSub NONE
+highlight link shTestPattern NONE
 
 set nobackup noswapfile nowritebackup
 set undofile

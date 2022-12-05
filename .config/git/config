@@ -41,3 +41,5 @@
 	skippedCherryPicks = false
 [gpg]
 	format = ssh
+[init]
+	defaultBranch = main

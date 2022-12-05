@@ -53,6 +53,10 @@ input "1133:16495:Logitech_MX_Ergo" {
 	scroll_factor 1.5
 }
 
+input "7119:5:USB_Optical_Mouse" {
+	pointer_accel 1.0
+}
+
 input type:keyboard {
 	xkb_layout  us,es
 	xkb_variant altgr-intl,cat
@@ -153,19 +157,14 @@ workspace 9 output DP-1 eDP-1
 workspace 10 output DP-1 eDP-1
 
 # App positions.
-# class= dupes are for xwayland.
 assign [app_id="neomutt"] workspace 3
+
 assign [class="discord"] workspace 5
-assign [app_id="discord"] workspace 5
-assign [app_id="telegramdesktop"] workspace 6
-assign [app_id="Slack"] workspace 7
+assign [app_id="org.telegram.desktop"] workspace 6
 assign [class="Slack"] workspace 7
-assign [app_id="Slack"] workspace 7
 assign [app_id="firefox"] workspace 8
-assign [app_id="Chromium"] workspace 9
+assign [app_id="chromium"] workspace 9
 assign [app_id="nnn"] workspace 9
-assign [class="zoom"] workspace 9
-assign [app_id="zoom"] workspace 9
 assign [app_id="ncmpc"] workspace 10
 
 # Layout stuff:
