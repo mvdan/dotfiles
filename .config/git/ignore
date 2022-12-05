@@ -1,0 +1,6 @@
+# benchmarking, profiling, etc
+old
+new
+*.out
+
+*.exe
