@@ -102,6 +102,7 @@ wgo() {
 }
 
 alias gg="go get"
+alias ggn="go generate"
 alias gb="go build -v"
 alias gi="go install -v"
 alias gt="go test"
