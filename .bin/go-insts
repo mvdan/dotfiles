@@ -58,9 +58,10 @@ install github.com/aclements/go-misc/benchcmd@master
 install github.com/rogpeppe/go-internal/cmd/{testscript,txtar-addmod}@master
 install golang.org/x/exp/cmd/txtar@master
 install github.com/kortschak/gospel@master
+install github.com/icholy/gomajor@master
 
 # misc
-install github.com/mholt/archiver/cmd/arc@latest
+install github.com/mholt/archiver/v3/cmd/arc@latest
 install github.com/itchyny/mmv/cmd/mmv@latest
 # install github.com/hanwen/go-mtpfs@latest
 install github.com/mdlayher/keylight/cmd/keylight@latest
