@@ -15,13 +15,13 @@ modInstall() {
 		cd "$dir"
 		go mod init test 2>/dev/null
 
-		main="$1"
+		tip="$1"
 		shift
 		if ! {
 			go get "$@"
-			go install -ldflags="-w -s" "$main"
+			go install -ldflags="-w -s" "$tip"
 		}; then
-			echo "failed to install $main with $@"
+			echo "failed to install $tip with $@"
 		fi
 		cd - >/dev/null
 		rm -rf "$dir"

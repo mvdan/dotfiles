@@ -1,6 +1,9 @@
 #!/bin/bash
 
-for dir in $(go-modules); do
+cmd=$1
+shift
+
+for dir in $($cmd); do
 	(
 		echo $dir
 		cd $dir
