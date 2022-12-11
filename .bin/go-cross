@@ -1,15 +1,14 @@
 #!/bin/bash
 
-# go-cross [go binary]
+# go-cross [go binary] [version]
 #
 # go-cross builds the main package under the current directory for all the first
-# class Go ports. The optional parameter configures which Go command to build with.
-# The build happens via GOPROXY, which allows embedding a useful module version.
-# We can avoid that step once https://go.dev/issue/50603 is implemented.
+# class Go ports. The optional parameters configure which Go command to build
+# with, and a version override.
 #
-# This script is meant to meet my needs. If you need more, copy and adapt it.
+# This script is meant to be simple. If you need more, copy and adapt it.
 
-# Consistently turn cgo off, even for our local GOOS/GOARCH.
+# Consistently turn cgo off, even for our local linux/amd64.
 export CGO_ENABLED=0
 
 # Since we use GOAMD64=v3 locally,
@@ -17,30 +16,16 @@ export CGO_ENABLED=0
 export GOAMD64=v1
 
 gocmd=${1:-"go"}
-version=${2:-"$(git describe --dirty --tags)"}
-outdir=$PWD
-name=$(basename "$PWD")
-goexe=$($gocmd env GOEXE)
+version=${2:-"$(git describe --always --dirty --tags)"}
+dir=$(basename "$PWD")
 
-tmpdir=$(mktemp -d --suffix 'go-cross')
-finish() { rm -rf tmpdir; }
-trap finish EXIT
-
-echo "Building version ${version} with $($gocmd version) from ${tmpdir}"
-
-read modpath pkgpath < <($gocmd list -f '{{.Module.Path}} {{.ImportPath}}' .)
-vcshead=$(git rev-parse HEAD)
-
-# Use a temporary module to resolve via GOPROXY. See the docs above.
-cd "$tmpdir"
-$gocmd mod init test
-$gocmd get ${modpath}@${vcshead}
+echo "Building version ${version} with $($gocmd version)"
 
 while read goos goarch; do
 	(
 		export GOOS=$goos GOARCH=$goarch
-		out=${name}_${version}_${goos}_${goarch}${goexe}
-		$gocmd build -trimpath -ldflags="-w -s" -o="${outdir}/${out}" ${pkgpath}
+		out="${dir}_${version}_${goos}_${goarch}$($gocmd env GOEXE)"
+		$gocmd build -trimpath -ldflags="-w -s -X 'main.version=${version}'" -o="${out}"
 		echo $out
 	) &
 done < <(
