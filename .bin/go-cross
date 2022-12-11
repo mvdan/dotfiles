@@ -6,9 +6,9 @@
 # class Go ports. The optional parameters configure which Go command to build
 # with, and a version override.
 #
-# This script is meant to be simple. If you need more, copy and adapt it.
+# This script is meant to meet my needs. If you need more, copy and adapt it.
 
-# Consistently turn cgo off, even for our local linux/amd64.
+# Consistently turn cgo off, even for our local GOOS/GOARCH.
 export CGO_ENABLED=0
 
 # Since we use GOAMD64=v3 locally,
@@ -17,14 +17,15 @@ export GOAMD64=v1
 
 gocmd=${1:-"go"}
 version=${2:-"$(git describe --always --dirty --tags)"}
-dir=$(basename "$PWD")
+name=$(basename "$PWD")
+goexe=$($gocmd env GOEXE)
 
 echo "Building version ${version} with $($gocmd version)"
 
 while read goos goarch; do
 	(
 		export GOOS=$goos GOARCH=$goarch
-		out="${dir}_${version}_${goos}_${goarch}$($gocmd env GOEXE)"
+		out="${name}_${version}_${goos}_${goarch}${goexe}"
 		$gocmd build -trimpath -ldflags="-w -s -X 'main.version=${version}'" -o="${out}"
 		echo $out
 	) &
