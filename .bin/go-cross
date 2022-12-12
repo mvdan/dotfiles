@@ -18,15 +18,15 @@ export GOAMD64=v1
 gocmd=${1:-"go"}
 version=${2:-"$(git describe --always --dirty --tags)"}
 name=$(basename "$PWD")
-goexe=$($gocmd env GOEXE)
 
-echo "Building version ${version} with $($gocmd version)"
+goversion="$($gocmd version)"
+echo "Building version ${version} with ${goversion}"
 
 while read goos goarch; do
 	(
-		export GOOS=$goos GOARCH=$goarch
-		out="${name}_${version}_${goos}_${goarch}${goexe}"
-		$gocmd build -trimpath -ldflags="-w -s -X 'main.version=${version}'" -o="${out}"
+		export GOOS=$goos GOARCH=$goarch # note that GOOS affects GOEXE
+		out="${name}_${version}_${goos}_${goarch}$($gocmd env GOEXE)"
+		$gocmd build -trimpath -ldflags="-w -s -X=main.version=${version}" -o="${out}"
 		echo $out
 	) &
 done < <(
@@ -37,3 +37,15 @@ done < <(
 )
 
 wait
+
+sha256sum "${name}_${version}_"* >sha256sums.txt
+
+# Text to be added at the end of the GitHub release, near the binaries.
+echo
+printf 'Binaries built on `%s` with:\n\n\tCGO_ENABLED=0 go build -trimpath -ldflags="-w -s -X=main.version=%s"\n' "$goversion" "$version"
+echo
+
+# Sanity check that the version information is present.
+bin="${name}_${version}_$($gocmd env GOOS)_$($gocmd env GOARCH)$($gocmd env GOEXE)"
+printf "> %s -version\n%s\n" "$name" "$(./$bin -version 2>/dev/null)"
+printf "> %s version\n%s\n" "$name" "$(./$bin version 2>/dev/null)"
