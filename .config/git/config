@@ -18,6 +18,8 @@
 	autoStash = true
 [format]
 	; signoff = true
+[log]
+	showSignature = true
 [diff]
 	indentHeuristic = true
 	colorMoved = zebra
@@ -30,7 +32,7 @@
 [merge]
 	conflictstyle = diff3
 [sendemail]
-	smtpserver = "/usr/bin/msmtp"
+	smtpserver = /usr/bin/msmtp
 	confirm = auto
 [pull]
 	rebase = merges
@@ -45,3 +47,5 @@
 [credential]
 	username = mvdan
 	helper = /usr/lib/git-core/git-credential-libsecret
+[gpg.ssh]
+	allowedSignersFile = ~/.config/git/allowed_signers
