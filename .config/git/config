@@ -1,10 +1,11 @@
 [user]
 	name = Daniel Martí
 	email = mvdan@mvdan.cc
+	signingkey = ~/.ssh/sign_ed25519
 [core]
 	editor = nvim
-	askpass = /bin/true
 	pager = less -F ; other programs always expect less to stick around
+	askpass = /usr/lib/seahorse/ssh-askpass
 [push]
 	default = current
 	autoSetupRemote = true
@@ -12,6 +13,7 @@
 	defaultRemote = origin
 [commit]
 	verbose = true
+	gpgsign = true
 [rebase]
 	autoStash = true
 [format]
@@ -25,14 +27,11 @@
 	newMoved = blue
 	oldMovedAlternative = blue
 	newMovedAlternative = blue
-[http]
-	cookiefile = ~/.config/git/cookies
 [merge]
 	conflictstyle = diff3
 [sendemail]
 	smtpserver = "/usr/bin/msmtp"
 	confirm = auto
-
 [pull]
 	rebase = merges
 [fetch]
@@ -43,3 +42,6 @@
 	format = ssh
 [init]
 	defaultBranch = main
+[credential]
+	username = mvdan
+	helper = /usr/lib/git-core/git-credential-libsecret
