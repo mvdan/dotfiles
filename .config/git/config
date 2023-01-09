@@ -18,8 +18,6 @@
 	autoStash = true
 [format]
 	; signoff = true
-[log]
-	showSignature = true
 [diff]
 	indentHeuristic = true
 	colorMoved = zebra

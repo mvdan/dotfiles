@@ -1,7 +1,8 @@
 #!/bin/bash
 
 install() {
-	(
+	TIMEFORMAT="# %R $@"
+	time (
 		if ! go install -ldflags="-w -s" "$@"; then
 			echo "failed to install $@"
 		fi
@@ -10,16 +11,17 @@ install() {
 
 # modInstall is like install, but for modules using replaces, like gopls.
 modInstall() {
-	(
+	TIMEFORMAT="# %R $@"
+	time (
 		dir="$(mktemp -d)"
 		cd "$dir"
 		go mod init test 2>/dev/null
 
-		tip="$1"
+		mainpkg="$1"
 		shift
 		if ! {
-			go get "$@"
-			go install -ldflags="-w -s" "$tip"
+			go get "$@" 2>/dev/null
+			go install -ldflags="-w -s" "$mainpkg"
 		}; then
 			echo "failed to install $tip with $@"
 		fi
@@ -30,7 +32,7 @@ modInstall() {
 
 # golang.org
 install golang.org/x/review/git-codereview@master
-install golang.org/x/tools/cmd/{goimports,present,stress,stringer,bundle,toolstash,compilebench}@master
+install golang.org/x/tools/cmd/{goimports,stress,stringer,bundle}@master
 install golang.org/x/perf/cmd/benchstat@master
 install golang.org/x/exp/cmd/gorelease@master
 
@@ -50,6 +52,7 @@ install mvdan.cc/gofumpt@master
 install mvdan.cc/dockexec@master
 install mvdan.cc/garble@master
 install mvdan.cc/bitw@master
+install mvdan.cc/benchinit@master
 # install mvdan.cc/goreduce@master
 # install mvdan.cc/fdroidcl@master
 

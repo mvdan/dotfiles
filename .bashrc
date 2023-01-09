@@ -44,7 +44,7 @@ galias gcm  commit
 galias gcp  cherry_pick "cherry-pick"
 galias gdf  diff
 galias glo  log  "-c core.pager='less -p \"^commit \"' log"
-galias glop log  "-c core.pager='less -p \"^commit \"' log -p --format=fuller --stat"
+galias glop log  "-c core.pager='less -p \"^commit \"' log -p --format=fuller --stat --show-signature"
 galias gmr  merge
 galias gpl  pull "pull --stat"
 galias gps  push
@@ -63,6 +63,8 @@ galias gr   restore
 gwm() { gw "$@" $(git-default-branch); }
 gdfm() { gdf "$@" $(git-default-branch); }
 grbm() { grb "$@" $(git-default-branch); }
+glot() { GIT_EXTERNAL_DIFF=difft glop --ext-diff; }
+gdft() { GIT_EXTERNAL_DIFF=difft gdf; }
 
 __git_complete gbrd _git_branch
 alias gclo="git clone"
@@ -100,6 +102,8 @@ wgo() {
 
 	PATH=$(${gocmd} env GOROOT)/bin:${PATH} "$@"
 }
+
+alias cue1=/usr/bin/cue
 
 alias gg="go get"
 alias ggn="go generate"
