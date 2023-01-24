@@ -1,11 +1,11 @@
 [user]
 	name = Daniel Martí
 	email = mvdan@mvdan.cc
-	signingkey = ~/.ssh/sign_ed25519
+	signingKey = ~/.ssh/sign_ed25519
 [core]
 	editor = nvim
 	pager = less -F ; other programs always expect less to stick around
-	askpass = /usr/lib/seahorse/ssh-askpass
+	askPass = /usr/lib/seahorse/ssh-askpass
 [push]
 	default = current
 	autoSetupRemote = true
@@ -13,7 +13,7 @@
 	defaultRemote = origin
 [commit]
 	verbose = true
-	gpgsign = true
+	gpgSign = true
 [rebase]
 	autoStash = true
 [format]
@@ -28,9 +28,9 @@
 	oldMovedAlternative = blue
 	newMovedAlternative = blue
 [merge]
-	conflictstyle = diff3
+	conflictStyle = diff3
 [sendemail]
-	smtpserver = /usr/bin/msmtp
+	smtpServer = /usr/bin/msmtp
 	confirm = auto
 [pull]
 	rebase = merges
