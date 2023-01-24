@@ -35,6 +35,7 @@ install golang.org/x/review/git-codereview@master
 install golang.org/x/tools/cmd/{goimports,stress,stringer,bundle}@master
 install golang.org/x/perf/cmd/benchstat@master
 install golang.org/x/exp/cmd/gorelease@master
+install golang.org/x/vuln/cmd/govulncheck@master
 
 # cuelang.org
 install cuelang.org/go/cmd/cue@master
