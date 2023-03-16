@@ -69,6 +69,7 @@ install github.com/mholt/archiver/v3/cmd/arc@latest
 install github.com/itchyny/mmv/cmd/mmv@latest
 # install github.com/hanwen/go-mtpfs@latest
 install github.com/mdlayher/keylight/cmd/keylight@latest
+install github.com/cespare/reflex@master
 
 # linters
 install honnef.co/go/tools/cmd/staticcheck@master

@@ -55,7 +55,7 @@
 	},
 	"memory": {
 		"interval": 5,
-		"format": "{}%"
+		"format": "{percentage}% {swapPercentage}%"
 	},
 	"temperature": {
 		// "thermal-zone": 2,

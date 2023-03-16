@@ -17,13 +17,6 @@ alias um="sudo umount"
 
 mkcd() { mkdir -p "$1" && cd "$1"; }
 cdr() { cd $(git rev-parse --show-toplevel); }
-cdc() {
-	local ref=${1:-HEAD}
-	# cd into the repo root first
-	cd $(git rev-parse --show-toplevel)
-	# cd into the directory containing all the changes
-	cd $(git diff-tree --no-commit-id --name-only -r $ref | sed -e 'N;s/^\(.*\).*\n\1.*$/\1\n\1/;D')
-}
 
 pgr() { ps aux | grep -v grep | grep -iE "$@"; }
 # alias rg="rg --no-heading --max-columns=150 --max-columns-preview"
@@ -58,6 +51,7 @@ galias gsh  show
 galias gsm  submodule
 galias gst  stash "-c core.pager='less -p ^stash' stash"
 galias gw   switch
+galias gwt  worktree
 galias gr   restore
 
 gwm() { gw "$@" $(git-default-branch); }
@@ -107,8 +101,8 @@ alias cue1=/usr/bin/cue
 
 alias gg="go get"
 alias ggn="go generate"
-alias gb="go build -v"
-alias gi="go install -v"
+alias gb="go build"
+alias gi="go install"
 alias gt="go test"
 alias gts="go test -vet=off -short -timeout 10s"
 alias gf="go test -run=- -vet=off -fuzz"
@@ -126,7 +120,7 @@ gcov() {
 	go tool cover -html=/tmp/c
 }
 
-alias gtoolcmp='go build -toolexec "toolstash -cmp" -a -v std cmd'
+alias gtoolcmp='go build -toolexec "toolstash -cmp" -a std cmd'
 
 gim() { goimports -l -w ${@:-*.go}; }
 gfm() { gofumpt -l -w ${@:-*.go}; }
