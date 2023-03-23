@@ -46,7 +46,7 @@ set rfc2047_parameters = yes
 set certificate_file = ~/.config/mutt/certificates
 set mailcap_path = ~/.config/mutt/mailcap
 set header_cache = ~/.config/mutt/headercache
-set tmpdir = ~/.cache
+set tmp_dir = ~/.cache
 unset signature
 
 set auto_tag
@@ -102,7 +102,6 @@ bind index,pager <esc>j sidebar-next
 color sidebar_new yellow default
 macro index,pager <esc>a <change-folder>=mvdan/Junk<enter>
 macro index,pager <esc>s <change-folder>=mvdan/Sent<enter>
-macro index,pager <esc>d <change-vfolder>All<enter>
 
 bind index G last-entry
 bind pager G bottom
