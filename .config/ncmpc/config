@@ -7,6 +7,6 @@ list-format = "%name%|[%artist% - ][%album% - ]%title%|%file%"
 search-format = "%name%|[%artist% - ][%album% - ]%title%|%file%"
 status-format = "[%artist% - ][%album% - ]%title%|%shortfile%"
 visible-bitrate = yes
-text-editor = nvim
+text-editor = helix
 text-editor-ask = no
 second-column = yes

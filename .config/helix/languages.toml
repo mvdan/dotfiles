@@ -1,0 +1,11 @@
+[[language]]
+name = "go"
+scope = "source.go"
+injection-regex = "go"
+file-types = ["go"]
+roots = ["Gopkg.toml", "go.mod"]
+auto-format = true
+comment-token = "//"
+#language-server = { command = "gopls", args = ["-remote=auto", "-remote.listen.timeout=5m", "serve"] }
+language-server = { command = "gopls", args = ["-logfile=/tmp/gopls.log", "-rpc.trace", "serve"] }
+indent = { tab-width = 4, unit = "\t" }

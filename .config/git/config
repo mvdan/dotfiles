@@ -3,7 +3,7 @@
 	email = mvdan@mvdan.cc
 	signingKey = ~/.ssh/sign_ed25519
 [core]
-	editor = nvim
+	editor = helix
 	pager = less -F ; other programs always expect less to stick around
 	askPass = /usr/lib/seahorse/ssh-askpass
 [push]

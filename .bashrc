@@ -9,7 +9,7 @@ shopt -s histappend
 alias l="less"
 alias s="sudo"
 alias se="sudoedit"
-alias v="nvim"
+alias v="helix"
 alias hx="helix"
 
 alias m="sudo mount"
