@@ -1,5 +1,14 @@
+# Disable CPU boost, as most laptop CPUs can't hold it for long.
 echo 0 | sudo tee /sys/devices/system/cpu/cpufreq/boost >/dev/null
+
+# Attept to schedule the benchmark process above most others.
 sudo renice -n -15 $$ >/dev/null
+
+# Currently using a laptop with 16 CPU cores.
+# However, some parallel benchmarks can stress the whole machine,
+# and that may cause noise of 5-10% as it's hard to keep the machine
+# otherwise completely idle. Use half the cores for parallel benchmarks.
+export GOMAXPROCS=8
 
 function finish {
 	  sudo renice -n 0 $$ >/dev/null

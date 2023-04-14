@@ -14,7 +14,7 @@ set $term foot
 # on the original workspace that the command was run on.
 set $menu wofi --show drun | xargs swaymsg exec --
 set $lock swaylock -c 323232
-set $tweakcpu sudo ryzenadj --stapm-limit=28000 --fast-limit=35000 --slow-limit=28000 --tctl-temp=90 --apu-skin-temp=55 --max-performance
+set $tweakcpu sudo ryzenadj --fast-limit=35000 --slow-limit=30000 --tctl-temp=90 --apu-skin-temp=65
 set $keylight keylight -a 'http://192.168.1.137:9123'
 
 ### Output configuration
@@ -155,13 +155,18 @@ workspace 10 output DP-1 eDP-1
 # App positions.
 assign [app_id="neomutt"] workspace 3
 
-assign [class="discord"] workspace 5
+assign [app_id="discord"] workspace 5
 assign [app_id="org.telegram.desktop"] workspace 6
 assign [app_id="Slack"] workspace 7
 assign [app_id="firefox"] workspace 8
 assign [app_id="chromium"] workspace 9
 assign [app_id="nnn"] workspace 9
 assign [app_id="ncmpc"] workspace 10
+
+for_window [app_id="^menu$"] floating enable, border none
+for_window [floating] border csd
+for_window [title="Firefox — Sharing Indicator"] kill
+for_window [title=".*is sharing your screen.$"] kill
 
 # Layout stuff:
 #
@@ -312,4 +317,3 @@ exec exec nm-applet --indicator
 
 exec exec /usr/lib/geoclue-2.0/demos/agent
 exec exec gammastep -v >/tmp/gammastep.log 2>&1
-# exec exec wlsunset -l 53.5 -L -2.1 >/tmp/wlsunset.log 2>&1

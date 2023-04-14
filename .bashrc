@@ -10,7 +10,7 @@ alias l="less"
 alias s="sudo"
 alias se="sudoedit"
 alias v="nvim"
-alias sp="sed -r 's/([^:]*:[^:]*:)/\1\t/'"
+alias hx="helix"
 
 alias m="sudo mount"
 alias um="sudo umount"
@@ -107,6 +107,15 @@ alias gt="go test"
 alias gts="go test -vet=off -short -timeout 10s"
 alias gf="go test -run=- -vet=off -fuzz"
 
+# gomajor is still useful for bumping major versions,
+# but "go list" and "go get" are enough and less buggy for others.
+go-updates() {
+	go list -u -m -f '{{if not .Indirect}}{{.}}{{end}}' all
+}
+go-updates-do() {
+	go get $(go list -m -f '{{if not .Indirect}}{{.}}{{end}}' all)
+}
+
 gstr() {
 	if [[ $# == 0 || $1 == help ]]; then
 		echo "gstr [stress flags] ./test [test flags]"
@@ -167,9 +176,7 @@ git-default-branch-fix() { git remote set-head origin -a; }
 git-default-branch() { git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'; }
 git-file-sizes() { git ls-files -z | xargs -0 du -b | sort -n; }
 
-gfork() {
-	gh repo fork --remote --remote-name mvdan
-}
+gfork() { gh repo fork --remote --remote-name mvdan; }
 gmrc() { git push origin -o merge_request.create "$@"; }
 alias gml="git-codereview mail"
 
@@ -178,6 +185,7 @@ alias rsv="rsync -avh --info=progress2"
 
 alias clb='curl -F "clbin=<-" https://clbin.com'
 alias bat='bat --pretty=false'
+alias procs='procs --color=disable'
 alias unr='arc unarchive'
 
 case $TERM in

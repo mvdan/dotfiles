@@ -1,8 +1,9 @@
 base=${1:-HEAD}
+shift
 if git config remote.mvdan.url >/dev/null; then
 	git push -f -u mvdan || exit 1
 else
-	# No fork present, so assume we are the only owner.
+	# No fork present, so assume we push to the original repo.
 	git push -u origin || exit 1
 fi
 
@@ -18,8 +19,8 @@ fi
 # as it won't do that for commit messages as nicely.
 issuelines="$(git rev-list --no-commit-header --reverse --format=%b HEAD ^origin/${base} | grep -E '^(Fixes|Updates|For) #[0-9]+')"
 if [[ $(git rev-list --count HEAD ^origin/${base}) == 1 ]]; then
-	gh pr create --title="$(git show -s --format=%s)" --body=$'(see commit message)\n\n'"${issuelines}" $baseflag
+	gh pr create --title="$(git show -s --format=%s)" --body=$'(see commit message)\n\n'"${issuelines}" $baseflag "$@"
 else
 	# Edit the PR body if there are many commits.
-	gh pr create --title="TODO" --body=$'(see commit messages - please do not squash)\n\n'"${issuelines}" $baseflag --web
+	gh pr create --title="TODO" --body=$'(see commit messages - please do not squash)\n\n'"${issuelines}" $baseflag --web "$@"
 fi
