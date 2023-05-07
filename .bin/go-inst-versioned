@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# TODO: hopefully replace all of this with https://go.dev/issues/44469
+
+path="$1"
+shift
+
+tdir="$(mktemp -d)"
+finish() { rm -rf "$tdir"; }
+trap finish EXIT
+
+# TODO: hack around https://go.dev/issues/23439
+FINAL_GOBIN="$(go env GOPATH)/bin"
+
+for version in "$@"; do
+	GOBIN="$tdir" go install "$path@$version"
+	for bin in "$tdir"/*; do
+		base=$(basename "$bin")
+		mv "$bin" "$FINAL_GOBIN"/$base-$version
+	done
+done
