@@ -9,7 +9,6 @@ shopt -s histappend
 alias l="less"
 alias s="sudo"
 alias se="sudoedit"
-alias v="helix"
 alias hx="helix"
 
 alias m="sudo mount"
@@ -17,9 +16,6 @@ alias um="sudo umount"
 
 mkcd() { mkdir -p "$1" && cd "$1"; }
 cdr() { cd $(git rev-parse --show-toplevel); }
-
-pgr() { ps aux | grep -v grep | grep -iE "$@"; }
-# alias rg="rg --no-heading --max-columns=150 --max-columns-preview"
 
 source /usr/share/fzf/key-bindings.bash
 source /usr/share/fzf/completion.bash
@@ -110,10 +106,11 @@ alias gf="go test -run=- -vet=off -fuzz"
 # gomajor is still useful for bumping major versions,
 # but "go list" and "go get" are enough and less buggy for others.
 go-updates() {
-	go list -u -m -f '{{if not .Indirect}}{{.}}{{end}}' all
+	go list -u -m -f '{{if and (not .Indirect) .Update}}{{.}}{{end}}' all
 }
 go-updates-do() {
-	go get $(go list -m -f '{{if not .Indirect}}{{.}}{{end}}' all)
+	go get $(go list -u -m -f '{{if not .Indirect}}{{with .Update}}{{.Path}}@{{.Version}}{{end}}{{end}}' all)
+	go mod tidy
 }
 
 gstr() {

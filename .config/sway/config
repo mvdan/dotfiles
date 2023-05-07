@@ -12,7 +12,7 @@ set $term foot
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu wofi --show drun | xargs swaymsg exec --
+set $menu wofi --insensitive --show drun | xargs swaymsg exec --
 set $lock swaylock -c 323232
 set $tweakcpu sudo ryzenadj --fast-limit=35000 --slow-limit=30000 --tctl-temp=90 --apu-skin-temp=65
 set $keylight keylight -a 'http://192.168.1.137:9123'
@@ -140,17 +140,17 @@ bindsym $mod+Shift+0 move container to workspace 10
 # Note: workspaces can have any name you want, not just numbers.
 # We just use 1-10 as the default.
 
-# All workspaces but the first two default to the external monitor.
-workspace 1 output eDP-1
-workspace 2 output eDP-1
-workspace 3 output DP-1 eDP-1
-workspace 4 output DP-1 eDP-1
-workspace 5 output DP-1 eDP-1
-workspace 6 output DP-1 eDP-1
-workspace 7 output DP-1 eDP-1
-workspace 8 output DP-1 eDP-1
-workspace 9 output DP-1 eDP-1
-workspace 10 output DP-1 eDP-1
+# All workspaces but the first two default to either external monitor.
+workspace 1  output eDP-1
+workspace 2  output eDP-1
+workspace 3  output DP-1 DP-2 eDP-1
+workspace 4  output DP-1 DP-2 eDP-1
+workspace 5  output DP-1 DP-2 eDP-1
+workspace 6  output DP-1 DP-2 eDP-1
+workspace 7  output DP-1 DP-2 eDP-1
+workspace 8  output DP-1 DP-2 eDP-1
+workspace 9  output DP-1 DP-2 eDP-1
+workspace 10 output DP-1 DP-2 eDP-1
 
 # App positions.
 assign [app_id="neomutt"] workspace 3
@@ -263,7 +263,7 @@ bindsym $mod+Alt+slash exec mpc toggle
 bindsym $mod+Alt+j exec $term --app-id=neomutt bash -c "sleep 0.1; exec neomutt"
 bindsym $mod+Alt+k exec $term --app-id=nnn nnn -d -u -U
 bindsym $mod+Alt+n exec $term --app-id=ncmpc ncmpc
-bindsym $mod+Alt+e exec $term --app-id=todo bash -c "sleep 0.1; exec helix Documents/TODO.txt"
+bindsym $mod+Alt+e exec $term helix Documents/TODO.txt
 bindsym $mod+Alt+i exec firefox
 
 # Other custom binds

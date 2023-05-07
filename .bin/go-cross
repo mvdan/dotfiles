@@ -15,25 +15,24 @@ export CGO_ENABLED=0
 # turn that off for cross-builds for greater compatibility.
 export GOAMD64=v1
 
-gocmd=${1:-"go"}
-version=${2:-"$(git describe --always --dirty --tags)"}
+version=${1:-"$(git describe --always --dirty --tags)"}
 name=$(basename "$PWD")
 
-goversion="$($gocmd version)"
+goversion="$(go version)"
 echo "Building version ${version} with ${goversion}"
 
 while read goos goarch; do
 	(
 		export GOOS=$goos GOARCH=$goarch # note that GOOS affects GOEXE
-		out="${name}_${version}_${goos}_${goarch}$($gocmd env GOEXE)"
-		$gocmd build -trimpath -ldflags="-w -s -X=main.version=${version}" -o="${out}"
+		out="${name}_${version}_${goos}_${goarch}$(go env GOEXE)"
+		go build -trimpath -ldflags="-w -s -X=main.version=${version}" -o="${out}"
 		echo $out
 	) &
 done < <(
 	# "dist list -json" gives us a list of all targets in JSON format.
 	# Flatten the list, and only keep the first-class ports.
 	# Then print the GOOS/GOARCH pairs in a way that shell can easily read.
-	$gocmd tool dist list -json | jq -r '.[] | select(.FirstClass) | [.GOOS, .GOARCH] | @tsv'
+	go tool dist list -json | jq -r '.[] | select(.FirstClass) | [.GOOS, .GOARCH] | @tsv'
 )
 
 wait
@@ -46,6 +45,6 @@ printf 'Binaries built on `%s` with:\n\n\tCGO_ENABLED=0 go build -trimpath -ldfl
 echo
 
 # Sanity check that the version information is present.
-bin="${name}_${version}_$($gocmd env GOOS)_$($gocmd env GOARCH)$($gocmd env GOEXE)"
+bin="${name}_${version}_$(go env GOOS)_$(go env GOARCH)$(go env GOEXE)"
 printf "> %s -version\n%s\n" "$name" "$(./$bin -version 2>/dev/null)"
 printf "> %s version\n%s\n" "$name" "$(./$bin version 2>/dev/null)"

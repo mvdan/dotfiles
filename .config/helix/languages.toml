@@ -1,11 +1,18 @@
+# Minor tweaks to Go, like gopls flags.
 [[language]]
 name = "go"
 scope = "source.go"
 injection-regex = "go"
 file-types = ["go"]
-roots = ["Gopkg.toml", "go.mod"]
+roots = ["go.mod"]
 auto-format = true
 comment-token = "//"
-#language-server = { command = "gopls", args = ["-remote=auto", "-remote.listen.timeout=5m", "serve"] }
-language-server = { command = "gopls", args = ["-logfile=/tmp/gopls.log", "-rpc.trace", "serve"] }
+language-server.command = "gopls"
+language-server.args = ["-logfile=/tmp/gopls.log", "-rpc.trace", "serve"]
+# language-server.environment = {"GOOS" = "js", "GOARCH" = "wasm"}
+indent = { tab-width = 4, unit = "\t" }
+
+# Indent shell with tabs.
+[[language]]
+name = "bash"
 indent = { tab-width = 4, unit = "\t" }
