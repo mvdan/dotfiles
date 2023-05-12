@@ -4,13 +4,14 @@ name = "go"
 scope = "source.go"
 injection-regex = "go"
 file-types = ["go"]
-roots = ["go.mod"]
+roots = ["go.work", "go.mod"]
 auto-format = true
 comment-token = "//"
 language-server.command = "gopls"
 language-server.args = ["-logfile=/tmp/gopls.log", "-rpc.trace", "serve"]
 # language-server.environment = {"GOOS" = "js", "GOARCH" = "wasm"}
 indent = { tab-width = 4, unit = "\t" }
+config = { "ui.diagnostic.staticcheck" = true }
 
 # Indent shell with tabs.
 [[language]]

@@ -181,7 +181,6 @@ alias ssh="TERM=xterm ssh"
 alias rsv="rsync -avh --info=progress2"
 
 alias clb='curl -F "clbin=<-" https://clbin.com'
-alias bat='bat --pretty=false'
 alias procs='procs --color=disable'
 alias unr='arc unarchive'
 

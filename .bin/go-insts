@@ -2,8 +2,18 @@
 
 install() {
 	TIMEFORMAT="# %R $@"
+
 	time (
-		if ! go install -ldflags="-w -s" "$@"; then
+		firstmain="${1%@*}@main"
+		# If a project replaces `master` with `main`, proxy.golang.org will continue
+		# to serve an old `@master` indefinitely, so we would be stuck without noticing.
+		# Until https://go.dev/issues/49146 is fixed, check manually.
+		if [[ "$1" == *@master && "$firstmain" != "$1" ]]; then
+			if go install -ldflags="-w -s" "$firstmain" 2>/dev/null; then
+				echo "WARNING: $firstmain exists"
+			fi
+		fi
+		if ! chronic go install -ldflags="-w -s" "$@"; then
 			echo "failed to install $@"
 		fi
 	) &
@@ -15,15 +25,12 @@ modInstall() {
 	time (
 		dir="$(mktemp -d)"
 		cd "$dir"
-		go mod init test 2>/dev/null
+		chronic go mod init test
 
 		mainpkg="$1"
 		shift
-		if ! {
-			go get "$@" 2>/dev/null
-			go install -ldflags="-w -s" "$mainpkg"
-		}; then
-			echo "failed to install $tip with $@"
+		if ! chronic go get "$@" && go install -ldflags="-w -s" "$mainpkg"; then
+			echo "failed to install $mainpkg with $@"
 		fi
 		cd - >/dev/null
 		rm -rf "$dir"
@@ -63,6 +70,7 @@ install github.com/rogpeppe/go-internal/cmd/{testscript,txtar-addmod}@master
 install golang.org/x/exp/cmd/txtar@master
 install github.com/kortschak/gospel@master
 install github.com/icholy/gomajor@master
+install rsc.io/rf/git-generate@main
 
 # misc
 install github.com/mholt/archiver/v3/cmd/arc@latest

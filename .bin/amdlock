@@ -1,5 +1,6 @@
 # Disable CPU boost, as most laptop CPUs can't hold it for long.
-echo 0 | sudo tee /sys/devices/system/cpu/cpufreq/boost >/dev/null
+# TODO: implement with amd-pstate?
+# echo 0 | sudo tee /sys/devices/system/cpu/cpufreq/boost >/dev/null
 
 # Attept to schedule the benchmark process above most others.
 sudo renice -n -15 $$ >/dev/null
@@ -12,7 +13,7 @@ export GOMAXPROCS=8
 
 function finish {
 	  sudo renice -n 0 $$ >/dev/null
-	  echo 1 | sudo tee /sys/devices/system/cpu/cpufreq/boost >/dev/null
+	  # echo 1 | sudo tee /sys/devices/system/cpu/cpufreq/boost >/dev/null
 }
 trap finish EXIT
 
