@@ -17,6 +17,7 @@ set allow_8bit
 set mail_check = 0
 set nobeep
 set timeout = 10
+# set color_directcolor = yes
 
 set sendmail = '/usr/bin/msmtp'
 set date_format = "!%a, %b %d, %Y at %H:%M:%S %Z"

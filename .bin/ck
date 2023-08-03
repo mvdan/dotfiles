@@ -1,3 +1,0 @@
-#!/bin/sh
-
-GITHUB_USER=mvdan GITHUB_PAT=$(secret-tool lookup account github.pat.cueckoo) cueckoo "$@"

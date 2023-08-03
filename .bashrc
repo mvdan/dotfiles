@@ -94,6 +94,7 @@ wgo() {
 }
 
 alias cue1=/usr/bin/cue
+wcue1() { PATH=/usr/bin:${PATH} "$@"; }
 
 alias gg="go get"
 alias ggn="go generate"

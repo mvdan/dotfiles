@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Kill the background processes when we stop.
+trap "trap - SIGTERM && kill -- -$$" SIGINT SIGTERM EXIT
+
 install() {
 	TIMEFORMAT="# %R $@"
 
@@ -40,6 +43,7 @@ modInstall() {
 # golang.org
 install golang.org/x/review/git-codereview@master
 install golang.org/x/tools/cmd/{goimports,stress,stringer,bundle}@master
+install golang.org/x/tools/internal/cmd/deadcode@master
 install golang.org/x/perf/cmd/benchstat@master
 install golang.org/x/exp/cmd/gorelease@master
 install golang.org/x/vuln/cmd/govulncheck@master
@@ -77,6 +81,7 @@ install github.com/mholt/archiver/v3/cmd/arc@latest
 install github.com/itchyny/mmv/cmd/mmv@latest
 # install github.com/hanwen/go-mtpfs@latest
 install github.com/mdlayher/keylight/cmd/keylight@latest
+install github.com/kenshaw/wofimoji@latest
 
 # linters
 install honnef.co/go/tools/cmd/staticcheck@master

@@ -1,1 +1,10 @@
 theme = "acme"
+
+[keys.normal]
+C-r = ":reload-all"
+
+[keys.normal."space"]
+o = "file_picker_in_current_buffer_directory"
+
+[editor.lsp]
+goto-reference-include-declaration = false

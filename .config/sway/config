@@ -29,8 +29,8 @@ hide_edge_borders smart
 ### Idle configuration
 
 exec swayidle -w \
-	timeout 600 '$lock -f' \
-	timeout 660 'swaymsg "output * power off"' \
+	timeout 800 '$lock -f' \
+	timeout 860 'pgrep swaylock && swaymsg "output * power off"' \
 	resume 'swaymsg "output * power on"' \
 	before-sleep '$lock -f' \
 	after-resume '$tweakcpu'
@@ -86,7 +86,7 @@ bindsym $mod+Shift+c reload
 #bindsym $mod+Shift+e exit
 bindsym $mod+Shift+p exec systemctl poweroff
 bindsym $mod+Shift+o exec systemctl reboot
-bindsym $mod+Shift+s exec systemctl suspend
+bindsym --locked $mod+Shift+s exec systemctl suspend
 #bindsym $mod+Shift+l exec "$lock -f; sleep 1; pkill -USR1 swayidle"
 #
 # Moving around:
@@ -153,8 +153,7 @@ workspace 9  output DP-1 DP-2 eDP-1
 workspace 10 output DP-1 DP-2 eDP-1
 
 # App positions.
-assign [app_id="neomutt"] workspace 3
-
+assign [app_id="thunderbird"] workspace 3
 assign [app_id="discord"] workspace 5
 assign [app_id="org.telegram.desktop"] workspace 6
 assign [app_id="Slack"] workspace 7
@@ -167,6 +166,7 @@ for_window [app_id="^menu$"] floating enable, border none
 for_window [floating] border csd
 for_window [title="Firefox — Sharing Indicator"] kill
 for_window [title=".*is sharing your screen.$"] kill
+for_window [title=".*is sharing a window.$"] kill
 
 # Layout stuff:
 #
@@ -233,17 +233,17 @@ bindsym $mod+r mode "resize"
 # Multimedia
 
 # Fn+1, Fn+2, Fn+3
-bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +2dB
-bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -2dB
-bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +2dB
+bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -2dB
+bindsym --locked XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 # Fn+4 or Fn+F4
-bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
-bindsym XF86Tools exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+bindsym --locked XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+bindsym --locked XF86Tools exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
 # Fn+5, Fn+6
-bindsym XF86MonBrightnessDown exec brightnessctl --exponent=2 set 5%-
-bindsym XF86MonBrightnessUp exec brightnessctl --exponent=2 set +5%
+bindsym --locked XF86MonBrightnessDown exec brightnessctl --exponent=2 set 5%-
+bindsym --locked XF86MonBrightnessUp exec brightnessctl --exponent=2 set +5%
 
 # Fn+7 or Fn+F7 (only useful when docked)
 bindsym XF86Display exec sudo ddcutil setvcp --sleep-less --noverify 10 $(( ($(brightnessctl get)*100) / $(brightnessctl max) ))
@@ -253,17 +253,17 @@ bindsym XF86Launch5 exec sudo ddcutil setvcp --sleep-less --noverify 10 $(( ($(b
 bindsym XF86Launch6 exec pactl-cycle-sink
 bindsym XF86Launch7 exec camera-config
 
-bindsym $mod+Alt+comma exec mpc prev
-bindsym $mod+Alt+period exec mpc next
-bindsym $mod+Alt+minus exec mpc toggle
-bindsym $mod+Alt+slash exec mpc toggle
+bindsym --locked $mod+Alt+comma exec mpc prev
+bindsym --locked $mod+Alt+period exec mpc next
+bindsym --locked $mod+Alt+minus exec mpc toggle
+bindsym --locked $mod+Alt+slash exec mpc toggle
 
 # Apps
 
-bindsym $mod+Alt+j exec $term --app-id=neomutt bash -c "sleep 0.1; exec neomutt"
 bindsym $mod+Alt+k exec $term --app-id=nnn nnn -d -u -U
 bindsym $mod+Alt+n exec $term --app-id=ncmpc ncmpc
 bindsym $mod+Alt+e exec $term helix Documents/TODO.txt
+bindsym $mod+Alt+j exec thunderbird
 bindsym $mod+Alt+i exec firefox
 
 # Other custom binds
@@ -273,6 +273,7 @@ bindsym $mod+Shift+g exec grim -g "$(slurp)" - | swappy -f - # slurp + swappy
 bindsym $mod+Alt+g exec cd /tmp && grim -o $(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name') # current dislay + /tmp
 bindsym $mod+Alt+m exec systemctl --user start mbsync
 bindsym $mod+o exec killall -SIGUSR1 waybar
+bindsym $mod+p exec wofimoji
 
 font pango:Inconsolata 16
 
