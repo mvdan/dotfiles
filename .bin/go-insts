@@ -32,7 +32,7 @@ modInstall() {
 
 		mainpkg="$1"
 		shift
-		if ! chronic go get "$@" && go install -ldflags="-w -s" "$mainpkg"; then
+		if ! { chronic go get "$@" && go install -ldflags="-w -s" "$mainpkg"; }; then
 			echo "failed to install $mainpkg with $@"
 		fi
 		cd - >/dev/null

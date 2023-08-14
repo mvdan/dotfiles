@@ -72,6 +72,7 @@ alias mksrcinfo="makepkg --printsrcinfo >.SRCINFO"
 alias sc="sudo systemctl"
 alias scu="systemctl --user"
 alias jc="journalctl"
+alias jcu="journalctl --user"
 
 alias ls="ls -F"
 alias ll="ls -lhiF"
@@ -85,16 +86,19 @@ alias cd.="cd .."
 alias cd..="cd ../.."
 alias cd...="cd ../../.."
 
-wgo1() { PATH=/usr/lib/go/bin:${PATH} "$@"; }
 wgo() {
-	local gocmd=go${1}
+	local gover=go${1}
 	shift
 
-	PATH=$(${gocmd} env GOROOT)/bin:${PATH} "$@"
+	PATH=$HOME/git/${gover}/bin:${PATH} "$@"
 }
 
-alias cue1=/usr/bin/cue
-wcue1() { PATH=/usr/bin:${PATH} "$@"; }
+wcue() {
+	local cuever=cue${1}
+	shift
+
+	PATH=$HOME/git/${cuever}/bin:${PATH} "$@"
+}
 
 alias gg="go get"
 alias ggn="go generate"

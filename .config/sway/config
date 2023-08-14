@@ -233,6 +233,7 @@ bindsym $mod+r mode "resize"
 # Multimedia
 
 # Fn+1, Fn+2, Fn+3
+# TODO: replace pactl with wpctl, see https://wiki.archlinux.org/title/WirePlumber#Keyboard_volume_control
 bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +2dB
 bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -2dB
 bindsym --locked XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
