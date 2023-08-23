@@ -53,5 +53,10 @@ if [[ ${#delete[@]} -gt 0 ]]; then
 	git branch -D ${!delete[@]}
 fi
 
+# Always delete the "*.mailed" tags created by `git-codereview mail`,
+# since I have no use for them and they otherwise pile up.
+# See https://go.dev/issue/15344.
+git tag -d $(git tag -l '*.mailed')
+
 # wait for the remote deletes to finish
 wait

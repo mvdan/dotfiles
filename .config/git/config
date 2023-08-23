@@ -47,3 +47,5 @@
 	helper = /usr/lib/git-core/git-credential-libsecret
 [gpg.ssh]
 	allowedSignersFile = ~/.config/git/allowed_signers
+[tag]
+	sort = -committerdate

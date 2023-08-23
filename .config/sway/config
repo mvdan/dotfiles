@@ -164,9 +164,6 @@ assign [app_id="ncmpc"] workspace 10
 
 for_window [app_id="^menu$"] floating enable, border none
 for_window [floating] border csd
-for_window [title="Firefox — Sharing Indicator"] kill
-for_window [title=".*is sharing your screen.$"] kill
-for_window [title=".*is sharing a window.$"] kill
 
 # Layout stuff:
 #
