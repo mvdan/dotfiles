@@ -13,6 +13,11 @@ language-server.args = ["-logfile=/tmp/gopls.log", "-remote=auto", "serve"]
 indent = { tab-width = 4, unit = "\t" }
 config = { "ui.diagnostic.staticcheck" = true }
 
+# "cue fmt" is buggy.
+[[language]]
+name = "cue"
+auto-format = false
+
 # Indent shell with tabs.
 [[language]]
 name = "bash"

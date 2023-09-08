@@ -90,14 +90,26 @@ wgo() {
 	local gover=go${1}
 	shift
 
-	PATH=$HOME/git/${gover}/bin:${PATH} "$@"
+	local bin=$HOME/git/${gover}/bin
+	if [[ ! -d $bin ]]; then
+		echo "version not found"
+		return 1
+	fi
+
+	PATH=${bin}:${PATH} "$@"
 }
 
 wcue() {
 	local cuever=cue${1}
 	shift
 
-	PATH=$HOME/git/${cuever}/bin:${PATH} "$@"
+	local bin=$HOME/git/${cuever}/bin
+	if [[ ! -d $bin ]]; then
+		echo "version not found"
+		return 1
+	fi
+
+	PATH=${bin}:${PATH} "$@"
 }
 
 alias gg="go get"
