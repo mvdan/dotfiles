@@ -200,6 +200,10 @@ alias rsv="rsync -avh --info=progress2"
 alias clb='curl -F "clbin=<-" https://clbin.com'
 alias procs='procs --color=disable'
 alias unr='arc unarchive'
+alias kc='kubectl'
+alias kcl='kubectl logs'
+alias kcg='kubectl get'
+alias kcd='kubectl describe'
 
 case $TERM in
 linux* | cons*) ;;

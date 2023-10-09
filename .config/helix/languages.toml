@@ -22,3 +22,8 @@ auto-format = false
 [[language]]
 name = "bash"
 indent = { tab-width = 4, unit = "\t" }
+
+# Indent markdown with tabs.
+[[language]]
+name = "markdown"
+indent = { tab-width = 4, unit = "\t" }

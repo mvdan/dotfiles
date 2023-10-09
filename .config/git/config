@@ -11,6 +11,8 @@
 	autoSetupRemote = true
 [checkout]
 	defaultRemote = origin
+[branch]
+	autoSetupMerge = inherit ; new branches inherit remote tracking branches
 [commit]
 	verbose = true
 	gpgSign = true
