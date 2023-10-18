@@ -11,8 +11,6 @@
 	autoSetupRemote = true
 [checkout]
 	defaultRemote = origin
-[branch]
-	autoSetupMerge = inherit ; new branches inherit remote tracking branches
 [commit]
 	verbose = true
 	gpgSign = true
@@ -49,5 +47,12 @@
 	helper = /usr/lib/git-core/git-credential-libsecret
 [gpg.ssh]
 	allowedSignersFile = ~/.config/git/allowed_signers
+
+# Sort branches and tags by descending date first, then by descending name.
+# This helps show the latest or highest ones first.
+[branch]
+	sort = -refname
+	sort = -creatordate
 [tag]
-	sort = -committerdate
+	sort = -refname
+	sort = -creatordate
