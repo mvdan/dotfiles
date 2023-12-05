@@ -3,4 +3,8 @@ old
 new
 *.out
 
+# binaries
 *.exe
+
+# helix workspace marker
+.helix

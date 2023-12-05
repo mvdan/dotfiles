@@ -1,4 +1,10 @@
 # Minor tweaks to Go, like gopls flags.
+[language-server.gopls]
+command = "gopls"
+args = ["-logfile=/tmp/gopls.log", "-remote=auto", "serve"]
+[language-server.gopls.config]
+"ui.diagnostic.staticcheck" = true
+
 [[language]]
 name = "go"
 scope = "source.go"
@@ -7,11 +13,7 @@ file-types = ["go"]
 roots = ["go.work", "go.mod"]
 auto-format = true
 comment-token = "//"
-language-server.command = "gopls"
-language-server.args = ["-logfile=/tmp/gopls.log", "-remote=auto", "serve"]
-# language-server.environment = {"GOOS" = "js", "GOARCH" = "wasm"}
 indent = { tab-width = 4, unit = "\t" }
-config = { "ui.diagnostic.staticcheck" = true }
 
 # "cue fmt" is buggy.
 [[language]]

@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [[ $# -eq 0 ]]; then
+	echo "txtar-apply shell files..."
+	exit 1
+fi
+
 script="$1"
 shift
 

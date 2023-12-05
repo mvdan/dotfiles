@@ -86,32 +86,6 @@ alias cd.="cd .."
 alias cd..="cd ../.."
 alias cd...="cd ../../.."
 
-wgo() {
-	local gover=go${1}
-	shift
-
-	local bin=$HOME/git/${gover}/bin
-	if [[ ! -d $bin ]]; then
-		echo "version not found"
-		return 1
-	fi
-
-	PATH=${bin}:${PATH} "$@"
-}
-
-wcue() {
-	local cuever=cue${1}
-	shift
-
-	local bin=$HOME/git/${cuever}/bin
-	if [[ ! -d $bin ]]; then
-		echo "version not found"
-		return 1
-	fi
-
-	PATH=${bin}:${PATH} "$@"
-}
-
 alias gg="go get"
 alias ggn="go generate"
 alias gb="go build"

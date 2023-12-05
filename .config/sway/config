@@ -163,7 +163,7 @@ assign [app_id="nnn"] workspace 9
 assign [app_id="ncmpc"] workspace 10
 
 for_window [app_id="^menu$"] floating enable, border none
-for_window [title="^Bitwarden — Mozilla Firefox$"] floating enable, border none
+# for_window [title="^Bitwarden — Mozilla Firefox$"] floating enable, border none
 for_window [floating] border csd
 
 # Layout stuff:
