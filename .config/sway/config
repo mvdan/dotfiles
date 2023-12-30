@@ -85,7 +85,6 @@ bindsym $mod+Shift+c reload
 # Exit sway (logs you out of your Wayland session)
 #bindsym $mod+Shift+e exit
 bindsym $mod+Shift+p exec systemctl poweroff
-bindsym $mod+Shift+o exec systemctl reboot
 bindsym --locked $mod+Shift+s exec systemctl suspend
 # bindsym $mod+Shift+l exec "$lock -f; sleep 1; pkill -USR1 swayidle"
 #
