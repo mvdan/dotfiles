@@ -32,8 +32,8 @@ galias gbr  branch
 galias gcm  commit
 galias gcp  cherry_pick "cherry-pick"
 galias gdf  diff
-galias glo  log  "-c core.pager='less -p \"^commit \"' log"
-galias glop log  "-c core.pager='less -p \"^commit \"' log -p --format=fuller --stat --show-signature"
+galias glo  log
+galias glop log "log -p --format=fuller --stat --show-signature"
 galias gmr  merge
 galias gpl  pull "pull --stat"
 galias gps  push
@@ -45,7 +45,7 @@ galias grt  remote
 galias grv  revert
 galias gsh  show
 galias gsm  submodule
-galias gst  stash "-c core.pager='less -p ^stash' stash"
+galias gst  stash
 galias gw   switch
 galias gwt  worktree
 galias gr   restore
