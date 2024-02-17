@@ -17,7 +17,7 @@ fi
 # Keep "Fixes #123" lines in the PR body.
 # This helps GitHub properly link the issues,
 # as it won't do that for commit messages as nicely.
-issuelines="$(git rev-list --no-commit-header --reverse --format=%b HEAD ^origin/${base} | grep -E '^(Fixes|Updates|For) #[0-9]+')"
+issuelines="$(git rev-list --no-commit-header --reverse --format=%b HEAD ^origin/${base} | grep -E '^(Fixes|Updates|For) [a-zA-Z/_-]*#[0-9]+')"
 if [[ $(git rev-list --count HEAD ^origin/${base}) == 1 ]]; then
 	gh pr create --title="$(git show -s --format=%s)" --body=$'(see commit message)\n\n'"${issuelines}" $baseflag "$@"
 else

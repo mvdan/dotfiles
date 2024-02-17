@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# go-cross [go binary] [version]
+# go-cross [version]
 #
 # go-cross builds the main package under the current directory for all the first
 # class Go ports. The optional parameters configure which Go command to build

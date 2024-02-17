@@ -3,6 +3,7 @@
 *.d/
 /.config/*
 !/.config/chromium-flags.conf
+!/.config/mimeapps.list
 !/.config/environment.d/
 !/.config/foot/
 !/.config/git/

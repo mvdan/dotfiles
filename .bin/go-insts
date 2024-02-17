@@ -46,6 +46,7 @@ install golang.org/x/tools/cmd/{deadcode,goimports,stress,stringer,bundle}@maste
 install golang.org/x/perf/cmd/benchstat@master
 install golang.org/x/exp/cmd/gorelease@master
 install golang.org/x/vuln/cmd/govulncheck@master
+install golang.org/x/telemetry/cmd/gotelemetry@latest
 
 # cuelang.org
 install cuelang.org/go/cmd/cue@master

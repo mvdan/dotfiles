@@ -104,6 +104,8 @@ go-updates-do() {
 	go mod tidy
 }
 
+wbin() { PATH=/usr/bin:${PATH} "$@"; }
+
 gstr() {
 	if [[ $# == 0 || $1 == help ]]; then
 		echo "gstr [stress flags] ./test [test flags]"
@@ -139,7 +141,8 @@ syu() {
 
 alias gca="gcm -a"
 alias gcam="gcm -a --amend"
-alias gcle="git clean -dffx"
+alias gcle="git clean -f"
+alias gclef="git clean -dffx"
 alias gdfs="gdf --stat"
 alias gdfc="gdf --cached"
 alias gdfo="gdf ORIG_HEAD"
@@ -150,7 +153,6 @@ alias glopo="glop --reverse ORIG_HEAD.."
 alias glopu="glop --reverse ..@{u}"
 alias glos="glo --stat"
 alias grbi="grb -i"
-alias grbia="grb -i --autosquash"
 alias grmc="git rm --cached"
 alias gs="git status -sb"
 alias gso="git status -sbuno"

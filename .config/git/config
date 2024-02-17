@@ -18,6 +18,7 @@
 [push]
 	default = current
 	autoSetupRemote = true
+	followTags = iso
 [checkout]
 	defaultRemote = origin
 [commit]
@@ -25,8 +26,13 @@
 	gpgSign = true
 [rebase]
 	autoStash = true
+	autoSquash = true
+	updateRefs = true
+	missingCommitsCheck = error
 [format]
 	# signoff = true
+[log]
+	date = iso
 [diff]
 	indentHeuristic = true
 	# colorMoved = default # it breaks under delta?
@@ -45,6 +51,8 @@
 	rebase = merges
 [fetch]
 	parallel = 8
+	prune = true
+	pruneTags = true
 [advice]
 	skippedCherryPicks = false
 [gpg]
@@ -56,6 +64,8 @@
 	helper = /usr/lib/git-core/git-credential-libsecret
 [gpg.ssh]
 	allowedSignersFile = ~/.config/git/allowed_signers
+[rerere]
+	enabled = true
 
 # Sort branches and tags by descending date first, then by descending name.
 # This helps show the latest or highest ones first.
