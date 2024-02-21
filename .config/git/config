@@ -4,21 +4,12 @@
 	signingKey = ~/.ssh/sign_ed25519
 [core]
 	editor = helix
-	pager = delta --hyperlinks # TODO: also hyperlinks for gerrit repos
+	pager = less -F ; other programs always expect less to stick around
 	askPass = /usr/lib/seahorse/ssh-askpass
-[interactive]
-	diffFilter = delta --color-only
-[include]
-	path = ~/.config/git/themes.gitconfig
-[delta]
-	navigate = true # use n and N to move between diff sections
-	file-style = omit
-	hunk-header-style = file line-number syntax
-	features = hoopoe zebra-light # for diff.colorMoved
 [push]
 	default = current
 	autoSetupRemote = true
-	followTags = iso
+	followTags = true
 [checkout]
 	defaultRemote = origin
 [commit]
@@ -35,7 +26,7 @@
 	date = iso
 [diff]
 	indentHeuristic = true
-	# colorMoved = default # it breaks under delta?
+	colorMoved = default
 	# noprefix = true # it affects git-send-email!
 [color.diff]
 	oldMoved = blue
@@ -51,8 +42,6 @@
 	rebase = merges
 [fetch]
 	parallel = 8
-	prune = true
-	pruneTags = true
 [advice]
 	skippedCherryPicks = false
 [gpg]
