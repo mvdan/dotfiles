@@ -11,10 +11,8 @@
 !/.config/helix/
 !/.config/mpd/
 !/.config/mpv/
-!/.config/mutt/
 !/.config/ncmpc/
-!/.config/notmuch/
-!/.config/nvim/
+!/.config/systemd/
 !/.config/sway/
 !/.config/zathura/
 

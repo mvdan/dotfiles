@@ -1,7 +1,0 @@
-text/html; $BROWSER %s &; x-neomutt-keep; nametemplate=%s.html
-text/html; elinks -no-home -dump %s; nametemplate=%s.html; copiousoutput
-
-text/*;          helix %s
-application/pdf; zathura %s; nametemplate=%s.pdf
-application/ps;  zathura %s; nametemplate=%s.ps
-image/*;         imv %s; nametemplate=%s.png

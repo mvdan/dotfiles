@@ -154,8 +154,10 @@ workspace 10 output DP-1 DP-2 eDP-1
 # App positions.
 assign [app_id="thunderbird"] workspace 3
 assign [app_id="discord"] workspace 5
+assign [class="discord"] workspace 5
 assign [app_id="org.telegram.desktop"] workspace 6
 assign [app_id="Slack"] workspace 7
+assign [class="Slack"] workspace 7
 assign [app_id="firefox"] workspace 8
 assign [app_id="chromium"] workspace 9
 assign [app_id="nnn"] workspace 9
@@ -164,6 +166,7 @@ assign [app_id="ncmpc"] workspace 10
 for_window [app_id="^menu$"] floating enable, border none
 # for_window [title="^Bitwarden — Mozilla Firefox$"] floating enable, border none
 for_window [floating] border csd
+for_window [shell="xwayland"] title_format "[XWayland] %title"
 
 # Layout stuff:
 #
@@ -298,21 +301,11 @@ bar {
 include /etc/sway/config.d/*
 
 exec brightnessctl set 40%
-exec sudo ddcutil setvcp --sleep-less --noverify 10 70 &
+# exec sudo ddcutil setvcp --sleep-less --noverify 10 70 &
 exec $tweakcpu
-exec xrdb -load .Xresources
-
-exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
-exec systemd-notify --ready
 
 ### Daemons
 
 # Use "exec exec" to avoid keeping a shell process around.
 
-exec exec mako >/tmp/mako.log 2>&1
-exec exec poweralertd >/tmp/poweralertd.log 2>&1
 exec exec kanshi >/tmp/kanshi.log 2>&1
-exec exec nm-applet --indicator
-
-exec exec /usr/lib/geoclue-2.0/demos/agent
-exec exec gammastep -v >/tmp/gammastep.log 2>&1

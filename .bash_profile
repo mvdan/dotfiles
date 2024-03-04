@@ -7,5 +7,6 @@ if [ "$(tty)" = "/dev/tty1" ]; then
 	# mv /tmp/sway.log /tmp/sway-previous.log
 	# exec sway -d 2>/tmp/sway.log
 
+	export WLR_RENDERER=vulkan
 	exec sway 2>/tmp/sway.log
 fi
