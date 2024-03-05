@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
 shopt -s globstar
 
 HISTSIZE=8192 HISTFILESIZE=32000
