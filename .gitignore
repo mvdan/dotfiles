@@ -12,8 +12,9 @@
 !/.config/mpd/
 !/.config/mpv/
 !/.config/ncmpc/
-!/.config/systemd/
 !/.config/sway/
+!/.config/systemd/
+!/.config/waybar/
 !/.config/zathura/
 
 /.gnupg/*.gpg*
