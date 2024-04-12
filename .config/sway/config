@@ -86,7 +86,7 @@ bindsym $mod+Shift+c reload
 #bindsym $mod+Shift+e exit
 bindsym $mod+Shift+p exec systemctl poweroff
 bindsym --locked $mod+Shift+s exec systemctl suspend
-# bindsym $mod+Shift+l exec "$lock -f; sleep 1; pkill -USR1 swayidle"
+bindsym $mod+Shift+o exec "$lock -f; sleep 1; pkill -USR1 swayidle"
 #
 # Moving around:
 #

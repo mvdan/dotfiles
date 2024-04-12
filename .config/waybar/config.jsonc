@@ -119,7 +119,7 @@
     "network": {
         "interval": 5,
         // "interface": "wlp2*", // (Optional) To force the use of this interface
-        "format-wifi": "{essid} {signalStrength}% {bandwidthUpOctets:>8} {bandwidthDownOctets:<9}",
+        "format-wifi": "{essid} {bandwidthUpOctets:>8} {bandwidthDownOctets:<9}",
         "format-ethernet": "{bandwidthUpOctets:>8} {bandwidthDownOctets:<9}",
         "tooltip-format": "{ifname} via {gwaddr}",
         "format-linked": "{ifname} (No IP)",
