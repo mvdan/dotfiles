@@ -27,6 +27,7 @@
 [diff]
 	indentHeuristic = true
 	colorMoved = default
+	noprefix = true
 	# noprefix = true # it affects git-send-email!
 [color.diff]
 	oldMoved = blue
