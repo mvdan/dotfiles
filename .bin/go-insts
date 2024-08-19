@@ -46,7 +46,8 @@ install golang.org/x/perf/cmd/benchstat@master
 install golang.org/x/pkgsite/cmd/pkgsite@master
 install golang.org/x/review/git-codereview@master
 install golang.org/x/telemetry/cmd/gotelemetry@master
-install golang.org/x/tools/cmd/{deadcode,goimports,stress,stringer,bundle}@master
+install golang.org/x/tools/cmd/{deadcode,goimports,stress,stringer,bundle}@master \
+	golang.org/x/tools/go/analysis/passes/nilness/cmd/nilness@master
 install golang.org/x/vuln/cmd/govulncheck@master
 
 # cuelang.org
@@ -54,7 +55,9 @@ install cuelang.org/go/cmd/cue@master
 install github.com/cue-sh/tools/cmd/cueckoo@master
 
 # lsp
-modInstall golang.org/x/tools/gopls golang.org/x/tools/gopls@master golang.org/x/tools@master
+modInstall golang.org/x/tools/gopls \
+	golang.org/x/tools/gopls@master \
+	golang.org/x/tools@master
 
 # mvdan.cc
 install mvdan.cc/sh/v3/cmd/shfmt@master

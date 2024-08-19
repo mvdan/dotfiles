@@ -301,7 +301,7 @@ bar {
 include /etc/sway/config.d/*
 
 exec brightnessctl set 40%
-# exec sudo ddcutil setvcp --sleep-less --noverify 10 70 &
+exec ddcutil setvcp --display 1 10 60
 exec $tweakcpu
 
 ### Daemons

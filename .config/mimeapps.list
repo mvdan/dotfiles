@@ -1,4 +1,6 @@
 [Added Associations]
+x-scheme-handler/tonsite=org.telegram.desktop.desktop;
+image/jpeg=gimp.desktop;imv.desktop;
 
 [Default Applications]
 application/pdf=org.pwmt.zathura.desktop;
@@ -19,3 +21,5 @@ x-scheme-handler/http=firefox.desktop;
 x-scheme-handler/https=firefox.desktop;
 x-scheme-handler/mailto=org.mozilla.Thunderbird.desktop;
 x-scheme-handler/terminal=org.codeberg.dnkl.foot.desktop;
+x-scheme-handler/tonsite=org.telegram.desktop.desktop
+image/jpeg=imv.desktop
