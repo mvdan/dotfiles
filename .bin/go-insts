@@ -5,7 +5,6 @@ trap "trap - SIGTERM && kill -- -$$" SIGINT SIGTERM EXIT
 
 install() {
 	TIMEFORMAT="# %R $@"
-
 	time (
 		firstmain="${1%@*}@main"
 		# If a project replaces `master` with `main`, proxy.golang.org will continue
@@ -52,7 +51,7 @@ install golang.org/x/vuln/cmd/govulncheck@master
 
 # cuelang.org
 install cuelang.org/go/cmd/cue@master
-install github.com/cue-sh/tools/cmd/cueckoo@master
+install github.com/cue-lang/contrib-tools/cmd/cueckoo@master
 
 # lsp
 modInstall golang.org/x/tools/gopls \

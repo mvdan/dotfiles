@@ -37,6 +37,11 @@ exec swayidle -w \
 
 ### Input configuration
 
+# Note that if you're using sway-systemd's keyboard layout script,
+# enabled by the Arch package, then this is overwritten by localectl.
+# Update it via:
+#    localectl set-x11-keymap us,es "" altgr-intl,cat caps:escape,grp:alt_space_toggle
+# The above can likely go away if we move to a display manager like SDDM.
 input type:keyboard {
 	xkb_layout  us,es
 	xkb_variant altgr-intl,cat

@@ -18,7 +18,6 @@
 [rebase]
 	autoStash = true
 	autoSquash = true
-	updateRefs = true
 	missingCommitsCheck = error
 [format]
 	# signoff = true
