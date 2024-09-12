@@ -1,0 +1,29 @@
+#!/bin/bash
+
+set -e
+
+script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
+name=$(basename $0)
+version=${name#cue-}
+
+if [[ $name == $version ]]; then
+	echo "this script should be called via a symlink like cue-v1.2.3 or cue-deadbeef123"
+	exit 1
+fi
+
+cache_dir="${script_dir}/.cache"
+cached_bin="${cache_dir}/${version}"
+
+if [[ ! -f $cached_bin ]]; then
+	echo "go install to" $cached_bin
+	# until `go install -o` is supported; see https://github.com/golang/go/issues/44469
+	gobin="${cache_dir}/gobin-${version}"
+	if ! GOBIN=$gobin go install cuelang.org/go/cmd/cue@${version}; then
+		exit 1
+	fi
+	mv "${gobin}/cue" "${cached_bin}"
+	rm -rf "$gobin"
+fi
+
+exec "$cached_bin" "$@"
