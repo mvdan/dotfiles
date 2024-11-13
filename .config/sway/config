@@ -169,7 +169,8 @@ assign [app_id="nnn"] workspace 9
 assign [app_id="ncmpc"] workspace 10
 
 for_window [app_id="^menu$"] floating enable, border none
-# for_window [title="^Bitwarden — Mozilla Firefox$"] floating enable, border none
+# TODO: this doesn't work. use the geometry?
+for_window [app_id="^firefox$" title="^Extension: \(Bitwarden - Free Password Manager\)"] floating enable
 for_window [floating] border csd
 for_window [shell="xwayland"] title_format "[XWayland] %title"
 
@@ -275,7 +276,7 @@ bindsym $mod+Alt+i exec firefox
 # Other custom binds
 
 # bindsym $mod+g exec grim - | swappy -f -                   # all displays + swappy
-bindsym $mod+Shift+g exec grim -g "$(slurp)" - | swappy -f - # slurp + swappy
+bindsym $mod+Shift+g exec grim -g "$(slurp)" - | swappy -f - # slurp + swappy, screenshot an area and edit it
 bindsym $mod+Alt+g exec cd /tmp && grim -o $(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name') # current dislay + /tmp
 bindsym $mod+Alt+m exec systemctl --user start mbsync
 bindsym $mod+o exec killall -SIGUSR1 waybar

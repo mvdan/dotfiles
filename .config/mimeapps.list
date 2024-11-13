@@ -1,6 +1,7 @@
 [Added Associations]
 x-scheme-handler/tonsite=org.telegram.desktop.desktop;
 image/jpeg=gimp.desktop;imv.desktop;
+application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-writer.desktop;
 
 [Default Applications]
 application/pdf=org.pwmt.zathura.desktop;

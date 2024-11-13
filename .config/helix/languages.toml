@@ -1,7 +1,7 @@
 # Minor tweaks to Go, like gopls flags.
 [language-server.gopls]
 command = "gopls"
-args = ["-logfile=/tmp/gopls.log", "-remote=auto", "serve"]
+args = ["serve"]
 [language-server.gopls.config]
 "ui.diagnostic.staticcheck" = true
 

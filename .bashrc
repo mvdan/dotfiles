@@ -170,6 +170,7 @@ git-default-branch() { git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/
 git-file-sizes() { git ls-files -z | xargs -0 du -b | sort -n; }
 
 gfork() { gh repo fork --remote --remote-name mvdan; }
+gprf() { gh pr checkout --branch=pr-$1 $1; }
 gmrc() { git push origin -o merge_request.create "$@"; }
 alias gml="git-codereview mail"
 
