@@ -12,6 +12,8 @@
 	followTags = true
 [checkout]
 	defaultRemote = origin
+[remote.origin]
+	followRemoteHEAD = always
 [commit]
 	verbose = true
 	gpgSign = true

@@ -15,8 +15,8 @@ for branch in $@; do
 	delete[$branch]=1
 done
 
-# create a set of the potentially active branches
-declare -A active=()
+# create a set of the potentially active branches; HEAD is always active
+declare -A active=([HEAD]=1)
 while read branch; do
 	active[$branch]=1
 done < <(git branch --format='%(refname:lstrip=2)')

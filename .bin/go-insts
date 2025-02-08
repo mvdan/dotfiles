@@ -42,9 +42,9 @@ modInstall() {
 # golang.org
 install golang.org/x/exp/cmd/gorelease@master
 install golang.org/x/perf/cmd/benchstat@master
-install golang.org/x/pkgsite/cmd/pkgsite@master
+# install golang.org/x/pkgsite/cmd/pkgsite@master
 install golang.org/x/review/git-codereview@master
-install golang.org/x/telemetry/cmd/gotelemetry@master
+# install golang.org/x/telemetry/cmd/gotelemetry@master
 install golang.org/x/tools/cmd/{deadcode,goimports,stress,stringer,bundle}@master \
 	golang.org/x/tools/go/analysis/passes/nilness/cmd/nilness@master
 install golang.org/x/vuln/cmd/govulncheck@master
@@ -82,7 +82,7 @@ install modernc.org/fe@master
 
 # misc
 install github.com/mholt/archiver/v3/cmd/arc@latest
-install github.com/itchyny/mmv/cmd/mmv@latest
+# install github.com/itchyny/mmv/cmd/mmv@latest
 # install github.com/hanwen/go-mtpfs@latest
 install github.com/mdlayher/keylight/cmd/keylight@latest
 install github.com/kenshaw/wofimoji@latest
