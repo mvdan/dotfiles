@@ -22,6 +22,7 @@ install() {
 }
 
 # modInstall is like install, but for modules using replaces, like gopls.
+# First the main package arguments without @version, then the modules with @version.
 modInstall() {
 	TIMEFORMAT="# %R $@"
 	time (
@@ -29,9 +30,12 @@ modInstall() {
 		cd "$dir"
 		chronic go mod init test
 
-		mainpkg="$1"
-		shift
-		if ! { chronic go get "$@" && go install -ldflags="-w -s" "$mainpkg"; }; then
+		mainpkgs=()
+		while [[ "$1" != *@* ]]; do
+			mainpkgs+=("$1")
+			shift
+		done
+		if ! { chronic go get "$@" && go install -ldflags="-w -s" "${mainpkgs[@]}"; }; then
 			echo "failed to install $mainpkg with $@"
 		fi
 		cd - >/dev/null
@@ -55,6 +59,7 @@ install github.com/cue-lang/contrib-tools/cmd/cueckoo@master
 
 # lsp
 modInstall golang.org/x/tools/gopls \
+	golang.org/x/tools/gopls/internal/analysis/modernize/cmd/modernize \
 	golang.org/x/tools/gopls@master \
 	golang.org/x/tools@master
 

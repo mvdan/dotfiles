@@ -95,7 +95,9 @@ button:hover {
 
 #window,
 #workspaces {
-    margin: 0 4px;
+    /* negative top and bottom margin to prevent emojis from making it larger;
+       see https://github.com/Alexays/Waybar/issues/2026 */
+    margin: -50px 4px;
 }
 
 /* If workspaces is the leftmost module, omit left margin */
