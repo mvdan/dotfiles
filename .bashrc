@@ -12,21 +12,20 @@ shopt -s histappend
 alias l="less"
 alias s="sudo"
 alias se="sudoedit"
-alias hx="helix"
 
 alias m="sudo mount"
 alias um="sudo umount"
 
 mkcd() { mkdir -p "$1" && cd "$1"; }
-cdr() { cd $(git rev-parse --show-toplevel); }
+cdr() { cd $(git rev-parse --path-format=relative --show-toplevel); }
 
-source /usr/share/fzf/key-bindings.bash
-source /usr/share/fzf/completion.bash
+source /usr/share/fzf/shell/key-bindings.bash
+source /etc/bash_completion.d/fzf
 
-_completion_loader git
+# _completion_loader git
 galias() {
 	alias $1="git ${3:-$2}"
-	__git_complete $1 _git_$2
+	# __git_complete $1 _git_$2
 }
 
 galias gad  add
@@ -59,20 +58,13 @@ grbm() { grb "$@" $(git-default-branch); }
 glot() { GIT_EXTERNAL_DIFF=difft glop --ext-diff; }
 gdft() { GIT_EXTERNAL_DIFF=difft gdf; }
 
-__git_complete gbrd _git_branch
+# __git_complete gbrd _git_branch
 alias gclo="git clone"
 alias grbc="git rebase --continue"
 alias ggc="git gc --prune=all"
 alias ggr="git grep -InE"
 
-alias spc="sudo pacman"
-alias ssi="pacman -Sii"
-ssq() { pacman -Qs "$@" | sed -n 's_local/__p'; }
-alias srm="spc -Rns"
-alias sim="spc -S --needed"
-alias mksrcinfo="makepkg --printsrcinfo >.SRCINFO"
-
-alias sc="sudo systemctl"
+alias sc="systemctl"
 alias scu="systemctl --user"
 alias jc="journalctl"
 alias jcu="journalctl --user"
@@ -128,18 +120,16 @@ gim() { goimports -l -w ${@:-*.go}; }
 gfm() { gofumpt -l -w ${@:-*.go}; }
 sfm() { shfmt -s -l -w ${@:-.}; }
 
-alias ssm="pacman -Ss"
-alias ssk="yay -Ss"
 syu() {
-	echo " -- yay --"
-	yay -Syu || return 1
+	echo " -- rpm-ostree --"
+	rpm-ostree upgrade || return 1
 
 	echo " -- flatpak --"
 	flatpak update || return 1
 
 	echo " -- fwupdmgr --"
-	sudo fwupdmgr refresh || return 1
-	sudo fwupdmgr get-updates || true # no updates is code 1
+	fwupdmgr refresh || return 1
+	fwupdmgr get-updates || true # no updates is code 1
 }
 
 alias gca="gcm -a"
@@ -177,13 +167,14 @@ alias gml="git-codereview mail"
 alias ssh="TERM=xterm ssh"
 alias rsv="rsync -avh --info=progress2"
 
-alias clb='curl -F "clbin=<-" https://clbin.com'
-alias procs='procs --color=disable'
+alias tb="nc termbin.com 9999"
 alias unr='arc unarchive'
 alias kc='kubectl'
 alias kcl='kubectl logs'
 alias kcg='kubectl get'
 alias kcd='kubectl describe'
+
+docker-prune-all-old() { docker system prune --all --filter until=730h; }
 
 case $TERM in
 linux* | cons*) ;;

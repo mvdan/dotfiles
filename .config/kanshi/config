@@ -1,8 +1,8 @@
 profile docked {
 	output "Dell Inc. DELL U2520D G8RQ823" mode 2560x1440 scale 1 position 0,0
-	output eDP-1 mode 1920x1080 scale 1 position 320,1440
+	output eDP-1 mode 2880x1920 scale 2 position 500,1440
 }
 
 profile mobile {
-	output eDP-1 mode 1920x1080 scale 1 position 0,0
+	output eDP-1 mode 2880x1920 scale 2 position 0,0
 }

@@ -1,11 +1,11 @@
 [user]
 	name = Daniel Martí
 	email = mvdan@mvdan.cc
-	signingKey = ~/.ssh/sign_ed25519
+	# signingKey = ~/.ssh/sign_ed25519
 [core]
-	editor = helix
+	editor = hx
 	pager = less -F ; other programs always expect less to stick around
-	askPass = /usr/lib/seahorse/ssh-askpass
+	askPass = /usr/libexec/openssh/ssh-askpass
 [push]
 	default = current
 	autoSetupRemote = true
@@ -16,7 +16,9 @@
 	followRemoteHEAD = always
 [commit]
 	verbose = true
-	gpgSign = true
+	# gpgSign = true
+[branch]
+	autoSetupMerge = true
 [rebase]
 	autoStash = true
 	autoSquash = true
@@ -37,9 +39,6 @@
 	newMovedAlternative = blue
 [merge]
 	conflictStyle = diff3
-[sendemail]
-	smtpServer = /usr/bin/msmtp
-	confirm = auto
 [pull]
 	rebase = merges
 [fetch]
@@ -52,11 +51,13 @@
 	defaultBranch = main
 [credential]
 	username = mvdan
-	helper = /usr/lib/git-core/git-credential-libsecret
+	helper = /usr/libexec/git-core/git-credential-libsecret
 [gpg.ssh]
 	allowedSignersFile = ~/.config/git/allowed_signers
 [rerere]
 	enabled = true
+[absorb]
+	autoStageIfNothingStaged = true
 
 # Sort branches and tags by descending date first, then by descending name.
 # This helps show the latest or highest ones first.
