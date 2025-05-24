@@ -1,1 +1,8 @@
+# Fedora overrides these defaults from Go; don't let it do that.
+GOPROXY=https://proxy.golang.org,direct
+GOSUMDB=sum.golang.org
+
+# We want to be in control of the toolchain version.
+GOTOOLCHAIN=local
+
 GOPRIVATE=github.com/cue-unity

@@ -84,6 +84,7 @@ install github.com/kortschak/gospel@master
 install github.com/icholy/gomajor@master
 install rsc.io/rf/git-generate@main
 install modernc.org/fe@master
+install github.com/goreleaser/goreleaser/v2@latest
 
 # misc
 install github.com/mholt/archiver/v3/cmd/arc@latest
