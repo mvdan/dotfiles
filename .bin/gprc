@@ -1,3 +1,5 @@
+#!/bin/bash
+
 base=${1:-HEAD}
 shift
 if git config remote.mvdan.url >/dev/null; then

@@ -4,7 +4,9 @@
 /.config/*
 !/.config/chromium-flags.conf
 !/.config/mimeapps.list
+!/.config/containers/
 !/.config/environment.d/
+!/.config/fish/
 !/.config/foot/
 !/.config/git/
 !/.config/go/

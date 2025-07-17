@@ -1,11 +1,13 @@
 [user]
 	name = Daniel Martí
 	email = mvdan@mvdan.cc
-	# signingKey = ~/.ssh/sign_ed25519
+	signingKey = ~/.ssh/sign_ed25519
 [core]
 	editor = hx
-	pager = less -F ; other programs always expect less to stick around
+	pager = delta
 	askPass = /usr/libexec/openssh/ssh-askpass
+[pager]
+	log = delta --navigate --navigate-regex \"^commit \"
 [push]
 	default = current
 	autoSetupRemote = true
@@ -32,13 +34,18 @@
 	colorMoved = default
 	noprefix = true
 	# noprefix = true # it affects git-send-email!
-[color.diff]
-	oldMoved = blue
-	newMoved = blue
-	oldMovedAlternative = blue
-	newMovedAlternative = blue
+[color.diff] # changing these colors breaks delta
+	# oldMoved = blue
+	# newMoved = blue
+	# oldMovedAlternative = blue
+	# newMovedAlternative = blue
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	light = true
 [merge]
-	conflictStyle = diff3
+	conflictstyle = zdiff3
+[merge]
 [pull]
 	rebase = merges
 [fetch]
