@@ -8,3 +8,5 @@ new
 
 # helix workspace marker
 .helix
+
+**/.claude/settings.local.json

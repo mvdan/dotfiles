@@ -5,6 +5,10 @@ args = ["serve"]
 [language-server.gopls.config]
 "ui.diagnostic.staticcheck" = true
 
+[language-server.cuelsp]
+command = "cue"
+args = ["lsp", "serve"]
+
 [[language]]
 name = "go"
 scope = "source.go"
@@ -15,10 +19,11 @@ auto-format = true
 comment-token = "//"
 indent = { tab-width = 4, unit = "\t" }
 
-# "cue fmt" is buggy.
 [[language]]
 name = "cue"
-auto-format = false
+# "cue fmt" is buggy.
+# auto-format = false
+language-servers = ["cuelsp"]
 
 # Indent shell with tabs.
 [[language]]

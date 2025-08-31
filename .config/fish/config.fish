@@ -108,17 +108,18 @@ function go-updates-do
 end
 
 function wbin
-    PATH=/usr/bin:$PATH $argv
+    fish_add_path --path --move /usr/bin
 end
 
-# gstr() {
-# 	if [[ $# == 0 || $1 == help ]]; then
-# 		echo "gstr [stress flags] ./test [test flags]"
-# 		return
-# 	fi
-# 	echo "go test -c -vet=off -o test && stress $@"
-# 	go test -c -vet=off -o test && stress "$@"
-# }
+function gstr
+    if ! set -q argv[1]
+        echo "gstr [stress flags] ./test [test flags]"
+        return
+    end
+    echo "go test -c -vet=off -o test && stress $argv"
+    go test -c -vet=off -o test && stress $argv
+end
+
 # gcov() {
 # 	go test -coverpkg=./... "$@" -coverprofile=/tmp/c
 # 	go tool cover -html=/tmp/c

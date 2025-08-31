@@ -19,6 +19,7 @@ application/x-extension-shtml=userapp-Firefox-GZBC62.desktop
 application/xhtml+xml=userapp-Firefox-GZBC62.desktop
 application/x-extension-xhtml=userapp-Firefox-GZBC62.desktop
 application/x-extension-xht=userapp-Firefox-GZBC62.desktop
+video/x-matroska=mpv.desktop
 
 [Added Associations]
 x-scheme-handler/http=userapp-Firefox-GZBC62.desktop;
@@ -31,3 +32,4 @@ application/x-extension-shtml=userapp-Firefox-GZBC62.desktop;
 application/xhtml+xml=userapp-Firefox-GZBC62.desktop;
 application/x-extension-xhtml=userapp-Firefox-GZBC62.desktop;
 application/x-extension-xht=userapp-Firefox-GZBC62.desktop;
+video/x-matroska=mpv.desktop;

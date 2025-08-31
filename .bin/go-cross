@@ -25,7 +25,7 @@ while read goos goarch; do
 	(
 		export GOOS=$goos GOARCH=$goarch # note that GOOS affects GOEXE
 		out="${name}_${version}_${goos}_${goarch}$(go env GOEXE)"
-		go build -trimpath -ldflags="-w -s -X=main.version=${version}" -o="${out}"
+		go build -trimpath -ldflags="-w -s" -o="${out}"
 		echo $out
 	) &
 done < <(
@@ -41,7 +41,7 @@ sha256sum "${name}_${version}_"* >sha256sums.txt
 
 # Text to be added at the end of the GitHub release, near the binaries.
 echo
-printf 'Binaries built on `%s` with:\n\n\tCGO_ENABLED=0 go build -trimpath -ldflags="-w -s -X=main.version=%s"\n' "$goversion" "$version"
+printf 'Binaries built on `%s` with:\n\n\tCGO_ENABLED=0 go build -trimpath -ldflags="-w -s"\n' "$goversion" "$version"
 echo
 
 # Sanity check that the version information is present.
