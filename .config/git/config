@@ -20,7 +20,7 @@
 	verbose = true
 	# gpgSign = true
 [branch]
-	autoSetupMerge = true
+	autoSetupMerge = inherit
 [rebase]
 	autoStash = true
 	autoSquash = true

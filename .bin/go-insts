@@ -75,7 +75,7 @@ install mvdan.cc/benchinit@master
 
 # dev tools
 install github.com/aclements/go-misc/benchcmd@master
-install github.com/rogpeppe/go-internal/cmd/{testscript,txtar-addmod}@master
+install github.com/rogpeppe/go-internal/cmd/{testscript,txtar-addmod,txtar-x,txtar-c}@master
 install golang.org/x/exp/cmd/txtar@master
 install github.com/kortschak/gospel@master
 install github.com/icholy/gomajor@master
