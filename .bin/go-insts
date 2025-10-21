@@ -50,7 +50,6 @@ install golang.org/x/review/git-codereview@master
 # install golang.org/x/telemetry/cmd/gotelemetry@master
 install golang.org/x/tools/cmd/{deadcode,goimports,stress,stringer,bundle}@master \
 	golang.org/x/tools/go/analysis/passes/nilness/cmd/nilness@master \
-	golang.org/x/tools/internal/gofix/cmd/gofix@master
 install golang.org/x/vuln/cmd/govulncheck@master
 
 # cuelang.org
@@ -59,7 +58,6 @@ install github.com/cue-lang/contrib-tools/cmd/cueckoo@master
 
 # lsp
 modInstall golang.org/x/tools/gopls \
-	golang.org/x/tools/gopls/internal/analysis/modernize/cmd/modernize \
 	golang.org/x/tools/gopls@master \
 	golang.org/x/tools@master
 

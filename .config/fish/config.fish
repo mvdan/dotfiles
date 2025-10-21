@@ -120,10 +120,10 @@ function gstr
     go test -c -vet=off -o test && stress $argv
 end
 
-# gcov() {
-# 	go test -coverpkg=./... "$@" -coverprofile=/tmp/c
-# 	go tool cover -html=/tmp/c
-# }
+function gcov
+    go test -coverpkg=./... -coverprofile=/tmp/c $argv
+    go tool cover -html=/tmp/c
+end
 
 # abbr --add gtoolcmp 'go build -toolexec "toolstash -cmp" -a std cmd'
 

@@ -40,7 +40,6 @@ done < <(
 	go tool dist list -json | jq -r '.[] | select(.FirstClass) | [.GOOS, .GOARCH] | @tsv'
 )
 
-sha256sum "${tmp}/"* >"${tmp}/sha256sums.txt"
 mv "${tmp}/"* .
 rmdir "${tmp}"
 

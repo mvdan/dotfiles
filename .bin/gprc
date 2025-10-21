@@ -20,7 +20,7 @@ fi
 # This helps GitHub properly link the issues,
 # as it won't do that for commit messages as nicely.
 # Sort numerically from the second byte and remove duplicates too.
-issuelines="$(git rev-list --no-commit-header --reverse --format=%b HEAD ^origin/${base} | grep -E '^(Fixes|Updates|For) [a-zA-Z/_-]*#[0-9]+' | sort -n -k1.2 | uniq)"
+issuelines="$(git rev-list --no-commit-header --reverse --format=%b HEAD ^origin/${base} | grep -E '^(Fixes|Updates|For|Closes) [a-zA-Z/_-]*#[0-9]+' | sort -n -k1.2 | uniq)"
 if [[ $(git rev-list --count HEAD ^origin/${base}) == 1 ]]; then
 	gh pr create --title="$(git show -s --format=%s)" --body=$'(see commit message)\n\n'"${issuelines}" $baseflag "$@"
 else
