@@ -48,8 +48,8 @@ install golang.org/x/exp/cmd/gorelease@master
 install golang.org/x/perf/cmd/benchstat@master
 install golang.org/x/review/git-codereview@master
 # install golang.org/x/telemetry/cmd/gotelemetry@master
-install golang.org/x/tools/cmd/{deadcode,goimports,stress,stringer,bundle}@master \
-	golang.org/x/tools/go/analysis/passes/nilness/cmd/nilness@master \
+install golang.org/x/tools/cmd/{deadcode,goimports,stress}@master \
+	golang.org/x/tools/go/analysis/passes/nilness/cmd/nilness@master
 install golang.org/x/vuln/cmd/govulncheck@master
 
 # cuelang.org
