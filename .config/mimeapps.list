@@ -6,7 +6,6 @@ text/html=userapp-Firefox-GZBC62.desktop
 x-scheme-handler/mailto=org.mozilla.Thunderbird.desktop
 image/jpeg=imv.desktop
 text/plain=Helix.desktop
-video/mp4=mpv.desktop
 x-scheme-handler/terminal=org.codeberg.dnkl.foot.desktop
 x-scheme-handler/tonsite=org.telegram.desktop.desktop
 image/png=imv.desktop
@@ -19,7 +18,9 @@ application/x-extension-shtml=userapp-Firefox-GZBC62.desktop
 application/xhtml+xml=userapp-Firefox-GZBC62.desktop
 application/x-extension-xhtml=userapp-Firefox-GZBC62.desktop
 application/x-extension-xht=userapp-Firefox-GZBC62.desktop
-video/x-matroska=mpv.desktop
+image/svg+xml=org.mozilla.firefox.desktop
+video/mp4=io.mpv.Mpv.desktop
+video/x-matroska=io.mpv.Mpv.desktop
 
 [Added Associations]
 x-scheme-handler/http=userapp-Firefox-GZBC62.desktop;
@@ -32,4 +33,6 @@ application/x-extension-shtml=userapp-Firefox-GZBC62.desktop;
 application/xhtml+xml=userapp-Firefox-GZBC62.desktop;
 application/x-extension-xhtml=userapp-Firefox-GZBC62.desktop;
 application/x-extension-xht=userapp-Firefox-GZBC62.desktop;
-video/x-matroska=mpv.desktop;
+image/svg+xml=org.mozilla.firefox.desktop;
+video/mp4=io.mpv.Mpv.desktop;
+video/x-matroska=io.mpv.Mpv.desktop;

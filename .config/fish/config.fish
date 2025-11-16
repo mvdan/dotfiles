@@ -132,11 +132,11 @@ end
 # sfm() { shfmt -s -l -w ${@:-.}; }
 
 function syu
-    echo " -- rpm-ostree --"
-    rpm-ostree upgrade || return 1
-
     echo " -- flatpak --"
     flatpak update || return 1
+
+    echo " -- rpm-ostree --"
+    rpm-ostree upgrade || return 1
 
     echo " -- fwupdmgr --"
     fwupdmgr refresh || return 1

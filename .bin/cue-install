@@ -1,0 +1,3 @@
+#!/bin/bash
+
+(cd ~/src/c/cue && go install ./cmd/cue)
