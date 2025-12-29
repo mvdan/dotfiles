@@ -86,6 +86,7 @@ install github.com/mholt/archiver/v3/cmd/arc@latest
 # install github.com/hanwen/go-mtpfs@latest
 install github.com/mdlayher/keylight/cmd/keylight@latest
 install github.com/kenshaw/wofimoji@latest
+install namespacelabs.dev/foundation/cmd/{nsc,docker-credential-nsc}@latest
 
 # linters
 install honnef.co/go/tools/cmd/staticcheck@master

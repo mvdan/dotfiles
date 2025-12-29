@@ -96,6 +96,7 @@ abbr --add gi go install
 abbr --add gt go test
 abbr --add gts go test -vet=off -short -timeout 10s
 abbr --add gf go test -run=- -vet=off -fuzz
+abbr --add gmt go mod tidy
 
 # gomajor is still useful for bumping major versions,
 # but "go list" and "go get" are enough and less buggy for others.
