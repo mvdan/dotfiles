@@ -157,7 +157,9 @@ function git-file-sizes
 end
 
 # gfork() { gh repo fork --remote --remote-name mvdan; }
-# gprf() { gh pr checkout --branch=pr-$1 $1; }
+function gprf
+    gh pr checkout --branch=pr-$argv[1] $argv[1]
+end
 # gmrc() { git push origin -o merge_request.create "$@"; }
 abbr --add gml git-codereview mail
 
