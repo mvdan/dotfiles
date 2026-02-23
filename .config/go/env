@@ -4,5 +4,3 @@ GOSUMDB=sum.golang.org
 
 # We want to be in control of the toolchain version.
 GOTOOLCHAIN=local
-
-GOPRIVATE=github.com/cue-unity
