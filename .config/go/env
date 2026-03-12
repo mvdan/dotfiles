@@ -1,6 +1,5 @@
-# Fedora overrides these defaults from Go; don't let it do that.
-GOPROXY=https://proxy.golang.org,direct
-GOSUMDB=sum.golang.org
-
 # We want to be in control of the toolchain version.
 GOTOOLCHAIN=local
+
+# Fedora sets "nodwarf5"; we don't care about debug info anyway.
+GOEXPERIMENT=

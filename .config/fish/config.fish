@@ -156,7 +156,9 @@ function git-file-sizes
     git ls-files -z | xargs -0 du -b | sort -n
 end
 
-# gfork() { gh repo fork --remote --remote-name mvdan; }
+function gfork
+    gh repo fork --remote --remote-name mvdan
+end
 function gprf
     gh pr checkout --branch=pr-$argv[1] $argv[1]
 end
