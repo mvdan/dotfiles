@@ -20,6 +20,10 @@ comment-token = "//"
 indent = { tab-width = 4, unit = "\t" }
 
 [[language]]
+name = "yaml"
+language-servers = ["cuelsp"]
+
+[[language]]
 name = "cue"
 # "cue fmt" is buggy.
 # auto-format = false
