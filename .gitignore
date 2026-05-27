@@ -15,6 +15,7 @@
 !/.config/mpv/
 !/.config/ncmpc/
 !/.config/sway/
+!/.config/sway/config.d/
 !/.config/systemd/
 !/.config/waybar/
 !/.config/zathura/
