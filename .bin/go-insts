@@ -90,6 +90,7 @@ install namespacelabs.dev/foundation/cmd/{nsc,docker-credential-nsc}@latest
 install -tags extended github.com/gohugoio/hugo@latest
 install filippo.io/age/cmd/...@latest
 install github.com/GoogleCloudPlatform/gke-mcp@latest
+install oras.land/oras/cmd/oras@latest
 
 # linters
 install honnef.co/go/tools/cmd/staticcheck@master

@@ -61,11 +61,11 @@ abbr --add gsmu gsm update --init --recursive
 function gwm
     git switch $argv $(git-default-branch)
 end
-function gdfm
-    git diff $argv $(git-default-branch)
+function gdfu
+    git diff $argv @{u}
 end
-function grbm
-    git rebase $argv $(git-default-branch)
+function grbu
+    git rebase $argv @{u}
 end
 # glot() { GIT_EXTERNAL_DIFF=difft glop --ext-diff; }
 # gdft() { GIT_EXTERNAL_DIFF=difft git diff; }
