@@ -51,6 +51,7 @@ abbr --add gclef git clean -dffx
 abbr --add gfe git fetch -v -p
 abbr --add gfea git fetch -v -p --all
 abbr --add grbi git rebase -i
+abbr --add grbiu git rebase -i @{u}
 abbr --add grmc git rm --cached
 abbr --add gs git status -sb
 abbr --add gso git status -sbuno

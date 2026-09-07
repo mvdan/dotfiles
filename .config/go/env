@@ -3,3 +3,4 @@ GOTOOLCHAIN=local
 
 # Fedora sets "nodwarf5"; we don't care about debug info anyway.
 GOEXPERIMENT=
+GOPRIVATE=cuelabs.dev/private
