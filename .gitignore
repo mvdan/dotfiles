@@ -1,5 +1,7 @@
 /*
 !/.*
+!/AGENTS.md
+!/CLAUDE.md
 *.d/
 /.config/*
 !/.config/mimeapps.list
