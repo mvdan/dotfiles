@@ -11,9 +11,7 @@
 !/.config/git/
 !/.config/go/
 !/.config/helix/
-!/.config/mpd/
 !/.config/mpv/
-!/.config/ncmpc/
 !/.config/sway/
 !/.config/sway/config.d/
 !/.config/systemd/
