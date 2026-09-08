@@ -15,7 +15,10 @@ shift
 for d in */; do
 	popd &>/dev/null # ok to error, e.g. if the stack is empty
 	pushd $d || exit 1
-	git diff --exit-code >/dev/null || echo "skipping $d due to changes"
+	if ! git diff --exit-code >/dev/null; then
+		echo "skipping $d due to changes"
+		continue
+	fi
 	git checkout -q master || continue
 
 	git fetch -q || continue
@@ -47,18 +50,13 @@ for d in */; do
 		git push -f -u origin || exit 1
 		continue # no PR needed
 		;;
-	staging-test)
-		git push -f -u origin || exit 1
-		continue # no PR wanted?
-		head=brankas:$branch
-		;;
 	*)
 		if ! git config remote.mvdan.url >/dev/null; then
-			hub fork || exit 1
+			gh repo fork --remote --remote-name mvdan || exit 1
 		fi
 		git push -f -u mvdan || exit 1
 		head=mvdan:$branch
 	esac
-	hub pull-request -f -h $head -m "$msg"
+	gh pr create --head "$head" --title "$msg" --body ""
 	git checkout master
 done
