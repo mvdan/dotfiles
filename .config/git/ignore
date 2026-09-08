@@ -1,7 +1,6 @@
-# benchmarking, profiling, etc
+# benchstat inputs; see gbench and gtoolbench
 old
 new
-*.out
 
 # binaries
 *.exe

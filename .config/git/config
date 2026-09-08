@@ -19,8 +19,6 @@
 [commit]
 	verbose = true
 	# gpgSign = true
-[branch]
-	autoSetupMerge = inherit
 [rebase]
 	autoStash = true
 	autoSquash = true
@@ -32,8 +30,8 @@
 [diff]
 	indentHeuristic = true
 	colorMoved = default
+	# format-patch ignores this, but "git diff | git apply" needs -p0.
 	noprefix = true
-	# noprefix = true # it affects git-send-email!
 [color.diff] # changing these colors breaks delta
 	# oldMoved = blue
 	# newMoved = blue
@@ -45,7 +43,6 @@
 	light = true
 [merge]
 	conflictstyle = zdiff3
-[merge]
 [pull]
 	rebase = merges
 [fetch]
@@ -69,6 +66,7 @@
 # Sort branches and tags by descending date first, then by descending name.
 # This helps show the latest or highest ones first.
 [branch]
+	autoSetupMerge = inherit
 	sort = -refname
 	sort = -creatordate
 [tag]
