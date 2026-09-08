@@ -56,14 +56,11 @@ abbr --add grmc git rm --cached
 abbr --add gs git status -sb
 abbr --add gso git status -sbuno
 abbr --add gss git status -sb --ignored
-abbr --add gsmf gsm foreach --recursive
-abbr --add gsmu gsm update --init --recursive
+abbr --add gsmf git submodule foreach --recursive
+abbr --add gsmu git submodule update --init --recursive
 
 function gwm
     git switch $argv $(git-default-branch)
-end
-function gdfu
-    git diff $argv @{u}
 end
 function grbu
     git rebase $argv @{u}
@@ -145,7 +142,7 @@ function syu
     fwupdmgr get-updates || true # no updates is code 1
 end
 
-abbr --add gsmfc "gsmf 'git clean -dffx && git reset --hard' && gcle && grsh"
+abbr --add gsmfc "git submodule foreach --recursive 'git clean -dffx && git reset --hard' && git clean -f && git reset --hard"
 
 function git-default-branch-fix
     git remote set-head origin -a
