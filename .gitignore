@@ -2,7 +2,6 @@
 !/.*
 *.d/
 /.config/*
-!/.config/chromium-flags.conf
 !/.config/mimeapps.list
 !/.config/containers/
 !/.config/environment.d/
@@ -11,11 +10,12 @@
 !/.config/git/
 !/.config/go/
 !/.config/helix/
+!/.config/kanshi/
+!/.config/mako/
 !/.config/mpv/
 !/.config/sway/
 !/.config/sway/config.d/
 !/.config/systemd/
-!/.config/waybar/
 !/.config/zathura/
 
 /.gnupg/*.gpg*
@@ -28,3 +28,6 @@
 *.db
 *.pid
 *.env
+
+# symlinks to versioned-cue, created as needed
+/.bin/cue-v*
