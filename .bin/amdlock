@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Disable CPU boost, as most laptop CPUs can't hold it for long.
 echo 0 | sudo tee /sys/devices/system/cpu/cpufreq/boost >/dev/null
 

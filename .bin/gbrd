@@ -56,7 +56,10 @@ fi
 # Always delete the "*.mailed" tags created by `git-codereview mail`,
 # since I have no use for them and they otherwise pile up.
 # See https://go.dev/issue/15344.
-git tag -d $(git tag -l '*.mailed')
+mailed=$(git tag -l '*.mailed')
+if [[ -n $mailed ]]; then
+	git tag -d $mailed
+fi
 
 # wait for the remote deletes to finish
 wait

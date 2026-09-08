@@ -1,3 +1,5 @@
+#!/bin/bash
+
 default=$(pactl get-default-sink)
 pactl list short sinks | while read _ device _; do
 	if [[ $device == $default ]]; then
