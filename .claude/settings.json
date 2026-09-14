@@ -1,0 +1,72 @@
+{
+  "env": {
+    "DISABLE_AUTOUPDATER": "1",
+    "GIT_TERMINAL_PROMPT": "0",
+    "GIT_ASKPASS": "/bin/false",
+    "SSH_ASKPASS_REQUIRE": "never",
+    "GIT_SSH_COMMAND": "ssh -o BatchMode=yes",
+    "GH_PROMPT_DISABLED": "1"
+  },
+  "attribution": {
+    "commit": ""
+  },
+  "permissions": {
+    "defaultMode": "auto"
+  },
+  "model": "opus[1m]",
+  "enabledPlugins": {
+    "gopls-lsp@claude-plugins-official": true,
+    "codex@openai-codex": true
+  },
+  "extraKnownMarketplaces": {
+    "openai-codex": {
+      "source": {
+        "source": "github",
+        "repo": "openai/codex-plugin-cc"
+      }
+    }
+  },
+  "effortLevel": "high",
+  "skipDangerousModePermissionPrompt": true,
+  "theme": "light",
+  "preferredNotifChannel": "kitty",
+  "skipAutoPermissionPrompt": true,
+  "autoMode": {
+    "allow": [
+      "$defaults",
+      "Projector preview: running go run ./private/cmd/projector ... preview is allowed. It force-pushes only the throwaway draft branch projection-draft/* on github.com/cue-labs/cue and writes no refs on cue-lang/cue; it is a routine review step, not publication."
+    ],
+    "soft_deny": [
+      "$defaults",
+      "Bash(git push:origin master)",
+      "Bash(git push:cuelang master)"
+    ],
+    "environment": [
+      "### Org-wide",
+      "**Organization**: cue-lang / cue-labs (CUE Labs) — evidenced by this repo's remotes (cue.gerrithub.io/cue-lang/cue, cue.gerrithub.io/cue-labs/cue, github.com/cue-lang/cue, github.com/cue-labs/cue)",
+      "**Cloud provider(s)**: None configured",
+      "**Repository visibility**: Not queryable via gh here; this repo (cuelang.org/go, remotes on github.com/cue-lang/cue, github.com/cue-labs/cue, cue.gerrithub.io) is a well-known open-source project — treat as PUBLIC",
+      "**Internal sharing / snippet hosting**: None configured — treat public paste/gist services as outside the trust boundary",
+      "**Secrets management**: None configured",
+      "**Default / protected branches**: Default branch master; protection/rulesets not queryable here (gh check not available) — treat master as protected by convention pending confirmation",
+      "**CI/CD deploy targets**: None configured",
+      "**Network posture**: None configured",
+      "**Source control**: Gerrit-based review at cue.gerrithub.io (cue-lang/cue, cue-labs/cue), mirrored to GitHub (github.com/cue-lang/cue, github.com/cue-labs/cue) — this repo and its remotes only",
+      "**Trusted internal domains**: cue.gerrithub.io, cuelang.org, cue.dev (evidenced by remotes and CLAUDE.md/README links)",
+      "**Trusted cloud buckets**: None configured",
+      "**Key internal services**: CUE planning GitHub org project (github.com/orgs/cue-lang/projects/37); machine-local SpecKit attention-hook portal (speckit-notify)",
+      "**Internal package registry**: None configured",
+      "**Sensitive data locations & audiences**: specs/ac78e-defaults-redesign/decisions/D-025-per-tier-retention.md, specs/acqbg-oss-ee-projection/decisions/D-001-constraint-classification.md, doc/tutorial/kubernetes/README.md — treat as internal design/decision docs, share only with cleared maintainer audiences",
+      "**Data retention / declassification**: None configured",
+      "**Sensitive remote targets**: any namespace, host, or container whose name carries prod or production as a whole word or name segment (default heuristic — no repo-specific prod targets found)",
+      "**Protected deployment namespaces / environments**: None configured — fall back to the Sensitive remote targets heuristic",
+      "**Protected IaC scopes**: IAM, RBAC, networking, quota, and node-pool resources; anything whose name or tag carries prod or production as a whole word or name segment",
+      "### User-specific",
+      "**Primary use of Claude Code**: software development on the CUE language repository (cuelang.org/go), including SpecKit-driven change workflows, release-note drafting, and backport management",
+      "Draft branches: projection-draft/* on github.com/cue-labs/cue are throwaway snapshot branches owned by the projector; force-pushes there are routine.",
+      "**Trusted repo**: /var/home/mvdan/src/c/cue-claude, /var/home/mvdan/src/c/cue (cuelang.org/go) and its remotes — cue.gerrithub.io/cue-lang/cue, cue.gerrithub.io/cue-labs/cue, github.com/cue-lang/cue, github.com/cue-labs/cue; public repo — only this repo's own work belongs here, not content ported in from other checkouts",
+      "**Org-specific CLIs**: cue, cueckoo, speckit-notify (SpecKit lifecycle hook, routine under this repo's .specify/ and .claude/skills/speckit-* flows)",
+      "routine under specs/ prefix: SpecKit change directories (specs/<feature>/meta.cue, spec.md, plan.md, tasks.md) for this repo's SpecKit workflow"
+    ]
+  }
+}
