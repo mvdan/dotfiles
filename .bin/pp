@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Repos whose CLAUDE.md imports the porcuepine common guidance use
+# porcuepine for trybots; everything else still uses cueckoo.
+tool=cueckoo
+gitroot=$(git rev-parse --show-toplevel 2>/dev/null)
+if [[ "$gitroot" != "" && -f "$gitroot/CLAUDE.md" ]] && grep -qF '@~/.cache/porcuepine/common-guidance.md' "$gitroot/CLAUDE.md"
+then
+    tool=porcuepine
+fi
+
+exec "$tool" "$@"

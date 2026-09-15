@@ -20,7 +20,10 @@
 !/.config/systemd/
 !/.config/zathura/
 
-!/.claude/
+/.claude/*
+!/.claude/settings.json
+!/.claude/CLAUDE.md
+
 /.gnupg/*.gpg*
 /.gnupg/random_seed
 /.ssh/id_*
