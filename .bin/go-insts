@@ -56,7 +56,6 @@ modInstall() {
 }
 
 # golang.org
-install golang.org/x/exp/cmd/gorelease@master
 install golang.org/x/perf/cmd/benchstat@master
 install golang.org/x/review/git-codereview@master
 # install golang.org/x/telemetry/cmd/gotelemetry@master
