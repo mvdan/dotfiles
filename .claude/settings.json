@@ -68,5 +68,6 @@
       "**Org-specific CLIs**: cue, cueckoo, speckit-notify (SpecKit lifecycle hook, routine under this repo's .specify/ and .claude/skills/speckit-* flows)",
       "routine under specs/ prefix: SpecKit change directories (specs/<feature>/meta.cue, spec.md, plan.md, tasks.md) for this repo's SpecKit workflow"
     ]
-  }
+  },
+  "switchModelsOnFlag": false
 }

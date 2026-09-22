@@ -24,11 +24,10 @@
   `[Name]` for a package-level name, `[Type.Field]` or `[Type.Method]` for a
   member, `[pkg.Name]` for another package.
 
-- Markdown written for publication on GitHub must not hard-wrap paragraphs, as
-  GitHub renders single newlines within a paragraph as line breaks. Write each
-  paragraph as one long line and let the browser wrap it. This does not apply
-  to commit messages, which keep their 72-column hard wrap, nor to fenced code
-  blocks.
+- Text written for GitHub issues, discussions, and releases must not hard-wrap
+  paragraphs, as those fields render single newlines within a paragraph as line
+  breaks. Write each paragraph as one long line and let the browser wrap it.
+  Fenced code blocks are never reflowed.
 
 - Never manually add Signed-off-by or Change-Id trailers to commit messages;
   projects which use them already have git commit hooks to add them.
