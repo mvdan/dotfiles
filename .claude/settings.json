@@ -5,7 +5,8 @@
     "GIT_ASKPASS": "/bin/false",
     "SSH_ASKPASS_REQUIRE": "never",
     "GIT_SSH_COMMAND": "ssh -o BatchMode=yes",
-    "GH_PROMPT_DISABLED": "1"
+    "GH_PROMPT_DISABLED": "1",
+    "GOFLAGS": "-timeout=20s"
   },
   "attribution": {
     "commit": ""

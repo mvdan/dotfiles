@@ -1,5 +1,10 @@
 # Personal preferences (all projects)
 
+- Go tests run with `-timeout=20s` by default, via GOFLAGS in settings.json, so
+  that a hung test fails fast instead of burning the machine. Do not set GOFLAGS
+  in a command without keeping the timeout; pass `-timeout` directly instead,
+  raising it only for a package known to be slower than that.
+
 - When investigating hangs or panics, always use short timeouts, such as
   `go test -timeout=3s` for Go tests, or `timeout 3 ./binary` for programs.
 
