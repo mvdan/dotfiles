@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# Run a command inside a transient systemd scope, so that the whole process
+# tree -- the command plus everything it spawns, such as go test -- is capped
+# by cgroup v2 CPU and memory controls. Meant for agent harnesses like claude
+# and codex: they may hit a wall of slowness or lose their own OOM kill, but
+# the machine stays usable.
+
+if [[ $# -eq 0 || $1 == -h || $1 == --help ]]; then
+	cat <<EOF2
+usage: capped <command> [args...]
+
+Runs the command under a CPU and memory capped systemd scope. Limits default
+to a share of the machine and can be overridden via the environment:
+
+	CAPPED_CPUQUOTA   hard CPU cap, percent of one core  (default: 2/3 of cores)
+	CAPPED_CPUWEIGHT  scheduling weight under contention (default: 50, vs 100)
+	CAPPED_MEMHIGH    soft cap: throttle and reclaim     (default: 20% of RAM)
+	CAPPED_MEMMAX     hard cap: OOM kill within the cgroup (default: 25% of RAM)
+	CAPPED_SWAPMAX    swap allowance                     (default: 0, no swap)
+EOF2
+	[[ $# -eq 0 ]] && exit 1
+	exit 0
+fi
+
+real=$(command -v -- "$1")
+if [[ -z $real ]]; then
+	echo "capped: $1 not found in PATH" >&2
+	exit 1
+fi
+shift
+
+: "${CAPPED_CPUQUOTA:=$(($(nproc) * 100 * 2 / 3))%}"
+: "${CAPPED_CPUWEIGHT:=50}"
+: "${CAPPED_MEMHIGH:=20%}"
+: "${CAPPED_MEMMAX:=25%}"
+: "${CAPPED_SWAPMAX:=0}"
+
+# Already capped, or no usable user manager: run the command as-is.
+if [[ -n $CAPPED_SCOPE ]] || ! systemctl --user is-active -q init.scope; then
+	exec "$real" "$@"
+fi
+
+export CAPPED_SCOPE=${real##*/}
+exec systemd-run --user --scope --quiet --collect \
+	--unit="capped-${real##*/}-$$" \
+	-p CPUQuota="$CAPPED_CPUQUOTA" \
+	-p CPUWeight="$CAPPED_CPUWEIGHT" \
+	-p MemoryHigh="$CAPPED_MEMHIGH" \
+	-p MemoryMax="$CAPPED_MEMMAX" \
+	-p MemorySwapMax="$CAPPED_SWAPMAX" \
+	-- "$real" "$@"
