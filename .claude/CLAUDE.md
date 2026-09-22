@@ -8,8 +8,9 @@
 - When investigating hangs or panics, always use short timeouts, such as
   `go test -timeout=3s` for Go tests, or `timeout 3 ./binary` for programs.
 
-- Never run benchmarks unless I ask for or approve them; they are slow and
-  their numbers are unreliable on a busy machine.
+- Never run benchmarks or fuzzing unless I ask for or approve them; they are
+  slow, benchmark numbers are unreliable on a busy machine, and fuzzing runs
+  open-ended until it is stopped.
 
 - Never run a command that can block on an interactive prompt. git and gh are
   non-interactive via settings.json env vars, but editors and login flows are
