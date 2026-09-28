@@ -14,7 +14,7 @@
   "permissions": {
     "defaultMode": "auto"
   },
-  "model": "opus[1m]",
+  "model": "opus",
   "enabledPlugins": {
     "gopls-lsp@claude-plugins-official": true,
     "codex@openai-codex": true
@@ -28,9 +28,18 @@
     }
   },
   "effortLevel": "high",
+  "modelSettings": {
+    "claude-opus-5-5": {
+      "effortLevel": "high"
+    },
+    "claude-fable-5-1": {
+      "effortLevel": "medium"
+    }
+  },
   "skipDangerousModePermissionPrompt": true,
   "theme": "light",
-  "preferredNotifChannel": "kitty",
+  "preferredNotifChannel": "terminal_bell",
+  "switchModelsOnFlag": false,
   "skipAutoPermissionPrompt": true,
   "autoMode": {
     "allow": [
@@ -70,5 +79,5 @@
       "routine under specs/ prefix: SpecKit change directories (specs/<feature>/meta.cue, spec.md, plan.md, tasks.md) for this repo's SpecKit workflow"
     ]
   },
-  "switchModelsOnFlag": false
+  "skipWorkflowUsageWarning": true
 }

@@ -66,6 +66,7 @@ install golang.org/x/vuln/cmd/govulncheck@master
 # CUE
 install cuelang.org/go/cmd/cue@master
 install cuelabs.dev/private/aiops/cmd/porcuepine@latest
+install github.com/cue-lang/contrib-tools/cmd/cueckoo@latest
 
 # lsp
 modInstall golang.org/x/tools/gopls \
@@ -86,10 +87,8 @@ install mvdan.cc/benchinit@master
 install github.com/aclements/go-misc/benchcmd@master
 install github.com/rogpeppe/go-internal/cmd/{testscript,txtar-addmod,txtar-x,txtar-c}@master
 install golang.org/x/exp/cmd/txtar@master
-install github.com/kortschak/gospel@master
 install github.com/icholy/gomajor@master
 install rsc.io/rf/git-generate@main
-install modernc.org/fe@master
 install github.com/goreleaser/goreleaser/v2@latest
 install github.com/rogpeppe/gerrit-batch@latest
 
