@@ -60,7 +60,15 @@ abbr --add gsmf git submodule foreach --recursive
 abbr --add gsmu git submodule update --init --recursive
 
 function gwm
-    git switch $argv $(git-default-branch)
+    set -l branch (git-default-branch)
+    # In a linked worktree like cue-claude, prefer its wk-claude branch.
+    if test (git rev-parse --path-format=absolute --git-dir) != (git rev-parse --path-format=absolute --git-common-dir)
+        set -l suffix (string match -rg -- '-([^-]+)$' (path basename (git rev-parse --show-toplevel)))
+        if test -n "$suffix"; and git show-ref -q --verify refs/heads/wk-$suffix
+            set branch wk-$suffix
+        end
+    end
+    git switch $argv $branch
 end
 function grbu
     git rebase $argv @{u}

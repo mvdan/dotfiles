@@ -33,10 +33,11 @@
       "effortLevel": "high"
     },
     "claude-fable-5-1": {
-      "effortLevel": "medium"
+      "effortLevel": "high"
     }
   },
   "skipDangerousModePermissionPrompt": true,
+  "skipWorkflowUsageWarning": true,
   "theme": "light",
   "preferredNotifChannel": "terminal_bell",
   "switchModelsOnFlag": false,
@@ -78,6 +79,5 @@
       "**Org-specific CLIs**: cue, cueckoo, speckit-notify (SpecKit lifecycle hook, routine under this repo's .specify/ and .claude/skills/speckit-* flows)",
       "routine under specs/ prefix: SpecKit change directories (specs/<feature>/meta.cue, spec.md, plan.md, tasks.md) for this repo's SpecKit workflow"
     ]
-  },
-  "skipWorkflowUsageWarning": true
+  }
 }
