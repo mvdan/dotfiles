@@ -95,6 +95,9 @@ abbr --add lt ls -Alhrt
 abbr --add zs sudo -E $SHELL
 abbr --add rr rm -rf
 
+abbr --add gba gerrit-batch
+abbr --add cc capped claude
+
 abbr --add gg go get
 abbr --add ggn go generate
 abbr --add gb go build

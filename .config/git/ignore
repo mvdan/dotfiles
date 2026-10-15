@@ -9,3 +9,5 @@ new
 .helix
 
 **/.claude/settings.local.json
+
+**/.claude/.cc-writes/

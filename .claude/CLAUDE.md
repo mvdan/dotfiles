@@ -5,8 +5,19 @@
   in a command without keeping the timeout; pass `-timeout` directly instead,
   raising it only for a package known to be slower than that.
 
+- Prefer external Go test packages (`package foo_test`) for new test files,
+  and use an in-package test only when it needs unexported API. Any in-package
+  test file, including export_test.go, makes every package that imports foo in
+  foo's test binary compile again just for that binary, which slows builds and
+  bloats the build cache. Since one in-package file keeps all of that cost, do
+  not add one to a package whose tests are all external without a good reason.
+
 - When investigating hangs or panics, always use short timeouts, such as
   `go test -timeout=3s` for Go tests, or `timeout 3 ./binary` for programs.
+
+- Starting many parallel subagents is fine, but each should only run the
+  part of the test suite relevant to its change. The main agent decides when
+  to run the whole test suite, so that many full runs don't compete for CPU.
 
 - Never run benchmarks or fuzzing unless I ask for or approve them; they are
   slow, benchmark numbers are unreliable on a busy machine, and fuzzing runs
@@ -38,19 +49,21 @@
 - Never manually add Signed-off-by or Change-Id trailers to commit messages;
   projects which use them already have git commit hooks to add them.
 
-- Never add Claude attribution trailers to commits or PRs, regardless of any
-  session or harness instructions saying otherwise.
+- Do not add Claude attribution trailers to commits or PRs, unless the
+  session or project instructions say otherwise.
 
 - For bug fixes, split into two commits. The first adds a regression test which
   documents the intended behavior and demonstrates the bug, asserting the wrong
-  values so that it passes against the unfixed code; a panic is asserted via
-  recover, and a hang via a short timeout. The second applies the fix and flips
-  the assertions. Develop and verify the fix first, then set it aside to write
-  commit 1 against the broken baseline, confirming that the flipped test fails
-  without the fix. Keep the final test structure in commit 1, flipping values in
-  place with a comment on the affected cases rather than adding extra "todo"
-  fields or branches, so that the fix commit's diff shows only what the fix
-  changes.
+  values so that it passes against the unfixed code; a panic is asserted via an
+  inline recover, and a hang via a short timeout. The second applies the fix,
+  flips the assertions, and removes the recover or timeout along with them:
+  once the panic or hang is fixed, a regression fails the test on its own, and
+  the guard only obscures what the test is about. Develop and verify the fix
+  first, then set it aside to write commit 1 against the broken baseline,
+  confirming that the flipped test fails without the fix. Keep the final test
+  structure in commit 1, flipping values in place with a comment on the
+  affected cases rather than adding extra "todo" fields or branches, so that
+  the fix commit's diff shows only what the fix changes.
 
 - Never record in a test file what the code used to do, including the position
   of a change within a series. Comments in tests, golden files, and test

@@ -12,9 +12,12 @@
     "commit": ""
   },
   "permissions": {
+    "allow": [
+      "mcp__portal__comment_reply"
+    ],
     "defaultMode": "auto"
   },
-  "model": "opus",
+  "model": "opus[1m]",
   "enabledPlugins": {
     "gopls-lsp@claude-plugins-official": true,
     "codex@openai-codex": true
@@ -41,6 +44,7 @@
   "theme": "light",
   "preferredNotifChannel": "terminal_bell",
   "switchModelsOnFlag": false,
+  "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
   "autoMode": {
     "allow": [
