@@ -1,12 +1,18 @@
 {
   "env": {
+    "CLAUDE_CODE_SHELL": "/usr/bin/bash",
     "DISABLE_AUTOUPDATER": "1",
-    "GIT_TERMINAL_PROMPT": "0",
-    "GIT_ASKPASS": "/bin/false",
-    "SSH_ASKPASS_REQUIRE": "never",
-    "GIT_SSH_COMMAND": "ssh -o BatchMode=yes",
+    "EDITOR": "true",
     "GH_PROMPT_DISABLED": "1",
-    "GOFLAGS": "-timeout=20s"
+    "GIT_ADVICE": "0",
+    "GIT_ASKPASS": "/bin/false",
+    "GIT_SSH_COMMAND": "ssh -o BatchMode=yes",
+    "GIT_TERMINAL_PROMPT": "0",
+    "GOFLAGS": "-timeout=30s",
+    "NO_COLOR": "1",
+    "PAGER": "cat",
+    "SSH_ASKPASS_REQUIRE": "never",
+    "VISUAL": "true"
   },
   "attribution": {
     "commit": ""
@@ -17,7 +23,7 @@
     ],
     "defaultMode": "auto"
   },
-  "model": "opus[1m]",
+  "model": "opus",
   "enabledPlugins": {
     "gopls-lsp@claude-plugins-official": true,
     "codex@openai-codex": true
@@ -39,8 +45,13 @@
       "effortLevel": "high"
     }
   },
+  "pluginConfigs": {},
   "skipDangerousModePermissionPrompt": true,
   "skipWorkflowUsageWarning": true,
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline-command.sh"
+  },
   "theme": "light",
   "preferredNotifChannel": "terminal_bell",
   "switchModelsOnFlag": false,

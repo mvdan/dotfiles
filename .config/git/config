@@ -49,13 +49,14 @@
 	parallel = 8
 [advice]
 	skippedCherryPicks = false
+	detachedHead = false
 [gpg]
 	format = ssh
 [init]
 	defaultBranch = main
 [credential]
 	username = mvdan
-	helper = /usr/libexec/git-core/git-credential-libsecret
+	helper = oo7
 [gpg.ssh]
 	allowedSignersFile = ~/.config/git/allowed_signers
 [rerere]

@@ -15,8 +15,8 @@ to a share of the machine and can be overridden via the environment:
 
 	CAPPED_CPUQUOTA   hard CPU cap, percent of one core  (default: 2/3 of cores)
 	CAPPED_CPUWEIGHT  scheduling weight under contention (default: 50, vs 100)
-	CAPPED_MEMHIGH    soft cap: throttle and reclaim     (default: 20% of RAM)
-	CAPPED_MEMMAX     hard cap: OOM kill within the cgroup (default: 25% of RAM)
+	CAPPED_MEMHIGH    soft cap: throttle and reclaim     (default: 30% of RAM)
+	CAPPED_MEMMAX     hard cap: OOM kill within the cgroup (default: 35% of RAM)
 	CAPPED_SWAPMAX    swap allowance                     (default: 0, no swap)
 EOF2
 	[[ $# -eq 0 ]] && exit 1
@@ -32,8 +32,8 @@ shift
 
 : "${CAPPED_CPUQUOTA:=$(($(nproc) * 100 * 2 / 3))%}"
 : "${CAPPED_CPUWEIGHT:=50}"
-: "${CAPPED_MEMHIGH:=20%}"
-: "${CAPPED_MEMMAX:=25%}"
+: "${CAPPED_MEMHIGH:=30%}"
+: "${CAPPED_MEMMAX:=35%}"
 : "${CAPPED_SWAPMAX:=0}"
 
 # Already capped, or no usable user manager: run the command as-is.

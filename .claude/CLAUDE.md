@@ -1,6 +1,6 @@
 # Personal preferences (all projects)
 
-- Go tests run with `-timeout=20s` by default, via GOFLAGS in settings.json, so
+- Go tests run with `-timeout=30s` by default, via GOFLAGS in settings.json, so
   that a hung test fails fast instead of burning the machine. Do not set GOFLAGS
   in a command without keeping the timeout; pass `-timeout` directly instead,
   raising it only for a package known to be slower than that.
@@ -29,6 +29,12 @@
   ask me to run auth commands myself with `! <command>`. If something does
   hang, kill it rather than waiting.
 
+- Use git's -q where output scales with the change (stash pop/apply, mixed
+  reset, rm -r, clean, am, rebase -x), not on commit, worktree add, or
+  checkout -b/switch, whose few lines are useful. bisect, cherry-pick, and
+  rebase --continue/--abort/--skip do not take -q, and `git diff -q` is not
+  `--quiet`.
+
 - Do not publish commits, PRs, comments, or code reviews without permission.
   Drafts are fine, as I can review them before they are published.
 
@@ -36,6 +42,9 @@
   and stop: no restating the same point, no code examples in commit-message
   prose, no padding that the code or tests already make clear. Default to the
   shorter form rather than waiting to be asked to trim.
+
+- Wrap any inline code snippet in commit messages and markdown in backquotes,
+  such as `echo foo`, `env.HOME`, or `--out`.
 
 - In Go doc comments, linkify references to other identifiers as doc links:
   `[Name]` for a package-level name, `[Type.Field]` or `[Type.Method]` for a
