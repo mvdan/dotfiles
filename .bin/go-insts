@@ -26,7 +26,7 @@ install() {
 				echo "WARNING: $firstmain exists"
 			fi
 		fi
-		if ! chronic go install -ldflags="-w -s" "$@"; then
+		if ! chronic go install -trimpath -ldflags="-w -s" "$@"; then
 			echo "failed to install $@"
 		fi
 	) &

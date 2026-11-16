@@ -24,6 +24,10 @@
     "defaultMode": "auto"
   },
   "model": "opus",
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline-command.sh"
+  },
   "enabledPlugins": {
     "gopls-lsp@claude-plugins-official": true,
     "codex@openai-codex": true
@@ -41,17 +45,13 @@
     "claude-opus-5-5": {
       "effortLevel": "high"
     },
-    "claude-fable-5-1": {
+    "claude-fable-5-2": {
       "effortLevel": "high"
     }
   },
   "pluginConfigs": {},
   "skipDangerousModePermissionPrompt": true,
   "skipWorkflowUsageWarning": true,
-  "statusLine": {
-    "type": "command",
-    "command": "bash ~/.claude/statusline-command.sh"
-  },
   "theme": "light",
   "preferredNotifChannel": "terminal_bell",
   "switchModelsOnFlag": false,

@@ -23,6 +23,14 @@
   slow, benchmark numbers are unreliable on a busy machine, and fuzzing runs
   open-ended until it is stopped.
 
+- Outside a Go benchmark, compare performance by instructions executed,
+  measured with `perf stat -e instructions:u`, which counts child processes
+  too; it is the steadiest measure on a noisy machine. User and system CPU
+  time, as `perf stat` or `/usr/bin/time` report them, are other options, but
+  they still vary with load, especially system time when spawning many
+  processes. Do not use wall time unless I explicitly ask for it, as it mostly
+  measures the scheduler on a busy machine.
+
 - Never run a command that can block on an interactive prompt. git and gh are
   non-interactive via settings.json env vars, but editors and login flows are
   not: pass -m/--no-edit, set GIT_EDITOR/GIT_SEQUENCE_EDITOR for rebases, and
@@ -34,6 +42,14 @@
   checkout -b/switch, whose few lines are useful. bisect, cherry-pick, and
   rebase --continue/--abort/--skip do not take -q, and `git diff -q` is not
   `--quiet`.
+
+- `git filter-repo` is installed; `git filter-branch` is not. Use it instead
+  of a rebase when every pending commit needs the same mechanical change,
+  such as a text replacement via `--file-info-callback`, so that no conflicts
+  arise. Back up the branch under refs/claude/backup/ first, and always limit
+  it with `--refs <branch> '^@{u}'`, which implies `--partial`: a plain run
+  rewrites every ref, removes the origin remote, and expires the reflogs. It
+  needs `--force` outside a fresh clone, which includes any linked worktree.
 
 - Do not publish commits, PRs, comments, or code reviews without permission.
   Drafts are fine, as I can review them before they are published.
@@ -49,6 +65,9 @@
 - In Go doc comments, linkify references to other identifiers as doc links:
   `[Name]` for a package-level name, `[Type.Field]` or `[Type.Method]` for a
   member, `[pkg.Name]` for another package.
+
+- When an expression mixes `&&` and `||`, add parentheses to make the grouping
+  explicit, such as `a || (b && c)`, rather than relying on precedence.
 
 - Text written for GitHub issues, discussions, and releases must not hard-wrap
   paragraphs, as those fields render single newlines within a paragraph as line
