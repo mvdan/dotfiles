@@ -93,6 +93,7 @@ install github.com/goreleaser/goreleaser/v2@latest
 install github.com/rogpeppe/gerrit-batch@latest
 
 # misc
+# TODO: replace with a CLI on https://github.com/mholt/archives once it exists
 install github.com/mholt/archiver/v3/cmd/arc@latest
 # install github.com/hanwen/go-mtpfs@latest
 install github.com/mdlayher/keylight/cmd/keylight@latest
