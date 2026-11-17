@@ -31,6 +31,12 @@
   processes. Do not use wall time unless I explicitly ask for it, as it mostly
   measures the scheduler on a busy machine.
 
+- Before acting on an unexplained performance difference in hot Go code,
+  link each side with a few `-ldflags=-randlayout=N` seeds, which shuffle
+  function order, and count `cycles:u` as well as instructions. If the
+  cycles overlap across seeds, the difference costs no time and is not worth
+  working around. `go tool` takes no `-ldflags`; use `go build` instead.
+
 - Never run a command that can block on an interactive prompt. git and gh are
   non-interactive via settings.json env vars, but editors and login flows are
   not: pass -m/--no-edit, set GIT_EDITOR/GIT_SEQUENCE_EDITOR for rebases, and
