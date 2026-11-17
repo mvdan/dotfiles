@@ -14,7 +14,6 @@
 /.config/go/telemetry/
 !/.config/helix/
 !/.config/kanshi/
-!/.config/mako/
 !/.config/mpv/
 !/.config/sway/
 !/.config/sway/config.d/
