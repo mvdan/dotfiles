@@ -11,6 +11,7 @@
 !/.config/foot/
 !/.config/git/
 !/.config/go/
+/.config/go/telemetry/
 !/.config/helix/
 !/.config/kanshi/
 !/.config/mako/
@@ -26,8 +27,8 @@
 
 /.gnupg/*.gpg*
 /.gnupg/random_seed
-/.ssh/id_*
-/.ssh/known_hosts
+/.ssh/*
+!/.ssh/config
 *cache
 *cookie*
 *state
