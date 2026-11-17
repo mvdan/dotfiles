@@ -10,6 +10,7 @@
 !/.config/environment.d/
 !/.config/fish/
 !/.config/foot/
+!/.config/gammastep/
 !/.config/git/
 !/.config/go/
 /.config/go/telemetry/
