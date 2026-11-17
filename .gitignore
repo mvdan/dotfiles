@@ -6,6 +6,7 @@
 /.config/*
 !/.config/mimeapps.list
 !/.config/containers/
+!/.config/containers/registries.conf.d/
 !/.config/environment.d/
 !/.config/fish/
 !/.config/foot/
