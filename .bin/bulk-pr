@@ -15,7 +15,7 @@ shift
 for d in */; do
 	popd &>/dev/null # ok to error, e.g. if the stack is empty
 	pushd $d || exit 1
-	if ! git diff --exit-code >/dev/null; then
+	if ! git diff HEAD --quiet; then
 		echo "skipping $d due to changes"
 		continue
 	fi
@@ -25,7 +25,7 @@ for d in */; do
 	git reset -q --hard origin/master || continue
 
 	{ echo "$@"; eval "$@"; } || exit 1
-	if git diff --exit-code >/dev/null; then
+	if git diff HEAD --quiet; then
 		echo "skipping $d since there is nothing to do"
 		continue
 	fi
@@ -47,7 +47,7 @@ for d in */; do
 	fi
 	case "$branch" in
 	master)
-		git push -f -u origin || exit 1
+		git push -u origin || exit 1
 		continue # no PR needed
 		;;
 	*)
