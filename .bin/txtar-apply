@@ -15,6 +15,7 @@ for file in "$@"; do
 	echo "> $file"
 	file="$(realpath "$file")" # we need an absolute path since we cd below
 	tempcomment="$(mktemp)"
+	tempout="$(mktemp)"
 	tempdir="$(mktemp -d)"
 	(
 		cd "$tempdir"
@@ -28,7 +29,14 @@ for file in "$@"; do
 		# TODO: allow including some new files created by the script,
 		# such as `go mod tidy` adding a go.sum file.
 		# We don't want to always do this due to e.g. built binaries.
-		txtar $filenames <"$tempcomment" >"$file"
+		# Write elsewhere first, as txtar fails if any of the files is gone.
+		# cp keeps the original file's mode, unlike mv.
+		if txtar $filenames <"$tempcomment" >"$tempout"; then
+			cp "$tempout" "$file"
+		else
+			echo "$file: could not rebuild the txtar file; leaving it unchanged"
+		fi
 	)
+	rm -f "$tempout"
 	echo
 done
