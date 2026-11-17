@@ -149,8 +149,9 @@ function syu
     rpm-ostree upgrade || return 1
 
     echo " -- fwupdmgr --"
-    fwupdmgr refresh || return 1
-    fwupdmgr get-updates || true # no updates is code 1
+    # code 2 means nothing to do, e.g. fresh metadata or no updates
+    fwupdmgr refresh || test $status -eq 2 || return 1
+    fwupdmgr get-updates || true
 end
 
 abbr --add gsmfc "git submodule foreach --recursive 'git clean -dffx && git reset --hard' && git clean -f && git reset --hard"
