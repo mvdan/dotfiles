@@ -27,6 +27,7 @@
 /.claude/*
 !/.claude/settings.json
 !/.claude/CLAUDE.md
+!/.claude/statusline-command.sh
 
 /.gnupg/*.gpg*
 /.gnupg/random_seed
