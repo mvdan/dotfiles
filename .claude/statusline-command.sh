@@ -2,6 +2,8 @@
 # Status line, left to right: what is running (model, effort), where (git branch),
 # this session's state (context, prompt cache), then the account's limits and identity.
 input=$(cat)
+# Fields are split on \x1f, not tabs: read merges adjacent whitespace separators,
+# which would shift the fields after an empty one.
 now=$(date +%s)
 
 # Gruvbox light foreground colors, as 24-bit ANSI escapes.
@@ -26,7 +28,7 @@ dur() {
   else printf '%dd%dh' $((s / 86400)) $((s % 86400 / 3600)); fi
 }
 
-IFS=$'\t' read -r model effort dir used tokens cache_warm cache_expires < <(echo "$input" | jq -r '
+IFS=$'\x1f' read -r model effort dir used tokens cache_warm cache_expires < <(echo "$input" | jq -r '
   def k: if . >= 1000000 then "\(. / 100000 | round / 10)M" elif . >= 1000 then "\(. / 1000 | round)k" else "\(.)" end;
   [ .model.display_name // "?",
     .effort.level // "-",
@@ -35,10 +37,10 @@ IFS=$'\t' read -r model effort dir used tokens cache_warm cache_expires < <(echo
     (.context_window | if .context_window_size then "\(.total_input_tokens // 0 | k)/\(.context_window_size | k)" else "-" end),
     (.prompt_cache | if . and .caching_observed then (.warm | tostring) else "-" end),
     .prompt_cache.expires_at // "-"
-  ] | map(tostring) | @tsv')
+  ] | map(tostring) | join("\u001f")')
 
 out="${bold}${blue}${model}${reset}"
-[ "$effort" != - ] && out="$out ${gray}${effort}${reset}"
+[ -n "$effort" ] && [ "$effort" != - ] && out="$out ${gray}${effort}${reset}"
 
 branch=$(git -C "$dir" branch --show-current 2>/dev/null)
 [ -z "$branch" ] && branch=$(git -C "$dir" rev-parse --short HEAD 2>/dev/null)
@@ -54,7 +56,7 @@ elif [ "$cache_warm" != - ]; then
 fi
 
 # Every window under .rate_limits that reports used_percentage, in input order.
-while IFS=$'\t' read -r name pct resets; do
+while IFS=$'\x1f' read -r name pct resets; do
   [ -n "$pct" ] || continue
   case "$name" in
     five_hour) label="5h" ;;
@@ -66,12 +68,13 @@ while IFS=$'\t' read -r name pct resets; do
   [ "$left" -lt 0 ] && left=0
   out="$out${sep}$label left $(level "$left")${left}%${reset}"
   [ -n "$resets" ] && out="$out ${gray}($(dur $(( ${resets%.*} - now ))))${reset}"
-done < <(echo "$input" | jq -r '(.rate_limits // {}) | to_entries[] | select(.value | type == "object") | [.key, (.value.used_percentage // ""), (.value.resets_at // "")] | @tsv')
+done < <(echo "$input" | jq -r '(.rate_limits // {}) | to_entries[] | select(.value | type == "object") | [.key, (.value.used_percentage // ""), (.value.resets_at // "") | tostring] | join("\u001f")')
 
-# Logged-in account: not in the statusLine input, so read two keys from ~/.claude.json.
+# Logged-in account: not in the statusLine input, so read two keys from .claude.json
+# in the active config dir, which CLAUDE_CONFIG_DIR moves away from $HOME.
 # A personal account's organization is named after its email, so it adds nothing.
 acct=$(jq -r '.oauthAccount | if . then .emailAddress as $e
   | [$e, (.organizationName | select(. and ($e == null or (contains($e) | not))))]
-  | map(select(. != null and . != "")) | join(" / ") else empty end' "$HOME/.claude.json" 2>/dev/null)
+  | map(select(. != null and . != "")) | join(" / ") else empty end' "${CLAUDE_CONFIG_DIR:-$HOME}/.claude.json" 2>/dev/null)
 [ -n "$acct" ] && out="$out${sep}${purple}${acct}${reset}"
 printf '%s\n' "$out"
