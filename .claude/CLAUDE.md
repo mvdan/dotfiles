@@ -86,18 +86,17 @@
 - Do not add Claude attribution trailers to commits or PRs, unless the
   session or project instructions say otherwise.
 
-- For bug fixes, split into two commits. The first adds a regression test which
-  documents the intended behavior and demonstrates the bug, asserting the wrong
-  values so that it passes against the unfixed code; a panic is asserted via an
-  inline recover, and a hang via a short timeout. The second applies the fix,
-  flips the assertions, and removes the recover or timeout along with them:
-  once the panic or hang is fixed, a regression fails the test on its own, and
-  the guard only obscures what the test is about. Develop and verify the fix
-  first, then set it aside to write commit 1 against the broken baseline,
-  confirming that the flipped test fails without the fix. Keep the final test
-  structure in commit 1, flipping values in place with a comment on the
-  affected cases rather than adding extra "todo" fields or branches, so that
-  the fix commit's diff shows only what the fix changes.
+- For bug fixes, split into two commits: a regression test asserting the
+  current wrong values, so that it passes against the unfixed code, then the
+  fix, which flips them. Develop and verify the fix first, then write commit 1
+  against the broken baseline and confirm that the flipped test fails without
+  the fix. Keep the final test structure in commit 1, flipping values in place
+  with a comment on the affected cases rather than adding "todo" fields or
+  branches, so the fix's diff shows only what it changes. Commit 1 catches a
+  panic with an inline recover and a hang with a short timeout, which the fix
+  removes, as a regression then fails on its own. If the test could only run
+  against the unfixed code outside its natural place, such as a stack overflow
+  needing a subprocess, skip commit 1 and add the test with the fix.
 
 - Never record in a test file what the code used to do, including the position
   of a change within a series. Comments in tests, golden files, and test
