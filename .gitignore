@@ -19,6 +19,8 @@
 /.config/jj/repos/
 !/.config/kanshi/
 !/.config/mpv/
+!/.config/pipewire/
+!/.config/pipewire/pipewire.conf.d/
 !/.config/sway/
 !/.config/sway/config.d/
 !/.config/systemd/
